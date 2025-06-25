@@ -21,8 +21,8 @@ public class SheetURLHelper : ScriptableObject
     private int _zeroBaseDataStartedRow;
 
     private string _classGeneratedPath;
+    private bool _isClassAvoidDuplication;
     private string _dbGeneratedPath;
-    private bool _isAvoidDuplication;
 
     private DataSet _excelData;
     private DateTime _excelUpdateTime;
@@ -36,10 +36,10 @@ public class SheetURLHelper : ScriptableObject
     public int DataNameRowNumber
     {
         get => _dataNameRowNumber;
-        set 
-        { 
+        set
+        {
             _zeroBaseNameRow = value - 1;
-            _dataNameRowNumber = value; 
+            _dataNameRowNumber = value;
         }
     }
 
@@ -68,16 +68,17 @@ public class SheetURLHelper : ScriptableObject
         get => _classGeneratedPath;
         set => _classGeneratedPath = value;
     }
+
     public string DBGeneratedPath
     {
         get => _dbGeneratedPath;
         set => _dbGeneratedPath = value;
     }
 
-    public bool IsAvoidDuplication
+    public bool IsClassAvoidDuplication
     {
-        get => _isAvoidDuplication;
-        set => _isAvoidDuplication = value;
+        get => _isClassAvoidDuplication;
+        set => _isClassAvoidDuplication = value;
     }
 
     public bool HasExcelData
@@ -128,11 +129,11 @@ public class SheetURLHelper : ScriptableObject
                 .Select(a => a.GetType(tables[i].TableName))
                 .FirstOrDefault(t => t != null);
 
-            if (type == null || _isAvoidDuplication == false)
+            if (type == null || _isClassAvoidDuplication == false)
             {
                 var text = GetClassScriptText(tables[i]);
-                GenerateFile(_classGeneratedPath, $"{tables[i].TableName}.cs", text);
-                if (_isAvoidDuplication == true)
+                GenerateFile(_classGeneratedPath, $"{tables[i].TableName}.cs", text, true);
+                if (_isClassAvoidDuplication == true)
                 {
                     log += $"- {tables[i].TableName} 생성 완료\n";
                 }
@@ -178,7 +179,31 @@ public class SheetURLHelper : ScriptableObject
         return code;
     }
 
-    public void ConvertClassToJson(System.Data.DataTable table)
+    public void GenerateDBJson()
+    {
+        if (HasExcelData == false)
+            throw new Exception("DB 없음");
+
+        Debug.Log("Json 생성 시작");
+        // TODO : 로그 출력
+        var log = "Json 생성 결과\n";
+        for (int i = 0; i < _excelData.Tables.Count; i++)
+        {
+            var table = _excelData.Tables[i];
+            if (TryConvertExcelToJson(table, out var text) == true)
+            {
+                GenerateFile(_dbGeneratedPath, $"{table.TableName}.json", text, true);
+            }
+            else
+            {
+
+            }
+
+        }
+        Debug.Log(log);
+    }
+
+    private bool TryConvertExcelToJson(DataTable table, out string text)
     {
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         Type type = assemblies
@@ -187,6 +212,7 @@ public class SheetURLHelper : ScriptableObject
 
         var datas = new System.Object[table.Rows.Count - _zeroBaseDataStartedRow];
         var filedNames = table.Rows[_zeroBaseNameRow];
+        var isSucceed = true;
         for (int i = 0; i < datas.Length; i++)
         {
             var data = table.Rows[_zeroBaseDataStartedRow + i];
@@ -215,13 +241,13 @@ public class SheetURLHelper : ScriptableObject
             }
             catch (ArgumentNullException err)
             {
-                Debug.LogError($"{table.TableName} 클래스가 생성되지 않음\n\n {err.Message}");
-                return;
+                Debug.Log($"{table.TableName} 클래스가 생성되지 않음\n\n {err.Message}");
+                isSucceed = false;
+                break;
             }
         }
-
-        var text = JsonConvert.SerializeObject(datas, Formatting.Indented);
-        Debug.Log(text);
+        text = isSucceed == true ? JsonConvert.SerializeObject(datas, Formatting.Indented) : "";
+        return isSucceed;
     }
 
     private bool IsPassRow(DataTable table, int index)
@@ -229,11 +255,14 @@ public class SheetURLHelper : ScriptableObject
         return (table.Rows[_zeroBaseNameRow][index].ToString().Length > 0 && table.Rows[_zeroBaseNameRow][index].ToString()[0] == '#');
     }
 
-    private void GenerateFile(string path, string fileName, string text)
+    private void GenerateFile(string path, string fileName, string text, bool isOverwrite)
     {
         // TODO : Path가 무조건 Asset 내부에서만
         path = Path.Combine(path, fileName);
-        File.AppendAllText(path, text);
+        if (isOverwrite == true)
+            File.WriteAllText(path, text); // 덮어쓰기
+        else
+            File.AppendAllText(path, text); // 이어쓰기
     }
 
     private void PrintExcelData(System.Data.DataTable table)
