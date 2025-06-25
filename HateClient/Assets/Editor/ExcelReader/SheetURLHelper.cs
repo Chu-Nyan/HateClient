@@ -119,8 +119,8 @@ public class SheetURLHelper : ScriptableObject
         if (HasExcelData == false)
             throw new Exception("엑셀 데이터 없음");
 
-        Debug.Log("생성 시작");
-        var log = "클래스 생성 결과\n";
+        Debug.Log("스크립트 생성 시작");
+        var log = "스크립트 생성 결과\n";
         var tables = _excelData.Tables;
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         for (int i = 0; i < tables.Count; i++)
@@ -185,7 +185,6 @@ public class SheetURLHelper : ScriptableObject
             throw new Exception("DB 없음");
 
         Debug.Log("Json 생성 시작");
-        // TODO : 로그 출력
         var log = "Json 생성 결과\n";
         for (int i = 0; i < _excelData.Tables.Count; i++)
         {
@@ -194,11 +193,7 @@ public class SheetURLHelper : ScriptableObject
             {
                 GenerateFile(_dbGeneratedPath, $"{table.TableName}.json", text, true);
             }
-            else
-            {
-
-            }
-
+            log += text != default ? $"- {table.TableName} 생성 완료\n" : $"- {table.TableName} 생성 실패\n";
         }
         Debug.Log(log);
     }
