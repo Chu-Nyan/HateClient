@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8fa4bae8b5a8442a42a65f05260aa0, type: 3}
   m_Name: SheetURLHelper
   m_EditorClassIdentifier: 
+  _googleSheetID: 1hzh6sZHyNAznkKQVJcs0T0IyYANyY6ywekRyjp2LYJU
+  _dataNameRowNumber: 1
+  _dataTypeRowNumber: 2
+  _dataStartedRowNumber: 3
+  _classGeneratedPath: C:/Users/Nyan/Desktop/Chu/HateClient/HateClient/Assets
+  GenerateClassFile: 0
