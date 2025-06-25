@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,52 +12,100 @@ using UnityEngine.Networking;
 public class SheetURLHelper : ScriptableObject
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
-
-    [SerializeField, Header("구글 시트 ID")]
     private string _googleSheetID;
-    [SerializeField, Header("변수 이름 행 번호")]
     private int _dataNameRowNumber;
-    [SerializeField, Header("자료형 행 번호")]
     private int _dataTypeRowNumber;
-    [SerializeField, Header("데이터 시작 행 번호")]
     private int _dataStartedRowNumber;
-    [SerializeField, Header("클래스 생성 위치")]
-    private string _classGeneratedPath = Application.dataPath;
+    private int _zeroBaseNameRow;
+    private int _zeroBaseTypeRow;
+    private int _zeroBaseDataStartedRow;
 
-    private int DataNameRowNumber
+    private string _classGeneratedPath;
+    private string _dbGeneratedPath;
+    private bool _isAvoidDuplication;
+
+    private DataSet _excelData;
+    private DateTime _excelUpdateTime;
+
+    public string GoogleSheetID
     {
-        get => _dataNameRowNumber - 1;
+        get => _googleSheetID;
+        set => _googleSheetID = value;
     }
 
-    private int DataTypeRowNumber
+    public int DataNameRowNumber
     {
-        get => _dataTypeRowNumber - 1;
+        get => _dataNameRowNumber;
+        set 
+        { 
+            _zeroBaseNameRow = value - 1;
+            _dataNameRowNumber = value; 
+        }
     }
 
-    private int DataStartedRowNumber
+    public int DataTypeRowNumber
     {
-        get => _dataStartedRowNumber - 1;
+        get => _dataTypeRowNumber;
+        set
+        {
+            _zeroBaseTypeRow = value - 1;
+            _dataTypeRowNumber = value;
+        }
     }
 
-    [ContextMenu("Load")]
-    private async void Load()
+    public int DataStartedRowNumber
     {
-        await LoadData();
+        get => _dataStartedRowNumber;
+        set
+        {
+            _zeroBaseDataStartedRow = value - 1;
+            _dataStartedRowNumber = value;
+        }
     }
 
-    private async Task LoadData()
+    public string ClassGeneratedPath
     {
-        Debug.Log("데이터 요청 중...");
-        using var www = UnityWebRequest.Get(string.Format(_googleDownloadURL,_googleSheetID));
+        get => _classGeneratedPath;
+        set => _classGeneratedPath = value;
+    }
+    public string DBGeneratedPath
+    {
+        get => _dbGeneratedPath;
+        set => _dbGeneratedPath = value;
+    }
+
+    public bool IsAvoidDuplication
+    {
+        get => _isAvoidDuplication;
+        set => _isAvoidDuplication = value;
+    }
+
+    public bool HasExcelData
+    {
+        get => _excelData != null;
+    }
+
+    public DateTime ExcelUpdateTime
+    {
+        get => _excelUpdateTime;
+    }
+
+    public async Task LoadExcelFile()
+    {
+        Debug.Log("데이터 요청 중");
+        var www = UnityWebRequest.Get(string.Format(_googleDownloadURL, _googleSheetID));
         var operation = www.SendWebRequest();
 
         while (!operation.isDone)
-            await Task.Yield(); // 메인 스레드 유지
+            await Task.Yield();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
-            using var stream = new MemoryStream(www.downloadHandler.data);
-            ReadExcel(stream);
+            var stream = new MemoryStream(www.downloadHandler.data);
+            _excelData = ExcelReaderFactory.CreateReader(stream)
+                                           .AsDataSet();
+            _excelUpdateTime = DateTime.Now;
+            Debug.Log("요청 수락됨");
         }
         else
         {
@@ -64,20 +113,50 @@ public class SheetURLHelper : ScriptableObject
         }
     }
 
-    private void ReadExcel(MemoryStream data)
+    public void GenerateClass()
     {
-        using (var reader = ExcelReaderFactory.CreateReader(data))
-        {
-            var result = reader.AsDataSet();
+        if (HasExcelData == false)
+            throw new Exception("엑셀 데이터 없음");
 
-    private string GetClassScriptText(System.Data.DataTable table)
+        Debug.Log("생성 시작");
+        var log = "클래스 생성 결과\n";
+        var tables = _excelData.Tables;
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        for (int i = 0; i < tables.Count; i++)
+        {
+            var type = assemblies
+                .Select(a => a.GetType(tables[i].TableName))
+                .FirstOrDefault(t => t != null);
+
+            if (type == null || _isAvoidDuplication == false)
+            {
+                var text = GetClassScriptText(tables[i]);
+                GenerateFile(_classGeneratedPath, $"{tables[i].TableName}.cs", text);
+                if (_isAvoidDuplication == true)
+                {
+                    log += $"- {tables[i].TableName} 생성 완료\n";
+                }
+                else
+                {
+                    log += $"- {tables[i].TableName} 중복 생성\n";
+                }
+            }
+            else
+            {
+                log += $"- {tables[i].TableName} 중복 감지\n";
+            }
+        }
+
+        Debug.Log(log);
+    }
+
+    private string GetClassScriptText(DataTable table)
     {
         // 주석용 열 제거
         var exceptionColumns = new HashSet<int>();
         var sheet = table.Rows;
         for (int i = 0; i < table.Columns.Count; i++)
         {
-            var name = sheet[DataNameRowNumber][i].ToString();
             if (IsPassRow(table, i) == true)
             {
                 exceptionColumns.Add(i);
@@ -92,7 +171,7 @@ public class SheetURLHelper : ScriptableObject
             if (exceptionColumns.Contains(i) == true)
                 continue;
 
-            code += $"\t public {sheet[DataTypeRowNumber][i]} {sheet[DataNameRowNumber][i]};\n";
+            code += $"\t public {sheet[_zeroBaseTypeRow][i]} {sheet[_zeroBaseNameRow][i]};\n";
         }
         code += $"}}\n";
 
@@ -106,11 +185,11 @@ public class SheetURLHelper : ScriptableObject
             .Select(a => a.GetType(table.TableName))
             .FirstOrDefault(t => t != null);
 
-        var datas = new System.Object[table.Rows.Count - DataStartedRowNumber];
-        var filedNames = table.Rows[DataNameRowNumber];
+        var datas = new System.Object[table.Rows.Count - _zeroBaseDataStartedRow];
+        var filedNames = table.Rows[_zeroBaseNameRow];
         for (int i = 0; i < datas.Length; i++)
         {
-            var data = table.Rows[DataStartedRowNumber + i];
+            var data = table.Rows[_zeroBaseDataStartedRow + i];
             try
             {
                 var instance = Activator.CreateInstance(type);
@@ -145,10 +224,16 @@ public class SheetURLHelper : ScriptableObject
         Debug.Log(text);
     }
 
-    private bool IsPassRow(System.Data.DataTable table, int index)
+    private bool IsPassRow(DataTable table, int index)
     {
-        return (table.Rows[DataNameRowNumber][index].ToString().Length > 0 && table.Rows[DataNameRowNumber][index].ToString()[0] == '#');
+        return (table.Rows[_zeroBaseNameRow][index].ToString().Length > 0 && table.Rows[_zeroBaseNameRow][index].ToString()[0] == '#');
     }
+
+    private void GenerateFile(string path, string fileName, string text)
+    {
+        // TODO : Path가 무조건 Asset 내부에서만
+        path = Path.Combine(path, fileName);
+        File.AppendAllText(path, text);
     }
 
     private void PrintExcelData(System.Data.DataTable table)
