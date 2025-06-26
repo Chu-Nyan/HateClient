@@ -34,6 +34,7 @@ public class SheetURLHelperEditor : Editor
     {
         EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
 
+        helper.IsClassAvoidDuplication = EditorGUILayout.Toggle("클래스 중복 방지", helper.IsClassAvoidDuplication);
         EditorGUILayout.BeginHorizontal();
         helper.ClassGeneratedPath = EditorGUILayout.TextField("클래스 생성 경로", helper.ClassGeneratedPath);
         if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
@@ -52,7 +53,15 @@ public class SheetURLHelperEditor : Editor
         }
         EditorGUILayout.EndHorizontal();
 
-        helper.IsClassAvoidDuplication = EditorGUILayout.Toggle("클래스 중복 방지", helper.IsClassAvoidDuplication);
+        EditorGUILayout.BeginHorizontal();
+        helper.EnumGeneratedPath = EditorGUILayout.TextField("Enum 생성 경로", helper.EnumGeneratedPath);
+        if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
+        {
+            var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, "");
+            helper.EnumGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
+        }
+        EditorGUILayout.EndHorizontal();
+
     }
 
     private void DrawControlFuntion(SheetURLHelper helper)
@@ -73,6 +82,12 @@ public class SheetURLHelperEditor : Editor
         if (GUILayout.Button("DB를 Json으로 생성", GUILayout.MaxWidth(200)))
         {
             helper.GenerateDBJson();
+            AssetDatabase.Refresh();
+        }
+
+        if (GUILayout.Button("Enum 스크립트 생성", GUILayout.MaxWidth(200)))
+        {
+            helper.GenerateEnumScript();
             AssetDatabase.Refresh();
         }
     }

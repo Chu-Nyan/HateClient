@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ExcelDataReader;
 using Newtonsoft.Json;
@@ -12,6 +13,11 @@ using UnityEngine.Networking;
 public class SheetURLHelper : ScriptableObject
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
+    private static readonly HashSet<string> _uniqueSheetName = new()
+    {
+        "Enum"
+    };
+
     private string _googleSheetID;
     private int _dataNameRowNumber;
     private int _dataTypeRowNumber;
@@ -20,9 +26,16 @@ public class SheetURLHelper : ScriptableObject
     private int _zeroBaseTypeRow;
     private int _zeroBaseDataStartedRow;
 
+    private int _enumDataStartedRow = 2;
+    private int _enumTypeColumn = 1 - 1;
+    private int _enumKeyColumn = 2 - 1;
+    private int _enumValueColumn = 3 - 1;
+    private int _enumCommentsColumn = 4 - 1;
+
     private string _classGeneratedPath;
     private bool _isClassAvoidDuplication;
     private string _dbGeneratedPath;
+    private string _enumGeneratedPath;
 
     private DataSet _excelData;
     private DateTime _excelUpdateTime;
@@ -75,6 +88,12 @@ public class SheetURLHelper : ScriptableObject
         set => _dbGeneratedPath = value;
     }
 
+    public string EnumGeneratedPath
+    {
+        get => _enumGeneratedPath;
+        set => _enumGeneratedPath = value;
+    }
+
     public bool IsClassAvoidDuplication
     {
         get => _isClassAvoidDuplication;
@@ -125,6 +144,9 @@ public class SheetURLHelper : ScriptableObject
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         for (int i = 0; i < tables.Count; i++)
         {
+            if (_uniqueSheetName.Contains(tables[i].TableName) == true)
+                continue;
+
             var type = assemblies
                 .Select(a => a.GetType(tables[i].TableName))
                 .FirstOrDefault(t => t != null);
@@ -188,6 +210,9 @@ public class SheetURLHelper : ScriptableObject
         var log = "Json 생성 결과\n";
         for (int i = 0; i < _excelData.Tables.Count; i++)
         {
+            if (_uniqueSheetName.Contains(_excelData.Tables[i].TableName) == true)
+                continue;
+
             var table = _excelData.Tables[i];
             if (TryConvertExcelToJson(table, out var text) == true)
             {
@@ -243,6 +268,58 @@ public class SheetURLHelper : ScriptableObject
         }
         text = isSucceed == true ? JsonConvert.SerializeObject(datas, Formatting.Indented) : "";
         return isSucceed;
+    }
+
+    public void GenerateEnumScript()
+    {
+        for (int i = 0; i < _excelData.Tables.Count; i++)
+        {
+            if (_excelData.Tables[i].TableName != "Enum")
+                continue;
+
+            var list = GetEnumScriptText(_excelData.Tables[i].Rows);
+            var sb = new StringBuilder();
+
+            // TODO : 스크립트를 하나로 통일 or x줄 이상 분리 등등 분기 만들기
+            for (int j = 0; j < list.Count; j++)
+            {
+                if (j + 1 < list.Count)
+                    sb.AppendLine(list[j]);
+                else
+                    sb.Append(list[j]);
+            }
+
+            var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
+            GenerateFile(_enumGeneratedPath, "Enum.cs", normalizedText, true);
+        }
+    }
+
+    private List<string> GetEnumScriptText(DataRowCollection rows)
+    {
+        var sb = new StringBuilder();
+        var arr = new List<string>(8);
+        var template = "public enum {0}\n{{\n{1}}}\n";
+
+        for (int i = _enumDataStartedRow - 1; i < rows.Count; i++)
+        {
+            var typeText = rows[i][_enumTypeColumn].ToString();
+
+            sb.Clear();
+            while (i < rows.Count && rows[i][_enumTypeColumn].ToString() == typeText)
+            {
+                // TODO : 매 키 마다 밸류는 적을 것이냐, 분기에만 적을 것이냐
+                sb.Append($"\t{rows[i][_enumKeyColumn]} = {rows[i][_enumValueColumn]},");
+                if (rows[i][_enumCommentsColumn].ToString() != string.Empty)
+                {
+                    sb.Append($" // {rows[i][_enumCommentsColumn]}");
+                }
+                sb.AppendLine();
+                i++;
+            }
+            arr.Add(String.Format(template, typeText, sb.ToString()));
+        }
+
+        return arr;
     }
 
     private bool IsPassRow(DataTable table, int index)
