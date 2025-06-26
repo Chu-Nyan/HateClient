@@ -18,87 +18,24 @@ public class SheetURLHelper : ScriptableObject
         "Enum"
     };
 
-    private string _googleSheetID;
-    private int _dataNameRowNumber;
-    private int _dataTypeRowNumber;
-    private int _dataStartedRowNumber;
-    private int _zeroBaseNameRow;
-    private int _zeroBaseTypeRow;
-    private int _zeroBaseDataStartedRow;
+    public string GoogleSheetID;
+    public int DataNameRow = 0;
+    public int DataTypeRow = 1;
+    public int DataStartedRow = 2;
 
-    private int _enumDataStartedRow = 2;
-    private int _enumTypeColumn = 1 - 1;
-    private int _enumKeyColumn = 2 - 1;
-    private int _enumValueColumn = 3 - 1;
-    private int _enumCommentsColumn = 4 - 1;
+    public int EnumDataStartedRow = 2;
+    public int EnumTypeColumn = 0;
+    public int EnumKeyColumn = 1;
+    public int EnumValueColumn = 2;
+    public int EnumCommentsColumn = 3;
 
-    private string _classGeneratedPath;
-    private bool _isClassAvoidDuplication;
-    private string _dbGeneratedPath;
-    private string _enumGeneratedPath;
+    public bool IsClassAvoidDuplication = true;
+    public string ClassGeneratedPath = Application.dataPath;
+    public string DBGeneratedPath = Application.dataPath;
+    public string EnumGeneratedPath = Application.dataPath;
 
     private DataSet _excelData;
     private DateTime _excelUpdateTime;
-
-    public string GoogleSheetID
-    {
-        get => _googleSheetID;
-        set => _googleSheetID = value;
-    }
-
-    public int DataNameRowNumber
-    {
-        get => _dataNameRowNumber;
-        set
-        {
-            _zeroBaseNameRow = value - 1;
-            _dataNameRowNumber = value;
-        }
-    }
-
-    public int DataTypeRowNumber
-    {
-        get => _dataTypeRowNumber;
-        set
-        {
-            _zeroBaseTypeRow = value - 1;
-            _dataTypeRowNumber = value;
-        }
-    }
-
-    public int DataStartedRowNumber
-    {
-        get => _dataStartedRowNumber;
-        set
-        {
-            _zeroBaseDataStartedRow = value - 1;
-            _dataStartedRowNumber = value;
-        }
-    }
-
-    public string ClassGeneratedPath
-    {
-        get => _classGeneratedPath;
-        set => _classGeneratedPath = value;
-    }
-
-    public string DBGeneratedPath
-    {
-        get => _dbGeneratedPath;
-        set => _dbGeneratedPath = value;
-    }
-
-    public string EnumGeneratedPath
-    {
-        get => _enumGeneratedPath;
-        set => _enumGeneratedPath = value;
-    }
-
-    public bool IsClassAvoidDuplication
-    {
-        get => _isClassAvoidDuplication;
-        set => _isClassAvoidDuplication = value;
-    }
 
     public bool HasExcelData
     {
@@ -113,7 +50,7 @@ public class SheetURLHelper : ScriptableObject
     public async Task LoadExcelFile()
     {
         Debug.Log("데이터 요청 중");
-        var www = UnityWebRequest.Get(string.Format(_googleDownloadURL, _googleSheetID));
+        var www = UnityWebRequest.Get(string.Format(_googleDownloadURL, GoogleSheetID));
         var operation = www.SendWebRequest();
 
         while (!operation.isDone)
@@ -151,11 +88,11 @@ public class SheetURLHelper : ScriptableObject
                 .Select(a => a.GetType(tables[i].TableName))
                 .FirstOrDefault(t => t != null);
 
-            if (type == null || _isClassAvoidDuplication == false)
+            if (type == null || IsClassAvoidDuplication == false)
             {
                 var text = GetClassScriptText(tables[i]);
-                GenerateFile(_classGeneratedPath, $"{tables[i].TableName}.cs", text, true);
-                if (_isClassAvoidDuplication == true)
+                GenerateFile(ClassGeneratedPath, $"{tables[i].TableName}.cs", text, true);
+                if (IsClassAvoidDuplication == true)
                 {
                     log += $"- {tables[i].TableName} 생성 완료\n";
                 }
@@ -194,7 +131,7 @@ public class SheetURLHelper : ScriptableObject
             if (exceptionColumns.Contains(i) == true)
                 continue;
 
-            code += $"\t public {sheet[_zeroBaseTypeRow][i]} {sheet[_zeroBaseNameRow][i]};\n";
+            code += $"\t public {sheet[DataTypeRow][i]} {sheet[DataNameRow][i]};\n";
         }
         code += $"}}\n";
 
@@ -216,7 +153,7 @@ public class SheetURLHelper : ScriptableObject
             var table = _excelData.Tables[i];
             if (TryConvertExcelToJson(table, out var text) == true)
             {
-                GenerateFile(_dbGeneratedPath, $"{table.TableName}.json", text, true);
+                GenerateFile(DBGeneratedPath, $"{table.TableName}.json", text, true);
             }
             log += text != default ? $"- {table.TableName} 생성 완료\n" : $"- {table.TableName} 생성 실패\n";
         }
@@ -230,12 +167,12 @@ public class SheetURLHelper : ScriptableObject
             .Select(a => a.GetType(table.TableName))
             .FirstOrDefault(t => t != null);
 
-        var datas = new System.Object[table.Rows.Count - _zeroBaseDataStartedRow];
-        var filedNames = table.Rows[_zeroBaseNameRow];
+        var datas = new System.Object[table.Rows.Count - DataStartedRow];
+        var filedNames = table.Rows[DataNameRow];
         var isSucceed = true;
         for (int i = 0; i < datas.Length; i++)
         {
-            var data = table.Rows[_zeroBaseDataStartedRow + i];
+            var data = table.Rows[DataStartedRow + i];
             try
             {
                 var instance = Activator.CreateInstance(type);
@@ -290,7 +227,7 @@ public class SheetURLHelper : ScriptableObject
             }
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-            GenerateFile(_enumGeneratedPath, "Enum.cs", normalizedText, true);
+            GenerateFile(EnumGeneratedPath, "Enum.cs", normalizedText, true);
         }
     }
 
@@ -300,18 +237,18 @@ public class SheetURLHelper : ScriptableObject
         var arr = new List<string>(8);
         var template = "public enum {0}\n{{\n{1}}}\n";
 
-        for (int i = _enumDataStartedRow - 1; i < rows.Count; i++)
+        for (int i = EnumDataStartedRow - 1; i < rows.Count; i++)
         {
-            var typeText = rows[i][_enumTypeColumn].ToString();
+            var typeText = rows[i][EnumTypeColumn].ToString();
 
             sb.Clear();
-            while (i < rows.Count && rows[i][_enumTypeColumn].ToString() == typeText)
+            while (i < rows.Count && rows[i][EnumTypeColumn].ToString() == typeText)
             {
                 // TODO : 매 키 마다 밸류는 적을 것이냐, 분기에만 적을 것이냐
-                sb.Append($"\t{rows[i][_enumKeyColumn]} = {rows[i][_enumValueColumn]},");
-                if (rows[i][_enumCommentsColumn].ToString() != string.Empty)
+                sb.Append($"\t{rows[i][EnumKeyColumn]} = {rows[i][EnumValueColumn]},");
+                if (rows[i][EnumCommentsColumn].ToString() != string.Empty)
                 {
-                    sb.Append($" // {rows[i][_enumCommentsColumn]}");
+                    sb.Append($" // {rows[i][EnumCommentsColumn]}");
                 }
                 sb.AppendLine();
                 i++;
@@ -324,7 +261,7 @@ public class SheetURLHelper : ScriptableObject
 
     private bool IsPassRow(DataTable table, int index)
     {
-        return (table.Rows[_zeroBaseNameRow][index].ToString().Length > 0 && table.Rows[_zeroBaseNameRow][index].ToString()[0] == '#');
+        return (table.Rows[DataNameRow][index].ToString().Length > 0 && table.Rows[DataNameRow][index].ToString()[0] == '#');
     }
 
     private void GenerateFile(string path, string fileName, string text, bool isOverwrite)
