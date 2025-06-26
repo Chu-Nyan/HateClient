@@ -247,21 +247,22 @@ public class SheetURLHelper : ScriptableObject
         var arr = new List<string>(8);
         var template = "public enum {0}\n{{\n{1}}}\n";
 
-        for (int i = EnumDataStartedRow - 1; i < rows.Count; i++)
+        var index = EnumDataStartedRow;
+        while (index < rows.Count)
         {
-            var typeText = rows[i][EnumTypeColumn].ToString();
+            var typeText = rows[index][EnumTypeColumn].ToString();
 
             sb.Clear();
-            while (i < rows.Count && rows[i][EnumTypeColumn].ToString() == typeText)
+            while (index < rows.Count && rows[index][EnumTypeColumn].ToString() == typeText)
             {
                 // TODO : 매 키 마다 밸류는 적을 것이냐, 분기에만 적을 것이냐
-                sb.Append($"\t{rows[i][EnumKeyColumn]} = {rows[i][EnumValueColumn]},");
-                if (rows[i][EnumCommentsColumn].ToString() != string.Empty)
+                sb.Append($"\t{rows[index][EnumKeyColumn]} = {rows[index][EnumValueColumn]},");
+                if (rows[index][EnumCommentsColumn].ToString() != string.Empty)
                 {
-                    sb.Append($" // {rows[i][EnumCommentsColumn]}");
+                    sb.Append($" // {rows[index][EnumCommentsColumn]}");
                 }
                 sb.AppendLine();
-                i++;
+                index++;
             }
             arr.Add(String.Format(template, typeText, sb.ToString()));
         }
