@@ -18,6 +18,8 @@ public class SheetURLHelperEditor : Editor
         DrawEnumSettingUI(helper);
         GUILayout.Space(10);
         DrawGenerateClassTextUI(helper);
+        GUILayout.Space(10);
+
 
         if (GUI.changed)
             EditorUtility.SetDirty(helper);
@@ -40,6 +42,8 @@ public class SheetURLHelperEditor : Editor
         }
 
         GUILayout.Space(5);
+        if (GUILayout.Button("All-In-One 생성"))
+            helper.SetupAllInOneAsync();
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("엑셀 파일 요청", GUILayout.MaxWidth(200)))
             LoadExcel(helper);
@@ -131,7 +135,6 @@ public class SheetURLHelperEditor : Editor
             EditorGUILayout.EndHorizontal();
         }
     }
-
 
     private async void LoadExcel(SheetURLHelper helper)
     {

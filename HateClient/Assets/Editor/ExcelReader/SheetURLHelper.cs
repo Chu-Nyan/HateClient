@@ -209,6 +209,7 @@ public class SheetURLHelper : ScriptableObject
 
     public void GenerateEnumScript()
     {
+        Debug.Log("Enum 스크립트 생성 시작");
         for (int i = 0; i < _excelData.Tables.Count; i++)
         {
             if (_excelData.Tables[i].TableName != "Enum")
@@ -229,6 +230,15 @@ public class SheetURLHelper : ScriptableObject
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
             GenerateFile(EnumGeneratedPath, "Enum.cs", normalizedText, true);
         }
+        Debug.Log("Enum 스크립트 생성 완료");
+    }
+
+    public async void SetupAllInOneAsync()
+    {
+        await LoadExcelFile();
+        GenerateEnumScript();
+        GenerateClass();
+        GenerateDBJson();
     }
 
     private List<string> GetEnumScriptText(DataRowCollection rows)
