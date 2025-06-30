@@ -16,7 +16,7 @@ MonoBehaviour:
   DataNameRow: 0
   DataTypeRow: 1
   DataStartedRow: 2
-  EnumDataStartedRow: 2
+  EnumDataStartedRow: 1
   EnumTypeColumn: 0
   EnumKeyColumn: 1
   EnumValueColumn: 2

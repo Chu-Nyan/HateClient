@@ -13,10 +13,8 @@ using UnityEngine.Networking;
 public class SheetURLHelper : ScriptableObject
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
-    private static readonly HashSet<string> _uniqueSheetName = new()
-    {
-        "Enum"
-    };
+    private const char _ignoreSymbol = '#';
+    private const string _sheetOption = "SheetOption";
 
     public string GoogleSheetID;
     public int DataNameRow = 0;
@@ -34,12 +32,12 @@ public class SheetURLHelper : ScriptableObject
     public string DBGeneratedPath = Application.dataPath;
     public string EnumGeneratedPath = Application.dataPath;
 
-    private DataSet _excelData;
+    private Dictionary<string, SheetData> _sheetDatas;
     private DateTime _excelUpdateTime;
 
     public bool HasExcelData
     {
-        get => _excelData != null;
+        get => _sheetDatas != null;
     }
 
     public DateTime ExcelUpdateTime
@@ -56,17 +54,39 @@ public class SheetURLHelper : ScriptableObject
         while (!operation.isDone)
             await Task.Yield();
 
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            var stream = new MemoryStream(www.downloadHandler.data);
-            _excelData = ExcelReaderFactory.CreateReader(stream)
-                                           .AsDataSet();
-            _excelUpdateTime = DateTime.Now;
-            Debug.Log("요청 수락됨");
-        }
+        if (www.result != UnityWebRequest.Result.Success)
+            Debug.LogError("실패: " + www.error);
         else
         {
-            Debug.LogError("실패: " + www.error);
+            var stream = new MemoryStream(www.downloadHandler.data);
+            SetExcelData(stream);
+            Debug.Log("요청 수락됨");
+        }
+    }
+
+    private void SetExcelData(Stream stream)
+    {
+        var dataSet = ExcelReaderFactory.CreateReader(stream)
+                                           .AsDataSet();
+        _excelUpdateTime = DateTime.Now;
+        _sheetDatas = new();
+        var option = dataSet.Tables[_sheetOption];
+
+        for (int x = 1; x < option.Rows.Count; x++)
+        {
+            var flag = 0;
+            for (int y = 1; y < option.Columns.Count; y++)
+            {
+                if (Enum.TryParse<ExcelReadConvertType>(option.Rows[x][y].ToString(), out var result) == false)
+                    continue;
+
+                flag += (int)result;
+            }
+
+            var name = option.Rows[x][0].ToString();
+
+            if (_sheetDatas.TryAdd(option.Rows[x][0].ToString(), new(dataSet.Tables[name], flag)) == false)
+                Debug.LogError($"{name}가 이미 존재함");
         }
     }
 
@@ -77,33 +97,32 @@ public class SheetURLHelper : ScriptableObject
 
         Debug.Log("스크립트 생성 시작");
         var log = "스크립트 생성 결과\n";
-        var tables = _excelData.Tables;
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        for (int i = 0; i < tables.Count; i++)
+        foreach (var item in _sheetDatas)
         {
-            if (_uniqueSheetName.Contains(tables[i].TableName) == true)
+            var sheet = item.Value;
+            var table = sheet.Table;
+
+            if (sheet.HasFlag(ExcelReadConvertType.Data) == false)
                 continue;
 
             var type = assemblies
-                .Select(a => a.GetType(tables[i].TableName))
+                .Select(a => a.GetType(table.TableName))
                 .FirstOrDefault(t => t != null);
 
             if (type == null || IsClassAvoidDuplication == false)
             {
-                var text = GetClassScriptText(tables[i]);
-                GenerateFile(ClassGeneratedPath, $"{tables[i].TableName}.cs", text, true);
+                var text = GetClassScriptText(table);
+                GenerateFile(ClassGeneratedPath, $"{table.TableName}.cs", text, true);
+
                 if (IsClassAvoidDuplication == true)
-                {
-                    log += $"- {tables[i].TableName} 생성 완료\n";
-                }
+                    log += $"- {table.TableName} 생성 완료\n";
                 else
-                {
-                    log += $"- {tables[i].TableName} 중복 생성\n";
-                }
+                    log += $"- {table.TableName} 중복 생성\n";
             }
             else
             {
-                log += $"- {tables[i].TableName} 중복 감지\n";
+                log += $"- {table.TableName} 중복 감지\n";
             }
         }
 
@@ -117,10 +136,10 @@ public class SheetURLHelper : ScriptableObject
         var sheet = table.Rows;
         for (int i = 0; i < table.Columns.Count; i++)
         {
-            if (IsPassRow(table, i) == true)
-            {
-                exceptionColumns.Add(i);
-            }
+            if (HasIgnoreSymbol(table.Rows[DataNameRow][i].ToString()) == false)
+                continue;
+
+            exceptionColumns.Add(i);
         }
 
         // 스크립트 작성
@@ -145,18 +164,20 @@ public class SheetURLHelper : ScriptableObject
 
         Debug.Log("Json 생성 시작");
         var log = "Json 생성 결과\n";
-        for (int i = 0; i < _excelData.Tables.Count; i++)
+
+        foreach (var item in _sheetDatas)
         {
-            if (_uniqueSheetName.Contains(_excelData.Tables[i].TableName) == true)
+            var sheet = item.Value;
+            var table = sheet.Table;
+            if (sheet.HasFlag(ExcelReadConvertType.Data) == false)
                 continue;
 
-            var table = _excelData.Tables[i];
             if (TryConvertExcelToJson(table, out var text) == true)
-            {
                 GenerateFile(DBGeneratedPath, $"{table.TableName}.json", text, true);
-            }
+
             log += text != default ? $"- {table.TableName} 생성 완료\n" : $"- {table.TableName} 생성 실패\n";
         }
+
         Debug.Log(log);
     }
 
@@ -178,7 +199,7 @@ public class SheetURLHelper : ScriptableObject
                 var instance = Activator.CreateInstance(type);
                 for (int j = 0; j < table.Columns.Count; j++)
                 {
-                    if (IsPassRow(table, j) == true)
+                    if (HasIgnoreSymbol(table.Rows[DataNameRow][j].ToString()) == true)
                         continue;
 
                     var fieldInfo = type.GetField(filedNames[j].ToString());
@@ -210,15 +231,16 @@ public class SheetURLHelper : ScriptableObject
     public void GenerateEnumScript()
     {
         Debug.Log("Enum 스크립트 생성 시작");
-        for (int i = 0; i < _excelData.Tables.Count; i++)
+
+        var sb = new StringBuilder();
+        foreach (var item in _sheetDatas)
         {
-            if (_excelData.Tables[i].TableName != "Enum")
+            var sheet = item.Value;
+
+            if (sheet.HasFlag(ExcelReadConvertType.Enum) == false)
                 continue;
-
-            var list = GetEnumScriptText(_excelData.Tables[i].Rows);
-            var sb = new StringBuilder();
-
-            // TODO : 스크립트를 하나로 통일 or x줄 이상 분리 등등 분기 만들기
+            var list = GetEnumScriptText(sheet.Table.Rows);
+            sb.Clear();
             for (int j = 0; j < list.Count; j++)
             {
                 if (j + 1 < list.Count)
@@ -228,8 +250,9 @@ public class SheetURLHelper : ScriptableObject
             }
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-            GenerateFile(EnumGeneratedPath, "Enum.cs", normalizedText, true);
+            GenerateFile(EnumGeneratedPath, $"{item.Key}.cs", normalizedText, true);
         }
+
         Debug.Log("Enum 스크립트 생성 완료");
     }
 
@@ -270,11 +293,7 @@ public class SheetURLHelper : ScriptableObject
         return arr;
     }
 
-    private bool IsPassRow(DataTable table, int index)
-    {
-        return (table.Rows[DataNameRow][index].ToString().Length > 0 && table.Rows[DataNameRow][index].ToString()[0] == '#');
-    }
-
+    #region 유틸리티
     private void GenerateFile(string path, string fileName, string text, bool isOverwrite)
     {
         // TODO : Path가 무조건 Asset 내부에서만
@@ -285,6 +304,13 @@ public class SheetURLHelper : ScriptableObject
             File.AppendAllText(path, text); // 이어쓰기
     }
 
+    private bool HasIgnoreSymbol(string text)
+    {
+        return text.Length == 0 || text[0] == _ignoreSymbol;
+    }
+    #endregion
+
+    #region 디버그
     private void PrintExcelData(System.Data.DataTable table)
     {
         string rowData = "";
@@ -306,4 +332,5 @@ public class SheetURLHelper : ScriptableObject
             PrintExcelData(tables[i]);
         }
     }
+    #endregion
 }
