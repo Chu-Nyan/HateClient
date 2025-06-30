@@ -20,7 +20,6 @@ public class SheetURLHelperEditor : Editor
         DrawGenerateClassTextUI(helper);
         GUILayout.Space(10);
 
-
         if (GUI.changed)
             EditorUtility.SetDirty(helper);
     }
@@ -82,11 +81,10 @@ public class SheetURLHelperEditor : Editor
         GUILayout.Space(5);
         if (GUILayout.Button("Enum 스크립트 생성"))
         {
-            helper.GenerateEnumScript();
+            GenerateEnumScript(helper);
             AssetDatabase.Refresh();
         }
     }
-
 
     private void DrawGenerateClassTextUI(SheetURLHelper helper)
     {
@@ -124,12 +122,12 @@ public class SheetURLHelperEditor : Editor
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("데이터 스크립트 생성"))
             {
-                helper.GenerateClass();
+                GenerateClass(helper);
                 AssetDatabase.Refresh();
             }
             if (GUILayout.Button("DB를 Json으로 생성"))
             {
-                helper.GenerateDBJson();
+                GenerateDBJson(helper);
                 AssetDatabase.Refresh();
             }
             EditorGUILayout.EndHorizontal();
@@ -139,5 +137,20 @@ public class SheetURLHelperEditor : Editor
     private async void LoadExcel(SheetURLHelper helper)
     {
         await helper.LoadExcelFile();
+    }
+
+    private async void GenerateEnumScript(SheetURLHelper helper)
+    {
+        await helper.GenerateEnumScript();
+    }
+
+    private async void GenerateClass(SheetURLHelper helper)
+    {
+        await helper.GenerateClass();
+    }
+
+    private async void GenerateDBJson(SheetURLHelper helper)
+    {
+        await helper.GenerateDBJson();
     }
 }

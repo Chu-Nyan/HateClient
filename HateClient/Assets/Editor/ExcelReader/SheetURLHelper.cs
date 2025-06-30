@@ -90,7 +90,38 @@ public class SheetURLHelper : ScriptableObject
         }
     }
 
-    public void GenerateClass()
+    public async Task GenerateEnumScript()
+    {
+        Debug.Log("Enum 스크립트 생성 시작");
+
+        var sb = new StringBuilder();
+        foreach (var item in _sheetDatas)
+        {
+            var sheet = item.Value;
+
+            if (sheet.HasFlag(ExcelReadConvertType.Enum) == false)
+                continue;
+
+            var list = GetEnumScriptText(sheet.Table.Rows);
+            sb.Clear();
+            for (int j = 0; j < list.Count; j++)
+            {
+                if (j + 1 < list.Count)
+                    sb.AppendLine(list[j]);
+                else
+                    sb.Append(list[j]);
+            }
+
+            var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
+            GenerateFile(EnumGeneratedPath, $"{item.Key}.cs", normalizedText, true);
+            await Task.Yield();
+        }
+
+        Debug.Log("Enum 스크립트 생성 완료");
+    }
+
+
+    public async Task GenerateClass()
     {
         if (HasExcelData == false)
             throw new Exception("엑셀 데이터 없음");
@@ -124,6 +155,8 @@ public class SheetURLHelper : ScriptableObject
             {
                 log += $"- {table.TableName} 중복 감지\n";
             }
+
+            await Task.Yield();
         }
 
         Debug.Log(log);
@@ -157,7 +190,7 @@ public class SheetURLHelper : ScriptableObject
         return code;
     }
 
-    public void GenerateDBJson()
+    public async Task GenerateDBJson()
     {
         if (HasExcelData == false)
             throw new Exception("DB 없음");
@@ -176,6 +209,8 @@ public class SheetURLHelper : ScriptableObject
                 GenerateFile(DBGeneratedPath, $"{table.TableName}.json", text, true);
 
             log += text != default ? $"- {table.TableName} 생성 완료\n" : $"- {table.TableName} 생성 실패\n";
+
+            await Task.Yield();
         }
 
         Debug.Log(log);
@@ -228,40 +263,12 @@ public class SheetURLHelper : ScriptableObject
         return isSucceed;
     }
 
-    public void GenerateEnumScript()
-    {
-        Debug.Log("Enum 스크립트 생성 시작");
-
-        var sb = new StringBuilder();
-        foreach (var item in _sheetDatas)
-        {
-            var sheet = item.Value;
-
-            if (sheet.HasFlag(ExcelReadConvertType.Enum) == false)
-                continue;
-            var list = GetEnumScriptText(sheet.Table.Rows);
-            sb.Clear();
-            for (int j = 0; j < list.Count; j++)
-            {
-                if (j + 1 < list.Count)
-                    sb.AppendLine(list[j]);
-                else
-                    sb.Append(list[j]);
-            }
-
-            var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-            GenerateFile(EnumGeneratedPath, $"{item.Key}.cs", normalizedText, true);
-        }
-
-        Debug.Log("Enum 스크립트 생성 완료");
-    }
-
     public async void SetupAllInOneAsync()
     {
         await LoadExcelFile();
-        GenerateEnumScript();
-        GenerateClass();
-        GenerateDBJson();
+        await GenerateEnumScript();
+        await GenerateClass();
+        await GenerateDBJson();
     }
 
     private List<string> GetEnumScriptText(DataRowCollection rows)
