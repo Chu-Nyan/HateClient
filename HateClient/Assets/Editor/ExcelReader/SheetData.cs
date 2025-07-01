@@ -13,6 +13,6 @@ public class SheetData
 
     public bool HasFlag(ExcelReadConvertType type)
     {
-        return (Options | (int)type) == (int)type;
+        return (Options & (int)type) == (int)type;
     }
 }
