@@ -4,6 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(SheetURLHelper))]
 public class SheetURLHelperEditor : Editor
 {
+    private bool _isCommonSettingFoldedOut = false;
     private bool _isSheetSettingFoldedOut = false;
     private bool _isEnumSettingFoldedOut = false;
     private bool _isDataClassSettingFoldedOut = false;
@@ -12,7 +13,8 @@ public class SheetURLHelperEditor : Editor
     public override void OnInspectorGUI()
     {
         var helper = (SheetURLHelper)target;
-
+        DrawCommonSettingUI(helper);
+        GUILayout.Space(10);
         DrawSheetSettingUI(helper);
         GUILayout.Space(10);
         DrawEnumSettingUI(helper);
@@ -48,6 +50,24 @@ public class SheetURLHelperEditor : Editor
             LoadExcel(helper);
         EditorGUILayout.LabelField(helper.HasExcelData == true ? $"업데이트 시간 : {helper.ExcelUpdateTime}" : $"데이터 없음");
         EditorGUILayout.EndHorizontal();
+    }
+
+    private void DrawCommonSettingUI(SheetURLHelper helper)
+    {
+        EditorGUILayout.LabelField("공통 설정", EditorStyles.boldLabel);
+        _isCommonSettingFoldedOut = EditorGUILayout.Foldout(_isCommonSettingFoldedOut, _foldoutName);
+        if (_isCommonSettingFoldedOut == true)
+        {
+            EditorGUILayout.BeginHorizontal();
+            helper.EditorGeneratedPath = EditorGUILayout.TextField("생성 경로", helper.EditorGeneratedPath);
+            if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
+            {
+                var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.EditorGeneratedPath);
+                helper.EditorGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
+            }
+            EditorGUILayout.EndHorizontal();
+
+        }
     }
 
     private void DrawEnumSettingUI(SheetURLHelper helper)
@@ -89,7 +109,7 @@ public class SheetURLHelperEditor : Editor
     private void DrawGenerateClassTextUI(SheetURLHelper helper)
     {
         EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
-        
+
         EditorGUILayout.BeginHorizontal();
         helper.ClassGeneratedPath = EditorGUILayout.TextField("클래스 생성 경로", helper.ClassGeneratedPath);
         if (GUILayout.Button("...", GUILayout.MaxWidth(30)))

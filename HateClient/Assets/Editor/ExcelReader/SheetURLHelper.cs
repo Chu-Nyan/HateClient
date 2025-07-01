@@ -31,6 +31,7 @@ public class SheetURLHelper : ScriptableObject
     public string ClassGeneratedPath = Application.dataPath;
     public string DBGeneratedPath = Application.dataPath;
     public string EnumGeneratedPath = Application.dataPath;
+    public string EditorGeneratedPath = Application.dataPath;
 
     private Dictionary<string, SheetData> _sheetDatas;
     private DateTime _excelUpdateTime;
@@ -113,7 +114,9 @@ public class SheetURLHelper : ScriptableObject
             }
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-            GenerateFile(EnumGeneratedPath, $"{item.Key}.cs", normalizedText, true);
+
+            var path = sheet.HasFlag(ExcelReadConvertType.EditorOnly) == false ? EnumGeneratedPath : EditorGeneratedPath;
+            GenerateFile(path, $"{item.Key}.cs", normalizedText, true);
             await Task.Yield();
         }
 
@@ -144,7 +147,8 @@ public class SheetURLHelper : ScriptableObject
             if (type == null || IsClassAvoidDuplication == false)
             {
                 var text = GetClassScriptText(table);
-                GenerateFile(ClassGeneratedPath, $"{table.TableName}.cs", text, true);
+                var path = sheet.HasFlag(ExcelReadConvertType.EditorOnly) == false ? ClassGeneratedPath : EditorGeneratedPath;
+                GenerateFile(path, $"{table.TableName}.cs", text, true);
 
                 if (IsClassAvoidDuplication == true)
                     log += $"- {table.TableName} 생성 완료\n";
@@ -206,7 +210,10 @@ public class SheetURLHelper : ScriptableObject
                 continue;
 
             if (TryConvertExcelToJson(table, out var text) == true)
-                GenerateFile(DBGeneratedPath, $"{table.TableName}.json", text, true);
+            {
+                var path = sheet.HasFlag(ExcelReadConvertType.EditorOnly) == false ? DBGeneratedPath : EditorGeneratedPath;
+                GenerateFile(path, $"{table.TableName}.json", text, true);
+            }
 
             log += text != default ? $"- {table.TableName} 생성 완료\n" : $"- {table.TableName} 생성 실패\n";
 
