@@ -22,7 +22,7 @@ MonoBehaviour:
   EnumValueColumn: 2
   EnumCommentsColumn: 3
   IsClassAvoidDuplication: 1
-  ClassGeneratedPath: C:/Users/Nyan/Desktop/Chu/HateClient/HateClient/Assets
-  DBGeneratedPath: C:/Users/Nyan/Desktop/Chu/HateClient/HateClient/Assets
-  EnumGeneratedPath: C:/Users/Nyan/Desktop/Chu/HateClient/HateClient/Assets
+  ClassGeneratedPath: Assets/Scripts/Entities
+  DBGeneratedPath: Assets/DB
+  EnumGeneratedPath: Assets/Scripts/Commons/Enum
   EditorGeneratedPath: Assets/Editor/EditorOnly
