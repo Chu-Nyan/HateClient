@@ -14,18 +14,10 @@ public class SheetURLHelper : ScriptableObject
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
     private const char _ignoreSymbol = '#';
-    private const string _sheetOption = "SheetOption";
+    private const string _sheetSettingName = "SheetSetting";
+    private const string _convertSettingName = "ConvertSetting";
 
     public string GoogleSheetID;
-    public int DataNameRow = 0;
-    public int DataTypeRow = 1;
-    public int DataStartedRow = 2;
-
-    public int EnumDataStartedRow = 2;
-    public int EnumTypeColumn = 0;
-    public int EnumKeyColumn = 1;
-    public int EnumValueColumn = 2;
-    public int EnumCommentsColumn = 3;
 
     public bool IsClassAvoidDuplication = true;
     public string ClassGeneratedPath = Application.dataPath;
@@ -34,6 +26,7 @@ public class SheetURLHelper : ScriptableObject
     public string EditorGeneratedPath = Application.dataPath;
 
     private Dictionary<string, SheetData> _sheetDatas;
+    private ConvertSetting _convertSetting;
     private DateTime _excelUpdateTime;
 
     public bool HasExcelData
@@ -60,18 +53,19 @@ public class SheetURLHelper : ScriptableObject
         else
         {
             var stream = new MemoryStream(www.downloadHandler.data);
-            SetExcelData(stream);
+            var tables = ExcelReaderFactory.CreateReader(stream).AsDataSet().Tables;
+
+            SetExcelData(tables);
+            SetConvertSetting(tables[_convertSettingName]);
             Debug.Log("요청 수락됨");
         }
     }
 
-    private void SetExcelData(Stream stream)
+    private void SetExcelData(DataTableCollection table)
     {
-        var dataSet = ExcelReaderFactory.CreateReader(stream)
-                                           .AsDataSet();
         _excelUpdateTime = DateTime.Now;
         _sheetDatas = new();
-        var option = dataSet.Tables[_sheetOption];
+        var option = table[_sheetSettingName];
 
         for (int x = 1; x < option.Rows.Count; x++)
         {
@@ -86,9 +80,37 @@ public class SheetURLHelper : ScriptableObject
 
             var name = option.Rows[x][0].ToString();
 
-            if (_sheetDatas.TryAdd(option.Rows[x][0].ToString(), new(dataSet.Tables[name], flag)) == false)
+            if (_sheetDatas.TryAdd(option.Rows[x][0].ToString(), new(table[name], flag)) == false)
                 Debug.LogError($"{name}가 이미 존재함");
         }
+    }
+
+    private void SetConvertSetting(DataTable sheet)
+    {
+        _convertSetting = new ConvertSetting();
+        var type = _convertSetting.GetType();
+        var nameColumn = 0;
+        var valueColumn = 1;
+
+        for (int i = 1; i < sheet.Rows.Count; i++)
+        {
+            var fieldName = sheet.Rows[i][nameColumn].ToString();
+            if (HasIgnoreSymbol(fieldName) == true)
+                continue;
+
+            var fieldInfo = type.GetField(fieldName);
+            if (fieldInfo != null)
+            {
+                var value = Convert.ChangeType(sheet.Rows[i][valueColumn].ToString(), fieldInfo.FieldType);
+                fieldInfo.SetValue(_convertSetting, value);
+            }
+            else
+            {
+                Debug.Log($"{fieldInfo} 누락");
+            }
+        }
+
+        _convertSetting.SetZeroBase();
     }
 
     public async Task GenerateEnumScript()
@@ -173,7 +195,7 @@ public class SheetURLHelper : ScriptableObject
         var sheet = table.Rows;
         for (int i = 0; i < table.Columns.Count; i++)
         {
-            if (HasIgnoreSymbol(table.Rows[DataNameRow][i].ToString()) == false)
+            if (HasIgnoreSymbol(table.Rows[_convertSetting.DBNameRow][i].ToString()) == false)
                 continue;
 
             exceptionColumns.Add(i);
@@ -187,7 +209,7 @@ public class SheetURLHelper : ScriptableObject
             if (exceptionColumns.Contains(i) == true)
                 continue;
 
-            code += $"\t public {sheet[DataTypeRow][i]} {sheet[DataNameRow][i]};\n";
+            code += $"\t public {sheet[_convertSetting.DBTypeRow][i]} {sheet[_convertSetting.DBNameRow][i]};\n";
         }
         code += $"}}\n";
 
@@ -230,18 +252,18 @@ public class SheetURLHelper : ScriptableObject
             .Select(a => a.GetType(table.TableName))
             .FirstOrDefault(t => t != null);
 
-        var datas = new System.Object[table.Rows.Count - DataStartedRow];
-        var filedNames = table.Rows[DataNameRow];
+        var datas = new System.Object[table.Rows.Count - _convertSetting.DBDataStartedRow];
+        var filedNames = table.Rows[_convertSetting.DBNameRow];
         var isSucceed = true;
         for (int i = 0; i < datas.Length; i++)
         {
-            var data = table.Rows[DataStartedRow + i];
+            var data = table.Rows[_convertSetting.DBDataStartedRow + i];
             try
             {
                 var instance = Activator.CreateInstance(type);
                 for (int j = 0; j < table.Columns.Count; j++)
                 {
-                    if (HasIgnoreSymbol(table.Rows[DataNameRow][j].ToString()) == true)
+                    if (HasIgnoreSymbol(table.Rows[_convertSetting.DBNameRow][j].ToString()) == true)
                         continue;
 
                     var fieldInfo = type.GetField(filedNames[j].ToString());
@@ -284,19 +306,20 @@ public class SheetURLHelper : ScriptableObject
         var arr = new List<string>(8);
         var template = "public enum {0}\n{{\n{1}}}\n";
 
-        var index = EnumDataStartedRow;
+        var index = _convertSetting.EnumDataStartedRow;
+
         while (index < rows.Count)
         {
-            var typeText = rows[index][EnumTypeColumn].ToString();
+            var typeText = rows[index][_convertSetting.EnumTypeColumn].ToString();
 
             sb.Clear();
-            while (index < rows.Count && rows[index][EnumTypeColumn].ToString() == typeText)
+            while (index < rows.Count && rows[index][_convertSetting.EnumTypeColumn].ToString() == typeText)
             {
                 // TODO : 매 키 마다 밸류는 적을 것이냐, 분기에만 적을 것이냐
-                sb.Append($"\t{rows[index][EnumKeyColumn]} = {rows[index][EnumValueColumn]},");
-                if (rows[index][EnumCommentsColumn].ToString() != string.Empty)
+                sb.Append($"\t{rows[index][_convertSetting.EnumKeyColumn]} = {rows[index][_convertSetting.EnumValueColumn]},");
+                if (rows[index][_convertSetting.EnumCommentsColumn].ToString() != string.Empty)
                 {
-                    sb.Append($" // {rows[index][EnumCommentsColumn]}");
+                    sb.Append($" // {rows[index][_convertSetting.EnumCommentsColumn]}");
                 }
                 sb.AppendLine();
                 index++;

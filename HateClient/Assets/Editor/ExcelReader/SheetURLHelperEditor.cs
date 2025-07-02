@@ -5,8 +5,6 @@ using UnityEngine;
 public class SheetURLHelperEditor : Editor
 {
     private bool _isCommonSettingFoldedOut = false;
-    private bool _isSheetSettingFoldedOut = false;
-    private bool _isEnumSettingFoldedOut = false;
     private bool _isDataClassSettingFoldedOut = false;
     private string _foldoutName = "설정";
 
@@ -28,19 +26,8 @@ public class SheetURLHelperEditor : Editor
 
     private void DrawSheetSettingUI(SheetURLHelper helper)
     {
-        var tempNameRow = helper.DataNameRow + 1;
-        var tempTypeRow = helper.DataTypeRow + 1;
-        var tempStartedRow = helper.DataStartedRow + 1;
-
         EditorGUILayout.LabelField("구글 스프레드 시트 설정", EditorStyles.boldLabel);
         helper.GoogleSheetID = EditorGUILayout.TextField("시트 ID", helper.GoogleSheetID);
-        _isSheetSettingFoldedOut = EditorGUILayout.Foldout(_isSheetSettingFoldedOut, _foldoutName);
-        if (_isSheetSettingFoldedOut == true)
-        {
-            helper.DataNameRow = EditorGUILayout.IntField("이름 행", tempNameRow) - 1;
-            helper.DataTypeRow = EditorGUILayout.IntField("타입 행", tempTypeRow) - 1;
-            helper.DataStartedRow = EditorGUILayout.IntField("데이터 시작 행", tempStartedRow) - 1;
-        }
 
         GUILayout.Space(5);
         if (GUILayout.Button("All-In-One 생성"))
@@ -72,11 +59,6 @@ public class SheetURLHelperEditor : Editor
 
     private void DrawEnumSettingUI(SheetURLHelper helper)
     {
-        var tempStartedRow = helper.EnumDataStartedRow + 1;
-        var tempTypeColumn = helper.EnumTypeColumn + 1;
-        var tempKeyColumn = helper.EnumKeyColumn + 1;
-        var tempValueColumn = helper.EnumValueColumn + 1;
-        var tempCommentColumn = helper.EnumCommentsColumn + 1;
 
         EditorGUILayout.LabelField("Enum 생성 설정", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
@@ -87,16 +69,6 @@ public class SheetURLHelperEditor : Editor
             helper.EnumGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
         }
         EditorGUILayout.EndHorizontal();
-
-        _isEnumSettingFoldedOut = EditorGUILayout.Foldout(_isEnumSettingFoldedOut, _foldoutName);
-        if (_isEnumSettingFoldedOut == true)
-        {
-            helper.EnumDataStartedRow = EditorGUILayout.IntField("데이터 시작 행", tempStartedRow) - 1;
-            helper.EnumTypeColumn = EditorGUILayout.IntField("타입 열", tempTypeColumn) - 1;
-            helper.EnumKeyColumn = EditorGUILayout.IntField("키 열", tempKeyColumn) - 1;
-            helper.EnumValueColumn = EditorGUILayout.IntField("밸류 열", tempValueColumn) - 1;
-            helper.EnumCommentsColumn = EditorGUILayout.IntField("주석 열", tempCommentColumn) - 1;
-        }
 
         GUILayout.Space(5);
         if (GUILayout.Button("Enum 스크립트 생성"))
