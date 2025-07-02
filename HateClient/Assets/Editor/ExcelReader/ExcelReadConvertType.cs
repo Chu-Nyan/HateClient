@@ -4,7 +4,8 @@ using System;
 public enum ExcelReadConvertType
 {
     None = 0,
-    Data = 1,
-    Enum = 2,
-    EditorOnly = 4
+    Data = 1 << 0,
+    Enum = 1 << 1,
+    Localization = 1 << 2,
+    EditorOnly = 1 << 3
 }
