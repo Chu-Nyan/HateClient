@@ -24,6 +24,7 @@ public class SheetURLHelper : ScriptableObject
     public string DBGeneratedPath = Application.dataPath;
     public string EnumGeneratedPath = Application.dataPath;
     public string EditorGeneratedPath = Application.dataPath;
+    public string LocalizationGeneratedPath = Application.dataPath;
 
     private Dictionary<string, SheetData> _sheetDatas;
     private ConvertSetting _convertSetting;
@@ -298,6 +299,7 @@ public class SheetURLHelper : ScriptableObject
         await GenerateEnumScript();
         await GenerateClass();
         await GenerateDBJson();
+        ConvertLocalization();
     }
 
     private List<string> GetEnumScriptText(DataRowCollection rows)
@@ -328,6 +330,53 @@ public class SheetURLHelper : ScriptableObject
         }
 
         return arr;
+    }
+
+    // 현지화 텍스트 불러오기
+    public void ConvertLocalization()
+    {
+        foreach (var sheet in _sheetDatas.Values)
+        {
+            if (sheet.HasFlag(ExcelReadConvertType.Localization) == false)
+                continue;
+
+            var dic = ConvertLocalizationSheetToJson(sheet.Table);
+            foreach (var item in dic)
+            {
+                GenerateFile(LocalizationGeneratedPath, $"{item.Key}.json", item.Value, true);
+            }
+        }
+    }
+
+    private Dictionary<string, string> ConvertLocalizationSheetToJson(DataTable table)
+    {
+        var texts = new Dictionary<string, string>();
+
+        for (int x = 0; x < table.Columns.Count; x++)
+        {
+            if (HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == _convertSetting.LocalizationKeyColumn)
+                continue;
+
+            var dic = new Dictionary<string, string>();
+
+            for (int y = _convertSetting.LocalizationFirstDataRow; y < table.Rows.Count; y++)
+            {
+                var key = table.Rows[y][_convertSetting.LocalizationKeyColumn].ToString();
+                if (key == string.Empty)
+                    break;
+
+                if (dic.ContainsKey(key) == true)
+                    throw new Exception("중복된 키 발견");
+
+                dic.Add(key, table.Rows[y][x].ToString());
+            }
+
+            var json = JsonConvert.SerializeObject(dic, Formatting.Indented);
+            var languageName = table.Rows[_convertSetting.LocalizationNameRow][x].ToString();
+            texts.Add(languageName, json);
+        }
+
+        return texts;
     }
 
     #region 유틸리티

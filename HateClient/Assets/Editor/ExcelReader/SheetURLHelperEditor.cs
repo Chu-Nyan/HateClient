@@ -19,6 +19,7 @@ public class SheetURLHelperEditor : Editor
         GUILayout.Space(10);
         DrawGenerateClassTextUI(helper);
         GUILayout.Space(10);
+        DrawGenerateLocalization(helper);
 
         if (GUI.changed)
             EditorUtility.SetDirty(helper);
@@ -123,6 +124,26 @@ public class SheetURLHelperEditor : Editor
                 AssetDatabase.Refresh();
             }
             EditorGUILayout.EndHorizontal();
+        }
+    }
+
+    private void DrawGenerateLocalization(SheetURLHelper helper)
+    {
+        EditorGUILayout.LabelField("텍스트 생성 설정", EditorStyles.boldLabel);
+        EditorGUILayout.BeginHorizontal();
+        helper.LocalizationGeneratedPath = EditorGUILayout.TextField("생성 경로", helper.LocalizationGeneratedPath);
+        if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
+        {
+            var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.LocalizationGeneratedPath);
+            helper.LocalizationGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
+        }
+        EditorGUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+        if (GUILayout.Button("텍스트 생성"))
+        {
+            helper.ConvertLocalization();
+            AssetDatabase.Refresh();
         }
     }
 

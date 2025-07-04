@@ -10,6 +10,10 @@ public class ConvertSetting
     public int EnumValueColumn;
     public int EnumCommentsColumn;
 
+    public int LocalizationNameRow;
+    public int LocalizationKeyColumn;
+    public int LocalizationFirstDataRow;
+
     private bool _isZeroBase;
 
     public void SetZeroBase()
@@ -28,5 +32,9 @@ public class ConvertSetting
         EnumKeyColumn--;
         EnumValueColumn--;
         EnumCommentsColumn--;
+
+        LocalizationKeyColumn--;
+        LocalizationNameRow--;
+        LocalizationFirstDataRow--;
     }
 }
