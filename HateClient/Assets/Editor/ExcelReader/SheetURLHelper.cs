@@ -23,7 +23,7 @@ public class SheetURLHelper : ScriptableObject
     public string ClassGeneratedPath = Application.dataPath;
     public string DBGeneratedPath = Application.dataPath;
     public string EnumGeneratedPath = Application.dataPath;
-    public string EditorGeneratedPath = Application.dataPath;
+    public string ExternalFolderGeneratedPath = Application.dataPath;
     public string LocalizationGeneratedPath = Application.dataPath;
 
     private Dictionary<string, SheetData> _sheetDatas;
@@ -138,7 +138,7 @@ public class SheetURLHelper : ScriptableObject
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
 
-            var path = sheet.HasFlag(ExcelReadConvertType.EditorOnly) == false ? EnumGeneratedPath : EditorGeneratedPath;
+            var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? EnumGeneratedPath : ExternalFolderGeneratedPath;
             GenerateFile(path, $"{item.Key}.cs", normalizedText, true);
             await Task.Yield();
         }
@@ -170,7 +170,7 @@ public class SheetURLHelper : ScriptableObject
             if (type == null || IsClassAvoidDuplication == false)
             {
                 var text = GetClassScriptText(table);
-                var path = sheet.HasFlag(ExcelReadConvertType.EditorOnly) == false ? ClassGeneratedPath : EditorGeneratedPath;
+                var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? ClassGeneratedPath : ExternalFolderGeneratedPath;
                 GenerateFile(path, $"{table.TableName}.cs", text, true);
 
                 if (IsClassAvoidDuplication == true)
@@ -234,7 +234,7 @@ public class SheetURLHelper : ScriptableObject
 
             if (TryConvertExcelToJson(table, out var text) == true)
             {
-                var path = sheet.HasFlag(ExcelReadConvertType.EditorOnly) == false ? DBGeneratedPath : EditorGeneratedPath;
+                var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? DBGeneratedPath : ExternalFolderGeneratedPath;
                 GenerateFile(path, $"{table.TableName}.json", text, true);
             }
 
@@ -343,7 +343,8 @@ public class SheetURLHelper : ScriptableObject
             var dic = ConvertLocalizationSheetToJson(sheet.Table);
             foreach (var item in dic)
             {
-                GenerateFile(LocalizationGeneratedPath, $"{item.Key}.json", item.Value, true);
+                var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? LocalizationGeneratedPath : ExternalFolderGeneratedPath;
+                GenerateFile(path, $"{item.Key}.json", item.Value, true);
             }
         }
     }
@@ -380,6 +381,11 @@ public class SheetURLHelper : ScriptableObject
     }
 
     #region 유틸리티
+    private void GenerateFileWithOption()
+    {
+        // TODO
+    }
+
     private void GenerateFile(string path, string fileName, string text, bool isOverwrite)
     {
         // TODO : Path가 무조건 Asset 내부에서만

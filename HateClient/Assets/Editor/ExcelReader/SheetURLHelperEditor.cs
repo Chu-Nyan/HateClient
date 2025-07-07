@@ -47,14 +47,13 @@ public class SheetURLHelperEditor : Editor
         if (_isCommonSettingFoldedOut == true)
         {
             EditorGUILayout.BeginHorizontal();
-            helper.EditorGeneratedPath = EditorGUILayout.TextField("생성 경로", helper.EditorGeneratedPath);
+            helper.ExternalFolderGeneratedPath = EditorGUILayout.TextField("외부 폴더 생성 경로", helper.ExternalFolderGeneratedPath);
             if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
             {
-                var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.EditorGeneratedPath);
-                helper.EditorGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
+                var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.ExternalFolderGeneratedPath);
+                helper.ExternalFolderGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
             }
             EditorGUILayout.EndHorizontal();
-
         }
     }
 
