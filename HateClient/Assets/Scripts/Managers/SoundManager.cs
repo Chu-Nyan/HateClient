@@ -74,7 +74,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     private AudioClip GetAudioClip(SoundType type)
     {
-        AssetManager.Instance.LoadAssetSync<AudioClip>(type.ToString());
+        AssetManager.LoadAssetSync<AudioClip>(type.ToString());
 
         return null;
     }
