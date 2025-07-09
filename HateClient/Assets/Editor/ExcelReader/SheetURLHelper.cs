@@ -234,7 +234,7 @@ public class SheetURLHelper : ScriptableObject
             var sheet = item.Value;
             var table = sheet.Table;
             var name = sheet.GetNameFromOptions();
-            if (TryConvertExcelToJson(table, out var text) == true)
+            if (TryConvertExcelToJson(sheet, out var text) == true)
             {
                 var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? DBGeneratedPath : ExternalFolderGeneratedPath;
                 GenerateFile(path, $"{name}.json", text, true);
@@ -248,11 +248,12 @@ public class SheetURLHelper : ScriptableObject
         Debug.Log(log);
     }
 
-    private bool TryConvertExcelToJson(DataTable table, out string text)
+    private bool TryConvertExcelToJson(SheetData sheet, out string text)
     {
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        var table = sheet.Table;
         Type type = assemblies
-            .Select(a => a.GetType(table.TableName))
+            .Select(a => a.GetType(sheet.GetNameFromOptions()))
             .FirstOrDefault(t => t != null);
 
         var datas = new System.Object[table.Rows.Count - _convertSetting.DBDataStartedRow];
@@ -329,7 +330,6 @@ public class SheetURLHelper : ScriptableObject
                 sb.AppendLine();
                 index++;
             }
-            typeText = sheet.GetNameFromOptions();
             arr.Add(String.Format(template, typeText, sb.ToString()));
         }
 
@@ -348,8 +348,7 @@ public class SheetURLHelper : ScriptableObject
             foreach (var item in dic)
             {
                 var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? LocalizationGeneratedPath : ExternalFolderGeneratedPath;
-                var name = sheet.GetNameFromOptions();
-                GenerateFile(path, $"{name}.json", item.Value, true);
+                GenerateFile(path, $"{item.Key}.json", item.Value, true);
             }
         }
     }
