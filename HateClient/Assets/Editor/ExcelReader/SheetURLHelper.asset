@@ -17,5 +17,5 @@ MonoBehaviour:
   ClassGeneratedPath: Assets/Scripts/Entities
   DBGeneratedPath: Assets/DB
   EnumGeneratedPath: Assets/Scripts/Commons/Enum
-  ExternalFolderGeneratedPath: Assets/Editor/ExternalFolder
+  ExternalFolderGeneratedPath: Assets/Editor/External_Data
   LocalizationGeneratedPath: C:/Users/Nyan/Desktop/Chu/HateClient/HateClient/Assets

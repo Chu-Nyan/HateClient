@@ -1,0 +1,16 @@
+{
+  "UI_Title": "Title",
+  "UI_Ok": "Ok",
+  "Unit_Human_Name": "Human",
+  "Unit_Goblin_Name": "Goblin",
+  "Unit_Orc_Name": "Orc",
+  "Unit_Troll_Name": "Troll",
+  "Unit_Skeleton_Name": "Skeleton",
+  "Unit_Dragon_Name": "Dragon",
+  "Unit_Human_Desc": "A versatile and resilient warrior skilled in both melee and ranged combat. Humans adapt quickly to various battle conditions.",
+  "Unit_Goblin_Desc": "Small and cunning creatures known for their speed and trickery. Goblins excel in ambush tactics and hit-and-run attacks.",
+  "Unit_Orc_Desc": "Powerful and brutal fighters with immense physical strength. Orcs rely on overwhelming force and savage melee combat.",
+  "Unit_Troll_Desc": "Large and durable creatures with regenerative abilities. Trolls endure heavy damage and retaliate fiercely in battle.",
+  "Unit_Skeleton_Desc": "Undead warriors animated by dark magic. Skeletons are relentless but fragile, often attacking in large numbers.",
+  "Unit_Dragon_Desc": "Legendary and fearsome beasts with immense power and magical abilities. Dragons dominate the battlefield with f"
+}
