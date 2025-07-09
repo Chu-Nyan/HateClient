@@ -15,4 +15,13 @@ public class SheetData
     {
         return (Options & (int)type) == (int)type;
     }
+
+    public string GetNameFromOptions()
+    {
+        var suffix = string.Empty;
+        if (HasFlag(ExcelReadConvertType.DTO) == true)
+            suffix += "DTO";
+
+        return $"{Table.TableName}{suffix}";
+    }
 }

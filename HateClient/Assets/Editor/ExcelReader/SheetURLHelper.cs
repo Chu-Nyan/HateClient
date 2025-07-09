@@ -126,7 +126,7 @@ public class SheetURLHelper : ScriptableObject
             if (sheet.HasFlag(ExcelReadConvertType.Enum) == false)
                 continue;
 
-            var list = GetEnumScriptText(sheet.Table.Rows);
+            var list = GetEnumScriptText(sheet);
             sb.Clear();
             for (int j = 0; j < list.Count; j++)
             {
@@ -139,7 +139,7 @@ public class SheetURLHelper : ScriptableObject
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
 
             var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? EnumGeneratedPath : ExternalFolderGeneratedPath;
-            GenerateFile(path, $"{item.Key}.cs", normalizedText, true);
+            GenerateFile(path, $"{sheet.GetNameFromOptions()}.cs", normalizedText, true);
             await Task.Yield();
         }
 
@@ -169,9 +169,9 @@ public class SheetURLHelper : ScriptableObject
 
             if (type == null || IsClassAvoidDuplication == false)
             {
-                var text = GetClassScriptText(table);
+                var text = GetClassScriptText(sheet);
                 var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? ClassGeneratedPath : ExternalFolderGeneratedPath;
-                GenerateFile(path, $"{table.TableName}.cs", text, true);
+                GenerateFile(path, $"{sheet.GetNameFromOptions()}.cs", text, true);
 
                 if (IsClassAvoidDuplication == true)
                     log += $"- {table.TableName} 생성 완료\n";
@@ -189,28 +189,29 @@ public class SheetURLHelper : ScriptableObject
         Debug.Log(log);
     }
 
-    private string GetClassScriptText(DataTable table)
+    private string GetClassScriptText(SheetData sheet)
     {
+        var table = sheet.Table;
         // 주석용 열 제거
         var exceptionColumns = new HashSet<int>();
-        var sheet = table.Rows;
+        var rows = table.Rows;
         for (int i = 0; i < table.Columns.Count; i++)
         {
-            if (HasIgnoreSymbol(table.Rows[_convertSetting.DBNameRow][i].ToString()) == false)
+            if (HasIgnoreSymbol(rows[_convertSetting.DBNameRow][i].ToString()) == false)
                 continue;
 
             exceptionColumns.Add(i);
         }
 
         // 스크립트 작성
-        var code = $"public class {table.TableName}\n";
+        var code = $"public class {sheet.GetNameFromOptions()}\n";
         code += $"{{\n";
         for (int i = 0; i < table.Columns.Count; i++)
         {
             if (exceptionColumns.Contains(i) == true)
                 continue;
 
-            code += $"\t public {sheet[_convertSetting.DBTypeRow][i]} {sheet[_convertSetting.DBNameRow][i]};\n";
+            code += $"\t public {rows[_convertSetting.DBTypeRow][i]} {rows[_convertSetting.DBNameRow][i]};\n";
         }
         code += $"}}\n";
 
@@ -227,18 +228,19 @@ public class SheetURLHelper : ScriptableObject
 
         foreach (var item in _sheetDatas)
         {
-            var sheet = item.Value;
-            var table = sheet.Table;
-            if (sheet.HasFlag(ExcelReadConvertType.Data) == false)
+            if (item.Value.HasFlag(ExcelReadConvertType.Data) == false)
                 continue;
 
+            var sheet = item.Value;
+            var table = sheet.Table;
+            var name = sheet.GetNameFromOptions();
             if (TryConvertExcelToJson(table, out var text) == true)
             {
                 var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? DBGeneratedPath : ExternalFolderGeneratedPath;
-                GenerateFile(path, $"{table.TableName}.json", text, true);
+                GenerateFile(path, $"{name}.json", text, true);
             }
 
-            log += text != default ? $"- {table.TableName} 생성 완료\n" : $"- {table.TableName} 생성 실패\n";
+            log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 생성 실패\n";
 
             await Task.Yield();
         }
@@ -302,8 +304,9 @@ public class SheetURLHelper : ScriptableObject
         ConvertLocalization();
     }
 
-    private List<string> GetEnumScriptText(DataRowCollection rows)
+    private List<string> GetEnumScriptText(SheetData sheet)
     {
+        var rows = sheet.Table.Rows;
         var sb = new StringBuilder();
         var arr = new List<string>(8);
         var template = "public enum {0}\n{{\n{1}}}\n";
@@ -326,6 +329,7 @@ public class SheetURLHelper : ScriptableObject
                 sb.AppendLine();
                 index++;
             }
+            typeText = sheet.GetNameFromOptions();
             arr.Add(String.Format(template, typeText, sb.ToString()));
         }
 
@@ -344,7 +348,8 @@ public class SheetURLHelper : ScriptableObject
             foreach (var item in dic)
             {
                 var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? LocalizationGeneratedPath : ExternalFolderGeneratedPath;
-                GenerateFile(path, $"{item.Key}.json", item.Value, true);
+                var name = sheet.GetNameFromOptions();
+                GenerateFile(path, $"{name}.json", item.Value, true);
             }
         }
     }
