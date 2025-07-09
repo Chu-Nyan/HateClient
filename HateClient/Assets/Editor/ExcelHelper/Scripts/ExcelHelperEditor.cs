@@ -1,8 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(SheetURLHelper))]
-public class SheetURLHelperEditor : Editor
+[CustomEditor(typeof(ExcelHelper))]
+public class ExcelHelperEditor : Editor
 {
     private bool _isCommonSettingFoldedOut = false;
     private bool _isDataClassSettingFoldedOut = false;
@@ -10,7 +10,7 @@ public class SheetURLHelperEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        var helper = (SheetURLHelper)target;
+        var helper = (ExcelHelper)target;
         DrawCommonSettingUI(helper);
         GUILayout.Space(10);
         DrawSheetSettingUI(helper);
@@ -25,7 +25,7 @@ public class SheetURLHelperEditor : Editor
             EditorUtility.SetDirty(helper);
     }
 
-    private void DrawSheetSettingUI(SheetURLHelper helper)
+    private void DrawSheetSettingUI(ExcelHelper helper)
     {
         EditorGUILayout.LabelField("구글 스프레드 시트 설정", EditorStyles.boldLabel);
         helper.GoogleSheetID = EditorGUILayout.TextField("시트 ID", helper.GoogleSheetID);
@@ -40,7 +40,7 @@ public class SheetURLHelperEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 
-    private void DrawCommonSettingUI(SheetURLHelper helper)
+    private void DrawCommonSettingUI(ExcelHelper helper)
     {
         EditorGUILayout.LabelField("공통 설정", EditorStyles.boldLabel);
         _isCommonSettingFoldedOut = EditorGUILayout.Foldout(_isCommonSettingFoldedOut, _foldoutName);
@@ -57,7 +57,7 @@ public class SheetURLHelperEditor : Editor
         }
     }
 
-    private void DrawEnumSettingUI(SheetURLHelper helper)
+    private void DrawEnumSettingUI(ExcelHelper helper)
     {
 
         EditorGUILayout.LabelField("Enum 생성 설정", EditorStyles.boldLabel);
@@ -78,7 +78,7 @@ public class SheetURLHelperEditor : Editor
         }
     }
 
-    private void DrawGenerateClassTextUI(SheetURLHelper helper)
+    private void DrawGenerateClassTextUI(ExcelHelper helper)
     {
         EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
 
@@ -109,7 +109,7 @@ public class SheetURLHelperEditor : Editor
         GUILayout.Space(5);
         DrawGenerateClassFuntion(helper);
 
-        void DrawGenerateClassFuntion(SheetURLHelper helper)
+        void DrawGenerateClassFuntion(ExcelHelper helper)
         {
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("데이터 스크립트 생성"))
@@ -126,7 +126,7 @@ public class SheetURLHelperEditor : Editor
         }
     }
 
-    private void DrawGenerateLocalization(SheetURLHelper helper)
+    private void DrawGenerateLocalization(ExcelHelper helper)
     {
         EditorGUILayout.LabelField("텍스트 생성 설정", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
@@ -146,22 +146,22 @@ public class SheetURLHelperEditor : Editor
         }
     }
 
-    private async void LoadExcel(SheetURLHelper helper)
+    private async void LoadExcel(ExcelHelper helper)
     {
         await helper.LoadExcelFile();
     }
 
-    private async void GenerateEnumScript(SheetURLHelper helper)
+    private async void GenerateEnumScript(ExcelHelper helper)
     {
         await helper.GenerateEnumScript();
     }
 
-    private async void GenerateClass(SheetURLHelper helper)
+    private async void GenerateClass(ExcelHelper helper)
     {
         await helper.GenerateClass();
     }
 
-    private async void GenerateDBJson(SheetURLHelper helper)
+    private async void GenerateDBJson(ExcelHelper helper)
     {
         await helper.GenerateDBJson();
     }

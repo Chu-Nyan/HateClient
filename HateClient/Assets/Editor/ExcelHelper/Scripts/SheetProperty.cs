@@ -1,7 +1,7 @@
 using System;
 
 [Flags]
-public enum ExcelReadConvertType
+public enum SheetProperty
 {
     None = 0,
     Data = 1 << 0,

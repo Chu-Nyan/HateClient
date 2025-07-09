@@ -10,11 +10,12 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SheetURLHelper : ScriptableObject
+[CreateAssetMenu(fileName = "ExcelHelper", menuName = "Scriptable Objects/ExcelHelper", order = 1)]
+public class ExcelHelper : ScriptableObject
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
     private const char _ignoreSymbol = '#';
-    private const string _sheetSettingName = "SheetSetting";
+    private const string _sheetPropertyName = "SheetProperty";
     private const string _convertSettingName = "ConvertSetting";
 
     public string GoogleSheetID;
@@ -66,14 +67,14 @@ public class SheetURLHelper : ScriptableObject
     {
         _excelUpdateTime = DateTime.Now;
         _sheetDatas = new();
-        var option = table[_sheetSettingName];
+        var option = table[_sheetPropertyName];
 
         for (int x = 1; x < option.Rows.Count; x++)
         {
             var flag = 0;
             for (int y = 1; y < option.Columns.Count; y++)
             {
-                if (Enum.TryParse<ExcelReadConvertType>(option.Rows[x][y].ToString(), out var result) == false)
+                if (Enum.TryParse<SheetProperty>(option.Rows[x][y].ToString(), out var result) == false)
                     continue;
 
                 flag += (int)result;
@@ -123,7 +124,7 @@ public class SheetURLHelper : ScriptableObject
         {
             var sheet = item.Value;
 
-            if (sheet.HasFlag(ExcelReadConvertType.Enum) == false)
+            if (sheet.HasFlag(SheetProperty.Enum) == false)
                 continue;
 
             var list = GetEnumScriptText(sheet);
@@ -138,7 +139,7 @@ public class SheetURLHelper : ScriptableObject
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
 
-            var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? EnumGeneratedPath : ExternalFolderGeneratedPath;
+            var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? EnumGeneratedPath : ExternalFolderGeneratedPath;
             GenerateFile(path, $"{sheet.GetNameFromOptions()}.cs", normalizedText, true);
             await Task.Yield();
         }
@@ -160,7 +161,7 @@ public class SheetURLHelper : ScriptableObject
             var sheet = item.Value;
             var table = sheet.Table;
 
-            if (sheet.HasFlag(ExcelReadConvertType.Data) == false)
+            if (sheet.HasFlag(SheetProperty.Data) == false)
                 continue;
 
             var type = assemblies
@@ -170,7 +171,7 @@ public class SheetURLHelper : ScriptableObject
             if (type == null || IsClassAvoidDuplication == false)
             {
                 var text = GetClassScriptText(sheet);
-                var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? ClassGeneratedPath : ExternalFolderGeneratedPath;
+                var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? ClassGeneratedPath : ExternalFolderGeneratedPath;
                 GenerateFile(path, $"{sheet.GetNameFromOptions()}.cs", text, true);
 
                 if (IsClassAvoidDuplication == true)
@@ -228,7 +229,7 @@ public class SheetURLHelper : ScriptableObject
 
         foreach (var item in _sheetDatas)
         {
-            if (item.Value.HasFlag(ExcelReadConvertType.Data) == false)
+            if (item.Value.HasFlag(SheetProperty.Data) == false)
                 continue;
 
             var sheet = item.Value;
@@ -236,7 +237,7 @@ public class SheetURLHelper : ScriptableObject
             var name = sheet.GetNameFromOptions();
             if (TryConvertExcelToJson(sheet, out var text) == true)
             {
-                var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? DBGeneratedPath : ExternalFolderGeneratedPath;
+                var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? DBGeneratedPath : ExternalFolderGeneratedPath;
                 GenerateFile(path, $"{name}.json", text, true);
             }
 
@@ -341,13 +342,13 @@ public class SheetURLHelper : ScriptableObject
     {
         foreach (var sheet in _sheetDatas.Values)
         {
-            if (sheet.HasFlag(ExcelReadConvertType.Localization) == false)
+            if (sheet.HasFlag(SheetProperty.Localization) == false)
                 continue;
 
             var dic = ConvertLocalizationSheetToJson(sheet.Table);
             foreach (var item in dic)
             {
-                var path = sheet.HasFlag(ExcelReadConvertType.ExternalFolder) == false ? LocalizationGeneratedPath : ExternalFolderGeneratedPath;
+                var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? LocalizationGeneratedPath : ExternalFolderGeneratedPath;
                 GenerateFile(path, $"{item.Key}.json", item.Value, true);
             }
         }

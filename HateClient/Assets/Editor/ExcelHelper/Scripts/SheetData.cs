@@ -11,7 +11,7 @@ public class SheetData
         Options = options;
     }
 
-    public bool HasFlag(ExcelReadConvertType type)
+    public bool HasFlag(SheetProperty type)
     {
         return (Options & (int)type) == (int)type;
     }
@@ -19,7 +19,7 @@ public class SheetData
     public string GetNameFromOptions()
     {
         var suffix = string.Empty;
-        if (HasFlag(ExcelReadConvertType.DTO) == true)
+        if (HasFlag(SheetProperty.DTO) == true)
             suffix += "DTO";
 
         return $"{Table.TableName}{suffix}";
