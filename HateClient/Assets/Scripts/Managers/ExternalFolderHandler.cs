@@ -8,13 +8,14 @@ public class ExternalFolderHandler
 #elif UNITY_IOS || UNITY_ANDROID
     public readonly string ExternalFolder = Application.persistentDataPath;
 #else
-    public readonly string ExternalFolder = Directory.GetParent(Application.dataPath)?.FullName;
+    public readonly string ExternalFolder = Path.Combine(Directory.GetParent(Application.dataPath)?.FullName, ExternalFolderName);
 #endif
-    private readonly string LanguagesFolder = "Languages";
+    private const string ExternalFolderName = "External_Data";
+    private const string LanguagesFolder = "Languages";
 
     public string GetLanguagesTextFile(string name)
     {
-        name = Path.Combine(ExternalFolder, LanguagesFolder, $"{name}.json");
+        name = Path.Combine(ExternalFolder, $"{name}.json");
         return System.IO.File.ReadAllText(name);
     }
 }
