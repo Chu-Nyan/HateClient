@@ -14,6 +14,10 @@ public class ConvertSetting
     public int LocalizationKeyColumn;
     public int LocalizationFirstDataRow;
 
+    public int SheetPropertyNameColumn;
+    public int SheetPropertyFirstDataRow;
+    public string SheetPropertyGeneratePathName;
+
     private bool _isZeroBase;
 
     public void SetZeroBase()
@@ -36,5 +40,8 @@ public class ConvertSetting
         LocalizationKeyColumn--;
         LocalizationNameRow--;
         LocalizationFirstDataRow--;
+
+        SheetPropertyNameColumn--;
+        SheetPropertyFirstDataRow--;
     }
 }

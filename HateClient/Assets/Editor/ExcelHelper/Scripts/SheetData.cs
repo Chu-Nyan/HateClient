@@ -1,14 +1,39 @@
 using System.Data;
+using System.IO;
+using UnityEngine;
 
 public class SheetData
 {
-    public DataTable Table;
-    public int Options;
+    private static readonly string _assetPath = Application.dataPath;
 
-    public SheetData(DataTable table, int options)
+    private readonly DataTable _table;
+    private int _option;
+    private string _generatePath;
+
+    public DataTable Table
     {
-        Table = table;
-        Options = options;
+        get => _table;
+    }
+
+    public int Options
+    {
+        get => _option;
+        set => _option = value;
+    }
+
+    public string GeneratePath
+    {
+        get => _generatePath;
+    }
+
+    public SheetData(DataTable table)
+    {
+        _table = table;
+    }
+
+    public void SetPathFromAssetFolder(string path)
+    {
+        _generatePath = Path.Combine(_assetPath, path);
     }
 
     public bool HasFlag(SheetProperty type)

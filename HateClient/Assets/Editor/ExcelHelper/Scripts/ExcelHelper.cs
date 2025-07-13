@@ -14,19 +14,13 @@ using UnityEngine.Networking;
 public class ExcelHelper : ScriptableObject
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
-    private const char _ignoreSymbol = '#';
-    private const string _sheetPropertyName = "SheetProperty";
-    private const string _convertSettingName = "ConvertSetting";
+    public const char IgnoreSymbol = '#';
 
     public string GoogleSheetID;
 
     public bool IsClassAvoidDuplication = true;
-    public string ClassGeneratedPath = Application.dataPath;
-    public string DBGeneratedPath = Application.dataPath;
-    public string EnumGeneratedPath = Application.dataPath;
-    public string ExternalFolderGeneratedPath = Application.dataPath;
-    public string LocalizationGeneratedPath = Application.dataPath;
 
+    private ExcelConfigLoader _configLoader = new();
     private Dictionary<string, SheetData> _sheetDatas;
     private ConvertSetting _convertSetting;
     private DateTime _excelUpdateTime;
@@ -39,6 +33,16 @@ public class ExcelHelper : ScriptableObject
     public DateTime ExcelUpdateTime
     {
         get => _excelUpdateTime;
+    }
+
+    #region Excel to File 파이프라인
+    public async void SetupAllInOneAsync()
+    {
+        await LoadExcelFile();
+        await GenerateEnumScript();
+        await GenerateClass();
+        await GenerateDBJson();
+        ConvertLocalization();
     }
 
     public async Task LoadExcelFile()
@@ -54,67 +58,15 @@ public class ExcelHelper : ScriptableObject
             Debug.LogError("실패: " + www.error);
         else
         {
+            _excelUpdateTime = DateTime.Now;
             var stream = new MemoryStream(www.downloadHandler.data);
             var tables = ExcelReaderFactory.CreateReader(stream).AsDataSet().Tables;
 
-            SetExcelData(tables);
-            SetConvertSetting(tables[_convertSettingName]);
+            _convertSetting = _configLoader.LoadConvertSetting(tables);
+            _sheetDatas = _configLoader.LoadSheetProperty(tables, _convertSetting);
             Debug.Log("요청 수락됨");
         }
     }
-
-    private void SetExcelData(DataTableCollection table)
-    {
-        _excelUpdateTime = DateTime.Now;
-        _sheetDatas = new();
-        var option = table[_sheetPropertyName];
-
-        for (int x = 1; x < option.Rows.Count; x++)
-        {
-            var flag = 0;
-            for (int y = 1; y < option.Columns.Count; y++)
-            {
-                if (Enum.TryParse<SheetProperty>(option.Rows[x][y].ToString(), out var result) == false)
-                    continue;
-
-                flag += (int)result;
-            }
-
-            var name = option.Rows[x][0].ToString();
-
-            if (_sheetDatas.TryAdd(option.Rows[x][0].ToString(), new(table[name], flag)) == false)
-                Debug.LogError($"{name}가 이미 존재함");
-        }
-    }
-
-    private void SetConvertSetting(DataTable sheet)
-    {
-        _convertSetting = new ConvertSetting();
-        var type = _convertSetting.GetType();
-        var nameColumn = 0;
-        var valueColumn = 1;
-
-        for (int i = 1; i < sheet.Rows.Count; i++)
-        {
-            var fieldName = sheet.Rows[i][nameColumn].ToString();
-            if (HasIgnoreSymbol(fieldName) == true)
-                continue;
-
-            var fieldInfo = type.GetField(fieldName);
-            if (fieldInfo != null)
-            {
-                var value = Convert.ChangeType(sheet.Rows[i][valueColumn].ToString(), fieldInfo.FieldType);
-                fieldInfo.SetValue(_convertSetting, value);
-            }
-            else
-            {
-                Debug.Log($"{fieldInfo} 누락");
-            }
-        }
-
-        _convertSetting.SetZeroBase();
-    }
-
     public async Task GenerateEnumScript()
     {
         Debug.Log("Enum 스크립트 생성 시작");
@@ -138,15 +90,12 @@ public class ExcelHelper : ScriptableObject
             }
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-
-            var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? EnumGeneratedPath : ExternalFolderGeneratedPath;
-            GenerateFile(path, $"{sheet.GetNameFromOptions()}.cs", normalizedText, true);
+            GenerateFile(sheet.GeneratePath, $"{sheet.GetNameFromOptions()}.cs", normalizedText, true);
             await Task.Yield();
         }
 
         Debug.Log("Enum 스크립트 생성 완료");
     }
-
 
     public async Task GenerateClass()
     {
@@ -171,8 +120,7 @@ public class ExcelHelper : ScriptableObject
             if (type == null || IsClassAvoidDuplication == false)
             {
                 var text = GetClassScriptText(sheet);
-                var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? ClassGeneratedPath : ExternalFolderGeneratedPath;
-                GenerateFile(path, $"{sheet.GetNameFromOptions()}.cs", text, true);
+                GenerateFile(sheet.GeneratePath, $"{sheet.GetNameFromOptions()}.cs", text, true);
 
                 if (IsClassAvoidDuplication == true)
                     log += $"- {table.TableName} 생성 완료\n";
@@ -192,8 +140,8 @@ public class ExcelHelper : ScriptableObject
 
     private string GetClassScriptText(SheetData sheet)
     {
-        var table = sheet.Table;
         // 주석용 열 제거
+        var table = sheet.Table;
         var exceptionColumns = new HashSet<int>();
         var rows = table.Rows;
         for (int i = 0; i < table.Columns.Count; i++)
@@ -236,10 +184,7 @@ public class ExcelHelper : ScriptableObject
             var table = sheet.Table;
             var name = sheet.GetNameFromOptions();
             if (TryConvertExcelToJson(sheet, out var text) == true)
-            {
-                var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? DBGeneratedPath : ExternalFolderGeneratedPath;
-                GenerateFile(path, $"{name}.json", text, true);
-            }
+                GenerateFile(sheet.GeneratePath, $"{name}.json", text, true);
 
             log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 생성 실패\n";
 
@@ -297,15 +242,6 @@ public class ExcelHelper : ScriptableObject
         return isSucceed;
     }
 
-    public async void SetupAllInOneAsync()
-    {
-        await LoadExcelFile();
-        await GenerateEnumScript();
-        await GenerateClass();
-        await GenerateDBJson();
-        ConvertLocalization();
-    }
-
     private List<string> GetEnumScriptText(SheetData sheet)
     {
         var rows = sheet.Table.Rows;
@@ -322,7 +258,6 @@ public class ExcelHelper : ScriptableObject
             sb.Clear();
             while (index < rows.Count && rows[index][_convertSetting.EnumTypeColumn].ToString() == typeText)
             {
-                // TODO : 매 키 마다 밸류는 적을 것이냐, 분기에만 적을 것이냐
                 sb.Append($"\t{rows[index][_convertSetting.EnumKeyColumn]} = {rows[index][_convertSetting.EnumValueColumn]},");
                 if (rows[index][_convertSetting.EnumCommentsColumn].ToString() != string.Empty)
                 {
@@ -348,8 +283,7 @@ public class ExcelHelper : ScriptableObject
             var dic = ConvertLocalizationSheetToJson(sheet.Table);
             foreach (var item in dic)
             {
-                var path = sheet.HasFlag(SheetProperty.ExternalFolder) == false ? LocalizationGeneratedPath : ExternalFolderGeneratedPath;
-                GenerateFile(path, $"{item.Key}.json", item.Value, true);
+                GenerateFile(sheet.GeneratePath, $"{item.Key}.json", item.Value, true);
             }
         }
     }
@@ -372,7 +306,7 @@ public class ExcelHelper : ScriptableObject
                     break;
 
                 if (dic.ContainsKey(key) == true)
-                    throw new Exception("중복된 키 발견");
+                    throw new Exception("중복 키 발견");
 
                 dic.Add(key, table.Rows[y][x].ToString());
             }
@@ -384,26 +318,24 @@ public class ExcelHelper : ScriptableObject
 
         return texts;
     }
+    #endregion
 
     #region 유틸리티
-    private void GenerateFileWithOption()
-    {
-        // TODO
-    }
-
     private void GenerateFile(string path, string fileName, string text, bool isOverwrite)
     {
-        // TODO : Path가 무조건 Asset 내부에서만
-        path = Path.Combine(path, fileName);
+        if (Directory.Exists(path) == false)
+            Directory.CreateDirectory(path);
+
+        var pathAndFile = Path.Combine(path, fileName);
         if (isOverwrite == true)
-            File.WriteAllText(path, text); // 덮어쓰기
+            File.WriteAllText(pathAndFile, text); // 덮어쓰기
         else
-            File.AppendAllText(path, text); // 이어쓰기
+            File.AppendAllText(pathAndFile, text); // 이어쓰기
     }
 
-    private bool HasIgnoreSymbol(string text)
+    public static bool HasIgnoreSymbol(string text)
     {
-        return text.Length == 0 || text[0] == _ignoreSymbol;
+        return text.Length == 0 || text[0] == IgnoreSymbol;
     }
     #endregion
 

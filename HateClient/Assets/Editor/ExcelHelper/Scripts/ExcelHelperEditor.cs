@@ -4,15 +4,12 @@ using UnityEngine;
 [CustomEditor(typeof(ExcelHelper))]
 public class ExcelHelperEditor : Editor
 {
-    private bool _isCommonSettingFoldedOut = false;
     private bool _isDataClassSettingFoldedOut = false;
     private string _foldoutName = "설정";
 
     public override void OnInspectorGUI()
     {
         var helper = (ExcelHelper)target;
-        DrawCommonSettingUI(helper);
-        GUILayout.Space(10);
         DrawSheetSettingUI(helper);
         GUILayout.Space(10);
         DrawEnumSettingUI(helper);
@@ -40,37 +37,8 @@ public class ExcelHelperEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 
-    private void DrawCommonSettingUI(ExcelHelper helper)
-    {
-        EditorGUILayout.LabelField("공통 설정", EditorStyles.boldLabel);
-        _isCommonSettingFoldedOut = EditorGUILayout.Foldout(_isCommonSettingFoldedOut, _foldoutName);
-        if (_isCommonSettingFoldedOut == true)
-        {
-            EditorGUILayout.BeginHorizontal();
-            helper.ExternalFolderGeneratedPath = EditorGUILayout.TextField("외부 폴더 생성 경로", helper.ExternalFolderGeneratedPath);
-            if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
-            {
-                var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.ExternalFolderGeneratedPath);
-                helper.ExternalFolderGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
-            }
-            EditorGUILayout.EndHorizontal();
-        }
-    }
-
     private void DrawEnumSettingUI(ExcelHelper helper)
     {
-
-        EditorGUILayout.LabelField("Enum 생성 설정", EditorStyles.boldLabel);
-        EditorGUILayout.BeginHorizontal();
-        helper.EnumGeneratedPath = EditorGUILayout.TextField("생성 경로", helper.EnumGeneratedPath);
-        if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
-        {
-            var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.EnumGeneratedPath);
-            helper.EnumGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
-        }
-        EditorGUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
         if (GUILayout.Button("Enum 스크립트 생성"))
         {
             GenerateEnumScript(helper);
@@ -82,25 +50,7 @@ public class ExcelHelperEditor : Editor
     {
         EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
 
-        EditorGUILayout.BeginHorizontal();
-        helper.ClassGeneratedPath = EditorGUILayout.TextField("클래스 생성 경로", helper.ClassGeneratedPath);
-        if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
-        {
-            var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.ClassGeneratedPath);
-            helper.ClassGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
-        }
-        EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        helper.DBGeneratedPath = EditorGUILayout.TextField("DB 생성 경로", helper.DBGeneratedPath);
-        if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
-        {
-            var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.EnumGeneratedPath);
-            helper.DBGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
-        }
-        EditorGUILayout.EndHorizontal();
-
-        _isDataClassSettingFoldedOut = EditorGUILayout.Foldout(_isDataClassSettingFoldedOut, _foldoutName);
+          _isDataClassSettingFoldedOut = EditorGUILayout.Foldout(_isDataClassSettingFoldedOut, _foldoutName);
         if (_isDataClassSettingFoldedOut == true)
         {
             helper.IsClassAvoidDuplication = EditorGUILayout.Toggle("클래스 중복 방지", helper.IsClassAvoidDuplication);
@@ -129,15 +79,6 @@ public class ExcelHelperEditor : Editor
     private void DrawGenerateLocalization(ExcelHelper helper)
     {
         EditorGUILayout.LabelField("텍스트 생성 설정", EditorStyles.boldLabel);
-        EditorGUILayout.BeginHorizontal();
-        helper.LocalizationGeneratedPath = EditorGUILayout.TextField("생성 경로", helper.LocalizationGeneratedPath);
-        if (GUILayout.Button("...", GUILayout.MaxWidth(30)))
-        {
-            var selected = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, helper.LocalizationGeneratedPath);
-            helper.LocalizationGeneratedPath = "Assets" + selected.Substring(Application.dataPath.Length);
-        }
-        EditorGUILayout.EndHorizontal();
-
         GUILayout.Space(5);
         if (GUILayout.Button("텍스트 생성"))
         {
