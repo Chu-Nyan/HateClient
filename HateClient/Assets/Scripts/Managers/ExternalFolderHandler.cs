@@ -12,16 +12,16 @@ public class ExternalFolderHandler
 #endif
     private const string ExternalFolderName = "External_Data";
     private const string LanguagesFolder = "Languages";
-
-    //TODO
+    
     public void ChangeFont()
     {
-
+        //TODO
     }
 
     public string GetLanguagesTextFile(string name)
     {
-        name = Path.Combine(ExternalFolder, $"{name}.json");
-        return System.IO.File.ReadAllText(name);
+        name = Path.Combine(ExternalFolder, LanguagesFolder, $"{name}.json");
+        return File.ReadAllText(name);
     }
 }
+
