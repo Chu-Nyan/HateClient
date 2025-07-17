@@ -1,3 +1,5 @@
+using System.Collections;
+using System.ComponentModel;
 using UnityEngine;
 
 public class GameSceneTrigger : MonoBehaviour
@@ -43,7 +45,5 @@ public class GameSceneTrigger : MonoBehaviour
     {
         new TextResource<TextID>();
         TextResource<TextID>.Instance.LoadTexts(lang);
-        Test_Name.text = TextResource<TextID>.Texts(TextID.Unit_Human_Name);
-        Test_Desc.text = TextResource<TextID>.Texts(TextID.Unit_Human_Desc);
     }
 }
