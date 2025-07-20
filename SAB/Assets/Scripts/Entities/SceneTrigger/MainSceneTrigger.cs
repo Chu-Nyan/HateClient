@@ -1,9 +1,12 @@
-using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 
 public class GameSceneTrigger : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _camera;
+    private TopViewCamera _topViewCam;
+    private Character _player; 
+
     private void Awake()
     {
         GenerateStatic();
@@ -24,7 +27,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void GenerateInstance()
     {
         SetPracticeScene();
-
+        _topViewCam = new TopViewCamera();
     }
 
     private void InitStatic()
@@ -34,7 +37,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void InitInstance()
     {
-
+        SetCameraSetting();
     }
 
     private void GameStart()
@@ -48,9 +51,15 @@ public class GameSceneTrigger : MonoBehaviour
         TextResource<TextID>.Instance.LoadTexts(lang);
     }
 
+    private void SetCameraSetting()
+    {
+        _topViewCam.InitCamera(_camera);
+        _topViewCam.StickCameraArm(_player.transform);
+    }
+
     private void SetPracticeScene()
     {
-        var obj = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
-        obj.SetMovementStratrgy(new PlayerMovement());
+        _player = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+        _player.SetMovementStratrgy(new PlayerMovement());
     }
 }
