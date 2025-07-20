@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7970292164172961828}
   - component: {fileID: 4615552113408308580}
   - component: {fileID: 7908721717700510692}
-  - component: {fileID: 3401655601891565928}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -111,28 +110,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &3401655601891565928
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4475848947455313726}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &6976352407453832290
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4484955559739131829}
   - component: {fileID: 6683781507500869920}
+  - component: {fileID: 6510419280220273067}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -178,4 +156,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb8939dee9a0684b9d2eb630d914960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nav: {fileID: 3401655601891565928}
+  _nav: {fileID: 6510419280220273067}
+--- !u!195 &6510419280220273067
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976352407453832290}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
