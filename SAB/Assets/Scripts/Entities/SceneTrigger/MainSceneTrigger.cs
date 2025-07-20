@@ -23,6 +23,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void GenerateInstance()
     {
+        SetPracticeScene();
 
     }
 
@@ -45,5 +46,11 @@ public class GameSceneTrigger : MonoBehaviour
     {
         new TextResource<TextID>();
         TextResource<TextID>.Instance.LoadTexts(lang);
+    }
+
+    private void SetPracticeScene()
+    {
+        var obj = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+        obj.SetMovementStratrgy(new PlayerMovement());
     }
 }

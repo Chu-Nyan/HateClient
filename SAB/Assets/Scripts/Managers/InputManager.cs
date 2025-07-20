@@ -49,13 +49,11 @@ public class InputManager : Singleton<InputManager>
     private void OnWASDPerformed(InputAction.CallbackContext value)
     {
         WASDPerformed?.Invoke(value.ReadValue<Vector2>());
-        Debug.Log("zz");
     }
 
     private void OnWASDCanceled(InputAction.CallbackContext value)
     {
         WASDCanceled?.Invoke(value.ReadValue<Vector2>());
-        Debug.Log("zz");
     }
     #endregion
 }
