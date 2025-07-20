@@ -14,8 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GoogleSheetID: 1hzh6sZHyNAznkKQVJcs0T0IyYANyY6ywekRyjp2LYJU
   IsClassAvoidDuplication: 1
-  ClassGeneratedPath: Assets/Scripts/Entities
-  DBGeneratedPath: Assets/DB
-  EnumGeneratedPath: Assets/Scripts/Commons/Enum
-  ExternalFolderGeneratedPath: Assets/Editor/External_Data
-  LocalizationGeneratedPath: C:/Users/Nyan/Desktop/Chu/HateClient/HateClient/Assets
