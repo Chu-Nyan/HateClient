@@ -45,6 +45,9 @@ public class ExcelConfigLoader
         for (int x = setting.SheetPropertyFirstDataRow; x < option.Rows.Count; x++)
         {
             var name = option.Rows[x][setting.SheetPropertyNameColumn].ToString();
+            if (table[name] == null)
+                continue;
+
             var sheetData = new SheetData(table[name]);
             var flag = 0;
 
