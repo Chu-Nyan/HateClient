@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Chu.Collision;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Character : MonoBehaviour
 {
     [SerializeField]
     private NavMeshAgent _nav;
+    private NyanCollider _collider;
 
     private IMovementStrategy _movementController;
 

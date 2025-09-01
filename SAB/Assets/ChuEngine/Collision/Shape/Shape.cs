@@ -1,0 +1,35 @@
+﻿using System;
+using Chu.Data;
+using UnityEngine;
+
+namespace Chu.Collision
+{
+    public abstract class Shape
+    {
+        protected RectBound _bound;
+
+        public event Action ContactStarted;
+
+        public RectBound RectBound
+        {
+            get => _bound;
+        }
+
+        public abstract RectBound WorldRectBound { get; }
+
+        public Shape(float minX, float maxX, float minY, float maxY)
+        {
+            _bound = new(minX, maxX, minY, maxY);
+        }
+
+        public virtual void UpdateRectBound(Transform transform)
+        {
+            _bound.RefreshPosition(transform.position);
+        }
+
+        public abstract bool Intersects(Shape target);
+        public abstract bool Intersects(RectShape shape);
+        public abstract bool Intersects(CircleShape shape);
+    }
+}
+
