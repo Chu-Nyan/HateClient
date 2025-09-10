@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d44f07b8e0d4564d871db12abe4e9cf, type: 3}
   m_Name: SABDTOConverter
   m_EditorClassIdentifier: 
-  _unitCommon: {fileID: 4900000, guid: 60926f7e884a25d459ccaff454330f9b, type: 3}
-  _unitDropItem: {fileID: 4900000, guid: 1a1cae2b55db80a4c9c3fe9f2f333e05, type: 3}
-  _unitLevel: {fileID: 4900000, guid: da837d5a96a258c478e5d54a0c5f4065, type: 3}
+  _characterCommon: {fileID: 4900000, guid: 60926f7e884a25d459ccaff454330f9b, type: 3}
+  _characterDropItem: {fileID: 4900000, guid: 1a1cae2b55db80a4c9c3fe9f2f333e05, type: 3}
+  _characterLevel: {fileID: 4900000, guid: da837d5a96a258c478e5d54a0c5f4065, type: 3}
+  _characterDBGeneratePath: Assets/Scripts/Entities/Character/Data
