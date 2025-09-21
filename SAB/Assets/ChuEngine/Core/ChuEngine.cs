@@ -12,9 +12,9 @@ namespace Chu
         private CollisionSystem _collisionSys;
         private GeneratorHub _hub;
 
-        public CollisionSystem CollisionSystem 
-        { 
-            get => _collisionSys;
+        public GeneratorHub GeneratorHub
+        {
+            get => _hub;
         }
 
         public ChuEngine(GameObject root) : base()
