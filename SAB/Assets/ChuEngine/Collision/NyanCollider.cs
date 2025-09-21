@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Chu.Data;
-using Chu.Utility;
 using UnityEngine;
 
 namespace Chu.Collision
 {
     public class NyanCollider : IQuadTreeEntity
     {
-        private static readonly IDNumbering _iDNumbering = new(0, 64);
-
         public readonly int ID;
         public readonly string Name;
         private readonly Shape _shape;
@@ -39,17 +36,15 @@ namespace Chu.Collision
             get => _shape.RectBound;
         }
 
-        public NyanCollider(Transform pivot, Shape entity, string name)
+        public NyanCollider(Transform pivot, Shape entity, int id, string name)
         {
-            ID = _iDNumbering.GetID();
             _transform = pivot;
             _shape = entity;
+            ID = id;
             _insertedNodes = new(4);
             _contactIDs = new();
             Name = name;
         }
-
-        public NyanCollider(Transform pivot, Shape entity) : this(pivot, entity, "Collider") { }
 
         public void OnPositionChanged()
         {

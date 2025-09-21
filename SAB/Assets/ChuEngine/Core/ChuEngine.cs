@@ -1,24 +1,31 @@
 ﻿using Chu.Collision;
 using Chu.Data;
-using Unity.VisualScripting;
+using Library.DesignPattern;
 using UnityEngine;
 
 namespace Chu
 {
-    public class ChuEngine
+    public class ChuEngine : Singleton<ChuEngine>
     {
-        private Transform _root;
+        private readonly GameObject _root;
 
         private CollisionSystem _collisionSys;
+        private GeneratorHub _hub;
 
         public CollisionSystem CollisionSystem 
         { 
             get => _collisionSys;
         }
 
-        public ChuEngine(Transform root)
+        public ChuEngine(GameObject root) : base()
         {
             _root = root;
+            InitGeneratorHub();
+        }
+
+        private void InitGeneratorHub()
+        {
+            _hub = new GeneratorHub();
         }
 
         public void ActivateCollisionSystem(RectBound bound, int capacity)
