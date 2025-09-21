@@ -21,9 +21,9 @@ public class NyanColliderGenerator
         GeneratedEvent += action;
     }
 
-    public NyanColliderGenerator GenerateCollider(Transform transform, Shape shape, string name)
+    public NyanColliderGenerator GenerateCollider(Transform transform, Shape shape, string comment)
     {
-        _newCollider = new NyanCollider(transform, shape, _iDNumbering.GetID(), name);
+        _newCollider = new NyanCollider(transform, shape, _iDNumbering.GetID(), comment);
         return this;
     }
 
