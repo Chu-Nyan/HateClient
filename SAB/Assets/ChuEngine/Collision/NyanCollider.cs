@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Chu.Utility;
 using Chu.Data;
+using Chu.Utility;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -11,6 +11,7 @@ namespace Chu.Collision
         private static readonly IDNumbering _iDNumbering = new(0, 64);
 
         public readonly int ID;
+        public readonly string Name;
         private readonly Shape _shape;
         private readonly Transform _transform;
         private readonly HashSet<int> _insertedNodes;
@@ -38,14 +39,17 @@ namespace Chu.Collision
             get => _shape.RectBound;
         }
 
-        public NyanCollider(Transform pivot, Shape entity)
+        public NyanCollider(Transform pivot, Shape entity, string name)
         {
             ID = _iDNumbering.GetID();
             _transform = pivot;
             _shape = entity;
             _insertedNodes = new(4);
             _contactIDs = new();
+            Name = name;
         }
+
+        public NyanCollider(Transform pivot, Shape entity) : this(pivot, entity, "Collider") { }
 
         public void OnPositionChanged()
         {
