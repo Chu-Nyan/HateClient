@@ -20,17 +20,14 @@ namespace Chu
         public ChuEngine(GameObject root) : base()
         {
             _root = root;
-            InitGeneratorHub();
-        }
-
-        private void InitGeneratorHub()
-        {
             _hub = new GeneratorHub();
         }
 
         public void ActivateCollisionSystem(RectBound bound, int capacity)
         {
             _collisionSys = _root.AddComponent<CollisionSystem>();
+
+            _hub.InitNyanColliderGenerator(_collisionSys);
             _collisionSys.InitArray(capacity);
             _collisionSys.InitBound(bound);
         }

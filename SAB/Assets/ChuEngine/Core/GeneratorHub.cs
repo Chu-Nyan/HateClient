@@ -1,4 +1,5 @@
-﻿using Library.DesignPattern;
+﻿using Chu.Collision;
+using Library.DesignPattern;
 
 namespace Chu
 {
@@ -9,6 +10,11 @@ namespace Chu
         public GeneratorHub()
         {
             NyanColliderGenerator = new();
+        }
+
+        public void InitNyanColliderGenerator(CollisionSystem system)
+        {
+            NyanColliderGenerator.Init(system);
         }
     }
 }
