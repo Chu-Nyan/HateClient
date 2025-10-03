@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Chu.Collision;
 using Chu.Data;
 using UnityEngine;
 
@@ -26,12 +27,12 @@ namespace Chu.Collision
             get => _bound.GetWorldCorners(_radius);
         }
 
-        public RectShape(float rotation, float width, float height) : base(0, width, 0, height)
+        public RectShape(float rotation, float width, float height) : base(ShapeType.Rectangle, 0, width, 0, height)
         {
             _rotation = rotation;
         }
 
-        public RectShape(float minX, float maxX, float minY, float maxY, float rotation = 0) : base(minX, maxX, minY, maxY)
+        public RectShape(float minX, float maxX, float minY, float maxY, float rotation = 0) : base(ShapeType.Rectangle, minX, maxX, minY, maxY)
         {
             _rotation = rotation;
         }
@@ -77,4 +78,20 @@ namespace Chu.Collision
         }
     }
 
+}
+
+public class Projectile : MonoBehaviour, ICollisionProvider
+{
+    private NyanCollider _collider;
+    public NyanCollider Collider { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+    public void OnNyanCollisionEnter(ICollisionProvider collider)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnNyanCollisionExit(ICollisionProvider collider)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -17,7 +17,7 @@ namespace Chu.Collision
             get => _bound;
         }
 
-        public CircleShape(float radius) : base(-radius, radius, -radius, radius)
+        public CircleShape(float radius) : base(ShapeType.Circle, -radius, radius, -radius, radius)
         {
             _radius = radius;
         }

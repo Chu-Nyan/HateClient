@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace Chu.Collision
 {
+
     public abstract class Shape
     {
+        public readonly ShapeType ShapeType;
         protected RectBound _bound;
 
         public event Action ContactStarted;
@@ -17,8 +19,9 @@ namespace Chu.Collision
 
         public abstract RectBound WorldRectBound { get; }
 
-        public Shape(float minX, float maxX, float minY, float maxY)
+        public Shape(ShapeType type, float minX, float maxX, float minY, float maxY)
         {
+            ShapeType = type;
             _bound = new(minX, maxX, minY, maxY);
         }
 
