@@ -26,14 +26,19 @@ public class QuadTree<T> where T : IQuadTreeEntity
 
     public void Insert(T entity)
     {
+        Remove(entity);
+
+        entity.ResetInsertedNodes();
+        _root.Insert(entity);
+    }
+
+    public void Remove(T entity)
+    {
         foreach (var nodeIndex in entity.InsertedNodesID)
         {
             var node = GetNode(nodeIndex);
             node.Remove(entity);
         }
-
-        entity.ResetInsertedNodes();
-        _root.Insert(entity);
     }
 
     public QuadTreeNode<T> GetNode(int index)
