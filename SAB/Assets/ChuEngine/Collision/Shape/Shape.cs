@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Chu.Collision
 {
-
     public abstract class Shape
     {
         public readonly ShapeType ShapeType;

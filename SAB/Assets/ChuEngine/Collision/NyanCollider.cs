@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Chu.Collision
 {
+    /// <summary>
+    /// NyanCollisonSystem에서 사용하는 물리 오브젝트
+    /// </summary>
     public class NyanCollider : IQuadTreeEntity
     {
         public readonly int ID;

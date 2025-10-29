@@ -4,14 +4,19 @@ using UnityEngine;
 
 namespace Chu.Collision
 {
-    public class CollisionSystem : MonoBehaviour
+    /// <summary>
+    /// 물리 객체를 관리, 충돌 시뮬레이션 실행
+    /// </summary>
+    /// - 개발 방향
+    /// 시스템에서 등록된 객체는 해제 불가능
+    public class NyanCollisonSystem : MonoBehaviour
     {
         private QuadTree<NyanCollider> _root;
 
         private HashSet<int> _frameChecked;
         private HashSet<int> _candidateChecked;
         private Queue<CollisionInfo> _collisionInfoQueue;
-        private Dictionary<int, ICollisionProvider> _collidersByID;
+        private Dictionary<int, INyanCollisionProvider> _collidersByID;
 
         /// <summary>
         /// 배열의 초기 크기 지정
@@ -63,7 +68,10 @@ namespace Chu.Collision
             _collisionInfoQueue.Clear();
         }
 
-        public void RegisterEntity(ICollisionProvider obj)
+        /// <summary>
+        /// 물리 시스템에 객체 등록, 해제 불가
+        /// </summary>
+        public void RegisterEntity(INyanCollisionProvider obj)
         {
             if (_collidersByID.TryAdd(obj.Collider.ID, obj) == false)
                 throw new System.Exception("콜라이더 중복 등록");

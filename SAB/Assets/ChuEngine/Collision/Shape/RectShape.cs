@@ -80,17 +80,17 @@ namespace Chu.Collision
 
 }
 
-public class Projectile : MonoBehaviour, ICollisionProvider
+public class Projectile : MonoBehaviour, INyanCollisionProvider
 {
     private NyanCollider _collider;
     public NyanCollider Collider { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-    public void OnNyanCollisionEnter(ICollisionProvider collider)
+    public void OnNyanCollisionEnter(INyanCollisionProvider collider)
     {
         throw new System.NotImplementedException();
     }
 
-    public void OnNyanCollisionExit(ICollisionProvider collider)
+    public void OnNyanCollisionExit(INyanCollisionProvider collider)
     {
         throw new System.NotImplementedException();
     }

@@ -1,5 +1,4 @@
 ﻿using Chu.Data;
-using UnityEngine;
 
 namespace Chu.Collision
 {

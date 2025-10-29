@@ -1,58 +1,63 @@
 ﻿using System;
-using Chu.Collision;
 using Chu.Utility;
 using UnityEngine;
 
-public class NyanColliderGenerator
+namespace Chu.Collision
 {
-    private readonly IDNumbering _iDNumbering;
-
-    private CollisionSystem _system;
-    private NyanCollider _newCollider;
-    private bool _initialized;
-
-    private event Action<NyanCollider> CommonEnabledChangedHandler;
-
-    public NyanColliderGenerator()
+    /// <summary>
+    /// NyanCollider를 생성하고 충돌 시스템에 등록하는 팩토리
+    /// </summary>
+    public class NyanColliderGenerator
     {
-        _iDNumbering = new(0, 64);
-    }
+        private readonly IDNumbering _iDNumbering;
 
-    public void Init(CollisionSystem sys)
-    {
-        if (_initialized == true)
-            throw new Exception("초기화 중복 호출");
+        private NyanCollisonSystem _system;
+        private NyanCollider _newCollider;
+        private bool _initialized;
 
-        _system = sys;
-        _initialized = true;
-    }
+        private event Action<NyanCollider> CommonEnabledChangedHandler;
 
-    public NyanColliderGenerator GenerateCollider(ICollisionProvider provider, Transform transform, Shape shape, string comment)
-    {
-        if (_initialized == false)
-            throw new Exception("초기화 되지 않음");
+        public NyanColliderGenerator()
+        {
+            _iDNumbering = new(0, 64);
+        }
 
-        _newCollider = new NyanCollider(transform, shape, _iDNumbering.GetID(), comment);
-        _newCollider.RegisterEnabled(CommonEnabledChangedHandler);
-        SetProviderAndRegisterCollisionSystem(provider);
-        return this;
-    }
+        public void Init(NyanCollisonSystem sys)
+        {
+            if (_initialized == true)
+                throw new Exception("초기화 중복 호출");
 
-    public NyanColliderGenerator GenerateCollider(ICollisionProvider provider, Transform transform, Shape shape)
-    {
-        GenerateCollider(provider, transform, shape, "Collider");
-        return this;
-    }
+            _system = sys;
+            _initialized = true;
+        }
 
-    private NyanColliderGenerator SetProviderAndRegisterCollisionSystem(ICollisionProvider provider)
-    {
-        provider.Collider = _newCollider;
-        _system.RegisterEntity(provider);
-        return this;
-    }
+        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, Transform transform, Shape shape, string comment)
+        {
+            if (_initialized == false)
+                throw new Exception("초기화 되지 않음");
 
-    public NyanCollider GetCollider()
-    {
-        return _newCollider;
+            _newCollider = new NyanCollider(transform, shape, _iDNumbering.GetID(), comment);
+            _newCollider.RegisterEnabled(CommonEnabledChangedHandler);
+            SetProviderAndRegisterCollisionSystem(provider);
+            return this;
+        }
+
+        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, Transform transform, Shape shape)
+        {
+            GenerateCollider(provider, transform, shape, "Collider");
+            return this;
+        }
+
+        private NyanColliderGenerator SetProviderAndRegisterCollisionSystem(INyanCollisionProvider provider)
+        {
+            provider.Collider = _newCollider;
+            _system.RegisterEntity(provider);
+            return this;
+        }
+
+        public NyanCollider GetCollider()
+        {
+            return _newCollider;
+        }
     }
 }

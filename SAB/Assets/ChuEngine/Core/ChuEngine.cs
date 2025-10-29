@@ -9,7 +9,7 @@ namespace Chu
     {
         private readonly GameObject _root;
 
-        private CollisionSystem _collisionSys;
+        private NyanCollisonSystem _collisionSys;
         private GeneratorHub _hub;
 
         public GeneratorHub GeneratorHub
@@ -25,7 +25,7 @@ namespace Chu
 
         public void ActivateCollisionSystem(RectBound bound, int capacity)
         {
-            _collisionSys = _root.AddComponent<CollisionSystem>();
+            _collisionSys = _root.AddComponent<NyanCollisonSystem>();
 
             _hub.InitNyanColliderGenerator(_collisionSys);
             _collisionSys.InitArray(capacity);

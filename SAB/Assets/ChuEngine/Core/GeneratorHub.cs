@@ -12,7 +12,7 @@ namespace Chu
             NyanColliderGenerator = new();
         }
 
-        public void InitNyanColliderGenerator(CollisionSystem system)
+        public void InitNyanColliderGenerator(NyanCollisonSystem system)
         {
             NyanColliderGenerator.Init(system);
         }
