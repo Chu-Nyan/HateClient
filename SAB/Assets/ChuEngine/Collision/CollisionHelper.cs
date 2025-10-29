@@ -20,7 +20,7 @@ namespace Chu.Collision
             {
                 float dotDistance = Mathf.Abs(Vector2.Dot(axis, distance));
                 float dotThis = Mathf.Abs(Vector2.Dot(axis, a.Radius[0])) + Mathf.Abs(Vector2.Dot(axis, a.Radius[1]));
-                float dotTarget = Mathf.Abs(Vector2.Dot(axis, b.Radius[0])) + Mathf.Abs(Vector2.Dot(axis, sb.Radius[1]));
+                float dotTarget = Mathf.Abs(Vector2.Dot(axis, b.Radius[0])) + Mathf.Abs(Vector2.Dot(axis, b.Radius[1]));
 
                 return dotDistance <= dotThis + dotTarget;
             }
