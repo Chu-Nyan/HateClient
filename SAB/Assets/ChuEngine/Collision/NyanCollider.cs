@@ -79,12 +79,12 @@ namespace Chu.Collision
             _insertedNodes.Clear();
         }
 
-        public void RegisterContactColliderID(int id)
+        public void AddContactColliderID(int id)
         {
             _contactIDs.Add(id);
         }
 
-        public void UnregisterContactColliderID(int id)
+        public void RemoveContactColliderID(int id)
         {
             _contactIDs.Remove(id);
         }

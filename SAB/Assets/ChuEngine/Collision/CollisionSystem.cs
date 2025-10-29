@@ -46,8 +46,8 @@ namespace Chu.Collision
 
                 if (info.State == CollisionState.Enter)
                 {
-                    aColider.Collider.RegisterContactColliderID(info.TargetID);
-                    bColider.Collider.RegisterContactColliderID(info.PrimaryID);
+                    aColider.Collider.AddContactColliderID(info.TargetID);
+                    bColider.Collider.AddContactColliderID(info.PrimaryID);
                     aColider.OnNyanCollisionEnter(bColider);
                     bColider.OnNyanCollisionEnter(aColider);
                 }
@@ -55,8 +55,8 @@ namespace Chu.Collision
                 {
                     aColider.OnNyanCollisionExit(bColider);
                     bColider.OnNyanCollisionExit(aColider);
-                    aColider.Collider.UnregisterContactColliderID(info.TargetID);
-                    bColider.Collider.UnregisterContactColliderID(info.PrimaryID);
+                    aColider.Collider.RemoveContactColliderID(info.TargetID);
+                    bColider.Collider.RemoveContactColliderID(info.PrimaryID);
                 }
             }
 
