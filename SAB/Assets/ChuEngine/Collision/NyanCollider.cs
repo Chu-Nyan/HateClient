@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Chu.Data;
+using System;
 using System.Collections.Generic;
-using Chu.Data;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -13,8 +13,10 @@ namespace Chu.Collision
         private readonly Transform _transform;
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
+        private bool _isEnable;
 
         private event Action<NyanCollider> PositionChanged;
+        private event Action<NyanCollider> EnabledChanged;
 
         public Shape Shape
         {
@@ -34,6 +36,16 @@ namespace Chu.Collision
         public RectBound RectBound
         {
             get => _shape.RectBound;
+        }
+
+        public bool IsEnable
+        {
+            get => _isEnable;
+            set 
+            {
+                _isEnable = value;
+                EnabledChanged?.Invoke(this);
+            }
         }
 
         public NyanCollider(Transform pivot, Shape entity, int id, string comment)
@@ -77,10 +89,22 @@ namespace Chu.Collision
             _contactIDs.Remove(id);
         }
 
+        #region 델리게이트 등록, 해제
         public void RegisterPositionChanged(Action<NyanCollider> action)
         {
             PositionChanged += action;
         }
+
+        public void UnregisterPositionChanged(Action<NyanCollider> action)
+        {
+            PositionChanged -= action;
+        }
+
+        public void RegisterEnabled(Action<NyanCollider> action)
+        {
+            EnabledChanged += action;
+        }
+        #endregion
 
         public override string ToString()
         {
