@@ -11,7 +11,7 @@ public class NyanColliderGenerator
     private NyanCollider _newCollider;
     private bool _initialized;
 
-    private event Action<NyanCollider> GeneratedEvent;
+    private event Action<NyanCollider> CommonEnabledChangedHandler;
 
     public NyanColliderGenerator()
     {
@@ -33,6 +33,7 @@ public class NyanColliderGenerator
             throw new Exception("초기화 되지 않음");
 
         _newCollider = new NyanCollider(transform, shape, _iDNumbering.GetID(), comment);
+        _newCollider.RegisterEnabled(CommonEnabledChangedHandler);
         SetProviderAndRegisterCollisionSystem(provider);
         return this;
     }
@@ -52,7 +53,6 @@ public class NyanColliderGenerator
 
     public NyanCollider GetCollider()
     {
-        GeneratedEvent?.Invoke(_newCollider);
         return _newCollider;
     }
 }

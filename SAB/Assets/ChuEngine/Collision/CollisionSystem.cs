@@ -68,11 +68,25 @@ namespace Chu.Collision
             if (_collidersByID.TryAdd(obj.Collider.ID, obj) == false)
                 throw new System.Exception("콜라이더 중복 등록");
 
-            obj.Collider.RegisterPositionChanged(Insert);
-            Insert(obj.Collider);
+            obj.Collider.RegisterEnabled(OnShapeActivationChanged);
+            OnShapeActivationChanged(obj.Collider);
         }
 
-        public void Insert(NyanCollider obj)
+        private void OnShapeActivationChanged(NyanCollider collider)
+        {
+            if (collider.IsEnable == true)
+            {
+                collider.RegisterPositionChanged(Insert);
+                Insert(collider);
+            }
+            else // false
+            {
+                collider.UnregisterPositionChanged(Insert);
+                Remove(collider);
+            }
+        }
+
+        private void Insert(NyanCollider obj)
         {
             var nodes = obj.InsertedNodesID;
             if (nodes.Count == 1)
@@ -89,6 +103,11 @@ namespace Chu.Collision
 
             _root.Insert(obj);
             CheckCollision(obj);
+        }
+
+        private void Remove(NyanCollider obj)
+        {
+            _root.Remove(obj);
         }
 
         private void CheckCollision(NyanCollider primary)
