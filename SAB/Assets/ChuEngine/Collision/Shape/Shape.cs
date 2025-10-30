@@ -9,8 +9,6 @@ namespace Chu.Collision
         public readonly ShapeType ShapeType;
         protected RectBound _bound;
 
-        public event Action ContactStarted;
-
         public RectBound RectBound
         {
             get => _bound;

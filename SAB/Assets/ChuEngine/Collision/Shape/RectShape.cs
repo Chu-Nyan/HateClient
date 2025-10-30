@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Chu.Collision;
-using Chu.Data;
+﻿using Chu.Data;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -78,20 +76,4 @@ namespace Chu.Collision
         }
     }
 
-}
-
-public class Projectile : MonoBehaviour, INyanCollisionProvider
-{
-    private NyanCollider _collider;
-    public NyanCollider Collider { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-    public void OnNyanCollisionEnter(INyanCollisionProvider collider)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnNyanCollisionExit(INyanCollisionProvider collider)
-    {
-        throw new System.NotImplementedException();
-    }
 }
