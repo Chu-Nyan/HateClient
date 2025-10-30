@@ -1,5 +1,5 @@
 ﻿using Chu.Collision;
-using Library.DesignPattern;
+using Chu.Utility;
 
 namespace Chu
 {

@@ -1,4 +1,4 @@
-﻿namespace Library.DesignPattern
+﻿namespace Chu.Utility
 {
     public abstract class Singleton<T> where T : Singleton<T>
     {

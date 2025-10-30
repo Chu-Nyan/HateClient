@@ -1,6 +1,6 @@
 ﻿using Chu.Collision;
 using Chu.Data;
-using Library.DesignPattern;
+using Chu.Utility;
 using UnityEngine;
 
 namespace Chu

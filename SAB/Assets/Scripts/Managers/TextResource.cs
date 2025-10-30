@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Library.DesignPattern;
+﻿using Chu.Utility;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 public class TextResource<T> : Singleton<TextResource<T>>
 {

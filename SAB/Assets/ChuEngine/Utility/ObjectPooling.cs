@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Library.DesignPattern
+namespace Chu.Utility
 {
     public class ObjectPooling<T> where T : class
     {

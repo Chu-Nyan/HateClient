@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using Chu.Utility;
+using System.Collections;
 using System.Collections.Generic;
-using Library.DesignPattern;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviourSingleton<SoundManager>
