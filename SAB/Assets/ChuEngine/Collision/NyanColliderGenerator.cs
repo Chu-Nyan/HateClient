@@ -38,20 +38,13 @@ namespace Chu.Collision
 
             _newCollider = new NyanCollider(transform, shape, _iDNumbering.GetID(), comment);
             _newCollider.RegisterEnabled(CommonEnabledChangedHandler);
-            SetProviderAndRegisterCollisionSystem(provider);
+            _system.RegisterEntity(provider);
             return this;
         }
 
         public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, Transform transform, Shape shape)
         {
             GenerateCollider(provider, transform, shape, "Collider");
-            return this;
-        }
-
-        private NyanColliderGenerator SetProviderAndRegisterCollisionSystem(INyanCollisionProvider provider)
-        {
-            provider.Collider = _newCollider;
-            _system.RegisterEntity(provider);
             return this;
         }
 

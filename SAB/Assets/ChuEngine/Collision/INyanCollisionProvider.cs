@@ -6,7 +6,7 @@
     /// 상속받은 객체는 반드시 하나의 NyanCollider를 제공해야함
     public interface INyanCollisionProvider
     {
-        public NyanCollider Collider { get; set; }
+        public NyanCollider Collider { get; }
         public void OnNyanCollisionEnter(INyanCollisionProvider collider);
         public void OnNyanCollisionExit(INyanCollisionProvider collider);
     }
