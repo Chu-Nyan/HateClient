@@ -36,9 +36,21 @@ namespace Chu.Collision
             _rotation = rotation;
         }
 
-        public override void UpdateRectBound(Transform transform)
+        public void Refresh(float rotation, float width, float height)
         {
-            base.UpdateRectBound(transform);
+            _rotation = rotation;
+            UpdateRectBound(0, width, 0, height);
+        }
+
+        public void Refresh(float rotation, float minX, float maxX, float minY, float maxY)
+        {
+            _rotation = rotation;
+            UpdateRectBound(minX, maxX, minY, maxY);
+        }
+
+        public override void UpdatePosition(Transform transform)
+        {
+            base.UpdatePosition(transform);
             _rotation = transform.localRotation.eulerAngles.y * Mathf.Deg2Rad;
             RefreshAxis();
         }

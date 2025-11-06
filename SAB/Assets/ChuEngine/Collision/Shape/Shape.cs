@@ -18,12 +18,17 @@ namespace Chu.Collision
         public Shape(ShapeType type, float minX, float maxX, float minY, float maxY)
         {
             ShapeType = type;
-            _bound = new(minX, maxX, minY, maxY);
+            UpdateRectBound(minX, maxX, minY, maxY);
         }
 
-        public virtual void UpdateRectBound(Transform transform)
+        public virtual void UpdatePosition(Transform transform)
         {
             _bound.RefreshPosition(transform.position);
+        }
+
+        protected void UpdateRectBound(float minX, float maxX, float minY, float maxY)
+        {
+            _bound = new(minX, maxX, minY, maxY);
         }
 
         public abstract bool Intersects(Shape target);

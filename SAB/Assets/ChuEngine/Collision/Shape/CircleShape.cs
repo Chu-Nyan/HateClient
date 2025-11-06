@@ -21,6 +21,12 @@ namespace Chu.Collision
             _radius = radius;
         }
 
+        public void Refresh(float radius)
+        {
+            _radius = radius;
+            UpdateRectBound(-radius, radius, -radius, radius);
+        }
+
         public override bool Intersects(Shape target)
         {
             if (RectBound.IsIntersecting(_bound, target.WorldRectBound) == false)

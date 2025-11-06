@@ -16,6 +16,8 @@ namespace Chu.Utility
             _resetDelegate = reset;
         }
 
+        public ObjectPooling(Func<T> generate) : this(generate, null) { }
+
         public T Dequeue()
         {
             if (_queue.TryDequeue(out var item) == true)
