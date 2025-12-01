@@ -69,6 +69,12 @@ namespace Chu.Collision
             return this;
         }
 
+        public NyanColliderGenerator SetShape(Shape shape, string comment)
+        {
+            _newCollider.SetShape(shape, comment);
+            return this;
+        }
+
         public NyanCollider GetCollider()
         {
             return _newCollider;
