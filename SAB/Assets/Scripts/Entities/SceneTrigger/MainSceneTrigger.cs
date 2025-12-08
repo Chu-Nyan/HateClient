@@ -1,3 +1,4 @@
+using Chu;
 using UnityEngine;
 
 public class GameSceneTrigger : MonoBehaviour
@@ -6,9 +7,12 @@ public class GameSceneTrigger : MonoBehaviour
     private GameObject _camera;
     private TopViewCamera _topViewCam;
     private Character _player; 
+    private UnitController _unitController;
 
     private void Awake()
     {
+        StartChuEngine();
+
         GenerateStatic();
         GenerateInstance();
 
@@ -17,32 +21,36 @@ public class GameSceneTrigger : MonoBehaviour
         GameStart();
     }
 
+    private void StartChuEngine()
+    {
+        var engine = new ChuEngine(gameObject);
+    }
+
     private void GenerateStatic()
     {
         new InputManager();
-        InputManager.Instance.SetActive(true);
-        InitText("en");
     }
 
     private void GenerateInstance()
     {
-        SetPracticeScene();
         _topViewCam = new TopViewCamera();
+        _unitController = new();
     }
 
     private void InitStatic()
     {
-
+        InputManager.Instance.SetActive(true);
+        InitText("en");
     }
 
     private void InitInstance()
     {
-        SetCameraSetting();
+        _topViewCam.InitCamera(_camera);
     }
 
     private void GameStart()
     {
-
+        SetPracticeScene();
     }
 
     private void InitText(string lang)
@@ -51,15 +59,10 @@ public class GameSceneTrigger : MonoBehaviour
         TextResource<TextID>.Instance.LoadTexts(lang);
     }
 
-    private void SetCameraSetting()
-    {
-        _topViewCam.InitCamera(_camera);
-        _topViewCam.StickCameraArm(_player.transform);
-    }
-
     private void SetPracticeScene()
     {
-        _player = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
-        _player.SetMovementStratrgy(new PlayerMovement());
+        _player = _unitController.GenerateCharacter(UnitController.Oner.Player);
+        _topViewCam.StickCameraArm(_player.transform);
+
     }
 }
