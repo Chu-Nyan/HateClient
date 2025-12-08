@@ -2,13 +2,25 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IMovementReceiver
 {
+    [SerializeField]
+    private int _objectID;
+
     [SerializeField]
     private NavMeshAgent _nav;
     private NyanCollider _collider;
 
     private IMovementStrategy _movementController;
+    public int ObjectID 
+    { 
+        get => _objectID;
+    }
+
+    public void Init(int objID)
+    {
+        _objectID = objID ;
+    }
 
     public void SetMovementStratrgy(IMovementStrategy movement)
     {
