@@ -1,5 +1,4 @@
-﻿using Chu.Collision;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Character : MonoBehaviour, IMovementReceiver
@@ -9,11 +8,14 @@ public class Character : MonoBehaviour, IMovementReceiver
 
     [SerializeField]
     private NavMeshAgent _nav;
-    private NyanCollider _collider;
 
-    private IMovementStrategy _movementController;
     public int ObjectID 
     { 
+        get => _objectID;
+    }
+
+    public int ReceiverID
+    {
         get => _objectID;
     }
 
@@ -22,18 +24,13 @@ public class Character : MonoBehaviour, IMovementReceiver
         _objectID = objID ;
     }
 
-    public void SetMovementStratrgy(IMovementStrategy movement)
+    public void SetDestination(Vector3 destination)
     {
-        _movementController = movement;
-        _movementController.Init(_nav);
+        _nav.SetDestination(destination);
     }
 
-    public void FixedUpdate()
+    public void Move(Vector3 dir)
     {
-        if (_movementController.IsMoving == true)
-        {
-            _movementController.Move();
-        }
-        _movementController.Move();
+        _nav.Move(dir);
     }
 }

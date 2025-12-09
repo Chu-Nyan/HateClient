@@ -1,8 +1,8 @@
 ﻿/// <summary>
-/// 상호작용, 공격 등 행동을 실행하는 객체
+/// 상호작용, 공격 등 행동을 수신
 /// </summary>
-public interface IActionReceiver
+public interface IActionReceiver : IInputReceiver
 {
-    void Attack();
-    void Interact();
+    public void Attack();
+    public void Interact();
 }

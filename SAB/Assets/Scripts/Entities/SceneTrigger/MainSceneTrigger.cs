@@ -34,7 +34,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void GenerateInstance()
     {
         _topViewCam = new TopViewCamera();
-        _unitController = new();
+        _unitController = new(transform);
     }
 
     private void InitStatic()
@@ -62,6 +62,8 @@ public class GameSceneTrigger : MonoBehaviour
     private void SetPracticeScene()
     {
         _player = _unitController.GenerateCharacter(UnitController.Oner.Player);
+        _unitController.BindUnitHandler(_player, UnitController.Oner.Player);
+        _unitController.ToggleUnitHandler(_player.ReceiverID, true);
         _topViewCam.StickCameraArm(_player.transform);
 
     }

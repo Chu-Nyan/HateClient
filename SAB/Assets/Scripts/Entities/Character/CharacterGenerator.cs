@@ -1,19 +1,19 @@
 ﻿using Chu.Utility;
 using System;
 
-public class CharactorGenerator
+public class CharacterGenerator
 {
+    private readonly IDNumbering _numbering;
+    
     private Character _new;
-    private IDNumbering _numbering;
-
     private bool _canRelease;
 
-    public CharactorGenerator()
+    public CharacterGenerator()
     {
-        _numbering = new IDNumbering(0, 48);
+        _numbering = new IDNumbering(100000, 48);
     }
 
-    public CharactorGenerator Ready()
+    public CharacterGenerator Ready()
     {
         _new = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
         _new.Init(_numbering.GetID());
@@ -27,6 +27,7 @@ public class CharactorGenerator
             throw new Exception();
 
         _canRelease = false;
+        
         return _new;
     }
 }

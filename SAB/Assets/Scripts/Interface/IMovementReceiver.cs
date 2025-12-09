@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 입력을 받아 움직이는 객체
+/// 이동 입력을 수신
 /// </summary>
-public interface IMovementReceiver
+public interface IMovementReceiver : IInputReceiver
 {
-    void Move(Vector3 dir);
+    public Transform transform { get; }
+    public void SetDestination(Vector3 dir);
+    public void Move(Vector3 dir);
 }
