@@ -1,19 +1,26 @@
-﻿namespace ChampagneSupernova.Library.BehaviorTree
+﻿using System;
+
+namespace ChampagneSupernova.Library.BehaviorTree
 {
     public class BehaviorAI<T> where T : class
     {
         private BaseContollerNode<T> _root;
-        private bool _isRunning;
+        private bool _isActivation;
 
-        public bool IsRunning
+        public bool IsActivation
         {
-            get => _isRunning;
-            set => _isRunning = value;
+            get => _isActivation;
+            set => _isActivation = value;
         }
 
         public void Init(BaseContollerNode<T> root)
         {
             _root = root;
+        }
+
+        public void SetActive(bool isActivation)
+        {
+            IsActivation = isActivation;
         }
 
         public void AddRootChild(IBTNode<T> node)
@@ -23,7 +30,7 @@
 
         public void Execute(T item)
         {
-            if (_isRunning == false)
+            if (_isActivation == false)
                 return;
 
             _root.Evaluate(item);
