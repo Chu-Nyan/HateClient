@@ -8,7 +8,7 @@ namespace SAB.AI.Data
     public class AIContext
     {
         private IMovementReceiver _movementReceiver;
-        private IActionReceiver _actionReceiver;
+        private ICombatReceiver _combatReceiver;
 
         private CommandType _command;
         private MethodResult _progress;
@@ -22,10 +22,10 @@ namespace SAB.AI.Data
             set => _movementReceiver = value;
         }
 
-        public IActionReceiver ActionReceiver
+        public ICombatReceiver CombatReceiver
         { 
-            get => _actionReceiver;
-            set => _actionReceiver = value;
+            get => _combatReceiver;
+            set => _combatReceiver = value;
         }
 
         public CommandType Command 

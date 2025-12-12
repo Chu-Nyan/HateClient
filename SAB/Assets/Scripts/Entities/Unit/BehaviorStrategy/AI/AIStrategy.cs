@@ -48,9 +48,9 @@ namespace SAB.AI
             _commandAI.SetActive(false);
         }
 
-        public void SetActionReceiver(IActionReceiver receiver)
+        public void SetCombatReceiver(ICombatReceiver receiver)
         {
-            _context.ActionReceiver = receiver;
+            _context.CombatReceiver = receiver;
         }
 
         public void SetMovementReceiver(IMovementReceiver receiver)

@@ -9,7 +9,7 @@ public class UnitBehaviorHandler
     private int _receiverID;
 
     private IUnitBehaviorStrategy _behaviorStrategy;
-    private IActionReceiver _actionReceiver;
+    private ICombatReceiver _combatReceiver;
     private IMovementReceiver _movementReceiver;
 
     private bool _isActivation;
@@ -63,15 +63,15 @@ public class UnitBehaviorHandler
 
     public void SetReceivers<T>(T receiver) where T : IInputReceiver
     {
-        SetActionReceiver(receiver as IActionReceiver);
+        SetActionReceiver(receiver as ICombatReceiver);
         SetMovementReceiver(receiver as IMovementReceiver);
         _receiverID = receiver.ReceiverID;
     }
 
-    private void SetActionReceiver(IActionReceiver receiver)
+    private void SetActionReceiver(ICombatReceiver receiver)
     {
-        _actionReceiver = receiver;
-        _behaviorStrategy.SetActionReceiver(_actionReceiver);
+        _combatReceiver = receiver;
+        _behaviorStrategy.SetCombatReceiver(_combatReceiver);
     }
 
     private void SetMovementReceiver(IMovementReceiver receiver)
@@ -82,7 +82,7 @@ public class UnitBehaviorHandler
 
     private void RefreshBehaviorStrategy()
     {
-        _behaviorStrategy.SetActionReceiver(_actionReceiver);
+        _behaviorStrategy.SetCombatReceiver(_combatReceiver);
         _behaviorStrategy.SetMovementReceiver(_movementReceiver);
     }
 }

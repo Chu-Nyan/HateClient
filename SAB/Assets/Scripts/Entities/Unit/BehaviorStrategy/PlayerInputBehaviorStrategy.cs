@@ -6,7 +6,7 @@
 public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
 {
     private IMovementReceiver _movementReceiver;
-    private IActionReceiver _actionReceiver;
+    private ICombatReceiver _combatReceiver;
     private Vector2 _direction;
     private bool _isMoving;
 
@@ -22,9 +22,9 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
         _movementReceiver = receiver;
     }
 
-    public void SetActionReceiver(IActionReceiver receiver)
+    public void SetCombatReceiver(ICombatReceiver receiver)
     {
-        _actionReceiver = receiver;
+        _combatReceiver = receiver;
     }
 
     public void Enable()
@@ -50,5 +50,10 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
     {
         var direction = new Vector3(_direction.x * 0.1f, 0, _direction.y * 0.1f);
         _movementReceiver.Move(direction);
+    }
+
+    private void Attack()
+    {
+        _combatReceiver.Attack
     }
 }
