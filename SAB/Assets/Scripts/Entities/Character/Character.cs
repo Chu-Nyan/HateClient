@@ -8,9 +8,11 @@ public class Character : MonoBehaviour, IMovementReceiver
 
     [SerializeField]
     private NavMeshAgent _nav;
+    private PatrolData _patrolData;
+    private IdleData _idleData;
 
-    public int ObjectID 
-    { 
+    public int ObjectID
+    {
         get => _objectID;
     }
 
@@ -19,9 +21,26 @@ public class Character : MonoBehaviour, IMovementReceiver
         get => _objectID;
     }
 
-    public void Init(int objID)
+    public PatrolData PatrolData
     {
-        _objectID = objID ;
+        get=> _patrolData;
+    }
+
+    public IdleData IdleData
+    {
+        get => _idleData;
+    }
+
+    public bool IsMoving
+    {
+        get => _nav.hasPath;
+    }
+
+    public void Init(int objID, PatrolData patrolData, IdleData idleData)
+    {
+        _objectID = objID;
+        _patrolData = patrolData;
+        _idleData = idleData;
     }
 
     public void SetDestination(Vector3 destination)

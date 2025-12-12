@@ -71,18 +71,18 @@ public class UnitBehaviorHandler
     private void SetActionReceiver(IActionReceiver receiver)
     {
         _actionReceiver = receiver;
-        RefreshBehaviorStrategy();
+        _behaviorStrategy.SetActionReceiver(_actionReceiver);
     }
 
     private void SetMovementReceiver(IMovementReceiver receiver)
     {
         _movementReceiver = receiver;
-        RefreshBehaviorStrategy();
+        _behaviorStrategy.SetMovementReceiver(_movementReceiver);
     }
 
     private void RefreshBehaviorStrategy()
     {
-        _behaviorStrategy.SetMovementReceiver(_movementReceiver);
         _behaviorStrategy.SetActionReceiver(_actionReceiver);
+        _behaviorStrategy.SetMovementReceiver(_movementReceiver);
     }
 }

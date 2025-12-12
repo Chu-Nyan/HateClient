@@ -1,4 +1,5 @@
 using Chu;
+using SAB.AI;
 using UnityEngine;
 
 public class GameSceneTrigger : MonoBehaviour
@@ -29,6 +30,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void GenerateStatic()
     {
         new InputManager();
+        new AIGenerator();
     }
 
     private void GenerateInstance()
@@ -61,9 +63,14 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void SetPracticeScene()
     {
-        _player = _unitController.GenerateCharacter(UnitController.Oner.Player);
+        _player = _unitController.GenerateCharacter(UnitController.Oner.Player, Vector3.zero);
         _unitController.BindUnitHandler(_player, UnitController.Oner.Player);
         _unitController.ToggleUnitHandler(_player.ReceiverID, true);
+
+        var _npc = _unitController.GenerateCharacter(UnitController.Oner.AI, new Vector3(2,0,2));
+        _unitController.BindUnitHandler(_npc, UnitController.Oner.AI);
+        _unitController.ToggleUnitHandler(_npc.ReceiverID, true);
+
         _topViewCam.StickCameraArm(_player.transform);
 
     }

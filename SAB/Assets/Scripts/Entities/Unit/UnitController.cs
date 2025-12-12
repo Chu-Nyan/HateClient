@@ -17,10 +17,11 @@ public class UnitController
         _binder = gameObj.AddComponent<UnitBinder>();
     }
 
-    public Character GenerateCharacter(Oner oner)
+    public Character GenerateCharacter(Oner oner, Vector3 respawn)
     {
         var unit = _actorGenerator
             .Ready()
+            .SetData(respawn)
             .Release();
 
         return unit;

@@ -1,7 +1,5 @@
-﻿using UnityEngine.AI;
-
-/// <summary>
-/// 행동을 제어할 기술을 정의하는 전략 패턴 인터페이스
+﻿/// <summary>
+/// 행동을 제어할 기술을 정의하는 전략 패턴
 /// </summary>
 public interface IUnitBehaviorStrategy
 {

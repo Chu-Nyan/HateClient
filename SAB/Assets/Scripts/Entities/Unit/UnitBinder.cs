@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SAB.AI;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +16,7 @@ public class UnitBinder : MonoBehaviour
         _handlerByHandlerId = new();
         _handlerByReceiverId = new();
         GenerateHanlder(new PlayerInputBehaviorStrategy());
+        GenerateHanlder(AIGenerator.Instance.TempGenerate());
     }
 
     private void Update()
@@ -40,7 +42,7 @@ public class UnitBinder : MonoBehaviour
         else
         {
             // TODO : NPC 기타 등등 핸들러 가져오기
-            handler = _handlerByHandlerId[_playerHandlerID];
+            handler = _handlerByHandlerId[2];
         }
 
         handler.SetReceivers(receiver);

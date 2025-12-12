@@ -1,10 +1,11 @@
 ﻿using Chu.Utility;
 using System;
+using UnityEngine;
 
 public class CharacterGenerator
 {
     private readonly IDNumbering _numbering;
-    
+
     private Character _new;
     private bool _canRelease;
 
@@ -16,8 +17,19 @@ public class CharacterGenerator
     public CharacterGenerator Ready()
     {
         _new = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
-        _new.Init(_numbering.GetID());
         _canRelease = true;
+        return this;
+    }
+
+    public CharacterGenerator SetData(Vector3 respawn)
+    {
+        // 임시 데이터 코드
+        var patrolData = new PatrolData(respawn, new(-10, 10), new(-10, 10));
+        var idleData = new IdleData();
+        idleData.WaitTime = 3f;
+        //
+
+        _new.Init(_numbering.GetID(), patrolData, idleData);
         return this;
     }
 
@@ -27,7 +39,8 @@ public class CharacterGenerator
             throw new Exception();
 
         _canRelease = false;
-        
+
         return _new;
     }
+
 }
