@@ -10,11 +10,23 @@ public class InputManager : Singleton<InputManager>
     private event Action<Vector2> WASDPerformed;
     private event Action<Vector2> WASDCanceled;
 
+    private event Action LeftClicked;
+
+    private Vector2 _mousePosition;
+
+    public Vector2 MousePosition
+    {
+        get => _mousePosition;
+    }
+
     public InputManager()
     {
         _action = new();
         _action.Player.WASD.performed += OnWASDPerformed;
         _action.Player.WASD.canceled += OnWASDCanceled;
+        _action.Player.Click.performed += OnLeftClicked;
+        _action.Player.Click.canceled += OnLeftClicked;
+        _action.Player.MousePosition.performed += GetMousePosition;
     }
 
     public void SetActive(bool value)
@@ -36,6 +48,11 @@ public class InputManager : Singleton<InputManager>
         WASDCanceled += action;
     }
 
+    public void RegisterLeftClickedPerformed(Action action)
+    {
+        LeftClicked += action;
+    }
+
     public void UnregisterWASDPerformed(Action<Vector2> action)
     {
         WASDPerformed -= action;
@@ -46,6 +63,11 @@ public class InputManager : Singleton<InputManager>
         WASDCanceled -= action;
     }
 
+    public void UnregisterLeftClickedPerformed(Action action)
+    {
+        LeftClicked -= action;
+    }
+
     private void OnWASDPerformed(InputAction.CallbackContext value)
     {
         WASDPerformed?.Invoke(value.ReadValue<Vector2>());
@@ -54,6 +76,16 @@ public class InputManager : Singleton<InputManager>
     private void OnWASDCanceled(InputAction.CallbackContext value)
     {
         WASDCanceled?.Invoke(value.ReadValue<Vector2>());
+    }
+
+    private void OnLeftClicked(InputAction.CallbackContext value)
+    {
+        LeftClicked?.Invoke();
+    }
+
+    private void GetMousePosition(InputAction.CallbackContext value)
+    {
+        _mousePosition = value.ReadValue<Vector2>();
     }
     #endregion
 }
