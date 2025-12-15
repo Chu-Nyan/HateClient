@@ -41,7 +41,7 @@ namespace SAB.Unit.Combat
 
         public void Use()
         {
-            _remainingCooldown = _data.CoolTime;
+            _remainingCooldown = _data.Cooldown;
         }
 
         public void ReduceCooldown(float time)

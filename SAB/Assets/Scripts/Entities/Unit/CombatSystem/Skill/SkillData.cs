@@ -4,6 +4,6 @@
     {
         public int ID;
         public string Name;
-        public float CoolTime;
+        public float Cooldown;
     }
 }
