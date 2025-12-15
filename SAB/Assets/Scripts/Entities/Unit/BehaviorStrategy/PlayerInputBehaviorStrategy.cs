@@ -10,7 +10,6 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
     private Vector2 _direction;
     private bool _isMoving;
 
-
     public void Update()
     {
         if (_isMoving == true)
@@ -31,14 +30,15 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
     {
         InputManager.Instance.RegisterWASDPerformed(SetDiection);
         InputManager.Instance.RegisterWASDCanceled(SetDiection);
+        InputManager.Instance.RegisterLeftClickedPerformed(BasicAttack);
     }
 
     public void Disable()
     {
         InputManager.Instance.UnregisterWASDPerformed(SetDiection);
         InputManager.Instance.UnregisterWASDCanceled(SetDiection);
+        InputManager.Instance.UnregisterLeftClickedPerformed(BasicAttack);
     }
-
 
     private void SetDiection(Vector2 dir)
     {
@@ -52,8 +52,8 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
         _movementReceiver.Move(direction);
     }
 
-    private void Attack()
+    private void BasicAttack(Vector2 dir)
     {
-        _combatReceiver.Attack
+        _combatReceiver.Attack(dir);
     }
 }

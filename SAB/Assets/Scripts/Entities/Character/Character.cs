@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using SAB.Unit.Combat;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver
+public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
 {
     [SerializeField]
     private int _objectID;
@@ -51,5 +53,10 @@ public class Character : MonoBehaviour, IMovementReceiver
     public void Move(Vector3 dir)
     {
         _nav.Move(dir);
+    }
+
+    public void Attack(Vector3 dir)
+    {
+        Debug.Log("공격");
     }
 }

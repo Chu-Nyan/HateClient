@@ -10,7 +10,7 @@ public class InputManager : Singleton<InputManager>
     private event Action<Vector2> WASDPerformed;
     private event Action<Vector2> WASDCanceled;
 
-    private event Action LeftClicked;
+    private event Action<Vector2> LeftClicked;
 
     private Vector2 _mousePosition;
 
@@ -25,7 +25,6 @@ public class InputManager : Singleton<InputManager>
         _action.Player.WASD.performed += OnWASDPerformed;
         _action.Player.WASD.canceled += OnWASDCanceled;
         _action.Player.Click.performed += OnLeftClicked;
-        _action.Player.Click.canceled += OnLeftClicked;
         _action.Player.MousePosition.performed += GetMousePosition;
     }
 
@@ -48,7 +47,7 @@ public class InputManager : Singleton<InputManager>
         WASDCanceled += action;
     }
 
-    public void RegisterLeftClickedPerformed(Action action)
+    public void RegisterLeftClickedPerformed(Action<Vector2> action)
     {
         LeftClicked += action;
     }
@@ -63,7 +62,7 @@ public class InputManager : Singleton<InputManager>
         WASDCanceled -= action;
     }
 
-    public void UnregisterLeftClickedPerformed(Action action)
+    public void UnregisterLeftClickedPerformed(Action<Vector2> action)
     {
         LeftClicked -= action;
     }
@@ -80,7 +79,7 @@ public class InputManager : Singleton<InputManager>
 
     private void OnLeftClicked(InputAction.CallbackContext value)
     {
-        LeftClicked?.Invoke();
+        LeftClicked?.Invoke(_mousePosition);
     }
 
     private void GetMousePosition(InputAction.CallbackContext value)
