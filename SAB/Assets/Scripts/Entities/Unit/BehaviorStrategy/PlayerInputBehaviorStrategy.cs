@@ -52,8 +52,9 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
         _movementReceiver.Move(direction);
     }
 
-    private void BasicAttack(Vector2 dir)
+    private void BasicAttack(Vector2 screenPoint)
     {
-        _combatReceiver.Attack(dir);
+        var worldPos = Camera.main.WorldToScreenPoint(screenPoint);
+        _combatReceiver.Attack(0, worldPos);
     }
 }

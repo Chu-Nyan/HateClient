@@ -12,6 +12,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     private NavMeshAgent _nav;
     private PatrolData _patrolData;
     private IdleData _idleData;
+    private CombatSystem _combatSystem;
 
     public int ObjectID
     {
@@ -38,8 +39,20 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         get => _nav.hasPath;
     }
 
+    public List<Skill> Skills
+    {
+        get => _combatSystem.SkillList;
+    }
+
+    private void Update()
+    {
+        _combatSystem.Update();
+    }
+
     public void Init(int objID, PatrolData patrolData, IdleData idleData)
     {
+        _combatSystem = new CombatSystem();
+        _combatSystem.Add(new());
         _objectID = objID;
         _patrolData = patrolData;
         _idleData = idleData;
@@ -55,8 +68,9 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         _nav.Move(dir);
     }
 
-    public void Attack(Vector3 dir)
+    public void Attack(int skillIndex, Vector3 targetPoint)
     {
-        Debug.Log("공격");
+        _combatSystem.Attack(skillIndex, targetPoint);
+        Debug.DrawRay(transform.position, targetPoint);
     }
 }
