@@ -40,13 +40,13 @@ namespace Chu.Collision
         }
 
         #region 생성 함수
-        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, Transform transform)
+        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider)
         {
             if (_initialized == false)
                 throw new Exception("초기화 되지 않음");
 
-            _newCollider = new NyanCollider(transform, _iDNumbering.GetID());
-            _system.RegisterEntity(provider);
+            _newCollider = new NyanCollider(provider, _iDNumbering.GetID());
+            _system.RegisterEntity(_newCollider);
             return this;
         }
 

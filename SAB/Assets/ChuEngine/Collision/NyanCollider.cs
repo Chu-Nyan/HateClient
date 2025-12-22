@@ -15,8 +15,9 @@ namespace Chu.Collision
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
         private Shape _shape;
-        private bool _isEnable;
+        private bool _isActive;
         private string _comment;
+        private INyanCollisionProvider _provider;
 
         private event Action<NyanCollider> PositionChanged;
         private event Action<NyanCollider> EnabledChanged;
@@ -41,14 +42,14 @@ namespace Chu.Collision
             get => _shape.RectBound;
         }
 
-        public bool IsEnable
+        public INyanCollisionProvider Provider
         {
-            get => _isEnable;
-            set 
-            {
-                _isEnable = value;
-                EnabledChanged?.Invoke(this);
-            }
+            get => _provider;
+        }
+
+        public bool IsActive
+        {
+            get => _isActive;
         }
 
         public string Comment
@@ -56,15 +57,22 @@ namespace Chu.Collision
             get => _comment;
         }
 
-        public NyanCollider(Transform pivot, int id)
+        public NyanCollider(INyanCollisionProvider provider, int id)
         {
             ID = id;
-            _transform = pivot;
+            _provider = provider;
+            _transform = provider.transform;
             _insertedNodes = new(4);
             _contactIDs = new();
         }
 
-        public void SetShape( Shape entity, string comment)
+        public void SetActive(bool value)
+        {
+            _isActive = value;
+            EnabledChanged?.Invoke(this);
+        }
+
+        public void SetShape(Shape entity, string comment)
         {
             _shape = entity;
             _comment = comment;

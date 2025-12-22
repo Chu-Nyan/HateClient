@@ -16,7 +16,7 @@ namespace Chu.Collision
         private HashSet<int> _frameChecked;
         private HashSet<int> _candidateChecked;
         private Queue<CollisionInfo> _collisionInfoQueue;
-        private Dictionary<int, INyanCollisionProvider> _collidersByID;
+        private Dictionary<int, NyanCollider> _collidersByID;
 
         /// <summary>
         /// 배열의 초기 크기 지정
@@ -46,22 +46,24 @@ namespace Chu.Collision
 
             foreach (var info in _collisionInfoQueue)
             {
-                var aColider = _collidersByID[info.PrimaryID];
-                var bColider = _collidersByID[info.TargetID];
+                var primaryColider = _collidersByID[info.PrimaryID];
+                var primaryProvider = _collidersByID[info.PrimaryID].Provider;
+                var targetColider = _collidersByID[info.TargetID];
+                var targetProvider = _collidersByID[info.TargetID].Provider;
 
                 if (info.State == CollisionState.Enter)
                 {
-                    aColider.Collider.AddContactColliderID(info.TargetID);
-                    bColider.Collider.AddContactColliderID(info.PrimaryID);
-                    aColider.OnNyanCollisionEnter(bColider);
-                    bColider.OnNyanCollisionEnter(aColider);
+                    primaryColider.AddContactColliderID(info.TargetID);
+                    targetColider.AddContactColliderID(info.PrimaryID);
+                    primaryProvider.OnNyanCollisionEnter(targetProvider);
+                    targetProvider.OnNyanCollisionEnter(primaryProvider);
                 }
                 else // EXIT
                 {
-                    aColider.OnNyanCollisionExit(bColider);
-                    bColider.OnNyanCollisionExit(aColider);
-                    aColider.Collider.RemoveContactColliderID(info.TargetID);
-                    bColider.Collider.RemoveContactColliderID(info.PrimaryID);
+                    primaryProvider.OnNyanCollisionExit(targetProvider);
+                    targetProvider.OnNyanCollisionExit(primaryProvider);
+                    primaryColider.RemoveContactColliderID(info.TargetID);
+                    targetColider.RemoveContactColliderID(info.PrimaryID);
                 }
             }
 
@@ -71,18 +73,18 @@ namespace Chu.Collision
         /// <summary>
         /// 물리 시스템에 객체 등록, 해제 불가
         /// </summary>
-        public void RegisterEntity(INyanCollisionProvider obj)
+        public void RegisterEntity(NyanCollider collider)
         {
-            if (_collidersByID.TryAdd(obj.Collider.ID, obj) == false)
+            if (_collidersByID.TryAdd(collider.ID, collider) == false)
                 throw new System.Exception("콜라이더 중복 등록");
 
-            obj.Collider.RegisterEnabled(OnShapeActivationChanged);
-            OnShapeActivationChanged(obj.Collider);
+            collider.RegisterEnabled(OnShapeActivationChanged);
+            OnShapeActivationChanged(collider);
         }
 
         private void OnShapeActivationChanged(NyanCollider collider)
         {
-            if (collider.IsEnable == true)
+            if (collider.IsActive == true)
             {
                 collider.RegisterPositionChanged(Insert);
                 Insert(collider);
@@ -137,7 +139,7 @@ namespace Chu.Collision
 
             foreach (var num in primary.ContactIDs)
             {
-                CheckCollisionState(primary, _collidersByID[num].Collider);
+                CheckCollisionState(primary, _collidersByID[num]);
             }
         }
 
