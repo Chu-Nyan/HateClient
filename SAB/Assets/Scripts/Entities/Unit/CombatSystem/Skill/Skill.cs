@@ -3,7 +3,7 @@
 namespace SAB.Unit.Combat
 {
     /// <summary>
-    /// 스킬의 정보와 현재 상태
+    /// 스킬의 공용, 개별 정보
     /// </summary>
     public class Skill
     {
