@@ -37,6 +37,8 @@ namespace SAB.Unit.Combat
         public void Init(SkillData data)
         {
             _data = data;
+            _remainingCooldown = 0;
+            _canUse = true;
         }
 
         public void Use()

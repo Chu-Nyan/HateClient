@@ -1,5 +1,6 @@
 using Chu;
 using SAB.AI;
+using SAB.Unit.Combat;
 using UnityEngine;
 
 public class GameSceneTrigger : MonoBehaviour
@@ -25,12 +26,14 @@ public class GameSceneTrigger : MonoBehaviour
     private void StartChuEngine()
     {
         var engine = new ChuEngine(gameObject);
+        engine.ActivateCollisionSystem(new(0,100,0,100),20);
     }
 
     private void GenerateStatic()
     {
         new InputManager();
         new AIGenerator();
+        new ProjectileGenerator();
     }
 
     private void GenerateInstance()

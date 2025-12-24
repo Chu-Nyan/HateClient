@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Chu.Collision;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SAB.Unit.Combat
 {
+
     public class CombatSystem
     {
         public const int BasicAttackIndex = 0;
@@ -22,7 +24,7 @@ namespace SAB.Unit.Combat
             _used = new HashSet<int>();
         }
 
-        public void Add(Skill skill)
+        public void AddSkill(Skill skill)
         {
             _skillList.Add(skill);
         }
@@ -52,12 +54,19 @@ namespace SAB.Unit.Combat
             }
         }
 
-        public void Attack(int index, Vector3 targetPoint)
+        public void Attack(int index, Vector3 start, Vector3 targetPoint)
         {
             if (_used.Contains(index) == true)
                 return;
 
             _used.Add(index);
+
+            // TODO : 스킬에 맞는 shape 발사
+            var rect = new CircleShape(0.5f);
+            var dir = targetPoint - start;
+            dir.y = 0f;
+            Debug.DrawRay(start, dir * 50f, Color.red, 4f);
+            ProjectileGenerator.Instance.Set(rect, start, dir);
             Debug.Log($"{index}번 스킬, {targetPoint} 공격");
         }
     }

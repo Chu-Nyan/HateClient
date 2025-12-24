@@ -54,7 +54,12 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
 
     private void BasicAttack(Vector2 screenPoint)
     {
-        var worldPos = Camera.main.WorldToScreenPoint(screenPoint);
-        _combatReceiver.Attack(0, worldPos);
+        Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+        int flag = LayerMask.GetMask("Ground");
+        if (Physics.Raycast(ray, out RaycastHit hit,100f , flag))
+        {
+            Vector3 targetPoint = hit.point ;
+            _combatReceiver.Attack(0, targetPoint);
+        }
     }
 }

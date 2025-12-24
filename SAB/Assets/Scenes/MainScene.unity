@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 1257885365}
   - component: {fileID: 1257885364}
   - component: {fileID: 1257885363}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 1549017610}
   - component: {fileID: 1549017609}
   - component: {fileID: 1549017608}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

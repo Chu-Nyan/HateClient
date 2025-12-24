@@ -7,6 +7,8 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
 {
     [SerializeField]
     private int _objectID;
+    [SerializeField]
+    private Transform _attackOrigin;
 
     [SerializeField]
     private NavMeshAgent _nav;
@@ -52,7 +54,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     public void Init(int objID, PatrolData patrolData, IdleData idleData)
     {
         _combatSystem = new CombatSystem();
-        _combatSystem.Add(new());
+        _combatSystem.AddSkill(new());
         _objectID = objID;
         _patrolData = patrolData;
         _idleData = idleData;
@@ -70,7 +72,8 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
 
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
-        _combatSystem.Attack(skillIndex, targetPoint);
-        Debug.DrawRay(transform.position, targetPoint);
+        // TODO : 연출 + 실제 충돌 처리
+        // 실제 충돌은 Combat 시스템에서 처리
+        _combatSystem.Attack(skillIndex, _attackOrigin.position, targetPoint);
     }
 }
