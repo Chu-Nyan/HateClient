@@ -10,7 +10,7 @@ namespace Chu.Collision
     {
         public Transform transform { get; }
         public NyanCollider Collider { get; }
-        public void OnNyanCollisionEnter(INyanCollisionProvider collider);
-        public void OnNyanCollisionExit(INyanCollisionProvider collider);
+        public void OnNyanCollisionEnter(INyanCollisionProvider provider);
+        public void OnNyanCollisionExit(INyanCollisionProvider provider);
     }
 }
