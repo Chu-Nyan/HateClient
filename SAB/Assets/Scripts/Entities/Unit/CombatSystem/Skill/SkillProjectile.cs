@@ -27,10 +27,11 @@ namespace SAB.Unit.Combat
             _hitLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
         }
 
-        private void Awake()
+
+        public void Init(Shape shape)
         {
             _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                .GenerateCollider(this)
+                .GenerateCollider(this, shape, $"투사체")
                 .GetCollider();
         }
 
@@ -40,7 +41,10 @@ namespace SAB.Unit.Combat
             if (_timer >= _maxLifeSpan)
                 gameObject.SetActive(false);
             else
+            {
                 transform.position += 10f * Time.deltaTime * transform.forward;
+                _nyanCollider.RefreshTransform();
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -55,8 +59,7 @@ namespace SAB.Unit.Combat
         public void OnNyanCollisionEnter(INyanCollisionProvider collider)
         {
             // 충돌 처리
-            Debug.Log("Nyan Collider 충돌");
-            OnExpired();
+            Debug.Log(collider.Collider.Comment + " 충돌");
         }
 
         public void OnNyanCollisionExit(INyanCollisionProvider collider)
@@ -64,9 +67,14 @@ namespace SAB.Unit.Combat
             // 없음
         }
 
+        public void ActivteNyanCollision(bool value)
+        {
+            _nyanCollider.SetActive(value);
+        }
+
         public void SetColiderShape(Shape shape)
         {
-            _nyanCollider.SetShape(shape, "투사체");
+            _nyanCollider.SetShape(shape);
         }
 
         public void SetTarget(Vector3 start, Vector3 dir)
@@ -79,6 +87,7 @@ namespace SAB.Unit.Combat
 
         private void OnExpired()
         {
+            _nyanCollider.SetActive(false);
             gameObject.SetActive(false);
         }
     }

@@ -79,7 +79,6 @@ namespace Chu.Collision
                 throw new System.Exception("콜라이더 중복 등록");
 
             collider.RegisterEnabled(OnShapeActivationChanged);
-            OnShapeActivationChanged(collider);
         }
 
         private void OnShapeActivationChanged(NyanCollider collider)

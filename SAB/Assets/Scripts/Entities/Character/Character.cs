@@ -1,4 +1,5 @@
-﻿using SAB.Unit.Combat;
+﻿using Chu.Collision;
+using SAB.Unit.Combat;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +15,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     private NavMeshAgent _nav;
     private PatrolData _patrolData;
     private IdleData _idleData;
+    private CharacterBody _body;
     private CombatSystem _combatSystem;
 
     public int ObjectID
@@ -49,12 +51,18 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     private void Update()
     {
         _combatSystem.Update();
+        if (IsMoving == true)
+        {
+            _body.Collider.RefreshTransform();
+        }
     }
 
     public void Init(int objID, PatrolData patrolData, IdleData idleData)
     {
+        _body = new(transform, new CircleShape(1));
         _combatSystem = new CombatSystem();
         _combatSystem.AddSkill(new());
+        _body.Init(new CircleShape(1));
         _objectID = objID;
         _patrolData = patrolData;
         _idleData = idleData;
@@ -68,6 +76,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     public void Move(Vector3 dir)
     {
         _nav.Move(dir);
+        _body.Collider.RefreshTransform();
     }
 
     public void Attack(int skillIndex, Vector3 targetPoint)

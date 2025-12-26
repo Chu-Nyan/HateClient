@@ -11,13 +11,13 @@ namespace Chu.Collision
     public class NyanCollider : IQuadTreeEntity
     {
         public readonly int ID;
+        private readonly INyanCollisionProvider _provider;
         private readonly Transform _transform;
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
         private Shape _shape;
         private bool _isActive;
         private string _comment;
-        private INyanCollisionProvider _provider;
 
         private event Action<NyanCollider> PositionChanged;
         private event Action<NyanCollider> EnabledChanged;
@@ -57,28 +57,37 @@ namespace Chu.Collision
             get => _comment;
         }
 
-        public NyanCollider(INyanCollisionProvider provider, int id)
+        public NyanCollider(INyanCollisionProvider provider, Shape shape, int id, string comment = null)
         {
             ID = id;
             _provider = provider;
+            _shape = shape;
             _transform = provider.transform;
             _insertedNodes = new(4);
             _contactIDs = new();
+            _comment = comment;
         }
 
         public void SetActive(bool value)
         {
+            if (Shape == null)
+            {
+                Debug.LogError("Shape is null");
+                return;
+            }
+
             _isActive = value;
+            if (_isActive == true)
+                _shape.UpdatePosition(_transform);
             EnabledChanged?.Invoke(this);
         }
 
-        public void SetShape(Shape entity, string comment)
+        public void SetShape(Shape shape)
         {
-            _shape = entity;
-            _comment = comment;
+            _shape = shape;
         }
 
-        public void OnPositionChanged()
+        public void RefreshTransform()
         {
             _shape.UpdatePosition(_transform);
             PositionChanged?.Invoke(this);

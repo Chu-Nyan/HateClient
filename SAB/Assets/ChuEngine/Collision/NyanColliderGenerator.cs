@@ -40,38 +40,13 @@ namespace Chu.Collision
         }
 
         #region 생성 함수
-        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider)
+        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, Shape shape, string comment = default)
         {
             if (_initialized == false)
                 throw new Exception("초기화 되지 않음");
 
-            _newCollider = new NyanCollider(provider, _iDNumbering.GetID());
+            _newCollider = new NyanCollider(provider, shape, _iDNumbering.GetID(), comment);
             _system.RegisterEntity(_newCollider);
-            return this;
-        }
-
-        public NyanColliderGenerator SetRectCollider(float rotation, float width, float height, string comment)
-        {
-            if (_initialized == false)
-                throw new Exception("초기화 되지 않음");
-
-            var rect = (RectShape)_pools[ShapeType.Rectangle].Dequeue();
-            rect.Refresh(rotation, width, height);
-            _newCollider.SetShape(rect, comment);
-            return this;
-        }
-
-        public NyanColliderGenerator SetCircleCollider(float radius, string comment)
-        {
-            var circle = (CircleShape)_pools[ShapeType.Circle].Dequeue();
-            circle.Refresh(radius);
-            _newCollider.SetShape(circle, comment);
-            return this;
-        }
-
-        public NyanColliderGenerator SetShape(Shape shape, string comment)
-        {
-            _newCollider.SetShape(shape, comment);
             return this;
         }
 
@@ -90,7 +65,7 @@ namespace Chu.Collision
 
             comment ??= collider.Comment;
             _pools[beforeType].Enqueue(collider.Shape);
-            collider.SetShape(_pools[afterType].Dequeue(), comment);
+            collider.SetShape(_pools[afterType].Dequeue());
         }
         #endregion
     }

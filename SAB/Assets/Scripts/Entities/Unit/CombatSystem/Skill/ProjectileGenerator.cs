@@ -14,8 +14,9 @@ namespace SAB.Unit.Combat
         public ProjectileGenerator Set(Shape shape, Vector3 start, Vector3 dir)
         {
             _new = AssetManager.GenerateLoadAssetSync<SkillProjectile>("Projectile");
-            _new.SetColiderShape(shape);
+            _new.Init(shape);
             _new.SetTarget(start, dir);
+            _new.ActivteNyanCollision(true);
             return this;
         }
 

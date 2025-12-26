@@ -26,7 +26,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void StartChuEngine()
     {
         var engine = new ChuEngine(gameObject);
-        engine.ActivateCollisionSystem(new(0,100,0,100),20);
+        engine.ActivateCollisionSystem(new(-100,100,-100,100),20);
     }
 
     private void GenerateStatic()
@@ -66,11 +66,11 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void SetPracticeScene()
     {
-        _player = _unitController.GenerateCharacter(UnitController.Oner.Player, Vector3.zero);
+        _player = _unitController.GenerateCharacter(UnitController.Oner.Player, new Vector3(50,0,50));
         _unitController.BindUnitHandler(_player, UnitController.Oner.Player);
         _unitController.ToggleUnitHandler(_player.ReceiverID, true);
 
-        var _npc = _unitController.GenerateCharacter(UnitController.Oner.AI, new Vector3(2,0,2));
+        var _npc = _unitController.GenerateCharacter(UnitController.Oner.AI, new Vector3(50, 0, 50));
         _unitController.BindUnitHandler(_npc, UnitController.Oner.AI);
         _unitController.ToggleUnitHandler(_npc.ReceiverID, true);
 
