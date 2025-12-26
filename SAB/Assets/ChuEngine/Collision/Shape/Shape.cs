@@ -23,7 +23,8 @@ namespace Chu.Collision
 
         public virtual void UpdatePosition(Transform transform)
         {
-            _bound.RefreshPosition(transform.position);
+            var convert = new Vector2(transform.position.x, transform.position.z);
+            _bound.RefreshPosition(convert);
         }
 
         protected void UpdateRectBound(float minX, float maxX, float minY, float maxY)
