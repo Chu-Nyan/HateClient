@@ -152,5 +152,24 @@ namespace Chu.Collision
         {
             return $"{ID} {_comment}";
         }
+
+#if UNITY_EDITOR
+        public bool IsValid(out string log)
+        {
+            var sb = new System.Text.StringBuilder();
+
+            if (_provider == null)
+                sb.AppendLine("Provider is null");
+
+            if (_shape == null)
+                sb.AppendLine("Shape is null");
+
+            if (!_isLayerInitialized)
+                sb.AppendLine("Layer is not initialized");
+
+            log = sb.ToString();
+            return sb.Length == 0;
+        }
+#endif
     }
 }

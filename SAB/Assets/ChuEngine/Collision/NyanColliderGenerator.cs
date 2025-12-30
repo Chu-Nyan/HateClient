@@ -57,6 +57,10 @@ namespace Chu.Collision
 
         public NyanCollider GetCollider()
         {
+#if UNITY_EDITOR
+            VerifyCollider(_newCollider);
+#endif
+            _system.RegisterEntity(_newCollider);
             return _newCollider;
         }
         #endregion
@@ -73,5 +77,15 @@ namespace Chu.Collision
             collider.SetShape(_pools[afterType].Dequeue());
         }
         #endregion
+
+#if UNITY_EDITOR
+        private void VerifyCollider(NyanCollider collider)
+        {
+            if (collider.IsValid(out var log) == false)
+            {
+                throw new Exception(log);
+            }
+        }
+#endif
     }
 }
