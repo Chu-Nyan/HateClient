@@ -1,7 +1,7 @@
-﻿using Chu.Utility;
+﻿using Chu.Collision.Layer;
+using Chu.Utility;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -46,7 +46,12 @@ namespace Chu.Collision
                 throw new Exception("초기화 되지 않음");
 
             _newCollider = new NyanCollider(provider, shape, _iDNumbering.GetID(), comment);
-            _system.RegisterEntity(_newCollider);
+            return this;
+        }
+
+        public NyanColliderGenerator SeyLayer(int layer, NyanLayerMask mask)
+        {
+            _newCollider.InitLayer(layer, mask);
             return this;
         }
 

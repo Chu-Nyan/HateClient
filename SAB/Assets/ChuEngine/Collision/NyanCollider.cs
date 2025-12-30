@@ -1,4 +1,5 @@
-﻿using Chu.Data;
+﻿using Chu.Collision.Layer;
+using Chu.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,11 @@ namespace Chu.Collision
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
         private Shape _shape;
+
+        private int _layer;
+        private NyanLayerMask _mask;
+        private bool _isLayerInitialized;
+
         private bool _isActive;
         private string _comment;
 
@@ -66,6 +72,13 @@ namespace Chu.Collision
             _insertedNodes = new(4);
             _contactIDs = new();
             _comment = comment;
+        }
+
+        public void InitLayer(int layer, NyanLayerMask mask)
+        {
+            _layer = layer;
+            _mask = mask;
+            _isLayerInitialized = true;
         }
 
         public void SetActive(bool value)
