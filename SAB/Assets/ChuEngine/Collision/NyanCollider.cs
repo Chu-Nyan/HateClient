@@ -93,12 +93,15 @@ namespace Chu.Collision
 
         public void SetActive(bool value)
         {
-            if (Shape == null)
-            {
-                Debug.LogError("Shape is null");
+#if UNITY_EDITOR
+            if (value && _shape == null)
+                throw new Exception("Shape is null.");
+            if (_shape == Shape.Invalid)
+                throw new Exception("Shape is not initialized.");
+#else
+            if (_shape == null)
                 return;
-            }
-
+#endif
             _isActive = value;
             if (_isActive == true)
                 _shape.UpdatePosition(_transform);

@@ -5,6 +5,8 @@ namespace Chu.Collision
 {
     public abstract class Shape
     {
+        public static readonly Shape Invalid = new CircleShape(0);
+
         public readonly ShapeType ShapeType;
         protected RectBound _bound;
 

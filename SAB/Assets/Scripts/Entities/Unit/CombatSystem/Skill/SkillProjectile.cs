@@ -30,12 +30,12 @@ namespace SAB.Unit.Combat
             _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
         }
 
-        public void Init(Shape shape)
+        public void Awake()
         {
             var mask = new NyanLayerMask(NyanLayer.Unit);
 
             _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                .GenerateCollider(this, shape, $"투사체")
+                .GenerateCollider(this, Shape.Invalid, $"투사체")
                 .SetLayer(_layer, mask)
                 .GetCollider();
         }
@@ -70,6 +70,11 @@ namespace SAB.Unit.Combat
         public void OnNyanCollisionExit(INyanCollisionProvider collider)
         {
             // 없음
+        }
+
+        public void Refresh(Shape shape)
+        {
+            _nyanCollider.SetShape(shape);
         }
 
         public void ActivteNyanCollision(bool value)
