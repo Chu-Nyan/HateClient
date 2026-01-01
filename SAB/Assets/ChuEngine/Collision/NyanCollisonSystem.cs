@@ -148,10 +148,12 @@ namespace Chu.Collision
                 return;
             if (_candidateChecked.Add(candidate.ID) == false)
                 return;
+            if (primary.LayerMask.ContainsLayer(candidate.Layer) == false
+             || candidate.LayerMask.ContainsLayer(primary.Layer) == false)
+                return;
 
             bool isCollision = primary.Shape.Intersects(candidate.Shape);
             bool isContacted = primary.IsContacted(candidate.ID);
-
 
             if (isCollision == true && isContacted == false)
                 _collisionInfoQueue.Enqueue(new CollisionInfo(primary.ID, candidate.ID, CollisionState.Enter));
