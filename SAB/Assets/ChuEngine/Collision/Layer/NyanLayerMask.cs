@@ -9,10 +9,19 @@ namespace Chu.Collision.Layer
             Mask = mask;
         }
 
-        public NyanLayerMask AddMask(NyanLayer layer)
+        public NyanLayerMask(NyanLayer layer)
         {
-            Mask += (int)layer;
-            return this;
+            Mask = (int)layer;
+        }
+
+        public NyanLayerMask(NyanLayer layer1, NyanLayer layer2)
+        {
+            Mask = (int)layer1 | (int)layer2;
+        }
+
+        public NyanLayerMask(NyanLayer layer1, NyanLayer layer2, NyanLayer layer3)
+        {
+            Mask = (int)layer1 | (int)layer2 | (int)layer3;
         }
 
         public bool ContainsLayer(NyanLayer layer)

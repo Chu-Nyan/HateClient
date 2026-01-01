@@ -1,5 +1,6 @@
 ﻿using Chu;
 using Chu.Collision;
+using Chu.Collision.Layer;
 using UnityEngine;
 
 namespace SAB.Unit.Combat
@@ -9,8 +10,10 @@ namespace SAB.Unit.Combat
     /// </summary>
     public class SkillProjectile : MonoBehaviour, INyanCollisionProvider
     {
+        private const NyanLayer _layer = NyanLayer.Projectile;
         private const float _maxLifeSpan = 5f;
-        private static int _hitLayer;
+
+        private static int _hitUnityLayer;
 
         private NyanCollider _nyanCollider;
         private Vector3 _dir;
@@ -24,14 +27,16 @@ namespace SAB.Unit.Combat
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void StaticInit()
         {
-            _hitLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
+            _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
         }
-
 
         public void Init(Shape shape)
         {
+            var mask = new NyanLayerMask(NyanLayer.Unit);
+
             _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
                 .GenerateCollider(this, shape, $"투사체")
+                .SetLayer(_layer, mask)
                 .GetCollider();
         }
 
@@ -49,7 +54,7 @@ namespace SAB.Unit.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            if ((1 << other.gameObject.layer & _hitLayer) == 0)
+            if ((1 << other.gameObject.layer & _hitUnityLayer) == 0)
                 return;
 
             Debug.Log("환경 오브젝트 충돌");

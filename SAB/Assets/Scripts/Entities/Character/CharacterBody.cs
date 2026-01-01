@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CharacterBody : INyanCollisionProvider
 {
+    private const NyanLayer _layer = NyanLayer.Unit;
+
     private Transform _transform;
     private NyanCollider _collider;
 
@@ -21,9 +23,11 @@ public class CharacterBody : INyanCollisionProvider
     public CharacterBody(Transform transform, Shape body)
     {
         _transform = transform;
+        var mask = new NyanLayerMask(NyanLayer.Projectile);
+
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
             .GenerateCollider(this, body, "캐릭터 바디")
-            .SetLayer(Character.Layer, new NyanLayerMask())
+            .SetLayer(_layer, mask)
             .GetCollider();
     }
 
