@@ -1,9 +1,11 @@
-﻿using Chu.Utility;
+﻿using Chu.Collision;
+using Chu.Utility;
 using System;
 using UnityEngine;
 
 public class CharacterGenerator
 {
+    private const NyanLayer _characterLayer = NyanLayer.Unit;
     private readonly IDNumbering _numbering;
 
     private Character _new;

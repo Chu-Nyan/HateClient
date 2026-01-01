@@ -18,7 +18,7 @@ namespace Chu.Collision
         private readonly HashSet<int> _contactIDs;
         private Shape _shape;
 
-        private int _layer;
+        private NyanLayer _layer;
         private NyanLayerMask _mask;
         private bool _isLayerInitialized;
 
@@ -27,6 +27,11 @@ namespace Chu.Collision
 
         private event Action<NyanCollider> PositionChanged;
         private event Action<NyanCollider> EnabledChanged;
+
+        public INyanCollisionProvider Provider
+        {
+            get => _provider;
+        }
 
         public Shape Shape
         {
@@ -48,9 +53,14 @@ namespace Chu.Collision
             get => _shape.RectBound;
         }
 
-        public INyanCollisionProvider Provider
+        public NyanLayer Layer
         {
-            get => _provider;
+            get => _layer;
+        }
+
+        public NyanLayerMask LayerMask
+        {
+            get => _mask;
         }
 
         public bool IsActive
@@ -74,7 +84,7 @@ namespace Chu.Collision
             _comment = comment;
         }
 
-        public void InitLayer(int layer, NyanLayerMask mask)
+        public void InitLayer(NyanLayer layer, NyanLayerMask mask)
         {
             _layer = layer;
             _mask = mask;

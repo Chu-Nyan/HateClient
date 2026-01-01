@@ -51,7 +51,7 @@ namespace Chu.Collision.Layer
             sb.AppendLine();
             sb.AppendLine("namespace Chu.Collision");
             sb.AppendLine("{{");
-            sb.AppendLine("\t public static class NyanLayer");
+            sb.AppendLine("\t public enum NyanLayer");
             sb.AppendLine("\t{{");
             sb.AppendLine("{0}");
             sb.AppendLine("\t}}");
@@ -69,7 +69,7 @@ namespace Chu.Collision.Layer
                 if (string.IsNullOrEmpty(_layer[i]) == true)
                     continue;
 
-                lines.Add($"\t\tpublic const int {_layer[i]} = 1 << {i};");
+                lines.Add($"\t\t{_layer[i]} = 1 << {i},");
             }
 
             return string.Join(Environment.NewLine, lines);

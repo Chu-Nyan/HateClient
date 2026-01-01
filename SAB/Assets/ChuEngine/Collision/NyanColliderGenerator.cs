@@ -49,7 +49,7 @@ namespace Chu.Collision
             return this;
         }
 
-        public NyanColliderGenerator SeyLayer(int layer, NyanLayerMask mask)
+        public NyanColliderGenerator SetLayer(NyanLayer layer, NyanLayerMask mask)
         {
             _newCollider.InitLayer(layer, mask);
             return this;
