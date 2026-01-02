@@ -11,11 +11,12 @@ namespace Chu.Collision
     /// </summary>
     public class NyanCollider : IQuadTreeEntity
     {
-        public readonly int ID;
+        public readonly int InstanceID;
         private readonly INyanCollisionProvider _provider;
         private readonly Transform _transform;
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
+        private int _instigatorID;
         private Shape _shape;
 
         private NyanLayer _layer;
@@ -31,6 +32,11 @@ namespace Chu.Collision
         public INyanCollisionProvider Provider
         {
             get => _provider;
+        }
+
+        public int InstigatorID
+        {
+            get => _instigatorID;
         }
 
         public Shape Shape
@@ -75,9 +81,9 @@ namespace Chu.Collision
 
         public NyanCollider(INyanCollisionProvider provider, Shape shape, int id, string comment = null)
         {
-            ID = id;
-            _provider = provider;
+            InstanceID = id;
             _shape = shape;
+            _provider = provider;
             _transform = provider.transform;
             _insertedNodes = new(4);
             _contactIDs = new();
@@ -89,6 +95,11 @@ namespace Chu.Collision
             _layer = layer;
             _mask = mask;
             _isLayerInitialized = true;
+        }
+
+        public void SetInstigatorID(int id)
+        {
+            _instigatorID = id;
         }
 
         public void SetActive(bool value)
@@ -163,7 +174,7 @@ namespace Chu.Collision
 
         public override string ToString()
         {
-            return $"{ID} {_comment}";
+            return $"{InstanceID} {_comment}";
         }
 
 #if UNITY_EDITOR

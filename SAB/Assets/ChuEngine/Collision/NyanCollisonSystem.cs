@@ -75,7 +75,7 @@ namespace Chu.Collision
         /// </summary>
         public void RegisterEntity(NyanCollider collider)
         {
-            if (_collidersByID.TryAdd(collider.ID, collider) == false)
+            if (_collidersByID.TryAdd(collider.InstanceID, collider) == false)
                 throw new System.Exception("콜라이더 중복 등록");
 
             collider.RegisterEnabled(OnShapeActivationChanged);
@@ -121,7 +121,7 @@ namespace Chu.Collision
 
         private void CheckCollision(NyanCollider primary)
         {
-            if (_frameChecked.Add(primary.ID) == false)
+            if (_frameChecked.Add(primary.InstanceID) == false)
                 return;
 
             _candidateChecked.Clear();
@@ -144,21 +144,23 @@ namespace Chu.Collision
 
         private void CheckCollisionState(NyanCollider primary, NyanCollider candidate)
         {
-            if (_frameChecked.Contains(candidate.ID) == true)
+            if (primary.InstigatorID == candidate.InstigatorID)
                 return;
-            if (_candidateChecked.Add(candidate.ID) == false)
+            if (_frameChecked.Contains(candidate.InstanceID) == true)
+                return;
+            if (_candidateChecked.Add(candidate.InstanceID) == false)
                 return;
             if (primary.LayerMask.ContainsLayer(candidate.Layer) == false
              || candidate.LayerMask.ContainsLayer(primary.Layer) == false)
                 return;
 
             bool isCollision = primary.Shape.Intersects(candidate.Shape);
-            bool isContacted = primary.IsContacted(candidate.ID);
+            bool isContacted = primary.IsContacted(candidate.InstanceID);
 
             if (isCollision == true && isContacted == false)
-                _collisionInfoQueue.Enqueue(new CollisionInfo(primary.ID, candidate.ID, CollisionState.Enter));
+                _collisionInfoQueue.Enqueue(new CollisionInfo(primary.InstanceID, candidate.InstanceID, CollisionState.Enter));
             else if (isCollision == false && isContacted == true)
-                _collisionInfoQueue.Enqueue(new CollisionInfo(primary.ID, candidate.ID, CollisionState.Exit));
+                _collisionInfoQueue.Enqueue(new CollisionInfo(primary.InstanceID, candidate.InstanceID, CollisionState.Exit));
         }
     }
 }

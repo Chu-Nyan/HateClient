@@ -55,6 +55,12 @@ namespace Chu.Collision
             return this;
         }
 
+        public NyanColliderGenerator SetInstigatorID(int id)
+        {
+            _newCollider.SetInstigatorID(id);
+            return this;
+        }
+
         public NyanCollider GetCollider()
         {
 #if UNITY_EDITOR
