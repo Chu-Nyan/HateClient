@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace SAB.Unit.Combat
 {
-
     public class CombatSystem
     {
         public const int BasicAttackIndex = 0;
@@ -54,7 +53,7 @@ namespace SAB.Unit.Combat
             }
         }
 
-        public void Attack(int index, Vector3 start, Vector3 targetPoint)
+        public void Attack(int instigatorID, int index, Vector3 start, Vector3 targetPoint)
         {
             if (_used.Contains(index) == true)
                 return;
@@ -66,7 +65,7 @@ namespace SAB.Unit.Combat
             var dir = targetPoint - start;
             dir.y = 0f;
             Debug.DrawRay(start, dir * 50f, Color.red, 4f);
-            ProjectileGenerator.Instance.Set(rect, start, dir);
+            ProjectileGenerator.Instance.Set(rect, instigatorID, start, dir);
             Debug.Log($"{index}번 스킬, {targetPoint} 공격");
         }
     }

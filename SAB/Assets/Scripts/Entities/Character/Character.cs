@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
 {
     [SerializeField]
-    private int _objectID;
+    private int _instanceID;
     [SerializeField]
     private Transform _attackOrigin;
 
@@ -18,14 +18,14 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     private CharacterBody _body;
     private CombatSystem _combatSystem;
 
-    public int ObjectID
+    public int InstanceID
     {
-        get => _objectID;
+        get => _instanceID;
     }
 
     public int ReceiverID
     {
-        get => _objectID;
+        get => _instanceID;
     }
 
     public PatrolData PatrolData
@@ -57,13 +57,13 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         }
     }
 
-    public void Init(int objID, PatrolData patrolData, IdleData idleData)
+    public void Init(int instanceID, PatrolData patrolData, IdleData idleData)
     {
-        _body = new(transform, new CircleShape(1));
+        _body = new(instanceID,transform, new CircleShape(1));
         _combatSystem = new CombatSystem();
         _combatSystem.AddSkill(new());
         _body.Init(new CircleShape(1));
-        _objectID = objID;
+        _instanceID = instanceID;
         _patrolData = patrolData;
         _idleData = idleData;
     }
@@ -83,6 +83,6 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     {
         // TODO : 연출 + 실제 충돌 처리
         // 실제 충돌은 Combat 시스템에서 처리
-        _combatSystem.Attack(skillIndex, _attackOrigin.position, targetPoint);
+        _combatSystem.Attack(_instanceID, skillIndex, _attackOrigin.position, targetPoint);
     }
 }

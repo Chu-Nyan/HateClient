@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: LayerHandler
   m_EditorClassIdentifier: 
   _layer:
+  - Defalut
   - Unit
-  - 
-  - 
+  - Projectile
   - 
   - 
   - 

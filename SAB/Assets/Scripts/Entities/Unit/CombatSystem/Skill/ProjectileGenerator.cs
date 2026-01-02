@@ -11,10 +11,10 @@ namespace SAB.Unit.Combat
     {
         private SkillProjectile _new;
 
-        public ProjectileGenerator Set(Shape shape, Vector3 start, Vector3 dir)
+        public ProjectileGenerator Set(Shape shape, int instigator, Vector3 start, Vector3 dir)
         {
             _new = AssetManager.GenerateLoadAssetSync<SkillProjectile>("Projectile");
-            _new.Init(shape);
+            _new.Refresh(shape, instigator);
             _new.SetTarget(start, dir);
             _new.ActivteNyanCollision(true);
             return this;

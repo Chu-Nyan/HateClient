@@ -1,20 +1,11 @@
-﻿using Chu.Collision;
-using Chu.Utility;
+﻿using Chu;
 using System;
 using UnityEngine;
 
 public class CharacterGenerator
 {
-    private const NyanLayer _characterLayer = NyanLayer.Unit;
-    private readonly IDNumbering _numbering;
-
     private Character _new;
     private bool _canRelease;
-
-    public CharacterGenerator()
-    {
-        _numbering = new IDNumbering(100000, 48);
-    }
 
     public CharacterGenerator Ready()
     {
@@ -30,8 +21,8 @@ public class CharacterGenerator
         var idleData = new IdleData();
         idleData.WaitTime = 3f;
         //
-
-        _new.Init(_numbering.GetID(), patrolData, idleData);
+        int id = InstanceIDService.AcquireID();
+        _new.Init(id, patrolData, idleData);
         return this;
     }
 

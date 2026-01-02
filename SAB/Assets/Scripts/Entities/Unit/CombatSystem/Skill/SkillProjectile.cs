@@ -72,9 +72,10 @@ namespace SAB.Unit.Combat
             // 없음
         }
 
-        public void Refresh(Shape shape)
+        public void Refresh(Shape shape, int instigator)
         {
             _nyanCollider.SetShape(shape);
+            _nyanCollider.SetInstigatorID(instigator);
         }
 
         public void ActivteNyanCollision(bool value)
