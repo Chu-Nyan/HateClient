@@ -10,6 +10,7 @@ namespace Chu
         private readonly GameObject _root;
 
         private NyanCollisonSystem _collisionSys;
+        private InstanceIDService _idService;
         private GeneratorHub _hub;
 
         public GeneratorHub GeneratorHub
@@ -21,6 +22,7 @@ namespace Chu
         {
             _root = root;
             _hub = new GeneratorHub();
+            _idService = new InstanceIDService();
         }
 
         public void ActivateCollisionSystem(RectBound bound, int capacity)
