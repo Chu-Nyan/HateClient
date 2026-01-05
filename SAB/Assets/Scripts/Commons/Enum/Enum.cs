@@ -1,11 +1,15 @@
 public enum UnitType
 {
 	Human = 10000,
-	Orc = 10001,
-	Troll = 10002,
-	Skeleton = 10003,
-	Dragon = 10004,
-	Goblin = 10005,
+	Slime = 10001,
+	Snail = 10002,
+	Mushroom = 10003,
+	Cactus = 10004,
+	Dragon = 10005,
+	SuckerShark = 10006,
+	Hummingbird = 10007,
+	Mimic = 10008,
+	Virus = 10009,
 }
 
 public enum ItemType

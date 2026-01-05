@@ -1,4 +1,4 @@
-public class Unit_CommonDTO
+public class Character_Base_Stats_DTO
 {
 	 public UnitType Type;
 	 public TextID Name;
