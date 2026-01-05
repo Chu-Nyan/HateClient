@@ -1,28 +1,32 @@
-﻿using Chu;
+﻿using Chu.Utility;
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 public class CharacterGenerator
 {
+    private Dictionary<UnitType, CharacterBaseStats> _unitDatas;
+    private IDNumbering _numbering;
     private Character _new;
     private bool _canRelease;
+
+    public CharacterGenerator()
+    {
+        _unitDatas = AssetManager.DeserializeJsonSync<Dictionary<UnitType, CharacterBaseStats>>(Const.Asset_Data_CharacterData);
+        _numbering = new IDNumbering();
+    }
 
     public CharacterGenerator Ready()
     {
         _new = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+        _new.Init(_numbering.GetID());
         _canRelease = true;
         return this;
     }
 
-    public CharacterGenerator SetData(Vector3 respawn)
+    public CharacterGenerator SetData(UnitType type, IdleData idleData, PatrolData patrolData)
     {
-        // 임시 데이터 코드
-        var patrolData = new PatrolData(respawn, new(-10, 10), new(-10, 10));
-        var idleData = new IdleData();
-        idleData.WaitTime = 3f;
-        //
-        int id = InstanceIDService.AcquireID();
-        _new.Init(id, patrolData, idleData);
+        _new.SetStats(_unitDatas[type],idleData, patrolData);
+
         return this;
     }
 

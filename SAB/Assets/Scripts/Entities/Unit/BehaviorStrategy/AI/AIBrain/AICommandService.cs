@@ -25,7 +25,7 @@ namespace SAB.AI.Brain
 
         public static MethodResult Idle(AIContext context)
         {
-            var waitTime = context.MovementReceiver.IdleData.WaitTime;
+            var waitTime = context.MovementReceiver.MovementAIData.IdleData.WaitTime;
 
             context.OrderToIdle(new IdleCommandData(waitTime));
             return MethodResult.Success;
@@ -33,7 +33,7 @@ namespace SAB.AI.Brain
 
         public static MethodResult Patrol(AIContext context)
         {
-            var data = context.MovementReceiver.PatrolData;
+            var data = context.MovementReceiver.MovementAIData.PatrolData;
             var x = UnityEngine.Random.Range(data.XRange.x, data.XRange.y);
             var z = UnityEngine.Random.Range(data.YRange.x, data.YRange.y);
             var pos = context.MovementReceiver.transform.position + new UnityEngine.Vector3(x, 0, z);

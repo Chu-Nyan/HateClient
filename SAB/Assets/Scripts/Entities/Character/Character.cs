@@ -13,8 +13,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
 
     [SerializeField]
     private NavMeshAgent _nav;
-    private PatrolData _patrolData;
-    private IdleData _idleData;
+    private CharacterStats _stats;
     private CharacterBody _body;
     private CombatSystem _combatSystem;
 
@@ -28,14 +27,14 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         get => _instanceID;
     }
 
-    public PatrolData PatrolData
+    public CharacterStats Stats
     {
-        get=> _patrolData;
+        get => _stats;
     }
 
-    public IdleData IdleData
+    public IMovementAIDataView MovementAIData
     {
-        get => _idleData;
+        get => _stats;
     }
 
     public bool IsMoving
@@ -57,15 +56,20 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         }
     }
 
-    public void Init(int instanceID, PatrolData patrolData, IdleData idleData)
+    public void Init(int instanceID)
     {
-        _body = new(instanceID,transform, new CircleShape(1));
+        _instanceID = instanceID;
         _combatSystem = new CombatSystem();
+        _stats = new CharacterStats();
+        _body = new(_instanceID, transform, new CircleShape(1));
+    }
+
+    public void SetStats(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
+    {
+        _stats.SetData(baseStats);
         _combatSystem.AddSkill(new());
         _body.Init(new CircleShape(1));
-        _instanceID = instanceID;
-        _patrolData = patrolData;
-        _idleData = idleData;
+        _stats.SetMovementAIData(idle, patrol);
     }
 
     public void SetDestination(Vector3 destination)
