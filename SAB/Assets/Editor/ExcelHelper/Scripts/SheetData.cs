@@ -44,8 +44,8 @@ public class SheetData
     public string GetNameFromOptions()
     {
         var suffix = string.Empty;
-        if (HasFlag(SheetProperty.DTO) == true)
-            suffix += "DTO";
+        if (HasFlag(SheetProperty.Data) == true)
+            suffix += "_DTO";
 
         return $"{Table.TableName}{suffix}";
     }

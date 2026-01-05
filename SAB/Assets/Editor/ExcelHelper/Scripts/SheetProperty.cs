@@ -8,5 +8,4 @@ public enum SheetProperty
     Enum = 1 << 1,
     Localization = 1 << 2,
     ExternalFolder = 1 << 3,
-    DTO = 1 << 4,
 }
