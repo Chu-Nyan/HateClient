@@ -1,0 +1,8 @@
+public class Skill_Base_DTO
+{
+	 public SkillID ID;
+	 public TextID StringID;
+	 public float CastingTime;
+	 public float Cooldown;
+	 public float Cost;
+}

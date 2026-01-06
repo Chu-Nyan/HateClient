@@ -23,8 +23,19 @@ public enum ItemType
 	SteelShield = 20001,
 }
 
-public enum DamageType
+public enum SkillProcessType
 {
-	Physical = 0,
-	Magical = 1,
+	Instant = 1,
+	DoT = 2,
+	AoE = 3,
+	Timer = 4,
+}
+
+public enum SkillID
+{
+	BasicMelee = 100000,
+	BasicRanged = 100001,
+	FireBolt = 100002,
+	FrogPoison = 100003,
+	StickyBomb = 100004,
 }

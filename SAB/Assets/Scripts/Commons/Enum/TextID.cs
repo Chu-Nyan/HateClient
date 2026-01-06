@@ -24,4 +24,9 @@ public enum TextID
 	Unit_Hummingbird_Desc = 200019,
 	Unit_Mimic_Desc = 200020,
 	Unit_Virus_Desc = 200021,
+	Skill_BasicMelee = 300000,
+	Skill_BasicRanged = 300001,
+	Skill_Firebolt = 300002,
+	Skill_FrogPoison = 300003,
+	Skill_StickyBomb = 300004,
 }
