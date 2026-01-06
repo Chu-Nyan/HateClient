@@ -35,7 +35,7 @@ public enum SkillID
 {
 	BasicMelee = 100000,
 	BasicRanged = 100001,
-	FireBolt = 100002,
+	Firebolt = 100002,
 	FrogPoison = 100003,
 	StickyBomb = 100004,
 }
