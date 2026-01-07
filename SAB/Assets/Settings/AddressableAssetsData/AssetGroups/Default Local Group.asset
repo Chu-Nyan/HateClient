@@ -15,6 +15,21 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: b4de0faf4f6bdcf41bffa4a31e862c8e
   m_SerializeEntries:
+  - m_GUID: 050e9f228f32a9a4888b7efef9184063
+    m_Address: SkillData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e8428152e884e44b90db7cebea74901
+    m_Address: SkillFlowDoT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cd2a768f8e1f9c4cb8be06c115029bb
+    m_Address: SkillFlowAoE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b67c4039bfa24f4a9cc6ad278369c30
     m_Address: Character
     m_ReadOnly: 0
@@ -27,6 +42,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8ceb8e5f267f660459273eeab958238c
     m_Address: CharacterData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2e76f472d1463b4bae75c37d3cf0347
+    m_Address: SkillFlowInstance
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e334153a8824eb745a936ab34e7ca635
+    m_Address: SkillFlowTimer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac3bcea95e82c34dac9c6c73337edc0, type: 3}
+  m_Name: SkillDTOConverter
+  m_EditorClassIdentifier: 
+  _skillBase: {fileID: 4900000, guid: c9f4e5c5dac34d4448df2126111ce673, type: 3}
+  _skillLogic: {fileID: 4900000, guid: 2dd4f3801a4d0bc4bbc1a9593273dbaf, type: 3}
+  _instance: {fileID: 4900000, guid: 55029e4b34dca2b4d9dd2fe5ffb57d52, type: 3}
+  _dot: {fileID: 4900000, guid: dee84f460cab1d340a10b1daa4700921, type: 3}
+  _aoe: {fileID: 4900000, guid: 6ac6559bb8fa67442a9bbeb8565af500, type: 3}
+  _time: {fileID: 4900000, guid: d6ed19f5ebdd2cb409fd3010bcca4884, type: 3}
+  _jsonGeneratePath: Assets/DB
