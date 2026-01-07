@@ -5,8 +5,11 @@
     /// </summary>
     public class SkillData
     {
-        public int ID;
-        public string Name;
+        public SkillID ID;
+        public TextID StringID;
+        public float CastingTime;
         public float Cooldown;
+        public float Cost;
+        public int[] FlowIDs;
     }
 }
