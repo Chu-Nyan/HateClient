@@ -59,14 +59,23 @@ namespace SAB.Unit.Combat
                 return;
 
             _used.Add(index);
+            Skill skill = SkillList[index];
+            var context = new AttackContext(skill.Data, 10); // 10 -> 객체의 공격력 추가
 
             // TODO : 스킬에 맞는 shape 발사
+
             var rect = new CircleShape(0.5f);
             var dir = targetPoint - start;
             dir.y = 0f;
             Debug.DrawRay(start, dir * 50f, Color.red, 4f);
-            ProjectileGenerator.Instance.Set(rect, instigatorID, start, dir);
+            // 원거리 공격
+            ProjectileGenerator.Instance.Set(rect, instigatorID, context, start, dir);
             Debug.Log($"{index}번 스킬, {targetPoint} 공격");
+        }
+
+        public void Defend(AttackContext atkContext)
+        {
+            Debug.Log(atkContext.Damage);
         }
     }
 }

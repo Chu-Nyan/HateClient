@@ -8,7 +8,7 @@ namespace SAB.Unit.Combat
     /// <summary>
     /// 스킬의 이펙트, 환경 오브젝트 충돌 처리
     /// </summary>
-    public class SkillProjectile : MonoBehaviour, INyanCollisionProvider
+    public class SkillProjectile : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
     {
         private const NyanLayer _layer = NyanLayer.Projectile;
         private const float _maxLifeSpan = 5f;
@@ -16,12 +16,18 @@ namespace SAB.Unit.Combat
         private static int _hitUnityLayer;
 
         private NyanCollider _nyanCollider;
+        private AttackContext _context;
         private Vector3 _dir;
         private float _timer;
 
         public NyanCollider Collider
         {
             get => _nyanCollider;
+        }
+
+        public AttackContext Context
+        {
+            get => _context;
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -72,10 +78,11 @@ namespace SAB.Unit.Combat
             // 없음
         }
 
-        public void Refresh(Shape shape, int instigator)
+        public void Refresh(Shape shape, int instigator, AttackContext context)
         {
             _nyanCollider.SetShape(shape);
             _nyanCollider.SetInstigatorID(instigator);
+            _context = context;
         }
 
         public void ActivteNyanCollision(bool value)

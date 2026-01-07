@@ -1,6 +1,8 @@
 ﻿using Chu;
 using Chu.Collision;
 using Chu.Collision.Layer;
+using SAB.Unit.Combat;
+using System;
 using UnityEngine;
 
 public class CharacterBody : INyanCollisionProvider
@@ -9,6 +11,7 @@ public class CharacterBody : INyanCollisionProvider
 
     private Transform _transform;
     private NyanCollider _collider;
+    private event Action<AttackContext> _onHit;
 
     public Transform transform
     {
@@ -41,10 +44,20 @@ public class CharacterBody : INyanCollisionProvider
 
     public void OnNyanCollisionEnter(INyanCollisionProvider provider)
     {
-        //Debug.Log(provider.Collider.Comment + " 충돌 됨");
+        if (provider.Collider.Layer == NyanLayer.Projectile)
+        {
+            var handler = provider as IAttackContextProvider;
+            AttackContext excutor = handler.Context;
+            _onHit?.Invoke(excutor);
+        }
     }
 
     public void OnNyanCollisionExit(INyanCollisionProvider provider)
     {
+    }
+
+    public void RegisterOnSkillHit(Action<AttackContext> action)
+    {
+        _onHit += action;
     }
 }

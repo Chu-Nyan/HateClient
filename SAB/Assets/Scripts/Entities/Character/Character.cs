@@ -62,12 +62,14 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         _combatSystem = new CombatSystem();
         _stats = new CharacterStats();
         _body = new(_instanceID, transform, new CircleShape(1));
+        _body.RegisterOnSkillHit(Defend);
     }
 
     public void SetStats(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
     {
         _stats.SetData(baseStats);
-        _combatSystem.AddSkill(new());
+        var skill = SkillGenerator.Instance.GetSkill(SkillID.BasicMelee);
+        _combatSystem.AddSkill(skill);
         _body.Init(new CircleShape(1));
         _stats.SetMovementAIData(idle, patrol);
     }
@@ -88,5 +90,10 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
         // TODO : 연출 + 실제 충돌 처리
         // 실제 충돌은 Combat 시스템에서 처리
         _combatSystem.Attack(_instanceID, skillIndex, _attackOrigin.position, targetPoint);
+    }
+
+    public void Defend(AttackContext context)
+    {
+        Debug.Log($"{context.SkillData.ID} 적중됨");
     }
 }
