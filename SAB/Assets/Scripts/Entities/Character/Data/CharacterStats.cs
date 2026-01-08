@@ -1,7 +1,7 @@
-﻿public class CharacterStats : IMovementAIDataView
+﻿public class CharacterStats : IMovementAIDataView, IHasStats
 {
     private CharacterBaseStats _baseStats;
-
+    private CharacterCurrentStats _currentStats; 
     private IdleData _idleData;
     private PatrolData _patrolData;
 
@@ -18,6 +18,17 @@
     public PatrolData PatrolData
     {
         get => _patrolData;
+    }
+
+    public float HP
+    {
+        get => _currentStats.HP;
+        set => _currentStats.HP = value;
+    }
+
+    public CharacterStats()
+    {
+        _currentStats = new();
     }
 
     public void SetData(CharacterBaseStats baseStats)
