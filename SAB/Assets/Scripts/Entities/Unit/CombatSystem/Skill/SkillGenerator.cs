@@ -1,4 +1,5 @@
 ﻿using Chu.Utility;
+using System;
 using System.Collections.Generic;
 
 namespace SAB.Unit.Combat
@@ -7,15 +8,28 @@ namespace SAB.Unit.Combat
     {
         private Dictionary<SkillID, SkillData> _skillDataByID;
         private Dictionary<int, IStepData> _stepDataByID;
+        private Dictionary<SkillProcessType, Func<ISkillStep>> _generateFuncByProcessType;
 
         public SkillGenerator() : base()
         {
             _skillDataByID = AssetManager.DeserializeJsonSync<Dictionary<SkillID, SkillData>>(Const.Asset_Data_SkillData);
             _stepDataByID = new();
+            InitGenerateFunc();
             InitStepData<InstanceStepData>(Const.Asset_Data_SkillFlowInstance);
             InitStepData<DotStepData>(Const.Asset_Data_SkillFlowDoT);
             InitStepData<AoEStepData>(Const.Asset_Data_SkillFlowAoE);
             InitStepData<TimerStepData>(Const.Asset_Data_SkillFlowTimer);
+        }
+
+        private void InitGenerateFunc()
+        {
+            _generateFuncByProcessType = new()
+            {
+                { SkillProcessType.Instant, () => new InstantSkillStep() },
+                { SkillProcessType.DoT, () => new DoTSkillStep() },
+                { SkillProcessType.AoE, () => new AoESkillStep() },
+                { SkillProcessType.Timer, () => new TimerSkillStep() },
+            };
         }
 
         private void InitStepData<T>(string path) where T : IStepData
@@ -33,6 +47,30 @@ namespace SAB.Unit.Combat
             var skill = new Skill();
             skill.Init(_skillDataByID[id]);
             return skill;
+        }
+
+        public SkillSequence GenerateSequence(AttackContext context)
+        {
+            var data = context.SkillData;
+            var list = new List<ISkillStep>();
+            for (int i = 0; i < data.FlowIDs.Length; i++)
+            {
+                list.Add(GenerateStep(data.FlowIDs[i], context));
+            }
+
+            var sequence = new SkillSequence();
+            sequence.Refresh(context, list);
+
+            return sequence;
+        }
+
+        private ISkillStep GenerateStep(int id, AttackContext context)
+        {
+            var type = (SkillProcessType)(id / 100000);
+            ISkillStep step = _generateFuncByProcessType[type]?.Invoke();
+            step.Refresh(_stepDataByID[id], context);
+
+            return step;
         }
     }
 }
