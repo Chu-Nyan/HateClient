@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace SAB.Unit.Combat
 {
@@ -12,7 +13,6 @@ namespace SAB.Unit.Combat
         public readonly int ID;
         private SkillData _data;
         private float _remainingCooldown;
-        private bool _canUse;
 
         public float RemainingCooldown
         {
@@ -21,7 +21,7 @@ namespace SAB.Unit.Combat
 
         public bool CanUse
         {
-            get => _canUse;
+            get => _remainingCooldown <= 0;
         }
 
         public SkillData Data
@@ -38,7 +38,6 @@ namespace SAB.Unit.Combat
         {
             _data = data;
             _remainingCooldown = 0;
-            _canUse = true;
         }
 
         public void Use()
@@ -49,7 +48,6 @@ namespace SAB.Unit.Combat
         public void ReduceCooldown(float time)
         {
             _remainingCooldown = Math.Max(0f, _remainingCooldown - time);
-            _canUse = _remainingCooldown <= 0;
         }
     }
 }

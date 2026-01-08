@@ -59,6 +59,7 @@ namespace SAB.Unit.Combat
 
             _used.Add(index);
             Skill skill = SkillList[index];
+            skill.Use();
             var context = new AttackContext(skill.Data, 10); // 10 -> 객체의 공격력 추가
 
             // TODO : 스킬에 맞는 shape 발사
