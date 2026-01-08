@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
+public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDefendable
 {
     [SerializeField]
     private int _instanceID;
@@ -16,6 +16,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     private CharacterStats _stats;
     private CharacterBody _body;
     private CombatSystem _combatSystem;
+    private DefenseSystem _defenseSystem;
 
     public int InstanceID
     {
@@ -50,6 +51,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     private void Update()
     {
         _combatSystem.Update();
+        _defenseSystem.Tick(_stats);
         if (IsMoving == true)
         {
             _body.Collider.RefreshTransform();
@@ -60,6 +62,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
     {
         _instanceID = instanceID;
         _combatSystem = new CombatSystem();
+        _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _body = new(_instanceID, transform, new CircleShape(1));
         _body.RegisterOnSkillHit(Defend);
@@ -94,6 +97,6 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver
 
     public void Defend(AttackContext context)
     {
-        Debug.Log($"{context.SkillData.ID} 적중됨");
+        _defenseSystem.Attack(context);
     }
 }

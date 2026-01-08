@@ -8,7 +8,6 @@ namespace SAB.Unit.Combat
     {
         public const int BasicAttackIndex = 0;
         private static readonly HashSet<int> _toRemove = new();
-
         private List<Skill> _skillList;
         private HashSet<int> _used;
 
@@ -71,11 +70,6 @@ namespace SAB.Unit.Combat
             // 원거리 공격
             ProjectileGenerator.Instance.Set(rect, instigatorID, context, start, dir);
             Debug.Log($"{index}번 스킬, {targetPoint} 공격");
-        }
-
-        public void Defend(AttackContext atkContext)
-        {
-            Debug.Log(atkContext.Damage);
         }
     }
 }
