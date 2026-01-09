@@ -1,17 +1,32 @@
-﻿namespace SAB.Unit.Combat
+﻿using System;
+
+namespace SAB.Unit.Combat
 {
     public class AoESkillStep : ISkillStep
     {
-        public bool IsDone => throw new System.NotImplementedException();
+        private AoEStepData _data;
+        private AttackContext _context;
+        private bool _isDone;
 
-        public void Refresh(IStepData data, AttackContext dmg)
+        public bool IsDone
         {
-            throw new System.NotImplementedException();
+            get => _isDone;
+        }
+
+        public void Refresh(IStepData data, AttackContext context)
+        {
+            if (data is not AoEStepData stepData)
+                throw new Exception("잘못된 SkillStep 초기화");
+
+            _data = stepData;
+            _context = context;
+
         }
 
         public void Tick(IHasStats defensive)
         {
-            throw new System.NotImplementedException();
+            // TODO : 범위 스킬 로직
+            _isDone = true;
         }
     }
 }

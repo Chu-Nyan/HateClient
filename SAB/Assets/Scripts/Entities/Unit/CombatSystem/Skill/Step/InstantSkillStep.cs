@@ -1,12 +1,11 @@
 ﻿using System;
-using UnityEngine;
 
 namespace SAB.Unit.Combat
 {
     public class InstantSkillStep : ISkillStep
     {
         private InstanceStepData _data;
-        private AttackContext _dmg;
+        private AttackContext _context;
         private bool _isDone;
 
         public bool IsDone
@@ -14,19 +13,18 @@ namespace SAB.Unit.Combat
             get => _isDone;
         }
 
-        public void Refresh(IStepData data, AttackContext dmg)
+        public void Refresh(IStepData data, AttackContext context)
         {
-            if (data is not InstanceStepData instant)
+            if (data is not InstanceStepData stepData)
                 throw new Exception("잘못된 SkillStep 초기화");
 
-            _data = instant;
-            _dmg = dmg;
+            _data = stepData;
+            _context = context;
         }
 
         public void Tick(IHasStats stats)
         {
-            // 공격자 데미지와 계산식
-            Debug.Log($"{stats.HP} - {_dmg}피해를 입힘");
+            stats.HP -= _context.Damage * _data.DamageRate;
             _isDone = true;
         }
     }
