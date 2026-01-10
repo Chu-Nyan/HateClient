@@ -68,13 +68,17 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
         _body.RegisterOnSkillHit(Defend);
     }
 
-    public void SetStats(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
+    public void SetupStats(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
     {
-        _stats.SetData(baseStats);
+        _stats.SetBaseData(baseStats, idle, patrol);
         var skill = SkillGenerator.Instance.GetSkill(SkillID.BasicMelee);
         _combatSystem.AddSkill(skill);
         _body.Init(new CircleShape(1));
-        _stats.SetMovementAIData(idle, patrol);
+    }
+
+    public void SetCurrentStats(float hp)
+    {
+        _stats.SetCurrentStats(hp);
     }
 
     public void SetDestination(Vector3 destination)
@@ -98,5 +102,19 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     public void Defend(AttackContext context)
     {
         _defenseSystem.Attack(context);
+
+        if (_stats.IsDead == true)
+            Die();
     }
+
+    public void Die()
+    {
+        SetActive(false);
+    }
+
+    public void SetActive(bool value)
+    {
+        gameObject.SetActive(value);
+    }
+
 }

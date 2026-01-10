@@ -20,6 +20,11 @@
         get => _patrolData;
     }
 
+    public bool IsDead
+    {
+        get => _currentStats.HP <= 0;
+    }
+
     public float HP
     {
         get => _currentStats.HP;
@@ -31,14 +36,20 @@
         _currentStats = new();
     }
 
-    public void SetData(CharacterBaseStats baseStats)
+    public void SetBaseData(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
     {
         _baseStats = baseStats;
-    }
-
-    public void SetMovementAIData(IdleData idle, PatrolData patrol)
-    {
         _idleData = idle;
         _patrolData = patrol;
+    }
+
+    public void SetCurrentStats(float hp)
+    {
+        _currentStats.HP = hp;
+    }
+
+    public void ResetStats()
+    {
+        _currentStats.HP = BaseStats.HP;
     }
 }

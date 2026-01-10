@@ -25,7 +25,8 @@ public class CharacterGenerator
 
     public CharacterGenerator SetData(UnitType type, IdleData idleData, PatrolData patrolData)
     {
-        _new.SetStats(_unitDatas[type],idleData, patrolData);
+        _new.SetupStats(_unitDatas[type],idleData, patrolData);
+        _new.SetCurrentStats(_unitDatas[type].HP);
 
         return this;
     }
