@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SkillDTOConverter
   m_EditorClassIdentifier: 
   _skillBase: {fileID: 4900000, guid: c9f4e5c5dac34d4448df2126111ce673, type: 3}
-  _skillLogic: {fileID: 4900000, guid: 2dd4f3801a4d0bc4bbc1a9593273dbaf, type: 3}
-  _instance: {fileID: 4900000, guid: 55029e4b34dca2b4d9dd2fe5ffb57d52, type: 3}
-  _dot: {fileID: 4900000, guid: dee84f460cab1d340a10b1daa4700921, type: 3}
-  _aoe: {fileID: 4900000, guid: 6ac6559bb8fa67442a9bbeb8565af500, type: 3}
-  _time: {fileID: 4900000, guid: d6ed19f5ebdd2cb409fd3010bcca4884, type: 3}
+  _skillstep: {fileID: 4900000, guid: 2a7fd2ce367d1e84e87c90248460c617, type: 3}
+  _instance: {fileID: 4900000, guid: dba1a815c4593d64ab370b83e333cecc, type: 3}
+  _dot: {fileID: 4900000, guid: 0d9fb49d2e58b10428964e92146af243, type: 3}
+  _aoe: {fileID: 4900000, guid: d7f037448889f06409855533553c100c, type: 3}
+  _time: {fileID: 4900000, guid: 8047203a7c287954d8f7dd0f8a7941bc, type: 3}
   _jsonGeneratePath: Assets/DB

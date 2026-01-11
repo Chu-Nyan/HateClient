@@ -23,7 +23,7 @@ public enum ItemType
 	SteelShield = 20001,
 }
 
-public enum SkillProcessType
+public enum SkillStepType
 {
 	Instant = 1,
 	DoT = 2,

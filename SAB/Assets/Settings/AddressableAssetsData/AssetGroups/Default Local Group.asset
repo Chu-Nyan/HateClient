@@ -20,18 +20,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0e8428152e884e44b90db7cebea74901
-    m_Address: SkillFlowDoT
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3cd2a768f8e1f9c4cb8be06c115029bb
-    m_Address: SkillFlowAoE
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b67c4039bfa24f4a9cc6ad278369c30
     m_Address: Character
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c64e17d2b6376948a019179b9b32725
+    m_Address: SkillStepDoT
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -40,18 +35,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 716dab13a0a01fa4d8333e094feccd96
+    m_Address: SkillStepInstance
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8ceb8e5f267f660459273eeab958238c
     m_Address: CharacterData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b2e76f472d1463b4bae75c37d3cf0347
-    m_Address: SkillFlowInstance
+  - m_GUID: 8e99c6d1c7231cc40bc7f228229eb798
+    m_Address: SkillStepTimer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e334153a8824eb745a936ab34e7ca635
-    m_Address: SkillFlowTimer
+  - m_GUID: b6af661ba0778024b8bc97a6ad995a1c
+    m_Address: SkillStepAoE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

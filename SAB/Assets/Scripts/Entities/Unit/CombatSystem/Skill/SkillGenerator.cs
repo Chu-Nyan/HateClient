@@ -8,27 +8,27 @@ namespace SAB.Unit.Combat
     {
         private Dictionary<SkillID, SkillData> _skillDataByID;
         private Dictionary<int, IStepData> _stepDataByID;
-        private Dictionary<SkillProcessType, Func<ISkillStep>> _generateFuncByProcessType;
+        private Dictionary<SkillStepType, Func<ISkillStep>> _generateFuncByProcessType;
 
         public SkillGenerator() : base()
         {
             _skillDataByID = AssetManager.DeserializeJsonSync<Dictionary<SkillID, SkillData>>(Const.Asset_Data_SkillData);
             _stepDataByID = new();
             InitGenerateFunc();
-            InitStepData<InstanceStepData>(Const.Asset_Data_SkillFlowInstance);
-            InitStepData<DotStepData>(Const.Asset_Data_SkillFlowDoT);
-            InitStepData<AoEStepData>(Const.Asset_Data_SkillFlowAoE);
-            InitStepData<TimerStepData>(Const.Asset_Data_SkillFlowTimer);
+            InitStepData<InstanceStepData>(Const.Asset_Data_SkillStepInstance);
+            InitStepData<DotStepData>(Const.Asset_Data_SkillStepDoT);
+            InitStepData<AoEStepData>(Const.Asset_Data_SkillStepAoE);
+            InitStepData<TimerStepData>(Const.Asset_Data_SkillStepTimer);
         }
 
         private void InitGenerateFunc()
         {
             _generateFuncByProcessType = new()
             {
-                { SkillProcessType.Instant, () => new InstantSkillStep() },
-                { SkillProcessType.DoT, () => new DoTSkillStep() },
-                { SkillProcessType.AoE, () => new AoESkillStep() },
-                { SkillProcessType.Timer, () => new TimerSkillStep() },
+                { SkillStepType.Instant, () => new InstantSkillStep() },
+                { SkillStepType.DoT, () => new DoTSkillStep() },
+                { SkillStepType.AoE, () => new AoESkillStep() },
+                { SkillStepType.Timer, () => new TimerSkillStep() },
             };
         }
 
@@ -66,7 +66,7 @@ namespace SAB.Unit.Combat
 
         private ISkillStep GenerateStep(int id, AttackContext context)
         {
-            var type = (SkillProcessType)(id / 100000);
+            var type = (SkillStepType)(id / 100000);
             ISkillStep step = _generateFuncByProcessType[type]?.Invoke();
             step.Refresh(_stepDataByID[id], context);
 

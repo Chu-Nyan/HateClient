@@ -29,7 +29,7 @@ public class SkillDTOConverter : ScriptableObject
     public void ConvertCharacterDTO()
     {
         var baseData = JsonToDictionary<SkillID, SkillData>(_skillBase.text, x => x.ID);
-        var flowstepDTO = ConvertFromJson<Skill_Logic_DTO[]>(_skillstep.text);
+        var flowstepDTO = ConvertFromJson<Skill_FlowStep_DTO[]>(_skillstep.text);
         var instanceDTO = JsonToDictionary<int, InstanceStepData>(_instance.text, x => x.ID);
         var dotDTO = JsonToDictionary<int, DotStepData>(_dot.text, x => x.ID);
         var aoeDTO = JsonToDictionary<int, AoEStepData>(_aoe.text, x => x.ID);
@@ -54,10 +54,10 @@ public class SkillDTOConverter : ScriptableObject
 
 
         WriteAllText(baseData, "SkillData.json");
-        WriteAllText(instanceDTO, "SkillFlowInstance.json");
-        WriteAllText(dotDTO, "SkillFlowDoT.json");
-        WriteAllText(aoeDTO, "SkillFlowAoE.json");
-        WriteAllText(timeDTO, "SkillFlowTimer.json");
+        WriteAllText(instanceDTO, "SkillStepInstance.json");
+        WriteAllText(dotDTO, "SkillStepDoT.json");
+        WriteAllText(aoeDTO, "SkillStepAoE.json");
+        WriteAllText(timeDTO, "SkillStepTimer.json");
     }
 
     private Dictionary<T,K> JsonToDictionary<T, K>(string json, Func<K, T> keySelctor)

@@ -1,4 +1,4 @@
-public class Skill_Logic_AoE_DTO
+public class Skill_Step_AoE_DTO
 {
 	 public int ID;
 	 public float DamageRate;
