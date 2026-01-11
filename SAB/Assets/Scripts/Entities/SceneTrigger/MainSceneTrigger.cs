@@ -1,5 +1,5 @@
 using Chu;
-using SAB.AI;
+using SAB.EntityAgent.AI;
 using SAB.Unit.Combat;
 using UnityEngine;
 

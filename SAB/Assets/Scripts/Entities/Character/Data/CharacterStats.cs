@@ -1,4 +1,6 @@
-﻿public class CharacterStats : IMovementAIDataView, IHasStats
+﻿using SAB.EntityAgent.AI;
+
+public class CharacterStats : IMovementAIDataView, IHasStats
 {
     private CharacterBaseStats _baseStats;
     private CharacterCurrentStats _currentStats; 

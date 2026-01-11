@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using SAB.EntityAgent;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -9,12 +10,12 @@ public class UnitController
     public enum Oner { Player, AI, None }
 
     private CharacterGenerator _actorGenerator;
-    private UnitBinder _binder;
+    private AgentController _controller;
 
     public UnitController(Transform gameObj)
     {
         _actorGenerator = new();
-        _binder = gameObj.AddComponent<UnitBinder>();
+        _controller = gameObj.AddComponent<AgentController>();
     }
 
     public Character GenerateCharacter(UnitType type, Vector3 respawn)
@@ -31,13 +32,13 @@ public class UnitController
     public void BindRecevier(IInputReceiver receiver, Oner oner, bool isActivation)
     {
         if (isActivation == true)
-            _binder.BindReceiver(receiver, oner);
+            _controller.BindReceiver(receiver, oner);
         else
-            _binder.UnbindReceiver(receiver);
+            _controller.UnbindReceiver(receiver);
     }
 
     private void OnCharacterDeactivated(IInputReceiver acter)
     {
-        _binder.UnbindReceiver(acter);
+        _controller.UnbindReceiver(acter);
     }
 }
