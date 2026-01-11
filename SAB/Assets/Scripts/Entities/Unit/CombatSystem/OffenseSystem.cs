@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SAB.Unit.Combat
 {
-    public class CombatSystem
+    public class OffenseSystem
     {
         public const int BasicAttackIndex = 0;
 
@@ -17,7 +17,7 @@ namespace SAB.Unit.Combat
             get => _skillList;
         }
 
-        public CombatSystem(int instigatorID)
+        public OffenseSystem(int instigatorID)
         {
             _skillList = new List<Skill>();
             _used = new List<int>();
@@ -44,7 +44,7 @@ namespace SAB.Unit.Combat
             _skillList.Add(skill);
         }
 
-        public void Attack(int index, Vector3 start, Vector3 targetPoint)
+        public void Attack(float damage, int index, Vector3 start, Vector3 targetPoint)
         {
             if (_used.Contains(index) == true)
                 return;
@@ -52,7 +52,7 @@ namespace SAB.Unit.Combat
             _used.Add(index);
             Skill skill = SkillList[index];
             skill.Use();
-            var context = new AttackContext(skill.Data, 10); // 10 -> 객체의 공격력 추가
+            var context = new AttackContext(skill.Data, damage);
 
             // TODO : 스킬에 맞는 shape 발사
 

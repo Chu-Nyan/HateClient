@@ -10,6 +10,6 @@
         public float CastingTime;
         public float Cooldown;
         public float Cost;
-        public int[] FlowIDs;
+        public int[] FlowStepIDs;
     }
 }

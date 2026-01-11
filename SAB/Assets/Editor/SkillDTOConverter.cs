@@ -12,7 +12,7 @@ public class SkillDTOConverter : ScriptableObject
     [SerializeField]
     private TextAsset _skillBase;
     [SerializeField]
-    private TextAsset _skillLogic;
+    private TextAsset _skillstep;
     [SerializeField]
     private TextAsset _instance;
     [SerializeField]
@@ -29,7 +29,7 @@ public class SkillDTOConverter : ScriptableObject
     public void ConvertCharacterDTO()
     {
         var baseData = JsonToDictionary<SkillID, SkillData>(_skillBase.text, x => x.ID);
-        var flowDTO = ConvertFromJson<Skill_Logic_DTO[]>(_skillLogic.text);
+        var flowstepDTO = ConvertFromJson<Skill_Logic_DTO[]>(_skillstep.text);
         var instanceDTO = JsonToDictionary<int, InstanceStepData>(_instance.text, x => x.ID);
         var dotDTO = JsonToDictionary<int, DotStepData>(_dot.text, x => x.ID);
         var aoeDTO = JsonToDictionary<int, AoEStepData>(_aoe.text, x => x.ID);
@@ -37,19 +37,19 @@ public class SkillDTOConverter : ScriptableObject
 
 
         var flowByID = new Dictionary<SkillID, List<int>>();
-        for (int i = 0; i < flowDTO.Length; i++)
+        for (int i = 0; i < flowstepDTO.Length; i++)
         {
-            if (flowByID.ContainsKey(flowDTO[i].ID) == false)
+            if (flowByID.ContainsKey(flowstepDTO[i].ID) == false)
             {
-                flowByID.Add(flowDTO[i].ID, new List<int>());
+                flowByID.Add(flowstepDTO[i].ID, new List<int>());
             }
 
-            flowByID[flowDTO[i].ID].Add(flowDTO[i].LogicID);
+            flowByID[flowstepDTO[i].ID].Add(flowstepDTO[i].LogicID);
         }
 
         foreach (var item in flowByID)
         {
-            baseData[item.Key].FlowIDs = item.Value.ToArray();
+            baseData[item.Key].FlowStepIDs = item.Value.ToArray();
         }
 
 

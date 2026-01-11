@@ -31,6 +31,11 @@
         set => _currentStats.HP = value;
     }
 
+    public float Damage
+    {
+        get => _currentStats.Damage;
+    }
+
     public CharacterStats()
     {
         _currentStats = new();

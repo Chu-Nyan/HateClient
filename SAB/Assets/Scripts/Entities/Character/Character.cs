@@ -15,7 +15,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     private NavMeshAgent _nav;
     private CharacterStats _stats;
     private CharacterBody _body;
-    private CombatSystem _combatSystem;
+    private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
 
     public int InstanceID
@@ -61,7 +61,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     public void Init(int instanceID)
     {
         _instanceID = instanceID;
-        _combatSystem = new CombatSystem(instanceID);
+        _combatSystem = new OffenseSystem(instanceID);
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _body = new(_instanceID, transform, new CircleShape(1));
@@ -96,7 +96,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     {
         // TODO : 연출 + 실제 충돌 처리
         // 실제 충돌은 Combat 시스템에서 처리
-        _combatSystem.Attack(skillIndex, _attackOrigin.position, targetPoint);
+        _combatSystem.Attack(_stats.Damage, skillIndex, _attackOrigin.position, targetPoint);
     }
 
     public void Defend(AttackContext context)
