@@ -7,29 +7,25 @@ using UnityEngine;
 /// </summary>
 public class UnitBinder : MonoBehaviour
 {
-    private const int _playerHandlerID = 1;
-    private Dictionary<int, UnitBehaviorHandler> _handlerByHandlerId;
-    private Dictionary<int, UnitBehaviorHandler> _handlerByReceiverId;
+    private const int _playerHandlerID = 0;
+    private UnitBehaviorHandler[] _handlerByHandlerId;
+    private Dictionary<int, UnitBehaviorHandler> _activationHandlerByReceiverId;
+    private Queue<UnitBehaviorHandler> _idleHandlers;
 
     private void Awake()
     {
-        _handlerByHandlerId = new();
-        _handlerByReceiverId = new();
+        _handlerByHandlerId = new UnitBehaviorHandler[200];
+        _activationHandlerByReceiverId = new();
+        _idleHandlers = new();
         GenerateHanlder(new PlayerInputBehaviorStrategy());
-        GenerateHanlder(AIGenerator.Instance.TempGenerate());
     }
 
     private void Update()
     {
-        foreach (var item in _handlerByHandlerId)
+        foreach (var item in _activationHandlerByReceiverId)
         {
             item.Value.Tick();
         }
-    }
-
-    public void ToggleHandlerByReceiverId(int id, bool isActivation)
-    {
-        _handlerByReceiverId[id].SetActive(isActivation);
     }
 
     public void BindReceiver(IInputReceiver receiver, UnitController.Oner oner)
@@ -41,12 +37,23 @@ public class UnitBinder : MonoBehaviour
         }
         else
         {
-            // TODO : NPC 기타 등등 핸들러 가져오기
-            handler = _handlerByHandlerId[2];
+            if (_idleHandlers.Count == 0)
+            {
+                UnitBehaviorHandler aiHandler = GenerateHanlder(AIGenerator.Instance.TempGenerate());
+                _idleHandlers.Enqueue(aiHandler);
+            }
+            handler = _idleHandlers.Dequeue();
         }
 
         handler.SetReceivers(receiver);
-        _handlerByReceiverId[receiver.ReceiverID] = handler;
+        handler.SetActive(true);
+        _activationHandlerByReceiverId[receiver.ReceiverID] = handler;
+    }
+
+    public void UnbindReceiver(IInputReceiver receiver)
+    {
+        _activationHandlerByReceiverId[receiver.ReceiverID].SetActive(false);
+        _activationHandlerByReceiverId.Remove(receiver.ReceiverID);
     }
 
     private UnitBehaviorHandler GenerateHanlder(IUnitBehaviorStrategy strategy)
@@ -54,8 +61,8 @@ public class UnitBinder : MonoBehaviour
         // TODO : PlayerHandler를 제외하고 돌려쓸 수 있게 변경
         var handler = new UnitBehaviorHandler();
         handler.SetBehaviorStrategy(strategy);
-        _handlerByHandlerId.Add(handler.ID, handler);
-
+        _handlerByHandlerId[handler.ID] = handler;
+        _idleHandlers.Enqueue(handler);
         return handler;
     }
 }

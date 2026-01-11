@@ -67,15 +67,12 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void SetPracticeScene()
     {
-        _player = _unitController.GenerateCharacter(UnitController.Oner.Player, UnitType.Human, new Vector3(50, 0, 50));
-        _unitController.BindUnitHandler(_player, UnitController.Oner.Player);
-        _unitController.ToggleUnitHandler(_player.ReceiverID, true);
+        _player = _unitController.GenerateCharacter(UnitType.Human, new Vector3(50, 0, 50));
+        _unitController.BindRecevier(_player, UnitController.Oner.Player, true);
 
-        var _npc = _unitController.GenerateCharacter(UnitController.Oner.AI, UnitType.Mimic, new Vector3(50, 0, 50));
-        _unitController.BindUnitHandler(_npc, UnitController.Oner.AI);
-        _unitController.ToggleUnitHandler(_npc.ReceiverID, true);
+        var _npc = _unitController.GenerateCharacter(UnitType.Mimic, new Vector3(50, 0, 50));
+        _unitController.BindRecevier(_npc, UnitController.Oner.AI, true);
 
         _topViewCam.StickCameraArm(_player.transform);
-
     }
 }

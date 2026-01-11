@@ -1,5 +1,6 @@
 ﻿using Chu.Collision;
 using SAB.Unit.Combat;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +18,8 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     private CharacterBody _body;
     private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
+
+    private event Action<Character> _deactivated;
 
     public int InstanceID
     {
@@ -95,7 +98,6 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
         // TODO : 연출 + 실제 충돌 처리
-        // 실제 충돌은 Combat 시스템에서 처리
         _combatSystem.Attack(_stats.Damage, skillIndex, _attackOrigin.position, targetPoint);
     }
 
@@ -109,12 +111,27 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
 
     public void Die()
     {
+        //TODO : 죽음 처리 로직이 끝난 후 SetActive로 마무리
+
         SetActive(false);
     }
 
     public void SetActive(bool value)
     {
+        if (gameObject.activeSelf == value)
+            return;
+
+        if (value == false)
+        {
+            _deactivated?.Invoke(this);
+            _deactivated = null;
+        }
+
         gameObject.SetActive(value);
     }
-
+    
+    public void RegisterDeactivated(Action<Character> callback)
+    {
+        _deactivated += callback;
+    }
 }
