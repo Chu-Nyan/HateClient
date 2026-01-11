@@ -30,12 +30,6 @@ namespace SAB.Unit.Combat
             get => _context;
         }
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void StaticInit()
-        {
-            _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
-        }
-
         public void Awake()
         {
             var mask = new NyanLayerMask(NyanLayer.Unit);
@@ -67,15 +61,10 @@ namespace SAB.Unit.Combat
             OnExpired();
         }
 
-        public void OnNyanCollisionEnter(INyanCollisionProvider collider)
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void StaticInit()
         {
-            // 충돌 처리
-            Debug.Log(collider.Collider.Comment + " 충돌");
-        }
-
-        public void OnNyanCollisionExit(INyanCollisionProvider collider)
-        {
-            // 없음
+            _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
         }
 
         public void Refresh(Shape shape, int instigator, AttackContext context)
@@ -101,6 +90,17 @@ namespace SAB.Unit.Combat
             _dir = dir;
             _timer = 0f;
             transform.rotation = Quaternion.LookRotation(_dir);
+        }
+
+        public void OnNyanCollisionEnter(INyanCollisionProvider collider)
+        {
+            // 충돌 처리
+            Debug.Log(collider.Collider.Comment + " 충돌");
+        }
+
+        public void OnNyanCollisionExit(INyanCollisionProvider collider)
+        {
+            // 없음
         }
 
         private void OnExpired()

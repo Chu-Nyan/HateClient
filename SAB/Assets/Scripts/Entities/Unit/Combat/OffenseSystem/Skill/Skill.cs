@@ -32,7 +32,7 @@ namespace SAB.Unit.Combat
             ID = id;
         }
 
-        public void Init(SkillData data)
+        public void Setup(SkillData data)
         {
             _data = data;
             _remainingCooldown = 0;

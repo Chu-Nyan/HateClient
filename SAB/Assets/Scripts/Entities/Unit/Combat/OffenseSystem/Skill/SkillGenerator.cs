@@ -48,7 +48,7 @@ namespace SAB.Unit.Combat
         public Skill GetSkill(SkillID id)
         {
             var skill = new Skill(_numbering.GetID());
-            skill.Init(_skillDataByID[id]);
+            skill.Setup(_skillDataByID[id]);
             return skill;
         }
 
