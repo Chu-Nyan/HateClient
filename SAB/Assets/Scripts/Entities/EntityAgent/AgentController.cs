@@ -10,18 +10,18 @@ namespace SAB.EntityAgent
     /// </summary>
     public class AgentController : MonoBehaviour
     {
-        private static int _idCounter = 0;
+        private static int _idCounter = 1;
         private const int _playerAgentID = 0;
         private Agent[] _agents;
         private Dictionary<int, Agent> _activeAgentByReceiverId;
-        private Queue<Agent> _idleAgent;
+        private Queue<Agent> _idleNPCAgent;
 
         private void Awake()
         {
             _agents = new Agent[200];
             _activeAgentByReceiverId = new();
-            _idleAgent = new();
-            GenerateAgent(new PlayerBrain());
+            _idleNPCAgent = new();
+            GeneratePlayerAgent();
         }
 
         private void Update()
@@ -35,18 +35,17 @@ namespace SAB.EntityAgent
         public void BindReceiver(IInputReceiver receiver, UnitController.Oner oner)
         {
             Agent handler;
+
             if (oner == UnitController.Oner.Player)
             {
                 handler = _agents[_playerAgentID];
             }
             else
             {
-                if (_idleAgent.Count == 0)
-                {
-                    Agent aiHandler = GenerateAgent(AIGenerator.Instance.TempGenerate());
-                    _idleAgent.Enqueue(aiHandler);
-                }
-                handler = _idleAgent.Dequeue();
+                if (_idleNPCAgent.Count == 0)
+                    GenerateNPCAgent(AIGenerator.Instance.TempGenerate());
+
+                handler = _idleNPCAgent.Dequeue();
             }
 
             handler.SetReceivers(receiver);
@@ -60,15 +59,25 @@ namespace SAB.EntityAgent
             _activeAgentByReceiverId.Remove(receiver.ReceiverID);
         }
 
-        private Agent GenerateAgent(IBrainStrategy strategy)
+        private Agent GenerateNPCAgent(IBrainStrategy strategy)
         {
-            // TODO : PlayerHandler를 제외하고 돌려쓸 수 있게 변경
-            var handler = new Agent(_idCounter);
+            Agent agent = GenerateAgent(_idCounter, strategy);
             _idCounter++;
-            handler.SetBehaviorStrategy(strategy);
-            _agents[handler.ID] = handler;
-            _idleAgent.Enqueue(handler);
-            return handler;
+            _idleNPCAgent.Enqueue(agent);
+            return agent;
+        }
+
+        private Agent GeneratePlayerAgent()
+        {
+            return GenerateAgent(_playerAgentID, new PlayerBrain());
+        }
+
+        private Agent GenerateAgent(int id, IBrainStrategy strategy)
+        {
+            var agent = new Agent(id);
+            agent.SetBehaviorStrategy(strategy);
+            _agents[agent.ID] = agent;
+            return agent;
         }
     }
 }
