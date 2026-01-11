@@ -8,8 +8,6 @@ namespace SAB.Unit.Combat
     /// </summary>
     public class Skill
     {
-        private static int _idCounter;
-
         public readonly int ID;
         private SkillData _data;
         private float _remainingCooldown;
@@ -29,9 +27,9 @@ namespace SAB.Unit.Combat
             get => _data;
         }
 
-        public Skill()
+        public Skill(int id)
         {
-            ID = ++_idCounter;
+            ID = id;
         }
 
         public void Init(SkillData data)

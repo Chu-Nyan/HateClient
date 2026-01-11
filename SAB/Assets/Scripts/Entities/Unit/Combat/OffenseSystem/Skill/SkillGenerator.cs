@@ -6,14 +6,17 @@ namespace SAB.Unit.Combat
 {
     public class SkillGenerator : Singleton<SkillGenerator>
     {
-        private Dictionary<SkillID, SkillData> _skillDataByID;
-        private Dictionary<int, IStepData> _stepDataByID;
+        private readonly IDNumbering _numbering;
+        private readonly Dictionary<SkillID, SkillData> _skillDataByID;
+        private readonly Dictionary<int, IStepData> _stepDataByID;
         private Dictionary<SkillStepType, Func<ISkillStep>> _generateFuncByProcessType;
 
         public SkillGenerator() : base()
         {
             _skillDataByID = AssetManager.DeserializeJsonSync<Dictionary<SkillID, SkillData>>(Const.Asset_Data_SkillData);
             _stepDataByID = new();
+            _numbering = new();
+
             InitGenerateFunc();
             InitStepData<InstanceStepData>(Const.Asset_Data_SkillStepInstance);
             InitStepData<DotStepData>(Const.Asset_Data_SkillStepDoT);
@@ -44,7 +47,7 @@ namespace SAB.Unit.Combat
 
         public Skill GetSkill(SkillID id)
         {
-            var skill = new Skill();
+            var skill = new Skill(_numbering.GetID());
             skill.Init(_skillDataByID[id]);
             return skill;
         }
