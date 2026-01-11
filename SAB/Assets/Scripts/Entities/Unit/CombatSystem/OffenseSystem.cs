@@ -30,7 +30,7 @@ namespace SAB.Unit.Combat
                 return;
 
             var time = Time.deltaTime;
-            for (int i = _used.Count - 1; i >= 0; i++)
+            for (int i = _used.Count - 1; i >= 0; i--)
             {
                 var skill = _skillList[i];
                 skill.ReduceCooldown(time);

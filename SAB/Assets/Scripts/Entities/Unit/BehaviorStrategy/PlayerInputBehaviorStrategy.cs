@@ -10,7 +10,7 @@ public class PlayerInputBehaviorStrategy : IUnitBehaviorStrategy
     private Vector2 _direction;
     private bool _isMoving;
 
-    public void Update()
+    public void Tick()
     {
         if (_isMoving == true)
             MoveDirection();

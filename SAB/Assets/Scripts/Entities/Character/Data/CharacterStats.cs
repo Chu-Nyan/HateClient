@@ -33,7 +33,7 @@
 
     public float Damage
     {
-        get => _currentStats.Damage;
+        get => _baseStats.ATK; // TODO : 공격력 계산식
     }
 
     public CharacterStats()

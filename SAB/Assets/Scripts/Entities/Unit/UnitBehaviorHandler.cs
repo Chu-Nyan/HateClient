@@ -34,9 +34,9 @@ public class UnitBehaviorHandler
         _id = ++_idCounter;
     }
 
-    public void Update()
+    public void Tick()
     {
-        _behaviorStrategy.Update();
+        _behaviorStrategy.Tick();
     }
 
     public void SetActive(bool isActivation)

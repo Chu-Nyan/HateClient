@@ -21,7 +21,7 @@ namespace SAB.AI.Brain
             _currentState.Enter(context);
         }
 
-        public void Update(AIContext context)
+        public void Tick(AIContext context)
         {
             _currentState?.Update(context);
         }

@@ -26,7 +26,7 @@ namespace SAB.AI
             _stateByOrder[CommandType.Idle] = new IdleState();
             _stateByOrder[CommandType.Move] = new MoveState();
         }
-        public void Update()
+        public void Tick()
         {
             if (_stateMachine.IsDone == true)
             {
@@ -35,7 +35,7 @@ namespace SAB.AI
                 _stateMachine.SetAIState(nextState, _context);
             }
 
-            _stateMachine.Update(_context);
+            _stateMachine.Tick(_context);
         }
 
         public void Enable()

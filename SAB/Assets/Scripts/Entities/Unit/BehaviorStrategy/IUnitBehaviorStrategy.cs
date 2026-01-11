@@ -7,5 +7,5 @@ public interface IUnitBehaviorStrategy
     public void Disable();
     public void SetMovementReceiver(IMovementReceiver receiver);
     public void SetCombatReceiver(ICombatReceiver receiver);
-    public void Update();
+    public void Tick();
 }

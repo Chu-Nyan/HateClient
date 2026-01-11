@@ -23,7 +23,7 @@ public class UnitBinder : MonoBehaviour
     {
         foreach (var item in _handlerByHandlerId)
         {
-            item.Value.Update();
+            item.Value.Tick();
         }
     }
 
