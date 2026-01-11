@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDefendable
+public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable
 {
     [SerializeField]
     private int _instanceID;

@@ -8,7 +8,7 @@ namespace SAB.EntityAgent.AI.Context
     public class AIContext
     {
         private IMovementReceiver _movementReceiver;
-        private ICombatReceiver _combatReceiver;
+        private IOffenseReceiver _combatReceiver;
 
         private CommandType _command;
         private MethodResult _progress;
@@ -22,7 +22,7 @@ namespace SAB.EntityAgent.AI.Context
             set => _movementReceiver = value;
         }
 
-        public ICombatReceiver CombatReceiver
+        public IOffenseReceiver CombatReceiver
         { 
             get => _combatReceiver;
             set => _combatReceiver = value;

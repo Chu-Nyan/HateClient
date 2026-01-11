@@ -8,7 +8,7 @@ namespace SAB.EntityAgent
     public class PlayerBrain : IBrainStrategy
     {
         private IMovementReceiver _movementReceiver;
-        private ICombatReceiver _combatReceiver;
+        private IOffenseReceiver _combatReceiver;
         private Vector2 _direction;
         private bool _isMoving;
 
@@ -23,7 +23,7 @@ namespace SAB.EntityAgent
             _movementReceiver = receiver;
         }
 
-        public void SetCombatReceiver(ICombatReceiver receiver)
+        public void SetCombatReceiver(IOffenseReceiver receiver)
         {
             _combatReceiver = receiver;
         }

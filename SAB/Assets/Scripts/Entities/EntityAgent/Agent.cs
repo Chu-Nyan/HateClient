@@ -9,7 +9,7 @@
         private int _receiverID;
 
         private IBrainStrategy _behaviorStrategy;
-        private ICombatReceiver _combatReceiver;
+        private IOffenseReceiver _combatReceiver;
         private IMovementReceiver _movementReceiver;
 
         private bool _isActivation;
@@ -58,12 +58,12 @@
 
         public void SetReceivers<T>(T receiver) where T : IInputReceiver
         {
-            SetActionReceiver(receiver as ICombatReceiver);
+            SetActionReceiver(receiver as IOffenseReceiver);
             SetMovementReceiver(receiver as IMovementReceiver);
             _receiverID = receiver.ReceiverID;
         }
 
-        private void SetActionReceiver(ICombatReceiver receiver)
+        private void SetActionReceiver(IOffenseReceiver receiver)
         {
             _combatReceiver = receiver;
             _behaviorStrategy.SetCombatReceiver(_combatReceiver);

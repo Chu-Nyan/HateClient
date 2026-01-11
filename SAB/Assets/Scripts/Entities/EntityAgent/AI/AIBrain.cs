@@ -48,7 +48,7 @@ namespace SAB.EntityAgent.AI
             _commandAI.SetActive(false);
         }
 
-        public void SetCombatReceiver(ICombatReceiver receiver)
+        public void SetCombatReceiver(IOffenseReceiver receiver)
         {
             _context.CombatReceiver = receiver;
         }

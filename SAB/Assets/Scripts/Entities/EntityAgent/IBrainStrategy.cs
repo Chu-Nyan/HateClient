@@ -8,7 +8,7 @@
         public void Enable();
         public void Disable();
         public void SetMovementReceiver(IMovementReceiver receiver);
-        public void SetCombatReceiver(ICombatReceiver receiver);
+        public void SetCombatReceiver(IOffenseReceiver receiver);
         public void Tick();
     }
 }
