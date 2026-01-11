@@ -11,6 +11,7 @@ namespace Chu
 
         private NyanCollisonSystem _collisionSys;
         private InstanceIDService _idService;
+        private GlobalObjectPool _objectPool;
         private GeneratorHub _hub;
 
         public GeneratorHub GeneratorHub
@@ -23,6 +24,7 @@ namespace Chu
             _root = root;
             _hub = new GeneratorHub();
             _idService = new InstanceIDService();
+            _objectPool = new GlobalObjectPool();
         }
 
         public void ActivateCollisionSystem(RectBound bound, int capacity)
