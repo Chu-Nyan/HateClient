@@ -7,19 +7,36 @@ namespace SAB.Unit.Combat
     public class CombatSystem
     {
         public const int BasicAttackIndex = 0;
-        private static readonly HashSet<int> _toRemove = new();
+
+        private int _instigatorID;
         private List<Skill> _skillList;
-        private HashSet<int> _used;
+        private List<int> _used;
 
         public List<Skill> SkillList
         {
             get => _skillList;
         }
 
-        public CombatSystem()
+        public CombatSystem(int instigatorID)
         {
             _skillList = new List<Skill>();
-            _used = new HashSet<int>();
+            _used = new List<int>();
+            _instigatorID = instigatorID;
+        }
+
+        public void Tick()
+        {
+            if (_used.Count <= 0)
+                return;
+
+            var time = Time.deltaTime;
+            for (int i = _used.Count - 1; i >= 0; i++)
+            {
+                var skill = _skillList[i];
+                skill.ReduceCooldown(time);
+                if (skill.CanUse == true)
+                    _used.Remove(i);
+            }
         }
 
         public void AddSkill(Skill skill)
@@ -27,32 +44,7 @@ namespace SAB.Unit.Combat
             _skillList.Add(skill);
         }
 
-        public void Update()
-        {
-            if (_used.Count <= 0)
-                return;
-
-            var time = Time.deltaTime;
-            foreach (var index in _used)
-            {
-                var skill = _skillList[index];
-                skill.ReduceCooldown(time);
-
-                if (skill.CanUse == true)
-                    _toRemove.Add(index);
-            }
-
-            if (_toRemove.Count > 0)
-            {
-                foreach (var index in _toRemove)
-                {
-                    _used.Remove(index);
-                }
-                _toRemove.Clear();
-            }
-        }
-
-        public void Attack(int instigatorID, int index, Vector3 start, Vector3 targetPoint)
+        public void Attack(int index, Vector3 start, Vector3 targetPoint)
         {
             if (_used.Contains(index) == true)
                 return;
@@ -69,7 +61,7 @@ namespace SAB.Unit.Combat
             dir.y = 0f;
             Debug.DrawRay(start, dir * 50f, Color.red, 4f);
             // 원거리 공격
-            ProjectileGenerator.Instance.Set(rect, instigatorID, context, start, dir);
+            ProjectileGenerator.Instance.Set(rect, _instigatorID, context, start, dir);
             Debug.Log($"{index}번 스킬, {targetPoint} 공격");
         }
     }

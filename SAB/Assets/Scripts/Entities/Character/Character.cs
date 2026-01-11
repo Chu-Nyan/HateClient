@@ -50,7 +50,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
 
     private void Update()
     {
-        _combatSystem.Update();
+        _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
         if (IsMoving == true)
         {
@@ -61,7 +61,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     public void Init(int instanceID)
     {
         _instanceID = instanceID;
-        _combatSystem = new CombatSystem();
+        _combatSystem = new CombatSystem(instanceID);
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _body = new(_instanceID, transform, new CircleShape(1));
@@ -96,7 +96,7 @@ public class Character : MonoBehaviour, IMovementReceiver, ICombatReceiver, IDef
     {
         // TODO : 연출 + 실제 충돌 처리
         // 실제 충돌은 Combat 시스템에서 처리
-        _combatSystem.Attack(_instanceID, skillIndex, _attackOrigin.position, targetPoint);
+        _combatSystem.Attack(skillIndex, _attackOrigin.position, targetPoint);
     }
 
     public void Defend(AttackContext context)
