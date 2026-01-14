@@ -1,5 +1,6 @@
 ﻿using Chu.Collision;
 using SAB.EntityAgent.AI;
+using SAB.MeshSlot;
 using SAB.Unit.Combat;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,15 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable
 {
     [SerializeField]
-    private int _instanceID;
-    [SerializeField]
     private Transform _attackOrigin;
 
-    [SerializeField]
-    private NavMeshAgent _nav;
+    private int _instanceID;
     private CharacterStats _stats;
     private CharacterBody _body;
     private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
+    private NavMeshAgent _nav;
+    private MeshSlotHub _meshHub;
 
     private event Action<Character> _deactivated;
 
@@ -69,6 +69,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _body = new(_instanceID, transform, new CircleShape(1));
+        _nav = GetComponent<NavMeshAgent>();
+        _meshHub = GetComponent<MeshSlotHub>();
         _body.RegisterOnSkillHit(Defend);
     }
 
@@ -88,6 +90,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void SetDestination(Vector3 destination)
     {
         _nav.SetDestination(destination);
+    }
+
+    public void SetMesh(SlotType type, Mesh mesh)
+    {
+        _meshHub.SetMesh(type, mesh);
     }
 
     public void Move(Vector3 dir)
