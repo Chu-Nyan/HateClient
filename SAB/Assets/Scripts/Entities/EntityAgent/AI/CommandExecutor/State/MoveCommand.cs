@@ -6,7 +6,7 @@ namespace SAB.EntityAgent.AI.StateMachine
     /// <summary>
     /// 목표 지점으로 이동 명령
     /// </summary>
-    public class MoveState : IMachineState<AIContext>
+    public class MoveCommand : ICommandState<AIContext>
     {
         private static float _stoppingDistance = 0.05f;
         private bool _done;
@@ -32,6 +32,7 @@ namespace SAB.EntityAgent.AI.StateMachine
             if (remainDistance <= _stoppingDistance)
             {
                 _done = true;
+
             }
             // TODO : 움직임이 취소되어야 할 경우 체크
         }

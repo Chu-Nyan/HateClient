@@ -5,16 +5,16 @@ namespace SAB.EntityAgent.AI.StateMachine
     /// <summary>
     /// 받은 명령으로 IInputReceiver 제어
     /// </summary>
-    public class StateMachine
+    public class CommandExecutor
     {
-        private IMachineState<AIContext> _currentState;
+        private ICommandState<AIContext> _currentState;
 
         public bool IsDone
         {
             get => _currentState == null || _currentState.IsDone;
         }
 
-        public void SetAIState(IMachineState<AIContext> state, AIContext context)
+        public void SetAIState(ICommandState<AIContext> state, AIContext context)
         {
             _currentState?.Exit(context);
             _currentState = state;

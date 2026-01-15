@@ -10,42 +10,42 @@ namespace SAB.EntityAgent.AI
     /// </summary>
     public class AIBrain : IBrainStrategy
     {
-        private readonly Dictionary<CommandType, IMachineState<AIContext>> _stateByOrder;
-        private BehaviorAI<AIContext> _commandAI;
-        private StateMachine.StateMachine _stateMachine;
+        private readonly Dictionary<CommandType, ICommandState<AIContext>> _stateByCommand;
+        private readonly BehaviorAI<AIContext> _decider;
+        private readonly CommandExecutor _executor;
         private AIContext _context;
 
         public AIBrain(BehaviorAI<AIContext> brain)
         {
-            _commandAI = brain;
+            _decider = brain;
 
-            _stateMachine = new();
+            _executor = new();
             _context = new();
-            _stateByOrder = new();
+            _stateByCommand = new();
 
-            _stateByOrder[CommandType.Idle] = new IdleState();
-            _stateByOrder[CommandType.Move] = new MoveState();
+            _stateByCommand[CommandType.Idle] = new IdleCommand();
+            _stateByCommand[CommandType.Move] = new MoveCommand();
         }
         public void Tick()
         {
-            if (_stateMachine.IsDone == true)
+            if (_executor.IsDone == true)
             {
-                _commandAI.Execute(_context);
-                var nextState = _stateByOrder[_context.Command];
-                _stateMachine.SetAIState(nextState, _context);
+                _decider.Execute(_context);
+                var nextState = _stateByCommand[_context.Command];
+                _executor.SetAIState(nextState, _context);
             }
 
-            _stateMachine.Tick(_context);
+            _executor.Tick(_context);
         }
 
         public void Enable()
         {
-            _commandAI.SetActive(true);
+            _decider.SetActive(true);
         }
 
         public void Disable()
         {
-            _commandAI.SetActive(false);
+            _decider.SetActive(false);
         }
 
         public void SetCombatReceiver(IOffenseReceiver receiver)

@@ -6,7 +6,7 @@ namespace SAB.EntityAgent.AI.StateMachine
     /// <summary>
     /// 대기 명령
     /// </summary>
-    public class IdleState : IMachineState<AIContext>
+    public class IdleCommand : ICommandState<AIContext>
     {
         private float _duration;
         private bool _done;
