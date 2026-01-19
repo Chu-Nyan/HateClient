@@ -97,12 +97,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _meshHub.SetMesh(type, mesh);
     }
 
-    public void Move(Vector3 dir)
-    {
-        _nav.Move(dir);
-        _body.Collider.RefreshTransform();
-    }
-
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
         // TODO : 연출 + 실제 충돌 처리
@@ -137,7 +131,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         gameObject.SetActive(value);
     }
-    
+
     public void RegisterDeactivated(Action<Character> callback)
     {
         _deactivated += callback;

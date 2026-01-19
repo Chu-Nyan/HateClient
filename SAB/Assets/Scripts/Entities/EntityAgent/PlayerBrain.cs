@@ -50,8 +50,8 @@ namespace SAB.EntityAgent
 
         private void MoveDirection()
         {
-            var direction = new Vector3(_direction.x * 0.1f, 0, _direction.y * 0.1f);
-            _movementReceiver.Move(direction);
+            var direction = new Vector3(_direction.x * 0.5f, 0, _direction.y * 0.5f) + _movementReceiver.transform.position;
+            _movementReceiver.SetDestination(direction);
         }
 
         private void BasicAttack(Vector2 screenPoint)
