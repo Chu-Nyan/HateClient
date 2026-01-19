@@ -1,4 +1,5 @@
 ﻿using SAB.EntityAgent;
+using SAB.MeshSlot;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class UnitController
         var unit = _actorGenerator
             .Ready()
             .SetData(type, IdleData.Default, new PatrolData(respawn))
+            .SetMesh(SlotType.Body, 5) // 임시 메쉬 코드
             .Release();
 
         unit.RegisterDeactivated(OnCharacterDeactivated);

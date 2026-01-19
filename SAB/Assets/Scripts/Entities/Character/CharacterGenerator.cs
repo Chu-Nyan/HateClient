@@ -1,6 +1,8 @@
 ﻿using Chu.Utility;
+using SAB.MeshSlot;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class CharacterGenerator
 {
@@ -30,6 +32,13 @@ public class CharacterGenerator
         return this;
     }
 
+    public CharacterGenerator SetMesh(SlotType type, int number)
+    {
+        Mesh mesh = AssetManager.LoadAssetSync<Mesh>($"{Const.Asset_Mesh_CharacterBody}{number:D2}");
+        _new.SetMesh(type, mesh);
+        return this;
+    }
+
     public Character Release()
     {
         if (_canRelease == false)
@@ -39,5 +48,4 @@ public class CharacterGenerator
 
         return _new;
     }
-
 }

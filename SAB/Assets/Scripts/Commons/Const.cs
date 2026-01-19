@@ -7,4 +7,5 @@
     public const string Asset_Data_SkillStepDoT = "SkillStepDoT";
     public const string Asset_Data_SkillStepAoE = "SkillStepAoE";
     public const string Asset_Data_SkillStepInstance = "SkillStepInstance";
+    public const string Asset_Mesh_CharacterBody = "CharacterBody";
 }
