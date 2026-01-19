@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TopViewCamera
 {
-    private static readonly Vector3 _defalutFollowOffset = new(0, 12, -15);
+    private static readonly Vector3 _defalutFollowOffset = new(0, 6, -7.5f);
 
     private CinemachineCamera _camera;
     private CinemachineFollow _cinemachineFollow;
