@@ -1,7 +1,9 @@
-﻿using Chu.Collision;
+﻿using Chu.AI;
+using Chu.Collision;
 using SAB.EntityAgent.AI;
 using SAB.MeshSlot;
 using SAB.Unit.Combat;
+using SAB.Unit.State;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +16,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     private int _instanceID;
     private CharacterStats _stats;
+    private FSM<CharacterState, CharacterStats> _state;
     private CharacterBody _body;
     private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
@@ -54,6 +57,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     private void Update()
     {
+        _state.Tick(_stats);
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
         if (IsMoving == true)
@@ -69,9 +73,19 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _body = new(_instanceID, transform, new CircleShape(1));
+        _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();
         _body.RegisterOnSkillHit(Defend);
+        _state.Setup(_stats);
+    private FSM<CharacterState, CharacterStats> GenerateStateHandler()
+    {
+        var resolver = new StateResolver();
+        var stateHandler = new FSM<CharacterState, CharacterStats>(resolver);
+        stateHandler.AddStates(new IIdleState());
+        stateHandler.AddStates(new IMovementState());
+        stateHandler.AddStates(new IAttackState());
+        return stateHandler;
     }
 
     public void SetupStats(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
