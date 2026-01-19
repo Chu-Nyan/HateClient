@@ -3,13 +3,18 @@
 public class CharacterStats : IMovementAIDataView, IHasStats
 {
     private CharacterBaseStats _baseStats;
-    private CharacterCurrentStats _currentStats; 
+    private CharacterCurrentStats _currentStats;
     private IdleData _idleData;
     private PatrolData _patrolData;
 
     public CharacterBaseStats BaseStats
     {
         get => _baseStats;
+    }
+
+    public CharacterCurrentStats CurrentStats
+    {
+        get => _currentStats;
     }
 
     public IdleData IdleData
@@ -48,6 +53,7 @@ public class CharacterStats : IMovementAIDataView, IHasStats
         _baseStats = baseStats;
         _idleData = idle;
         _patrolData = patrol;
+        ResetStats();
     }
 
     public void SetCurrentStats(float hp)

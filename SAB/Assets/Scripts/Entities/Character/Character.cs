@@ -96,11 +96,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _body.Init(new CircleShape(1));
     }
 
-    public void SetCurrentStats(float hp)
-    {
-        _stats.SetCurrentStats(hp);
-    }
-
     public void SetDestination(Vector3 destination)
     {
         _nav.SetDestination(destination);
