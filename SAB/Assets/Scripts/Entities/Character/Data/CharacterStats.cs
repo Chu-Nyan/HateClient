@@ -64,5 +64,6 @@ public class CharacterStats : IMovementAIDataView, IHasStats
     public void ResetStats()
     {
         _currentStats.HP = BaseStats.HP;
+        _currentStats.MoveSpeed = _baseStats.SPD;
     }
 }

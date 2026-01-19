@@ -22,6 +22,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private DefenseSystem _defenseSystem;
     private NavMeshAgent _nav;
     private MeshSlotHub _meshHub;
+    private CharacterAnimator _animator;
 
     private event Action<Character> _deactivated;
 
@@ -45,11 +46,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         get => _stats;
     }
 
-    public bool IsMoving
-    {
-        get => _nav.hasPath;
-    }
-
     public List<Skill> Skills
     {
         get => _combatSystem.SkillList;
@@ -57,13 +53,17 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     private void Update()
     {
+        StateUpdate();
         _state.Tick(_stats);
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
-        if (IsMoving == true)
-        {
-            _body.Collider.RefreshTransform();
-        }
+        _animator.Tick(_stats.CurrentStats);
+    }
+
+    private void StateUpdate()
+    {
+        CharacterCurrentStats stats = _stats.CurrentStats;
+        stats.IsMoveing = _nav.velocity.sqrMagnitude > 0.1f;
     }
 
     public void Init(int instanceID)
@@ -76,8 +76,12 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();
+        _animator = new CharacterAnimator(GetComponent<Animator>());
+
         _body.RegisterOnSkillHit(Defend);
         _state.Setup(_stats);
+    }
+
     private FSM<CharacterState, CharacterStats> GenerateStateHandler()
     {
         var resolver = new StateResolver();

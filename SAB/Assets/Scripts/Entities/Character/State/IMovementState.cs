@@ -11,6 +11,7 @@ namespace SAB.Unit.State
 
         public void Enter(CharacterStats context)
         {
+            context.CurrentStats.PlayAnimationClip = AnimationClipType.IdleAndMove;
         }
 
         public bool Tick(CharacterStats context)
