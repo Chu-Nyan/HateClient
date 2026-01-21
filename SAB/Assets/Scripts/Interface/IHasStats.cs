@@ -1,4 +1,7 @@
-﻿public interface IHasStats
+﻿using SAB.Unit;
+
+public interface IHasStats
 {
-    public float HP { get; set; }
+    public float this[StatType type] { get; }
+    public void AddHP(float value);
 }

@@ -2,24 +2,24 @@
 
 namespace SAB.Unit.State
 {
-    public class IIdleState : IMachineState<CharacterState, CharacterStats>
+    public class IIdleState : IMachineState<CharacterState, StateContext>
     {
         public CharacterState Type
         {
             get => CharacterState.Idle;
         }
 
-        public void Enter(CharacterStats context)
+        public void Enter(StateContext context)
         {
-            context.CurrentStats.PlayAnimationClip = AnimationClipType.IdleAndMove;
+            context.PlayAnimationClip = AnimationClipType.IdleAndMove;
         }
 
-        public bool Tick(CharacterStats context)
+        public bool Tick(StateContext context)
         {
             return true;
         }
 
-        public void Exit(CharacterStats context)
+        public void Exit(StateContext context)
         {
         }
     }

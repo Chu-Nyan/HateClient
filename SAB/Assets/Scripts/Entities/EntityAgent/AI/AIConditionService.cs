@@ -27,8 +27,8 @@ namespace SAB.EntityAgent.AI
         {
             if (context.Command != CommandType.Idle)
                 return MethodResult.Failure;
-            
-            var data = context.MovementReceiver.MovementAIData.PatrolData;
+
+            var data = PatrolData.Default;
             var x = UnityEngine.Random.Range(data.XRange.x, data.XRange.y);
             var z = UnityEngine.Random.Range(data.YRange.x, data.YRange.y);
             var pos = context.MovementReceiver.transform.position + new UnityEngine.Vector3(x, 0, z);

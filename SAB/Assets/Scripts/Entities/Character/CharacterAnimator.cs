@@ -16,11 +16,11 @@ public class CharacterAnimator
         _animator = new(animator, clipData);
     }
 
-    public void Tick(CharacterCurrentStats stats)
+    public void Tick(StateContext data, float moveSpd)
     {
-        if (stats.PlayAnimationClip == AnimationClipType.IdleAndMove)
+        if (data.PlayAnimationClip == AnimationClipType.IdleAndMove)
         {
-            float value = stats.IsMoveing == true ? 5f * stats.MoveSpeed * 0.1f : 0;
+            float value = data.IsMoveing == true ? 5f * moveSpd * 0.1f : 0;
             PlayMoveAnimation(value);
         }
     }

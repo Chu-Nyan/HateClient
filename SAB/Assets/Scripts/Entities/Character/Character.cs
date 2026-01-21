@@ -1,7 +1,7 @@
 ﻿using Chu.AI;
 using Chu.Collision;
-using SAB.EntityAgent.AI;
 using SAB.MeshSlot;
+using SAB.Unit;
 using SAB.Unit.Combat;
 using SAB.Unit.State;
 using System;
@@ -15,16 +15,20 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private Transform _attackOrigin;
 
     private int _instanceID;
+
     private CharacterStats _stats;
-    private FSM<CharacterState, CharacterStats> _state;
-    private CharacterBody _body;
-    private OffenseSystem _combatSystem;
-    private DefenseSystem _defenseSystem;
+    private StateContext _stateContext;
+    private FSM<CharacterState, StateContext> _state;
+
     private NavMeshAgent _nav;
     private MeshSlotHub _meshHub;
     private CharacterAnimator _animator;
 
-    private event Action<Character> _deactivated;
+    private CharacterBody _body;
+    private OffenseSystem _combatSystem;
+    private DefenseSystem _defenseSystem;
+
+    private event Action<Character> Deactivated;
 
     public int InstanceID
     {
@@ -41,29 +45,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         get => _stats;
     }
 
-    public IMovementAIDataView MovementAIData
-    {
-        get => _stats;
-    }
-
     public List<Skill> Skills
     {
         get => _combatSystem.SkillList;
-    }
-
-    private void Update()
-    {
-        StateUpdate();
-        _state.Tick(_stats);
-        _combatSystem.Tick();
-        _defenseSystem.Tick(_stats);
-        _animator.Tick(_stats.CurrentStats);
-    }
-
-    private void StateUpdate()
-    {
-        CharacterCurrentStats stats = _stats.CurrentStats;
-        stats.IsMoveing = _nav.velocity.sqrMagnitude > 0.1f;
     }
 
     public void Init(int instanceID)
@@ -72,6 +56,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _combatSystem = new OffenseSystem(instanceID);
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
+        _stateContext = new StateContext();
         _body = new(_instanceID, transform, new CircleShape(1));
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
@@ -79,22 +64,36 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _animator = new CharacterAnimator(GetComponent<Animator>());
 
         _body.RegisterOnSkillHit(Defend);
-        _state.Setup(_stats);
+        _state.Setup(_stateContext);
     }
 
-    private FSM<CharacterState, CharacterStats> GenerateStateHandler()
+    private void Update()
+    {
+        StateUpdate();
+        _state.Tick(_stateContext);
+        _combatSystem.Tick();
+        _defenseSystem.Tick(_stats);
+        _animator.Tick(_stateContext, _stats[StatType.SPD]);
+    }
+
+    private void StateUpdate()
+    {
+        _stateContext.IsMoveing = _nav.velocity.sqrMagnitude > 0.1f;
+    }
+
+    private FSM<CharacterState, StateContext> GenerateStateHandler()
     {
         var resolver = new StateResolver();
-        var stateHandler = new FSM<CharacterState, CharacterStats>(resolver);
+        var stateHandler = new FSM<CharacterState, StateContext>(resolver);
         stateHandler.AddStates(new IIdleState());
         stateHandler.AddStates(new IMovementState());
         stateHandler.AddStates(new IAttackState());
         return stateHandler;
     }
 
-    public void SetupStats(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
+    public void SetupStats(BaseStats baseStats)
     {
-        _stats.SetBaseData(baseStats, idle, patrol);
+        _stats.SetBaseData(baseStats);
         var skill = SkillGenerator.Instance.GetSkill(SkillID.BasicMelee);
         _combatSystem.AddSkill(skill);
         _body.Init(new CircleShape(1));
@@ -112,12 +111,18 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
-        // TODO : 연출 + 실제 충돌 처리
-        _combatSystem.Attack(_stats.Damage, skillIndex, _attackOrigin.position, targetPoint);
+        if (_stateContext.IsInCombat == false)
+            _stateContext.IsInCombat = true;
+
+        float dmg = _stats.GetDamage();
+        _combatSystem.Attack(dmg, skillIndex, _attackOrigin.position, targetPoint);
     }
 
     public void Defend(AttackContext context)
     {
+        if (_stateContext.IsInCombat == false)
+            _stateContext.IsInCombat = true;
+
         _defenseSystem.Attack(context);
 
         if (_stats.IsDead == true)
@@ -138,8 +143,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         if (value == false)
         {
-            _deactivated?.Invoke(this);
-            _deactivated = null;
+            Deactivated?.Invoke(this);
+            Deactivated = null;
         }
 
         gameObject.SetActive(value);
@@ -147,6 +152,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void RegisterDeactivated(Action<Character> callback)
     {
-        _deactivated += callback;
+        Deactivated += callback;
     }
 }

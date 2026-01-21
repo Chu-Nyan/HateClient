@@ -25,15 +25,14 @@ namespace SAB.EntityAgent.AI
 
         public static MethodResult Idle(AIContext context)
         {
-            var waitTime = context.MovementReceiver.MovementAIData.IdleData.WaitTime;
+            context.OrderToIdle(new IdleCommandData(IdleData.Default.WaitTime));
 
-            context.OrderToIdle(new IdleCommandData(waitTime));
             return MethodResult.Success;
         }
 
         public static MethodResult Patrol(AIContext context)
         {
-            var data = context.MovementReceiver.MovementAIData.PatrolData;
+            var data = PatrolData.Default;
             var x = UnityEngine.Random.Range(data.XRange.x, data.XRange.y);
             var z = UnityEngine.Random.Range(data.YRange.x, data.YRange.y);
             var pos = context.MovementReceiver.transform.position + new UnityEngine.Vector3(x, 0, z);

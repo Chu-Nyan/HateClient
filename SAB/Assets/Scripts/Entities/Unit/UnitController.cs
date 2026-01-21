@@ -23,7 +23,7 @@ public class UnitController
     {
         var unit = _actorGenerator
             .Ready()
-            .SetData(type, IdleData.Default, new PatrolData(respawn))
+            .SetData(type)
             .SetMesh(SlotType.Body, 5) // 임시 메쉬 코드
             .Release();
 

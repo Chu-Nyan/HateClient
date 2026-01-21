@@ -1,69 +1,114 @@
 ﻿using SAB.EntityAgent.AI;
+using SAB.Unit;
+using System;
 
-public class CharacterStats : IMovementAIDataView, IHasStats
+namespace SAB.Unit
 {
-    private CharacterBaseStats _baseStats;
-    private CharacterCurrentStats _currentStats;
-    private IdleData _idleData;
-    private PatrolData _patrolData;
-
-    public CharacterBaseStats BaseStats
+    public enum StatType
     {
-        get => _baseStats;
+        HP, ATK, PDEF, MDEF, SPD
     }
 
-    public CharacterCurrentStats CurrentStats
+    public class CharacterStats : IHasStats
     {
-        get => _currentStats;
+        private BaseStats _baseStats;
+        private readonly ModifierStat[] _currentStats;
+        private readonly float[] _finalStats;
+
+        public BaseStats BaseStats
+        {
+            get => _baseStats;
+        }
+
+        public bool IsDead
+        {
+            get => _finalStats[(int)StatType.HP] <= 0;
+        }
+
+        public float this[StatType type] 
+        { 
+            get => _finalStats[(int)type]; 
+        }
+
+        public CharacterStats()
+        {
+            _currentStats = new ModifierStat[5];
+            _finalStats = new float[5];
+        }
+
+        public void SetBaseData(BaseStats baseStats)
+        {
+            _baseStats = baseStats;
+            for (int i = 0; i < _baseStats.Stats.Length; i++)
+            {
+                _finalStats[i] = baseStats.Stats[i];
+            }
+        }
+
+        public void AddHP(float value)
+        {
+            _finalStats[(int)StatType.HP] += value;
+        }
+
+        public float GetDamage()
+        {
+            return _finalStats[(int)StatType.ATK];
+        }
+    }
+}
+
+public class StateHanlder
+{
+    private StateContext _stateData;
+
+    public StateContext StateData
+    {
+        get => _stateData;
     }
 
-    public IdleData IdleData
+    public StateHanlder()
     {
-        get => _idleData;
+        _stateData = new();
+    }
+}
+
+public class StateContext
+{
+    private AnimationClipType _playAnimationClip;
+
+    private bool _isMoveing;
+
+    private bool _isInCombat;
+    private float _remainBattleTime;
+    private bool _isAttacking;
+
+    public AnimationClipType PlayAnimationClip
+    {
+        get => _playAnimationClip;
+        set => _playAnimationClip = value;
     }
 
-    public PatrolData PatrolData
+    public bool IsMoveing
     {
-        get => _patrolData;
+        get => _isMoveing;
+        set => _isMoveing = value;
     }
 
-    public bool IsDead
+    public bool IsInCombat
     {
-        get => _currentStats.HP <= 0;
+        get => _isInCombat;
+        set => _isInCombat = value;
     }
 
-    public float HP
+    public float RemainBattileTime
     {
-        get => _currentStats.HP;
-        set => _currentStats.HP = value;
+        get => _remainBattleTime;
+        set => _remainBattleTime = value;
     }
 
-    public float Damage
+    public bool IsAttacking
     {
-        get => _baseStats.ATK; // TODO : 공격력 계산식
-    }
-
-    public CharacterStats()
-    {
-        _currentStats = new();
-    }
-
-    public void SetBaseData(CharacterBaseStats baseStats, IdleData idle, PatrolData patrol)
-    {
-        _baseStats = baseStats;
-        _idleData = idle;
-        _patrolData = patrol;
-        ResetStats();
-    }
-
-    public void SetCurrentStats(float hp)
-    {
-        _currentStats.HP = hp;
-    }
-
-    public void ResetStats()
-    {
-        _currentStats.HP = BaseStats.HP;
-        _currentStats.MoveSpeed = _baseStats.SPD;
+        get => _isAttacking;
+        set => _isAttacking = value;
     }
 }

@@ -24,7 +24,7 @@ namespace SAB.Unit.Combat
 
         public void Tick(IHasStats stats)
         {
-            stats.HP -= _context.Damage * _data.DamageRate;
+            stats.AddHP(-(_context.Damage * _data.DamageRate));
             _isDone = true;
         }
     }

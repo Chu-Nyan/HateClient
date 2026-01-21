@@ -7,6 +7,5 @@ using UnityEngine;
 public interface IMovementReceiver : IInputReceiver
 {
     public Transform transform { get; }
-    public IMovementAIDataView MovementAIData { get; }
     public void SetDestination(Vector3 dir);
 }

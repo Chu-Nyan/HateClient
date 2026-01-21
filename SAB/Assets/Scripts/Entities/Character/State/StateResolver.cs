@@ -2,14 +2,13 @@
 
 namespace SAB.Unit.State
 {
-    public class StateResolver : IMachineStateResolver<CharacterState, CharacterStats>
+    public class StateResolver : IMachineStateResolver<CharacterState, StateContext>
     {
-        public CharacterState Resolve(CharacterStats stats)
+        public CharacterState Resolve(StateContext stats)
         {
-            CharacterCurrentStats current = stats.CurrentStats;
-            if (current.IsAttacking == true)
+            if (stats.IsAttacking == true)
                 return CharacterState.Attack;
-            if (current.IsMoveing == true)
+            if (stats.IsMoveing == true)
                 return CharacterState.Move;
 
             return CharacterState.Idle;

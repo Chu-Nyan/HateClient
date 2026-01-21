@@ -2,24 +2,24 @@
 
 namespace SAB.Unit.State
 {
-    public class IAttackState : IMachineState<CharacterState, CharacterStats>
+    public class IAttackState : IMachineState<CharacterState, StateContext>
     {
         public CharacterState Type
         {
             get => CharacterState.Attack;
         }
 
-        public void Enter(CharacterStats context)
+        public void Enter(StateContext context)
         {
-            context.CurrentStats.PlayAnimationClip = AnimationClipType.Attack;
+            context.PlayAnimationClip = AnimationClipType.Attack;
         }
 
-        public bool Tick(CharacterStats context)
+        public bool Tick(StateContext context)
         {
-            return context.CurrentStats.IsAttacking == false;
+            return context.IsAttacking == false;
         }
 
-        public void Exit(CharacterStats context)
+        public void Exit(StateContext context)
         {
         }
     }

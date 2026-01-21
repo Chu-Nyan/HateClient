@@ -1,19 +1,20 @@
 ﻿using Chu.Utility;
 using SAB.MeshSlot;
+using SAB.Unit;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterGenerator
 {
-    private Dictionary<UnitType, CharacterBaseStats> _unitDatas;
+    private Dictionary<UnitType, BaseStats> _unitDatas;
     private IDNumbering _numbering;
     private Character _new;
     private bool _canRelease;
 
     public CharacterGenerator()
     {
-        _unitDatas = AssetManager.DeserializeJsonSync<Dictionary<UnitType, CharacterBaseStats>>(Const.Asset_Data_CharacterData);
+        _unitDatas = AssetManager.DeserializeJsonSync<Dictionary<UnitType, BaseStats>>(Const.Asset_Data_CharacterData);
         _numbering = new IDNumbering();
     }
 
@@ -25,9 +26,9 @@ public class CharacterGenerator
         return this;
     }
 
-    public CharacterGenerator SetData(UnitType type, IdleData idleData, PatrolData patrolData)
+    public CharacterGenerator SetData(UnitType type)
     {
-        _new.SetupStats(_unitDatas[type], idleData, patrolData);
+        _new.SetupStats(_unitDatas[type]);
 
         return this;
     }

@@ -35,7 +35,7 @@ namespace SAB.Unit.Combat
             {
                 _remainTick--;
                 _remainInterval += DotStepData.DamageInterval;
-                defensive.HP -= _context.Damage * _data.DamageRate;
+                defensive.AddHP(-(_context.Damage * _data.DamageRate));
 
                 if (_remainTick == 0)
                     _isDone = true;
