@@ -60,4 +60,9 @@ public class CharacterBody : INyanCollisionProvider
     {
         _onHit += action;
     }
+
+    public void RefreshTransform()
+    {
+        _collider.RefreshTransform();
+    }
 }

@@ -70,6 +70,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private void Update()
     {
         StateUpdate();
+        if (_stateContext.IsMoveing == true)
+            _body.RefreshTransform();
         _state.Tick(_stateContext);
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
