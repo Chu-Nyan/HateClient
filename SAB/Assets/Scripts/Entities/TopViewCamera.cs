@@ -23,6 +23,7 @@ public class TopViewCamera
     public void StickCameraArm(Transform transform)
     {
         _cameraArm.parent = transform;
+        _cameraArm.transform.localPosition = Vector3.zero;
     }
 
     public void SetFollowTarget(Transform transform)
