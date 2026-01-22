@@ -113,8 +113,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
-        if (_stateContext.IsInCombat == false)
-            _stateContext.IsInCombat = true;
 
         float dmg = _stats.GetDamage();
         _combatSystem.Attack(dmg, skillIndex, _attackOrigin.position, targetPoint);
@@ -122,13 +120,15 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void Defend(AttackContext context)
     {
-        if (_stateContext.IsInCombat == false)
-            _stateContext.IsInCombat = true;
-
         _defenseSystem.Attack(context);
 
         if (_stats.IsDead == true)
             Die();
+    }
+
+    public void SetCombatMode(bool value)
+    {
+        _stateContext.IsCombatMode = value;
     }
 
     public void Die()

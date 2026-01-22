@@ -1,6 +1,4 @@
-﻿using SAB.EntityAgent.AI;
-using SAB.Unit;
-using System;
+﻿using SAB.Unit;
 
 namespace SAB.Unit
 {
@@ -94,7 +92,7 @@ public class StateContext
         set => _isMoveing = value;
     }
 
-    public bool IsInCombat
+    public bool IsCombatMode
     {
         get => _isInCombat;
         set => _isInCombat = value;
