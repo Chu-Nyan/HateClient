@@ -2,7 +2,6 @@
 using Chu.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -13,7 +12,6 @@ namespace Chu.Collision
     {
         public readonly int InstanceID;
         private readonly INyanCollisionProvider _provider;
-        private readonly Transform _transform;
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
         private int _instigatorID;
@@ -84,7 +82,6 @@ namespace Chu.Collision
             InstanceID = id;
             _shape = shape;
             _provider = provider;
-            _transform = provider.transform;
             _insertedNodes = new(4);
             _contactIDs = new();
             _comment = comment;
@@ -115,7 +112,7 @@ namespace Chu.Collision
 #endif
             _isActive = value;
             if (_isActive == true)
-                _shape.UpdatePosition(_transform);
+                _shape.UpdatePosition(_provider.transform);
             EnabledChanged?.Invoke(this);
         }
 
@@ -126,7 +123,7 @@ namespace Chu.Collision
 
         public void RefreshTransform()
         {
-            _shape.UpdatePosition(_transform);
+            _shape.UpdatePosition(_provider.transform);
             PositionChanged?.Invoke(this);
         }
 
