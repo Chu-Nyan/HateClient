@@ -54,7 +54,7 @@ namespace Chu.AI
 
             _currentState?.Exit(context);
             _currentState = _stateByType[type];
-            Debug.Log(type);
+            //Debug.Log(type);
             _currentState.Enter(context);
         }
     }

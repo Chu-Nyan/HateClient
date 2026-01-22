@@ -1,6 +1,5 @@
 ﻿using SAB.Unit.Combat;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class DefenseSystem
 {
@@ -24,7 +23,7 @@ public class DefenseSystem
             if (_sequences[i].TickAndCheck(stats) == false)
                 continue;
 
-            Debug.Log($"{_sequences[i].Context.SkillData.StringID} 제거됨");
+            //Debug.Log($"{_sequences[i].Context.SkillData.StringID} 제거됨");
             _sequences.RemoveAt(i);
         }
         return true;

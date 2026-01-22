@@ -62,7 +62,7 @@ namespace SAB.Unit.Combat
             Debug.DrawRay(start, dir * 50f, Color.red, 4f);
             // 원거리 공격
             ProjectileGenerator.Instance.Set(rect, _instigatorID, context, start, dir);
-            Debug.Log($"{index}번 스킬, {targetPoint} 공격");
+            //Debug.Log($"{index}번 스킬, {targetPoint} 공격");
         }
     }
 }
