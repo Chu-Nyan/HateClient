@@ -18,9 +18,10 @@ public class CharacterGenerator
         _numbering = new IDNumbering();
     }
 
-    public CharacterGenerator Ready()
+    public CharacterGenerator Ready(Vector3 respawn)
     {
         _new = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+        _new.transform.position = respawn;
         _new.Init(_numbering.GetID());
         _canRelease = true;
         return this;

@@ -22,7 +22,7 @@ public class UnitController
     public Character GenerateCharacter(UnitType type, Vector3 respawn)
     {
         var unit = _actorGenerator
-            .Ready()
+            .Ready(respawn)
             .SetData(type)
             .SetMesh(SlotType.Body, 5) // 임시 메쉬 코드
             .Release();
