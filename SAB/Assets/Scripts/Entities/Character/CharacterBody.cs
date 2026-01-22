@@ -26,7 +26,7 @@ public class CharacterBody : INyanCollisionProvider
     public CharacterBody(int instigatorID, Transform transform, Shape body)
     {
         _transform = transform;
-        var mask = new NyanLayerMask(NyanLayer.Projectile);
+        var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
 
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
             .GenerateCollider(this, body, "캐릭터 바디")

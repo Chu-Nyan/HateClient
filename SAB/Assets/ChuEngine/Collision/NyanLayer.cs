@@ -8,5 +8,6 @@ namespace Chu.Collision
 		Defalut = 1 << 0,
 		Unit = 1 << 1,
 		Projectile = 1 << 2,
+		UnitSensor = 1 << 3,
 	}
 }
