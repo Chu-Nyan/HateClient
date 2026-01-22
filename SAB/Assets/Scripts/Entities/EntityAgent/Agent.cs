@@ -24,9 +24,10 @@
             get => _isActivation;
         }
 
-        public Agent(int id)
+        public Agent(int id, IBrainStrategy unitBehavior)
         {
             ID = id;
+            _behaviorStrategy = unitBehavior;
         }
 
         public void Tick()
@@ -45,21 +46,13 @@
             else
                 _behaviorStrategy.Disable();
         }
-
-        public void SetBehaviorStrategy(IBrainStrategy unitBehavior)
-        {
-            _behaviorStrategy?.Disable();
-
-            _behaviorStrategy = unitBehavior;
-            RefreshBehaviorStrategy();
-            if (_isActivation == true)
-                _behaviorStrategy.Enable();
-        }
-
         public void SetReceivers<T>(T receiver) where T : IInputReceiver
         {
-            SetActionReceiver(receiver as IOffenseReceiver);
-            SetMovementReceiver(receiver as IMovementReceiver);
+            if (receiver is IOffenseReceiver offense)
+                SetActionReceiver(offense);
+            if (receiver is IMovementReceiver movement)
+                SetMovementReceiver(movement);
+
             _receiverID = receiver.ReceiverID;
         }
 
@@ -74,12 +67,5 @@
             _movementReceiver = receiver;
             _behaviorStrategy.SetMovementReceiver(_movementReceiver);
         }
-
-        private void RefreshBehaviorStrategy()
-        {
-            _behaviorStrategy.SetCombatReceiver(_combatReceiver);
-            _behaviorStrategy.SetMovementReceiver(_movementReceiver);
-        }
     }
-
 }

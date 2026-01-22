@@ -60,10 +60,9 @@ namespace SAB.EntityAgent
             _activeAgentByReceiverId.Remove(receiver.ReceiverID);
         }
 
-        private Agent GenerateAgent(IBrainStrategy strategy)
+        private Agent GenerateAgent(IBrainStrategy brain)
         {
-            Agent agent = new(_idCounter);
-            agent.SetBehaviorStrategy(strategy);
+            Agent agent = new(_idCounter, brain);
             _agents[agent.ID] = agent;
             _idCounter++;
             return agent;
