@@ -8,6 +8,8 @@ using UnityEngine;
 public interface IOffenseReceiver : IInputReceiver
 {
     public Transform transform { get; }
+    public int InstanceID { get; }
     public List<Skill> Skills { get; } 
     public void Attack(int skillIndex, Vector3 targetPoint);
+    public void SetCombatMode(bool value);
 }

@@ -2,6 +2,7 @@
 using SAB.EntityAgent.AI.Context;
 using SAB.EntityAgent.AI.StateMachine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SAB.EntityAgent.AI
 {
@@ -13,6 +14,7 @@ namespace SAB.EntityAgent.AI
         private readonly Dictionary<CommandType, ICommandState<AIContext>> _stateByCommand;
         private readonly BehaviorAI<AIContext> _decider;
         private readonly CommandExecutor _executor;
+        private readonly CombatModeDecider _combatModeDecider;
         private AIContext _context;
 
         public AIBrain(BehaviorAI<AIContext> brain)
@@ -25,9 +27,16 @@ namespace SAB.EntityAgent.AI
 
             _stateByCommand[CommandType.Idle] = new IdleCommand();
             _stateByCommand[CommandType.Move] = new MoveCommand();
+            _combatModeDecider = new CombatModeDecider();
         }
+
         public void Tick()
         {
+            if (_context.CombatReceiver != null)
+            {
+                float time = Time.deltaTime;
+                _combatModeDecider.TickForExit(time);
+            }
             if (_executor.IsDone == true)
             {
                 _decider.Execute(_context);
@@ -40,6 +49,9 @@ namespace SAB.EntityAgent.AI
 
         public void Enable()
         {
+            if (_context.CombatReceiver == null && _context.MovementReceiver == null)
+                return;
+
             _decider.SetActive(true);
         }
 
@@ -51,6 +63,7 @@ namespace SAB.EntityAgent.AI
         public void SetCombatReceiver(IOffenseReceiver receiver)
         {
             _context.CombatReceiver = receiver;
+            _combatModeDecider.Setup(receiver.transform, receiver.InstanceID);
         }
 
         public void SetMovementReceiver(IMovementReceiver receiver)

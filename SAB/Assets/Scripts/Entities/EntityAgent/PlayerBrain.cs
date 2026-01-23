@@ -9,11 +9,18 @@ namespace SAB.EntityAgent
     {
         private IMovementReceiver _movementReceiver;
         private IOffenseReceiver _combatReceiver;
+        private CombatModeDecider _combatModeDecider;
         private Vector2 _direction;
         private bool _isMoving;
 
+        public PlayerBrain()
+        {
+            _combatModeDecider = new();
+        }
+
         public void Tick()
         {
+            _combatModeDecider.TickForExit(Time.deltaTime);
             if (_isMoving == true)
                 MoveDirection();
         }
@@ -26,6 +33,7 @@ namespace SAB.EntityAgent
         public void SetCombatReceiver(IOffenseReceiver receiver)
         {
             _combatReceiver = receiver;
+            _combatModeDecider.Setup(receiver.transform, receiver.InstanceID);
         }
 
         public void Enable()
@@ -56,6 +64,8 @@ namespace SAB.EntityAgent
 
         private void BasicAttack(Vector2 screenPoint)
         {
+            // 캐릭터가 공격 당했을 때도 전투모드 들어가게 추가해야함
+            _combatModeDecider.SetActivate(true);
             Ray ray = Camera.main.ScreenPointToRay(screenPoint);
             int flag = LayerMask.GetMask("Ground");
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, flag))
@@ -65,5 +75,4 @@ namespace SAB.EntityAgent
             }
         }
     }
-
 }
