@@ -55,5 +55,10 @@ namespace Chu.Utility
 
             _animator.SetFloat(_idByEnum[key], value);
         }
+
+        public void SetTrigger(T key)
+        {
+            _animator.SetTrigger(_idByEnum[key]);
+        }
     }
 }
