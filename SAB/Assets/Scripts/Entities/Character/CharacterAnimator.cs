@@ -1,5 +1,6 @@
 ﻿using Chu.Utility;
 using SAB.Unit;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ public class CharacterAnimator
         var clipData = new Dictionary<AniParamator, string>()
         {
             { AniParamator.MoveSpeed, "MoveSpeed" },
-            { AniParamator.CombatMode, "IsCombatMode" }
+            { AniParamator.CombatMode, "IsCombatMode" },
+            { AniParamator.Attack, "Attack" }
         };
         _animator = new(animator, clipData);
     }
@@ -26,14 +28,18 @@ public class CharacterAnimator
         }
     }
 
-    public void SetCombatMode(bool value)
-    {
-        _animator.SetBool(AniParamator.CombatMode, value);
-    }
-
     private void PlayMoveAnimation(float value)
     {
         _animator.SetFloat(AniParamator.MoveSpeed, value);
     }
 
+    public void SetCombatMode(bool value)
+    {
+        _animator.SetBool(AniParamator.CombatMode, value);
+    }
+
+    public void SetAttack()
+    {
+        _animator.SetTrigger(AniParamator.Attack);
+    }
 }

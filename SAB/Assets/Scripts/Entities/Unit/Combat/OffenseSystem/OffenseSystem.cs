@@ -44,10 +44,10 @@ namespace SAB.Unit.Combat
             _skillList.Add(skill);
         }
 
-        public void Attack(float damage, int index, Vector3 start, Vector3 targetPoint)
+        public bool Attack(float damage, int index, Vector3 start, Vector3 targetPoint)
         {
             if (_used.Contains(index) == true)
-                return;
+                return false;
 
             _used.Add(index);
             Skill skill = SkillList[index];
@@ -63,6 +63,8 @@ namespace SAB.Unit.Combat
             // 원거리 공격
             ProjectileGenerator.Instance.Set(rect, _instigatorID, context, start, dir);
             //Debug.Log($"{index}번 스킬, {targetPoint} 공격");
+
+            return true;
         }
     }
 }

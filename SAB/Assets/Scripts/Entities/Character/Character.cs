@@ -113,9 +113,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
-
         float dmg = _stats.GetDamage();
-        _combatSystem.Attack(dmg, skillIndex, _attackOrigin.position, targetPoint);
+        if (_combatSystem.Attack(dmg, skillIndex, _attackOrigin.position, targetPoint) == true)
+            _animator.SetAttack();
     }
 
     public void Defend(AttackContext context)
