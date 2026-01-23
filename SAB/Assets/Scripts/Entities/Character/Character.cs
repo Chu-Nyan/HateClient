@@ -129,6 +129,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void SetCombatMode(bool value)
     {
         _stateContext.IsCombatMode = value;
+        _animator.SetCombatMode(value);
     }
 
     public void Die()

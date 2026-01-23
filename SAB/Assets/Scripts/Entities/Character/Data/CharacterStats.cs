@@ -72,7 +72,7 @@ public class StateHanlder
 
 public class StateContext
 {
-    private AnimationClipType _playAnimationClip;
+    private AniParamator _playAnimationClip;
 
     private bool _isMoveing;
 
@@ -80,7 +80,7 @@ public class StateContext
     private float _remainBattleTime;
     private bool _isAttacking;
 
-    public AnimationClipType PlayAnimationClip
+    public AniParamator PlayAnimationClip
     {
         get => _playAnimationClip;
         set => _playAnimationClip = value;

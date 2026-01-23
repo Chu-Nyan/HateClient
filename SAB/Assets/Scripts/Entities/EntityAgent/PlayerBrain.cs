@@ -21,6 +21,11 @@ namespace SAB.EntityAgent
         public void Tick()
         {
             _combatModeDecider.TickForExit(Time.deltaTime);
+            if (_combatModeDecider.IsActivate == false)
+            {
+                _combatReceiver.SetCombatMode(false);
+            }
+
             if (_isMoving == true)
                 MoveDirection();
         }
@@ -66,6 +71,7 @@ namespace SAB.EntityAgent
         {
             // 캐릭터가 공격 당했을 때도 전투모드 들어가게 추가해야함
             _combatModeDecider.SetActivate(true);
+            _combatReceiver.SetCombatMode(true);
             Ray ray = Camera.main.ScreenPointToRay(screenPoint);
             int flag = LayerMask.GetMask("Ground");
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, flag))

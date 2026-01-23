@@ -11,7 +11,7 @@ namespace SAB.Unit.State
 
         public void Enter(StateContext context)
         {
-            context.PlayAnimationClip = AnimationClipType.Attack;
+            context.PlayAnimationClip = AniParamator.Attack;
         }
 
         public bool Tick(StateContext context)

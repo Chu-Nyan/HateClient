@@ -11,7 +11,7 @@ namespace SAB.Unit.State
 
         public void Enter(StateContext context)
         {
-            context.PlayAnimationClip = AnimationClipType.IdleAndMove;
+            context.PlayAnimationClip = AniParamator.MoveSpeed;
         }
 
         public bool Tick(StateContext context)

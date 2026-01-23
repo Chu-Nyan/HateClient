@@ -27,6 +27,11 @@ namespace SAB.EntityAgent
             get => _collider;
         }
 
+        public bool IsActivate
+        {
+            get => _isActivate;
+        }
+
         public void Setup(Transform origin, int instigatorID)
         {
             _transform = origin;
@@ -46,9 +51,6 @@ namespace SAB.EntityAgent
 
         public void TickForExit(float time)
         {
-            if (_isActivate == false)
-                return;
-
             _collider.RefreshTransform(); // TODO : 캐릭터에 이벤트 추가하기
             if (_enemiesInRange > 0)
             {
