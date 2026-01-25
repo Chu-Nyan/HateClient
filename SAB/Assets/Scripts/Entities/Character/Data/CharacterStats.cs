@@ -75,10 +75,10 @@ public class StateContext
     private AniParamator _playAnimationClip;
 
     private bool _isMoveing;
+    private bool _isAttacking;
 
     private bool _isInCombat;
     private float _remainBattleTime;
-    private bool _isAttacking;
 
     public AniParamator PlayAnimationClip
     {

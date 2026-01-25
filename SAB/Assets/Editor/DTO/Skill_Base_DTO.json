@@ -4,34 +4,39 @@
     "StringID": 300000,
     "CastingTime": 0.0,
     "Cooldown": 1.0,
-    "Cost": 0.0
+    "Cost": 0.0,
+    "attackTriggerTiming": 0.7
   },
   {
     "ID": 100001,
     "StringID": 300001,
     "CastingTime": 0.0,
     "Cooldown": 0.4,
-    "Cost": 0.0
+    "Cost": 0.0,
+    "attackTriggerTiming": 0.7
   },
   {
     "ID": 100002,
     "StringID": 0,
     "CastingTime": 1.0,
     "Cooldown": 4.0,
-    "Cost": 3.0
+    "Cost": 3.0,
+    "attackTriggerTiming": 0.5
   },
   {
     "ID": 100003,
     "StringID": 300003,
     "CastingTime": 1.0,
     "Cooldown": 5.0,
-    "Cost": 5.0
+    "Cost": 5.0,
+    "attackTriggerTiming": 0.5
   },
   {
     "ID": 100004,
     "StringID": 300004,
     "CastingTime": 1.0,
     "Cooldown": 6.0,
-    "Cost": 7.0
+    "Cost": 7.0,
+    "attackTriggerTiming": 0.5
   }
 ]

@@ -10,6 +10,7 @@
         public float CastingTime;
         public float Cooldown;
         public float Cost;
+        public float AttackTriggerTiming;
         public int[] FlowStepIDs;
     }
 }

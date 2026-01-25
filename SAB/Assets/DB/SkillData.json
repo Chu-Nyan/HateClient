@@ -5,6 +5,7 @@
     "CastingTime": 0.0,
     "Cooldown": 1.0,
     "Cost": 0.0,
+    "AttackTriggerTiming": 0.7,
     "FlowStepIDs": [
       100000
     ]
@@ -15,6 +16,7 @@
     "CastingTime": 0.0,
     "Cooldown": 0.4,
     "Cost": 0.0,
+    "AttackTriggerTiming": 0.7,
     "FlowStepIDs": [
       100001
     ]
@@ -25,6 +27,7 @@
     "CastingTime": 1.0,
     "Cooldown": 4.0,
     "Cost": 3.0,
+    "AttackTriggerTiming": 0.5,
     "FlowStepIDs": [
       100002
     ]
@@ -35,6 +38,7 @@
     "CastingTime": 1.0,
     "Cooldown": 5.0,
     "Cost": 5.0,
+    "AttackTriggerTiming": 0.5,
     "FlowStepIDs": [
       200000
     ]
@@ -45,6 +49,7 @@
     "CastingTime": 1.0,
     "Cooldown": 6.0,
     "Cost": 7.0,
+    "AttackTriggerTiming": 0.5,
     "FlowStepIDs": [
       100003,
       400001,
