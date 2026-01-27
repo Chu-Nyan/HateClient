@@ -74,8 +74,9 @@ namespace SAB.Unit.Combat
             _context = context;
         }
 
-        public void ActivteNyanCollision(bool value)
+        public void SetActive(bool value)
         {
+            gameObject.SetActive(value);
             _nyanCollider.SetActive(value);
         }
 

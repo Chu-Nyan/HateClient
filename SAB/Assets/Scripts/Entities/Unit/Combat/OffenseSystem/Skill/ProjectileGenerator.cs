@@ -16,7 +16,7 @@ namespace SAB.Unit.Combat
             _new = AssetManager.GenerateLoadAssetSync<SkillProjectile>("Projectile");
             _new.Refresh(shape, instigator, context);
             _new.SetTarget(start, dir);
-            _new.ActivteNyanCollision(true);
+            _new.SetActive(true);
             return this;
         }
 
