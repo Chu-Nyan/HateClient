@@ -53,7 +53,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void Init(int instanceID)
     {
         _instanceID = instanceID;
-        _combatSystem = new OffenseSystem(instanceID);
+        _combatSystem = new OffenseSystem(instanceID, _attackOrigin);
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _stateContext = new StateContext();
@@ -113,9 +113,16 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void Attack(int skillIndex, Vector3 targetPoint)
     {
+        if (_stateContext.IsAttacking == true)
+            return;
+        if (_combatSystem.IsUsed(skillIndex) == true)
+            return;
+
+        _animator.SetAttack();
         float dmg = _stats.GetDamage();
-        if (_combatSystem.Attack(dmg, skillIndex, _attackOrigin.position, targetPoint) == true)
-            _animator.SetAttack();
+        AniEventData data = _combatSystem.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
+        float timeing = _combatSystem.SkillList[skillIndex].Data.AttackTriggerTiming;
+        _animator.SetAnimationEvent(AniState.Attack,data, timeing, _combatSystem.AttackWithAnimator);
     }
 
     public void Defend(AttackContext context)
@@ -135,7 +142,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void Die()
     {
         //TODO : 죽음 처리 로직이 끝난 후 SetActive로 마무리
-
         SetActive(false);
     }
 
