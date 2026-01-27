@@ -4,4 +4,9 @@
     {
         None, MoveSpeed, Attack, CombatMode
     }
+
+    public enum AniState 
+    {
+        Movement, CombatMoveMent, Attack
+    }
 }
