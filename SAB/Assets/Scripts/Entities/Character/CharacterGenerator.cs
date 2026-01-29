@@ -1,5 +1,4 @@
 ﻿using Chu.Utility;
-using SAB.MeshSlot;
 using SAB.Unit;
 using System;
 using System.Collections.Generic;
@@ -34,10 +33,10 @@ public class CharacterGenerator
         return this;
     }
 
-    public CharacterGenerator SetMesh(SlotType type, int number)
+    public CharacterGenerator SetMesh(string part, int number)
     {
-        Mesh mesh = AssetManager.LoadAssetSync<Mesh>($"{Const.Asset_Mesh_CharacterBody}{number:D2}");
-        _new.SetMesh(type, mesh);
+        Mesh mesh = AssetManager.LoadAssetSync<Mesh>($"Mesh_Body_MaleDefault");
+        _new.SetMesh(part, mesh);
         return this;
     }
 

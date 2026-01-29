@@ -1,5 +1,4 @@
 ﻿using SAB.EntityAgent;
-using SAB.MeshSlot;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ public class UnitController
         var unit = _actorGenerator
             .Ready(respawn)
             .SetData(type)
-            .SetMesh(SlotType.Body, 5) // 임시 메쉬 코드
+            .SetMesh("Body", 5) // 임시 메쉬 코드
             .Release();
 
         unit.RegisterDeactivated(OnCharacterDeactivated);

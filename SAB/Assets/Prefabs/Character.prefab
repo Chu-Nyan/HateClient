@@ -2108,20 +2108,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a578ff398f5d3c47a55fc08f0db4e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bodyPartComponent:
-  - Key: 1
-    Value: {fileID: 6042316898654178217}
-  - Key: 2
-    Value: {fileID: 2359966923131791025}
-  - Key: 3
-    Value: {fileID: 4467094785363956909}
-  - Key: 4
-    Value: {fileID: 3072790203844154152}
-  - Key: 5
+  _meshComponents:
+  - Key: Body
     Value: {fileID: 4070393135088315783}
-  - Key: 6
+  - Key: Cloak
+    Value: {fileID: 3876812704402162838}
+  - Key: LeftEquipment
     Value: {fileID: 118187208349710754}
-  - Key: 7
+  - Key: RightEquipment
     Value: {fileID: 2382409294408450089}
 --- !u!95 &-9105476830870872354
 Animator:

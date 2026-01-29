@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SAB.MeshSlot
+namespace Chu.Art
 {
     public interface IMeshAdapter
     {

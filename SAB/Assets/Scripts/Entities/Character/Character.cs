@@ -1,6 +1,6 @@
 ﻿using Chu.AI;
+using Chu.Art;
 using Chu.Collision;
-using SAB.MeshSlot;
 using SAB.Unit;
 using SAB.Unit.Combat;
 using SAB.Unit.State;
@@ -106,9 +106,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _nav.SetDestination(destination);
     }
 
-    public void SetMesh(SlotType type, Mesh mesh)
+    public void SetMesh(string part, Mesh mesh)
     {
-        _meshHub.SetMesh(type, mesh);
+        _meshHub.SetMesh(part, mesh);
     }
 
     public void Attack(int skillIndex, Vector3 targetPoint)
