@@ -1,0 +1,137 @@
+[
+  {
+    "ID": 1,
+    "TextID": 400001,
+    "Category": "Weapon"
+  },
+  {
+    "ID": 2,
+    "TextID": 400002,
+    "Category": "Weapon"
+  },
+  {
+    "ID": 3,
+    "TextID": 400003,
+    "Category": "Weapon"
+  },
+  {
+    "ID": 4,
+    "TextID": 400004,
+    "Category": "Weapon"
+  },
+  {
+    "ID": 5,
+    "TextID": 400005,
+    "Category": "Armor"
+  },
+  {
+    "ID": 6,
+    "TextID": 400006,
+    "Category": "Armor"
+  },
+  {
+    "ID": 7,
+    "TextID": 400007,
+    "Category": "Armor"
+  },
+  {
+    "ID": 8,
+    "TextID": 400008,
+    "Category": "Armor"
+  },
+  {
+    "ID": 9,
+    "TextID": 400009,
+    "Category": "Armor"
+  },
+  {
+    "ID": 10,
+    "TextID": 400010,
+    "Category": "Armor"
+  },
+  {
+    "ID": 11,
+    "TextID": 400011,
+    "Category": "Armor"
+  },
+  {
+    "ID": 12,
+    "TextID": 400012,
+    "Category": "Armor"
+  },
+  {
+    "ID": 13,
+    "TextID": 400013,
+    "Category": "Armor"
+  },
+  {
+    "ID": 14,
+    "TextID": 400014,
+    "Category": "Armor"
+  },
+  {
+    "ID": 15,
+    "TextID": 400015,
+    "Category": "Armor"
+  },
+  {
+    "ID": 16,
+    "TextID": 400016,
+    "Category": "Armor"
+  },
+  {
+    "ID": 17,
+    "TextID": 400017,
+    "Category": "Armor"
+  },
+  {
+    "ID": 18,
+    "TextID": 400018,
+    "Category": "Armor"
+  },
+  {
+    "ID": 19,
+    "TextID": 400019,
+    "Category": "Armor"
+  },
+  {
+    "ID": 20,
+    "TextID": 400020,
+    "Category": "Armor"
+  },
+  {
+    "ID": 21,
+    "TextID": 400021,
+    "Category": "Armor"
+  },
+  {
+    "ID": 22,
+    "TextID": 400022,
+    "Category": "Armor"
+  },
+  {
+    "ID": 23,
+    "TextID": 400023,
+    "Category": "Armor"
+  },
+  {
+    "ID": 24,
+    "TextID": 400024,
+    "Category": "Armor"
+  },
+  {
+    "ID": 25,
+    "TextID": 400025,
+    "Category": "Armor"
+  },
+  {
+    "ID": 26,
+    "TextID": 400026,
+    "Category": "Armor"
+  },
+  {
+    "ID": 27,
+    "TextID": 400027,
+    "Category": "Armor"
+  }
+]

@@ -1,0 +1,137 @@
+[
+  {
+    "ID": 1,
+    "Slot": "Weapon",
+    "MeshPath": "Mesh_Weapon_ShortSword"
+  },
+  {
+    "ID": 2,
+    "Slot": "Weapon",
+    "MeshPath": "Mesh_Weapon_IronSword"
+  },
+  {
+    "ID": 3,
+    "Slot": "Weapon",
+    "MeshPath": "Mesh_Weapon_KnightSword"
+  },
+  {
+    "ID": 4,
+    "Slot": "Weapon",
+    "MeshPath": "Mesh_Weapon_HeroSword"
+  },
+  {
+    "ID": 5,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Cloth"
+  },
+  {
+    "ID": 6,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Adventurer"
+  },
+  {
+    "ID": 7,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Knight"
+  },
+  {
+    "ID": 8,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_ScoutLeather"
+  },
+  {
+    "ID": 9,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_MageRobe"
+  },
+  {
+    "ID": 10,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_SageRobe"
+  },
+  {
+    "ID": 11,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_RedKnight"
+  },
+  {
+    "ID": 12,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Beast"
+  },
+  {
+    "ID": 13,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Demon"
+  },
+  {
+    "ID": 14,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Hero"
+  },
+  {
+    "ID": 15,
+    "Slot": "Body",
+    "MeshPath": "Mesh_Body_Soldier"
+  },
+  {
+    "ID": 16,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 17,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 18,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 19,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 20,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 21,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 22,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 23,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 24,
+    "Slot": "Shield",
+    "MeshPath": "Mesh_Shield_ShortSword"
+  },
+  {
+    "ID": 25,
+    "Slot": "Cloak",
+    "MeshPath": "Mesh_Cloak_ShortSword"
+  },
+  {
+    "ID": 26,
+    "Slot": "Cloak",
+    "MeshPath": "Mesh_Cloak_ShortSword"
+  },
+  {
+    "ID": 27,
+    "Slot": "Cloak",
+    "MeshPath": "Mesh_Cloak_ShortSword"
+  }
+]
