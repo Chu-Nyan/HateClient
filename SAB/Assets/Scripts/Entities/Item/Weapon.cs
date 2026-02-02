@@ -15,5 +15,18 @@
         {
             get => _equipmentData;
         }
+
+        public Weapon()
+        {
+            _itemData = new();
+            _equipmentData = new();
+        }
+
+        public void Setup(ItemTemplateData itemData, EquipmentTemplateData equipmentData, WeaponTemplateData weaponData)
+        {
+            _itemData.Setup(itemData);
+            _equipmentData.Setup(equipmentData);
+            _weaponData = weaponData;
+        }
     }
 }

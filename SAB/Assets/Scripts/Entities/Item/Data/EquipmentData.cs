@@ -9,5 +9,10 @@
         {
             _equipmentInstanceData = new();
         }
+
+        public void Setup(EquipmentTemplateData equipmentTemplateData)
+        {
+            _equipmentTemplateData = equipmentTemplateData;
+        }
     }
 }

@@ -14,5 +14,11 @@
         {
             get => _equipmentData;
         }
+
+        public void Setup(ItemTemplateData itemData, EquipmentTemplateData equipment)
+        {
+            _itemData.Setup(itemData);
+            _equipmentData.Setup(equipment);
+        }
     }
 }

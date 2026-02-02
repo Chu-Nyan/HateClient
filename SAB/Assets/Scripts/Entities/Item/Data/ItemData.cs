@@ -9,5 +9,10 @@
         {
             _itemInstanceData = new ItemInstanceData();
         }
+
+        public void Setup(ItemTemplateData itemTemplateData)
+        {
+            _itemTemplateData = itemTemplateData;
+        }
     }
 }
