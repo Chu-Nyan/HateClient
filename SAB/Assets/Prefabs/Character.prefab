@@ -284,7 +284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &446136946313800174
 Transform:
   m_ObjectHideFlags: 0
@@ -1060,7 +1060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5533070040209930601
 Transform:
   m_ObjectHideFlags: 0
@@ -2113,9 +2113,9 @@ MonoBehaviour:
     Value: {fileID: 4070393135088315783}
   - Key: Cloak
     Value: {fileID: 3876812704402162838}
-  - Key: LeftEquipment
+  - Key: Shield
     Value: {fileID: 118187208349710754}
-  - Key: RightEquipment
+  - Key: Weapon
     Value: {fileID: 2382409294408450089}
 --- !u!95 &-9105476830870872354
 Animator:
@@ -2468,7 +2468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5778763787589950540
 Transform:
   m_ObjectHideFlags: 0

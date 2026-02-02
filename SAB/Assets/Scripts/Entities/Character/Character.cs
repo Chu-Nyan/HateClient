@@ -1,6 +1,7 @@
 ﻿using Chu.AI;
 using Chu.Art;
 using Chu.Collision;
+using SAB.Item;
 using SAB.Unit;
 using SAB.Unit.Combat;
 using SAB.Unit.State;
@@ -27,6 +28,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private CharacterBody _body;
     private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
+    
+    private EquipmentSystem _equipmentSys;
 
     private event Action<Character> Deactivated;
 
@@ -62,6 +65,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();
         _animator = new CharacterAnimator(GetComponent<Animator>());
+        _equipmentSys = new();
 
         _body.RegisterOnSkillHit(Defend);
         _state.Setup(_stateContext);
@@ -162,5 +166,13 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void RegisterDeactivated(Action<Character> callback)
     {
         Deactivated += callback;
+    }
+
+    public void Equip(IHasEquipmentData equipment)
+    {
+        _equipmentSys.Equip(equipment);
+        EquipmentTemplateData template = equipment.EquipmentTemplateData.Template;
+        Mesh mesh = AssetManager.LoadAssetSync<Mesh>(template.MeshPath);
+        _meshHub.SetMesh(template.Slot.ToString(), mesh);
     }
 }

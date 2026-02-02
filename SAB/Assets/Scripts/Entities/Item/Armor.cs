@@ -15,6 +15,12 @@
             get => _equipmentData;
         }
 
+        public Armor()
+        {
+            _itemData = new();
+            _equipmentData = new();
+        }
+
         public void Setup(ItemTemplateData itemData, EquipmentTemplateData equipment)
         {
             _itemData.Setup(itemData);

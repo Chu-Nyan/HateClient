@@ -5,6 +5,11 @@
         private EquipmentTemplateData _equipmentTemplateData;
         private EquipmentInstanceData _equipmentInstanceData;
 
+        public EquipmentTemplateData Template
+        {
+            get => _equipmentTemplateData;
+        }
+
         public EquipmentData()
         {
             _equipmentInstanceData = new();
