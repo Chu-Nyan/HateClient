@@ -77,61 +77,61 @@
   {
     "ID": 16,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Wood"
   },
   {
     "ID": 17,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Standard"
   },
   {
     "ID": 18,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Knight"
   },
   {
     "ID": 19,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_BlackKnight"
   },
   {
     "ID": 20,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Beast"
   },
   {
     "ID": 21,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Demon"
   },
   {
     "ID": 22,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Hero"
   },
   {
     "ID": 23,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_Legendary"
   },
   {
     "ID": 24,
     "Slot": "Shield",
-    "MeshPath": "Mesh_Shield_ShortSword"
+    "MeshPath": "Mesh_Shield_DemonLord"
   },
   {
     "ID": 25,
     "Slot": "Cloak",
-    "MeshPath": "Mesh_Cloak_ShortSword"
+    "MeshPath": "Mesh_Cloak_Knight"
   },
   {
     "ID": 26,
     "Slot": "Cloak",
-    "MeshPath": "Mesh_Cloak_ShortSword"
+    "MeshPath": "Mesh_Cloak_Hero"
   },
   {
     "ID": 27,
     "Slot": "Cloak",
-    "MeshPath": "Mesh_Cloak_ShortSword"
+    "MeshPath": "Mesh_Cloak_DemonLord"
   }
 ]

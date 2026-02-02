@@ -231,11 +231,11 @@ public class ExcelHelper : ScriptableObject
 
                 datas[i] = instance;
             }
-            catch (ArgumentNullException err)
+            catch (Exception err)
             {
                 Debug.Log($"{table.TableName} 클래스가 생성되지 않음\n\n {err.Message}");
                 isSucceed = false;
-                break;
+                continue;
             }
         }
         text = isSucceed == true ? JsonConvert.SerializeObject(datas, Formatting.Indented) : "";
