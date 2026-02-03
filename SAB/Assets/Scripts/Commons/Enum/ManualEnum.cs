@@ -12,3 +12,9 @@ public enum ItemCategory
 {
     Weapon, Armor, Food, Material, Misc
 }
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum WeaponStance
+{
+    Unarmed, Sword, SwordAndShield
+}

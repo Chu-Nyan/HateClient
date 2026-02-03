@@ -8,6 +8,7 @@ public class CharacterAnimator
 {
     private readonly AnimatorHelper<AniParamator, AniState> _animator;
     private readonly Dictionary<AniState, AniClipEvent> _eventByState;
+    private readonly Dictionary<WeaponStance, RuntimeAnimatorController> _animatorByWeaponType;
 
     public CharacterAnimator(Animator animator)
     {
@@ -24,9 +25,15 @@ public class CharacterAnimator
             { AniState.CombatMoveMent, "Combat_Movement" },
             { AniState.Attack, "Attack" }
         };
-
         _eventByState = new();
         _animator = new(animator, clipData, stateData);
+
+        _animatorByWeaponType = new Dictionary<WeaponStance, RuntimeAnimatorController>()
+        {
+            { WeaponStance.Unarmed, _animator.RuntimeAnaimator},
+            { WeaponStance.Sword, AssetManager.LoadAssetSync<AnimatorOverrideController>("SwordAnimator") },
+            { WeaponStance.SwordAndShield, AssetManager.LoadAssetSync<AnimatorOverrideController>("SwordAndShieldAnimator") }
+        };
     }
 
     public void Tick(StateContext data, float moveSpd)
@@ -53,6 +60,11 @@ public class CharacterAnimator
             _eventByState[state] = new AniClipEvent();
 
         _eventByState[state].Setup(data, timeing, action);
+    }
+
+    public void ChangeStance(WeaponStance stance)
+    {
+        _animator.SetRuntimeAnimator(_animatorByWeaponType[stance]);
     }
 
     private void PlayMoveAnimation(float value)

@@ -171,8 +171,12 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void Equip(IHasEquipmentData equipment)
     {
         _equipmentSys.Equip(equipment);
+
         EquipmentTemplateData template = equipment.EquipmentTemplateData.Template;
         Mesh mesh = AssetManager.LoadAssetSync<Mesh>(template.MeshPath);
         _meshHub.SetMesh(template.Slot.ToString(), mesh);
+
+        WeaponStance stance = _equipmentSys.Stance;
+        _animator.ChangeStance(stance);
     }
 }
