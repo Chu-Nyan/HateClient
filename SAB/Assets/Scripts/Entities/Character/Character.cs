@@ -79,7 +79,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _state.Tick(_stateContext);
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
-        _animator.Tick(_stateContext, _stats[StatType.SPD]);
+        _animator.Tick(_stateContext, 1); // 1 << 이동속도 퍼센트로 넣기
     }
 
     private void StateUpdate()
@@ -110,9 +110,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _nav.SetDestination(destination);
     }
 
-    public void SetMesh(string part, Mesh mesh)
+    public void SetCustomizing(CustomizingPart part, int number)
     {
-        _meshHub.SetMesh(part, mesh);
+        string path = HumanoidCustomizingConst.GetPath(part, number);
+        Mesh mesh = AssetManager.LoadAssetSync<Mesh>(path);
+        _meshHub.SetMesh(part.ToString(), mesh);
     }
 
     public void Attack(int skillIndex, Vector3 targetPoint)

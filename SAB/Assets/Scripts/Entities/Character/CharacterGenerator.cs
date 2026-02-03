@@ -33,10 +33,12 @@ public class CharacterGenerator
         return this;
     }
 
-    public CharacterGenerator SetMesh(string part, int number)
+    public CharacterGenerator SetCustomizing(CustomizingData data)
     {
-        Mesh mesh = AssetManager.LoadAssetSync<Mesh>($"Mesh_Body_MaleDefault");
-        _new.SetMesh(part, mesh);
+        _new.SetCustomizing(CustomizingPart.Hair, data.Hair);
+        _new.SetCustomizing(CustomizingPart.Mouth, data.Mouth);
+        _new.SetCustomizing(CustomizingPart.Eyebrow, data.Eyebrow);
+        _new.SetCustomizing(CustomizingPart.Eye, data.Eye);
         return this;
     }
 

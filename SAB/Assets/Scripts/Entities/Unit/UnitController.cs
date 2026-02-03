@@ -18,12 +18,12 @@ public class UnitController
         _controller = gameObj.AddComponent<AgentController>();
     }
 
-    public Character GenerateCharacter(UnitType type, Vector3 respawn)
+    public Character GenerateCharacter(UnitType type, Vector3 respawn, CustomizingData customizingData)
     {
         var unit = _actorGenerator
             .Ready(respawn)
             .SetData(type)
-            .SetMesh("Body", 5) // 임시 메쉬 코드
+            .SetCustomizing(customizingData)
             .Release();
 
         unit.RegisterDeactivated(OnCharacterDeactivated);

@@ -18,3 +18,8 @@ public enum WeaponStance
 {
     Unarmed, Sword, SwordAndShield
 }
+
+public enum CustomizingPart
+{
+    Eye, Eyebrow, Hair, Mouth
+}
