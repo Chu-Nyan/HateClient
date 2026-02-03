@@ -17,6 +17,11 @@ namespace Chu.Utility
         private readonly Dictionary<int, K> _hashByState;
         private readonly Dictionary<K, AniClipEvent> _eventByState;
 
+        public RuntimeAnimatorController RuntimeAnaimator
+        {
+            get => _animator.runtimeAnimatorController;
+        }
+
         public AnimatorHelper(Animator animator, Dictionary<T, string> clipStrings, Dictionary<K, string> stateStrings)
         {
             _animator = animator;
@@ -64,6 +69,11 @@ namespace Chu.Utility
         public K GetStateHash(int key)
         {
             return _hashByState[key];
+        }
+
+        public void SetRuntimeAnimator(RuntimeAnimatorController controller)
+        {
+            _animator.runtimeAnimatorController = controller;
         }
 
         public void SetBool(T key, bool value)
