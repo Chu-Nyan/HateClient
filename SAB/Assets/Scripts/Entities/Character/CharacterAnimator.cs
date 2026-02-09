@@ -7,7 +7,6 @@ using UnityEngine;
 public class CharacterAnimator
 {
     private readonly AnimatorHelper<AniParamator, AniState> _animator;
-    private readonly Dictionary<AniState, AniClipEvent> _eventByState;
     private readonly Dictionary<WeaponStance, RuntimeAnimatorController> _animatorByWeaponType;
 
     public CharacterAnimator(Animator animator)
@@ -25,7 +24,6 @@ public class CharacterAnimator
             { AniState.CombatMoveMent, "Combat_Movement" },
             { AniState.Attack, "Attack" }
         };
-        _eventByState = new();
         _animator = new(animator, clipData, stateData);
 
         _animatorByWeaponType = new Dictionary<WeaponStance, RuntimeAnimatorController>()
@@ -41,25 +39,19 @@ public class CharacterAnimator
         AnimatorStateInfo info = _animator.GetCurrentStateInfo();
         AniState currentState = _animator.GetStateHash(info.shortNameHash);
 
-        if (data.PlayAnimationClip == AniParamator.MoveSpeed)
+        if (currentState == AniState.Movement || currentState == AniState.CombatMoveMent)
         {
             float value = data.IsMoveing == true ? 5f * moveSpd * 0.1f : 0;
             PlayMoveAnimation(value);
         }
 
-        if (_eventByState.TryGetValue(currentState, out AniClipEvent clipevent) == true)
-        {
-            float time = info.normalizedTime;
-            clipevent.Tick(time);
-        }
+        _animator.Tick();
     }
 
     public void SetAnimationEvent(AniState state, AniEventData data, float timeing, Action<AniEventData> action)
     {
-        if (_eventByState.ContainsKey(state) == false)
-            _eventByState[state] = new AniClipEvent();
-
-        _eventByState[state].Setup(data, timeing, action);
+        AniClipEvent clipEvent = new(data, timeing, action);
+        _animator.RegisterStateEvent(state, clipEvent);
     }
 
     public void ChangeStance(WeaponStance stance)

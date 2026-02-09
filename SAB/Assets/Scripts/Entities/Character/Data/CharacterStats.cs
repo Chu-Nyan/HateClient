@@ -72,19 +72,11 @@ public class StateHanlder
 
 public class StateContext
 {
-    private AniParamator _playAnimationClip;
-
     private bool _isMoveing;
     private bool _isAttacking;
 
     private bool _isInCombat;
     private float _remainBattleTime;
-
-    public AniParamator PlayAnimationClip
-    {
-        get => _playAnimationClip;
-        set => _playAnimationClip = value;
-    }
 
     public bool IsMoveing
     {

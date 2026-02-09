@@ -261,6 +261,18 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!114 &3583364171167468348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c820e8f0a99b4845befd5c45549cb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1102 &3769048414089033012
 AnimatorState:
   serializedVersion: 6

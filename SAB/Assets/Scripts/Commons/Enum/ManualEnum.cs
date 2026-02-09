@@ -14,6 +14,19 @@ public enum ItemCategory
 }
 
 [JsonConverter(typeof(StringEnumConverter))]
+public enum WeaponType
+{
+    Unarmed, Sword, Spear, Bow
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum WeaponHandedness
+{
+    OneHand,
+    TwoHand
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
 public enum WeaponStance
 {
     Unarmed, Sword, SwordAndShield

@@ -2,6 +2,6 @@
 {
     public enum CharacterState
     {
-        Idle, Move, Attack
+        Movement, Attack
     }
 }

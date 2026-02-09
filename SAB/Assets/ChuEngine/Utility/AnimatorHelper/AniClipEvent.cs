@@ -2,35 +2,31 @@
 
 public class AniClipEvent
 {
-    private bool _isExecuted;
-    private float _timeing;
     private AniEventData _data;
     private Action<AniEventData> _action;
+    private float _timeing;
 
-    public void Setup(AniEventData data, float timing, Action<AniEventData> action)
+    public float Timeing
     {
-        _timeing = timing;
+        get => _timeing;
+    }
+
+    public AniClipEvent(AniEventData data, float timeing, Action<AniEventData> action)
+    {
+        if (timeing > 1 || timeing < 0)
+        {
+            throw new ArgumentOutOfRangeException($"이벤트 실행 시간이 허용 범위를 이탈함 : {timeing}");
+        }
+        _timeing = timeing;
         _data = data;
         _action = action;
     }
 
-    public void Refresh()
+    public bool TryExecute(float normalizedTime)
     {
-        _isExecuted = false;
-    }
-
-    public bool Tick(float normalizedTime)
-    {
-        if (_isExecuted == true && _timeing > normalizedTime)
-            _isExecuted = false;
-
-        if (_isExecuted == true)
-            return false;
-
         if (_timeing > normalizedTime)
             return false;
 
-        _isExecuted = true;
         _action?.Invoke(_data);
         return true;
     }

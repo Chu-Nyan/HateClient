@@ -76,6 +76,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         StateUpdate();
         if (_stateContext.IsMoveing == true)
             _body.RefreshTransform();
+
         _state.Tick(_stateContext);
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
@@ -89,11 +90,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     private FSM<CharacterState, StateContext> GenerateStateHandler()
     {
-        var resolver = new StateResolver();
-        var stateHandler = new FSM<CharacterState, StateContext>(resolver);
-        stateHandler.AddStates(new IIdleState());
-        stateHandler.AddStates(new IMovementState());
-        stateHandler.AddStates(new IAttackState());
+        var stateHandler = new FSM<CharacterState, StateContext>(new StateResolver());
+        stateHandler.AddStates(new MovementState());
+        stateHandler.AddStates(new AttackState());
         return stateHandler;
     }
 
@@ -107,7 +106,15 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void SetDestination(Vector3 destination)
     {
+        if (_stateContext.IsAttacking == true)
+            return;
+
         _nav.SetDestination(destination);
+    }
+
+    public void StopMovement()
+    {
+        _nav.ResetPath();
     }
 
     public void SetCustomizing(CustomizingPart part, int number)
@@ -124,6 +131,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         if (_combatSystem.IsUsed(skillIndex) == true)
             return;
 
+        _stateContext.IsAttacking = true;
+        StopMovement();
         _animator.SetAttack();
         float dmg = _stats.GetDamage();
         AniEventData data = _combatSystem.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);

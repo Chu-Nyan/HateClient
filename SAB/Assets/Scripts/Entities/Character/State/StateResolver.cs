@@ -8,10 +8,8 @@ namespace SAB.Unit.State
         {
             if (stats.IsAttacking == true)
                 return CharacterState.Attack;
-            if (stats.IsMoveing == true)
-                return CharacterState.Move;
 
-            return CharacterState.Idle;
+            return CharacterState.Movement;
         }
     }
 }

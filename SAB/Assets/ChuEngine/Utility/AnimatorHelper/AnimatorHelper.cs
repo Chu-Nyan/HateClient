@@ -15,7 +15,8 @@ namespace Chu.Utility
         private readonly Animator _animator;
         private readonly Dictionary<T, int> _idByEnum;
         private readonly Dictionary<int, K> _hashByState;
-        private readonly Dictionary<K, AniClipEvent> _eventByState;
+        private readonly Dictionary<K, AniStateBehaviour> _eventByState;
+        private K _state;
 
         public RuntimeAnimatorController RuntimeAnaimator
         {
@@ -29,7 +30,6 @@ namespace Chu.Utility
             _hashByState = new(stateStrings.Count);
             _eventByState = new(stateStrings.Count);
 
-
             foreach (var item in clipStrings)
             {
                 int hash = Animator.StringToHash(item.Value);
@@ -40,25 +40,22 @@ namespace Chu.Utility
             {
                 int hash = Animator.StringToHash(item.Value);
                 _hashByState[hash] = item.Key;
+                _eventByState[item.Key] = new AniStateBehaviour();
             }
         }
 
-        public AnimatorHelper(Animator animator, Dictionary<T, int> clipStrings)
-        {
-            _animator = animator;
-            _idByEnum = clipStrings;
-        }
-
-        public void TickForEvent()
+        public void Tick()
         {
             AnimatorStateInfo info = _animator.GetCurrentAnimatorStateInfo(0);
-            K currentState = _hashByState[info.shortNameHash];
-
-            if (_eventByState.TryGetValue(currentState, out AniClipEvent clipevent) == true)
+            K nextState = _hashByState[info.shortNameHash];
+            if (_state.Equals(nextState) == false)
             {
-                float time = info.normalizedTime;
-                clipevent.Tick(time);
+                _eventByState[_state].OnStateExit(info);
+                _eventByState[nextState].OnStateEnter(info);
+                _state = nextState;
             }
+
+            _eventByState[_state].OnStateUpdate(info);
         }
 
         public AnimatorStateInfo GetCurrentStateInfo()
@@ -69,6 +66,11 @@ namespace Chu.Utility
         public K GetStateHash(int key)
         {
             return _hashByState[key];
+        }
+
+        public void RegisterStateEvent(K state, AniClipEvent clipEvent)
+        {
+            _eventByState[state].RegisterEvent(clipEvent);
         }
 
         public void SetRuntimeAnimator(RuntimeAnimatorController controller)

@@ -1,26 +1,31 @@
 ﻿using Chu.AI;
+using UnityEngine;
 
 namespace SAB.Unit.State
 {
-    public class IMovementState : IMachineState<CharacterState, StateContext>
+    public class AttackState : IMachineState<CharacterState, StateContext>
     {
         public CharacterState Type
         {
-            get => CharacterState.Move;
+            get => CharacterState.Attack;
         }
 
         public void Enter(StateContext context)
         {
-            context.PlayAnimationClip = AniParamator.MoveSpeed;
+            Debug.Log(context.IsAttacking);
         }
 
         public bool Tick(StateContext context)
         {
-            return context.IsMoveing == false;
+            if (context.IsAttacking == false)
+                return false;
+
+            return true;
         }
 
         public void Exit(StateContext context)
         {
         }
     }
+
 }
