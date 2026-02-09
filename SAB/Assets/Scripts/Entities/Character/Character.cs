@@ -28,7 +28,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private CharacterBody _body;
     private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
-    
+
     private EquipmentSystem _equipmentSys;
 
     private event Action<Character> Deactivated;
@@ -69,6 +69,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         _body.RegisterOnSkillHit(Defend);
         _state.Setup(_stateContext);
+        _animator.RegisterAnimationEvent(AniState.Attack, new AniEventData(), 1, a => _stateContext.IsAttacking = false);
     }
 
     private void Update()
@@ -137,7 +138,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         float dmg = _stats.GetDamage();
         AniEventData data = _combatSystem.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
         float timeing = _combatSystem.SkillList[skillIndex].Data.AttackTriggerTiming;
-        _animator.SetAnimationEvent(AniState.Attack,data, timeing, _combatSystem.AttackWithAnimator);
+        _animator.RegisterAnimationEvent(AniState.Attack, data, timeing, _combatSystem.AttackWithAnimator);
     }
 
     public void Defend(AttackContext context)

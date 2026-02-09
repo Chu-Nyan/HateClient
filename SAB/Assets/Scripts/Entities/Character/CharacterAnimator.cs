@@ -48,7 +48,7 @@ public class CharacterAnimator
         _animator.Tick();
     }
 
-    public void SetAnimationEvent(AniState state, AniEventData data, float timeing, Action<AniEventData> action)
+    public void RegisterAnimationEvent(AniState state, AniEventData data, float timeing, Action<AniEventData> action)
     {
         AniClipEvent clipEvent = new(data, timeing, action);
         _animator.RegisterStateEvent(state, clipEvent);
