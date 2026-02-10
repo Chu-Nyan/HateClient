@@ -48,10 +48,14 @@ public class CharacterAnimator
         _animator.Tick();
     }
 
-    public void RegisterAnimationEvent(AniState state, AniEventData data, float timeing, Action<AniEventData> action)
+    public void RegisterAnimationEvent(AniState state, string id, AniEventData data, float timeing, Action<AniEventData> action)
     {
-        AniClipEvent clipEvent = new(data, timeing, action);
-        _animator.RegisterStateEvent(state, clipEvent);
+        _animator.RegisterStateEvent(state, id, data, timeing, action);
+    }
+
+    public void ChangeEventData(AniState state, string id, AniEventData data)
+    {
+        _animator.ChagneEventData(state, id, data);
     }
 
     public void ChangeStance(WeaponStance stance)

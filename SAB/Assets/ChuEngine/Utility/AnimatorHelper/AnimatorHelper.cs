@@ -1,5 +1,4 @@
-﻿using SAB.Unit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Chu.Utility
     /// </summary>
     /// <typeparam name="T">파라미터 대응</typeparam>
     /// <typeparam name="K">스테이트 대응</typeparam>
-    public class AnimatorHelper<T,K> where T : Enum where K : Enum
+    public class AnimatorHelper<T, K> where T : Enum where K : Enum
     {
         private readonly Animator _animator;
         private readonly Dictionary<T, int> _idByEnum;
@@ -68,9 +67,14 @@ namespace Chu.Utility
             return _hashByState[key];
         }
 
-        public void RegisterStateEvent(K state, AniClipEvent clipEvent)
+        public void RegisterStateEvent(K state, string id, AniEventData data, float timeing, Action<AniEventData> action)
         {
-            _eventByState[state].RegisterEvent(clipEvent);
+            _eventByState[state].RegisterEvent(id, data, timeing, action);
+        }
+
+        public void ChagneEventData(K state, string id, AniEventData data)
+        {
+            _eventByState[state].ChangeAniEventData(id, data);
         }
 
         public void SetRuntimeAnimator(RuntimeAnimatorController controller)

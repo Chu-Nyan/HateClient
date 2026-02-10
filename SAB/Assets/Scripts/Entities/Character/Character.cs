@@ -69,7 +69,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         _body.RegisterOnSkillHit(Defend);
         _state.Setup(_stateContext);
-        _animator.RegisterAnimationEvent(AniState.Attack, new AniEventData(), 1, a => _stateContext.IsAttacking = false);
+        _animator.RegisterAnimationEvent(AniState.Attack, "AttackFinished", new AniEventData(), 1, a => _stateContext.IsAttacking = false);
+        _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSystem.AttackWithAnimator);
     }
 
     private void Update()
@@ -137,8 +138,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _animator.SetAttack();
         float dmg = _stats.GetDamage();
         AniEventData data = _combatSystem.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
-        float timeing = _combatSystem.SkillList[skillIndex].Data.AttackTriggerTiming;
-        _animator.RegisterAnimationEvent(AniState.Attack, data, timeing, _combatSystem.AttackWithAnimator);
+        _animator.ChangeEventData(AniState.Attack, "BasicAttack", data);
     }
 
     public void Defend(AttackContext context)
@@ -190,5 +190,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         WeaponStance stance = _equipmentSys.Stance;
         _animator.ChangeStance(stance);
+        float BasicAttackTimeing = 0.5f;// 무기 데이터에서 추출할 것
+
     }
 }
