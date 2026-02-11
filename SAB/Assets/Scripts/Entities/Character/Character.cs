@@ -135,6 +135,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         _stateContext.IsAttacking = true;
         StopMovement();
+        transform.rotation = Quaternion.LookRotation(targetPoint - transform.position);
         _animator.SetAttack();
         float dmg = _stats.GetDamage();
         AniEventData data = _combatSystem.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
