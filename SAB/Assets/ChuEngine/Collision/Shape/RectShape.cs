@@ -1,13 +1,14 @@
 ﻿using Chu.Data;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Chu.Collision
 {
     public class RectShape : Shape
     {
-        private float _rotation;
-        private float _axisUpdatedRotation = float.MaxValue;
+        private float _width;
+        private float _height;
+        private float _degree;
+        private float _radian;
         private readonly Vector2[] _axis = new Vector2[2];      // 0 : Right, 1 : Up
         private readonly Vector2[] _radius = new Vector2[2];    // 0 : Right, 1 : Up
 
@@ -21,58 +22,39 @@ namespace Chu.Collision
             get => _radius;
         }
 
-        public override RectBound WorldRectBound
+        public RectShape(float width, float height, float degree, Vector2 pos) : base(ShapeType.Rectangle)
         {
-            get => _bound.GetWorldCorners(_radius);
+            _width = width;
+            _height = height;
+            _aabb = new(0, width, 0, height);
+            UpdateAABB(pos, degree);
         }
 
-        public RectShape(float rotation, float width, float height) : base(ShapeType.Rectangle, 0, width, 0, height)
+        public override void UpdateAABB(Vector2 position, float degree)
         {
-            _rotation = rotation;
+            _aabb.RefreshPosition(position);
+            RefreshAxis(degree);
         }
 
-        public RectShape(float minX, float maxX, float minY, float maxY, float rotation = 0) : base(ShapeType.Rectangle, minX, maxX, minY, maxY)
+        private void RefreshAxis(float degree)
         {
-            _rotation = rotation;
-        }
-
-        public void Refresh(float rotation, float width, float height)
-        {
-            _rotation = rotation;
-            UpdateRectBound(0, width, 0, height);
-        }
-
-        public void Refresh(float rotation, float minX, float maxX, float minY, float maxY)
-        {
-            _rotation = rotation;
-            UpdateRectBound(minX, maxX, minY, maxY);
-        }
-
-        public override void UpdatePosition(Transform transform)
-        {
-            base.UpdatePosition(transform);
-            _rotation = transform.localRotation.eulerAngles.y * Mathf.Deg2Rad;
-            RefreshAxis();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void RefreshAxis()
-        {
-            if (_axisUpdatedRotation == _rotation)
+            if (_degree == degree)
                 return;
 
-            float cos = Mathf.Cos(_rotation);
-            float sin = Mathf.Sin(_rotation);
+            _degree = degree;
+            _radian = degree * Mathf.Deg2Rad;
+
+            float cos = Mathf.Cos(_radian);
+            float sin = Mathf.Sin(_radian);
             _axis[0] = new Vector2(-sin, cos);
             _axis[1] = new Vector2(cos, sin);
-            _radius[0] = _axis[1] * _bound.HalfX;
-            _radius[1] = _axis[0] * _bound.HalfY;
-            _axisUpdatedRotation = _rotation;
+            _radius[0] = _width * 0.5f * _axis[1];
+            _radius[1] = _height * 0.5f * _axis[0];
         }
 
         public override bool Intersects(Shape target)
         {
-            if (RectBound.IsIntersecting(WorldRectBound, target.WorldRectBound) == false)
+            if (RectBound.IsIntersecting(AABB, target.AABB) == false)
                 return false;
 
             return target.Intersects(this);
@@ -87,6 +69,10 @@ namespace Chu.Collision
         {
             return CollisionHelper.IsColliding(this, shape);
         }
-    }
 
+        public override bool Intersects(CompositeShape shape)
+        {
+            return CollisionHelper.IsColliding(shape, this);
+        }
+    }
 }

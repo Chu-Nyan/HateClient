@@ -33,12 +33,7 @@ public class CharacterBody : INyanCollisionProvider
             .SetLayer(_layer, mask)
             .SetInstigatorID(instigatorID)
             .GetCollider();
-    }
 
-    public void Init(Shape shape)
-    {
-        _transform = transform;
-        _collider.SetShape(shape);
         _collider.SetActive(true);
     }
 

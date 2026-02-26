@@ -5,38 +5,28 @@ namespace Chu.Collision
 {
     public abstract class Shape
     {
-        public static readonly Shape Invalid = new CircleShape(0);
+        public static readonly Shape Invalid = new CircleShape(0, Vector2.zero);
 
         public readonly ShapeType ShapeType;
-        protected RectBound _bound;
+        protected RectBound _aabb;
 
-        public RectBound RectBound
+        public RectBound AABB
         {
-            get => _bound;
+            get => _aabb;
         }
 
-        public abstract RectBound WorldRectBound { get; }
-
-        public Shape(ShapeType type, float minX, float maxX, float minY, float maxY)
+        public Shape(ShapeType type)
         {
             ShapeType = type;
-            UpdateRectBound(minX, maxX, minY, maxY);
         }
 
-        public virtual void UpdatePosition(Transform transform)
+        public abstract void UpdateAABB(Vector2 position, float degree);
+        public virtual bool Intersects(Shape target)
         {
-            var convert = new Vector2(transform.position.x, transform.position.z);
-            _bound.RefreshPosition(convert);
+            return RectBound.IsIntersecting(_aabb, target.AABB) == false;
         }
-
-        protected void UpdateRectBound(float minX, float maxX, float minY, float maxY)
-        {
-            _bound = new(minX, maxX, minY, maxY);
-        }
-
-        public abstract bool Intersects(Shape target);
         public abstract bool Intersects(RectShape shape);
         public abstract bool Intersects(CircleShape shape);
+        public abstract bool Intersects(CompositeShape shape);
     }
 }
-

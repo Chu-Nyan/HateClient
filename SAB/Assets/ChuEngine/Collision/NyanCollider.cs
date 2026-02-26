@@ -54,7 +54,7 @@ namespace Chu.Collision
 
         public RectBound RectBound
         {
-            get => _shape.RectBound;
+            get => _shape.AABB;
         }
 
         public NyanLayer Layer
@@ -112,7 +112,7 @@ namespace Chu.Collision
 #endif
             _isActive = value;
             if (_isActive == true)
-                _shape.UpdatePosition(_provider.transform);
+                _shape.UpdateAABB(_provider.transform.position, _provider.transform.rotation.y);
             EnabledChanged?.Invoke(this);
         }
 
@@ -123,7 +123,7 @@ namespace Chu.Collision
 
         public void RefreshTransform()
         {
-            _shape.UpdatePosition(_provider.transform);
+            _shape.UpdateAABB(_provider.transform.position, _provider.transform.rotation.y);
             PositionChanged?.Invoke(this);
         }
 

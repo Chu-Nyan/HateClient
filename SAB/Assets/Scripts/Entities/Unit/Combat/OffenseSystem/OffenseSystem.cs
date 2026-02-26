@@ -50,7 +50,7 @@ namespace SAB.Unit.Combat
         private void Attack(float damage, int index, Vector3 targetPoint)
         {
             var context = new AttackContext(SkillList[index].Data, damage);
-            var rect = new CircleShape(0.5f);
+            var rect = new CircleShape(0.5f, Vector2.zero);
             var dir = targetPoint - _origin.position;
             dir.y = 0f;
             dir.Normalize();

@@ -60,7 +60,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _stateContext = new StateContext();
-        _body = new(_instanceID, transform, new CircleShape(1));
+        _body = new(_instanceID, transform, new CircleShape(1, transform.position));
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();
@@ -103,7 +103,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _stats.SetBaseData(baseStats);
         var skill = SkillGenerator.Instance.GetSkill(SkillID.BasicMelee);
         _combatSystem.AddSkill(skill);
-        _body.Init(new CircleShape(1));
     }
 
     public void SetDestination(Vector3 destination)

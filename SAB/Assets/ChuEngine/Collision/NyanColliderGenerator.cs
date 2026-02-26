@@ -2,6 +2,7 @@
 using Chu.Utility;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -21,8 +22,8 @@ namespace Chu.Collision
             _iDNumbering = new(0, 64);
 
             // 풀 초기화
-            var rectPool = new ObjectPooling<Shape>(() => new RectShape(0, 1, 1));
-            var circlePool = new ObjectPooling<Shape>(() => new CircleShape(1));
+            var rectPool = new ObjectPooling<Shape>(() => new RectShape(1, 1, 0, Vector2.zero));
+            var circlePool = new ObjectPooling<Shape>(() => new CircleShape(1, Vector2.zero));
             _pools = new()
             {
                 { ShapeType.Rectangle, rectPool },

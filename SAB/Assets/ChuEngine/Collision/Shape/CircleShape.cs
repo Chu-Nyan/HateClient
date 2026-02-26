@@ -1,4 +1,5 @@
 ﻿using Chu.Data;
+using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -11,25 +12,27 @@ namespace Chu.Collision
             get => _radius;
         }
 
-        public override RectBound WorldRectBound
-        {
-            get => _bound;
-        }
-
-        public CircleShape(float radius) : base(ShapeType.Circle, -radius, radius, -radius, radius)
+        public CircleShape(float radius, Vector2 position) : base(ShapeType.Circle)
         {
             _radius = radius;
+            Refresh(_radius, position);
         }
 
-        public void Refresh(float radius)
+        public void Refresh(float radius, Vector2 position)
         {
             _radius = radius;
-            UpdateRectBound(-radius, radius, -radius, radius);
+            _aabb = new(-_radius, _radius, -_radius, _radius);
+            _aabb.RefreshPosition(position);
+        }
+
+        public override void UpdateAABB(Vector2 position, float degree)
+        {
+            _aabb.RefreshPosition(position);
         }
 
         public override bool Intersects(Shape target)
         {
-            if (RectBound.IsIntersecting(_bound, target.WorldRectBound) == false)
+            if (RectBound.IsIntersecting(AABB, target.AABB) == false)
                 return false;
 
             return target.Intersects(this);
@@ -41,6 +44,11 @@ namespace Chu.Collision
         }
 
         public override bool Intersects(CircleShape shape)
+        {
+            return CollisionHelper.IsColliding(shape, this);
+        }
+
+        public override bool Intersects(CompositeShape shape)
         {
             return CollisionHelper.IsColliding(shape, this);
         }
