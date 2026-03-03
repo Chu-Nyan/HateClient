@@ -40,7 +40,7 @@ namespace SAB.EntityAgent
             {
                 var mask = new NyanLayerMask(NyanLayer.Unit);
                 _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                    .GenerateCollider(this, new CircleShape(_searchRange, transform.position), "전투 판정")
+                    .GenerateCollider(this, new CircleShape(new CircleRangeData(Vector3.zero, 0)), "전투 판정")
                     .SetLayer(NyanLayer.UnitSensor, mask)
                     .SetInstigatorID(instigatorID)
                     .GetCollider();

@@ -4,32 +4,41 @@ using UnityEngine;
 
 namespace Chu.Collision
 {
-    public class CompositeShape : Shape
+    public class CompositeShape : IShape
     {
-        private readonly List<Shape> _shapeList;
+        private readonly List<IShape> _shapeList;
+        private RectBound _aabb;
 
-        public List<Shape> ShapeList
+        public ShapeType ShapeType
         {
-            get => _shapeList;
+            get => ShapeType.Composite;
         }
 
-        public Shape this[int index]
+        public RectBound AABB
+        {
+            get => _aabb;
+        }
+
+        public IShape this[int index]
         {
             get => _shapeList[index];
-            set => _shapeList[index] = value;
         }
 
-        public CompositeShape(List<Shape> list, Vector2 position, float degree) : base(ShapeType.Composite)
+        public int Count
+        {
+            get => _shapeList.Count;
+        }
+
+        public CompositeShape(List<IShape> list, Vector2 position, float degree)
         {
             _shapeList = new();
             for (int i = 0; i < list.Count; i++)
-            {
                 _shapeList.Add(list[i]);
-            }
+
             UpdateAABB(position, degree);
         }
 
-        public override void UpdateAABB(Vector2 position, float degree)
+        public void UpdateAABB(Vector2 position, float degree)
         {
             if (_shapeList.Count == 0)
                 return;
@@ -53,7 +62,7 @@ namespace Chu.Collision
             _aabb = new RectBound(minX, maxX, minY, maxY);
         }
 
-        public override bool Intersects(Shape target)
+        public bool Intersects(IShape target)
         {
             if (RectBound.IsIntersecting(AABB, target.AABB) == false)
                 return false;
@@ -61,17 +70,17 @@ namespace Chu.Collision
             return target.Intersects(this);
         }
 
-        public override bool Intersects(RectShape shape)
+        public bool Intersects(RectShape shape)
         {
             return CollisionHelper.IsColliding(this, shape);
         }
 
-        public override bool Intersects(CircleShape shape)
+        public bool Intersects(CircleShape shape)
         {
             return CollisionHelper.IsColliding(this, shape);
         }
 
-        public override bool Intersects(CompositeShape shape)
+        public bool Intersects(CompositeShape shape)
         {
             return CollisionHelper.IsColliding(this, shape);
         }

@@ -24,27 +24,19 @@ namespace Chu.Data
             HalfY = (maxY - minY) * 0.5f;
         }
 
-        public void RefreshPosition(Vector2 pos)
+        public RectBound(Vector2[] radius, Vector2 pos)
         {
-            MinX = pos.x - HalfX;
-            MaxX = pos.x + HalfX;
-            MinY = pos.y - HalfY;
-            MaxY = pos.y + HalfY;
-        }
+            Vector2 center = pos;
+            Vector2 r0 = radius[0];
+            Vector2 r1 = radius[1];
 
-        // 회전 상태를 반영한 AABB 반환
-        public void RefreshAABB(Vector2[] Radius)
-        {
-            Vector2 center = Center;
-            Vector2 r0 = Radius[0];
-            Vector2 r1 = Radius[1];
+            MinX = center.x - Mathf.Abs(r0.x) - Mathf.Abs(r1.x);
+            MaxX = center.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x);
+            MinY = center.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y);
+            MaxY = center.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y);
 
-            float minX = center.x - Mathf.Abs(r0.x) - Mathf.Abs(r1.x);
-            float maxX = center.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x);
-            float minY = center.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y);
-            float maxY = center.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y);
-
-            SetBound(minX, maxX, minY, maxY);
+            HalfX = (MaxX - MinX) * 0.5f;
+            HalfY = (MaxY - MinY) * 0.5f;
         }
 
         private void SetBound(float minX, float maxX, float minY, float maxY)
@@ -56,6 +48,29 @@ namespace Chu.Data
 
             HalfX = (maxX - minX) * 0.5f;
             HalfY = (maxY - minY) * 0.5f;
+        }
+
+        public void RefreshAABB(Vector2 pos)
+        {
+            SetBound(pos.x - HalfX, pos.x + HalfX, pos.y - HalfY, pos.y + HalfY);
+        }
+
+        // 회전 상태를 반영한 AABB 반환
+        public void RefreshAABB(Vector2 pos, Vector2[] radius)
+        {
+            Vector2 center = pos;
+            Vector2 r0 = radius[0];
+            Vector2 r1 = radius[1];
+
+            SetBound(center.x - Mathf.Abs(r0.x) - Mathf.Abs(r1.x),
+                     center.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x),
+                     center.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y),
+                     center.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y));
+        }
+
+        public void RefreshAABB(Vector2[] radius)
+        {
+            RefreshAABB(Center, radius);
         }
 
         // 내부에 target이 완벽하게 포함되는가?

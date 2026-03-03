@@ -154,7 +154,7 @@ namespace Chu.Collision
              || candidate.LayerMask.ContainsLayer(primary.Layer) == false)
                 return;
 
-            bool isCollision = primary.Shape.Intersects(candidate.Shape);
+            bool isCollision = primary.Intersects(candidate);
             bool isContacted = primary.IsContacted(candidate.InstanceID);
 
             if (isCollision == true && isContacted == false)

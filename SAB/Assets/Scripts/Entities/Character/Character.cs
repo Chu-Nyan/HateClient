@@ -60,7 +60,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _stateContext = new StateContext();
-        _body = new(_instanceID, transform, new CircleShape(1, transform.position));
+        _body = new(_instanceID, transform, new CircleShape(new CircleRangeData(Vector2.zero, 1)));
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();

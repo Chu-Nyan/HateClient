@@ -54,7 +54,7 @@ namespace Chu.Collision
 
         public static bool IsColliding(CompositeShape a, CircleShape b)
         {
-            for (int i = 0; i < a.ShapeList.Count; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 if (a[i].Intersects(b) == true)
                     return true;
@@ -65,7 +65,7 @@ namespace Chu.Collision
 
         public static bool IsColliding(CompositeShape a, RectShape b)
         {
-            for (int i = 0; i < a.ShapeList.Count; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 if (a[i].Intersects(b) == true)
                     return true;
@@ -76,9 +76,9 @@ namespace Chu.Collision
 
         public static bool IsColliding(CompositeShape a, CompositeShape b)
         {
-            for (int i = 0; i < a.ShapeList.Count; i++)
+            for (int i = 0; i < a.Count; i++)
             {
-                for (int j = 0; j < b.ShapeList.Count; j++)
+                for (int j = 0; j < b.Count; j++)
                 {
                     if (a[i].Intersects(b[j]) == true)
                         return true;

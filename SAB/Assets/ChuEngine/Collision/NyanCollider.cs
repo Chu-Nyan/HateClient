@@ -15,7 +15,8 @@ namespace Chu.Collision
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
         private int _instigatorID;
-        private Shape _shape;
+        private IShape _shape;
+        private RectBound _aabb;
 
         private NyanLayer _layer;
         private NyanLayerMask _mask;
@@ -35,11 +36,6 @@ namespace Chu.Collision
         public int InstigatorID
         {
             get => _instigatorID;
-        }
-
-        public Shape Shape
-        {
-            get => _shape;
         }
 
         public HashSet<int> InsertedNodesID
@@ -77,7 +73,7 @@ namespace Chu.Collision
             get => _comment;
         }
 
-        public NyanCollider(INyanCollisionProvider provider, Shape shape, int id, string comment = null)
+        public NyanCollider(INyanCollisionProvider provider, IShape shape, int id, string comment = null)
         {
             InstanceID = id;
             _shape = shape;
@@ -104,7 +100,7 @@ namespace Chu.Collision
 #if UNITY_EDITOR
             if (value && _shape == null)
                 throw new Exception("Shape is null.");
-            if (_shape == Shape.Invalid)
+            if (_shape == CircleShape.Invalid)
                 throw new Exception("Shape is not initialized.");
 #else
             if (_shape == null)
@@ -112,19 +108,33 @@ namespace Chu.Collision
 #endif
             _isActive = value;
             if (_isActive == true)
-                _shape.UpdateAABB(_provider.transform.position, _provider.transform.rotation.y);
+                _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
             EnabledChanged?.Invoke(this);
         }
 
-        public void SetShape(Shape shape)
+        public void SetShape(IShape shape)
         {
             _shape = shape;
         }
 
         public void RefreshTransform()
         {
-            _shape.UpdateAABB(_provider.transform.position, _provider.transform.rotation.y);
+            _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
             PositionChanged?.Invoke(this);
+        }
+
+        public bool Intersects(IShape shape)
+        {
+            return _shape.Intersects(shape);
+        }
+
+        public bool Intersects(NyanCollider collider)
+        {
+            bool result = false;
+            if (RectBound.IsIntersecting(RectBound, collider.RectBound) == true)
+                result = _shape.Intersects(collider._shape);
+
+            return result;
         }
 
         public bool IsContacted(int id)

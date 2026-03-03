@@ -23,7 +23,7 @@ public class CharacterBody : INyanCollisionProvider
         get => _collider;
     }
 
-    public CharacterBody(int instigatorID, Transform transform, Shape body)
+    public CharacterBody(int instigatorID, Transform transform, IShape body)
     {
         _transform = transform;
         var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
