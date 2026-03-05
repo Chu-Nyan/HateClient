@@ -33,7 +33,7 @@ public enum SkillStepType
 
 public enum SkillID
 {
-	BasicMelee = 100000,
+	Unarmed = 100000,
 	BasicRanged = 100001,
 	Firebolt = 100002,
 	FrogPoison = 100003,

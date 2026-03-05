@@ -5,5 +5,7 @@ public class Skill_Base_DTO
 	 public float CastingTime;
 	 public float Cooldown;
 	 public float Cost;
-	 public float attackTriggerTiming;
+	 public string MotionFileName;
+	 public int HitBoxID;
+	 public int MaxHitCount;
 }

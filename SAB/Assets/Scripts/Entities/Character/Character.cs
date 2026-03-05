@@ -101,7 +101,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void SetupStats(BaseStats baseStats)
     {
         _stats.SetBaseData(baseStats);
-        var skill = SkillGenerator.Instance.GetSkill(SkillID.BasicMelee);
+        var skill = SkillGenerator.Instance.GetSkill(SkillID.Unarmed);
         _combatSystem.AddSkill(skill);
     }
 
