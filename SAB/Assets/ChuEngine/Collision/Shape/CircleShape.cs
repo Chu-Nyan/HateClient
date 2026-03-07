@@ -25,12 +25,7 @@ namespace Chu.Collision
             get => _aabb;
         }
 
-        public CircleShape(CircleRangeData data)
-        {
-            Refresh(data, Vector3.zero);
-        }
-
-        public void Refresh(CircleRangeData data, Vector2 position)
+        public void Setup(CircleRangeData data, Vector2 position)
         {
             _data = data;
             _aabb = new(-_data.Radius, _data.Radius, -_data.Radius, _data.Radius);

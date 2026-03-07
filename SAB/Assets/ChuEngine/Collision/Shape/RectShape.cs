@@ -35,11 +35,6 @@ namespace Chu.Collision
             get => _aabb;
         }
 
-        public RectShape(RectRangeData data, Vector2 pos, float degree)
-        {
-            Setup(data, pos, degree);
-        }
-
         public void Setup(RectRangeData data, Vector2 pos, float degree)
         {
             _rectData = data;

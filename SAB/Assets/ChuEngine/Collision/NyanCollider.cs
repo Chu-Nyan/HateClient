@@ -2,6 +2,7 @@
 using Chu.Data;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -16,7 +17,6 @@ namespace Chu.Collision
         private readonly HashSet<int> _contactIDs;
         private int _instigatorID;
         private IShape _shape;
-        private RectBound _aabb;
 
         private NyanLayer _layer;
         private NyanLayerMask _mask;
@@ -27,6 +27,7 @@ namespace Chu.Collision
 
         private event Action<NyanCollider> PositionChanged;
         private event Action<NyanCollider> EnabledChanged;
+        private event Action<IShape> ShapeChanged;
 
         public INyanCollisionProvider Provider
         {
@@ -38,6 +39,7 @@ namespace Chu.Collision
             get => _instigatorID;
         }
 
+
         public HashSet<int> InsertedNodesID
         {
             get => _insertedNodes;
@@ -46,6 +48,11 @@ namespace Chu.Collision
         public HashSet<int> ContactIDs
         {
             get => _contactIDs;
+        }
+
+        public ShapeType ShapeType
+        {
+            get => _shape.ShapeType;
         }
 
         public RectBound RectBound
@@ -112,11 +119,6 @@ namespace Chu.Collision
             EnabledChanged?.Invoke(this);
         }
 
-        public void SetShape(IShape shape)
-        {
-            _shape = shape;
-        }
-
         public void RefreshTransform()
         {
             _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
@@ -160,6 +162,20 @@ namespace Chu.Collision
         public void RemoveContactColliderID(int id)
         {
             _contactIDs.Remove(id);
+        }
+
+        public void ChangeToRectShape(RectRangeData data)
+        { 
+            RectShape shape =ShapeFactory.Instance.Generate<RectShape>();
+            Transform transform = _provider.transform;
+            shape.Setup(data, transform.position, _provider.transform.eulerAngles.y);
+            ReplaceCurrentShape(shape);
+        }
+
+        private void ReplaceCurrentShape(IShape shape)
+        {
+            ShapeFactory.Instance.Release(_shape);
+            _shape = shape;
         }
 
         #region 델리게이트 등록, 해제

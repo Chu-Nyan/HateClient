@@ -12,7 +12,6 @@ namespace Chu.Collision
     public class NyanColliderGenerator
     {
         private readonly IDNumbering _iDNumbering;
-        private readonly Dictionary<ShapeType, ObjectPooling<IShape>> _pools;
         private NyanCollisonSystem _system;
         private NyanCollider _newCollider;
         private bool _initialized;
@@ -20,15 +19,6 @@ namespace Chu.Collision
         public NyanColliderGenerator()
         {
             _iDNumbering = new(0, 64);
-
-            // 풀 초기화
-            var rectPool = new ObjectPooling<IShape>(() => new RectShape(new RectRangeData(), Vector2.zero, 0));
-            var circlePool = new ObjectPooling<IShape>(() => new CircleShape(new CircleRangeData()));
-            _pools = new()
-            {
-                { ShapeType.Rectangle, rectPool },
-                { ShapeType.Circle, circlePool }
-            };
         }
 
         public void Init(NyanCollisonSystem sys)
@@ -70,19 +60,6 @@ namespace Chu.Collision
             _system.RegisterEntity(_newCollider);
             return _newCollider;
         }
-        #endregion
-
-        #region 유틸리티
-        //public void ChangeShape(ShapeType afterType, NyanCollider collider, string comment = null)
-        //{
-        //    var beforeType = collider.Shape.ShapeType;
-        //    if (beforeType == afterType)
-        //        return;
-
-        //    comment ??= collider.Comment;
-        //    _pools[beforeType].Enqueue(collider.Shape);
-        //    collider.SetShape(_pools[afterType].Dequeue());
-        //}
         #endregion
 
 #if UNITY_EDITOR

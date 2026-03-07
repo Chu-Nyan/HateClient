@@ -29,9 +29,13 @@ namespace Chu.Collision
             get => _shapeList.Count;
         }
 
-        public CompositeShape(List<IShape> list, Vector2 position, float degree)
+        public CompositeShape()
         {
             _shapeList = new();
+        }
+
+        public void Setup(List<IShape> list, Vector2 position, float degree)
+        {
             for (int i = 0; i < list.Count; i++)
                 _shapeList.Add(list[i]);
 

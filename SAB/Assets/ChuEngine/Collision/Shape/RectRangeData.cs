@@ -7,10 +7,10 @@ public struct RectRangeData
     public float Width;
     public float Height;
 
-    public RectRangeData(Vector3 offset, float radian, float width, float height)
+    public RectRangeData(Vector3 offset, float rotation, float width, float height)
     {
         Offset = offset;
-        Rotation = radian;
+        Rotation = rotation;
         Width = width;
         Height = height;
     }
