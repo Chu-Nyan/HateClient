@@ -27,7 +27,6 @@ namespace Chu.Collision
 
         private event Action<NyanCollider> PositionChanged;
         private event Action<NyanCollider> EnabledChanged;
-        private event Action<IShape> ShapeChanged;
 
         public INyanCollisionProvider Provider
         {
@@ -102,13 +101,17 @@ namespace Chu.Collision
             _instigatorID = id;
         }
 
+        public void SetShape(IShape shape)
+        {
+            ShapeFactory.Instance.Release(_shape);
+            _shape = shape;
+        }
+
         public void SetActive(bool value)
         {
 #if UNITY_EDITOR
             if (value && _shape == null)
                 throw new Exception("Shape is null.");
-            if (_shape == CircleShape.Invalid)
-                throw new Exception("Shape is not initialized.");
 #else
             if (_shape == null)
                 return;
@@ -164,19 +167,6 @@ namespace Chu.Collision
             _contactIDs.Remove(id);
         }
 
-        public void ChangeToRectShape(RectRangeData data)
-        { 
-            RectShape shape =ShapeFactory.Instance.Generate<RectShape>();
-            Transform transform = _provider.transform;
-            shape.Setup(data, transform.position, _provider.transform.eulerAngles.y);
-            ReplaceCurrentShape(shape);
-        }
-
-        private void ReplaceCurrentShape(IShape shape)
-        {
-            ShapeFactory.Instance.Release(_shape);
-            _shape = shape;
-        }
 
         #region 델리게이트 등록, 해제
         public void RegisterPositionChanged(Action<NyanCollider> action)

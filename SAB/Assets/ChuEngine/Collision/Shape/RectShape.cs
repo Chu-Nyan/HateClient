@@ -35,11 +35,10 @@ namespace Chu.Collision
             get => _aabb;
         }
 
-        public void Setup(RectRangeData data, Vector2 pos, float degree)
+        public void Setup(RectRangeData data)
         {
             _rectData = data;
             _aabb = new(0, data.Width, 0, data.Height);
-            UpdateAABB(pos, _rectData.Rotation + degree);
         }
 
         public void UpdateAABB(Vector2 position, float degree)

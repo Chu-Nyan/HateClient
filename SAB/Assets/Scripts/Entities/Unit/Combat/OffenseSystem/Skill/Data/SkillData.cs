@@ -1,4 +1,8 @@
-﻿namespace SAB.Unit.Combat
+﻿using Chu.Collision;
+using System;
+using UnityEngine;
+
+namespace SAB.Unit.Combat
 {
     /// <summary>
     /// 스킬 공용 정보
@@ -11,6 +15,8 @@
         public float Cooldown;
         public float Cost;
         public float AttackTriggerTiming;
-        public int[] FlowStepIDs;
+        public string AttachPoint;
+        public ShapeParam[] HitBoxes;
+        public int[] HitFlowStepIDs;
     }
 }

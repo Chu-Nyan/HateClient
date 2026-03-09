@@ -1,4 +1,5 @@
 ﻿using Chu.Data;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,12 +35,11 @@ namespace Chu.Collision
             _shapeList = new();
         }
 
-        public void Setup(List<IShape> list, Vector2 position, float degree)
+        public void Setup(ReadOnlySpan<ShapeParam> list)
         {
-            for (int i = 0; i < list.Count; i++)
-                _shapeList.Add(list[i]);
-
-            UpdateAABB(position, degree);
+            ShapeFactory.Instance.Release(_shapeList);
+            _shapeList.Clear();
+            ShapeFactory.Instance.ConvertShapesNonAlloc(list, _shapeList);
         }
 
         public void UpdateAABB(Vector2 position, float degree)

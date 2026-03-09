@@ -60,7 +60,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _defenseSystem = new DefenseSystem();
         _stats = new CharacterStats();
         _stateContext = new StateContext();
-        _body = new(_instanceID, transform, new CircleShape(new CircleRangeData(Vector2.zero, 1)));
+        CircleShape shape = ShapeFactory.Instance.Generate<CircleShape>();
+        shape.Setup(new CircleRangeData(Vector2.zero, 1));
+        _body = new(_instanceID, transform, shape);
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();

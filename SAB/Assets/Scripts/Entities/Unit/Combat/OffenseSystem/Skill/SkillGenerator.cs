@@ -56,9 +56,9 @@ namespace SAB.Unit.Combat
         {
             var data = context.SkillData;
             var list = new List<ISkillStep>();
-            for (int i = 0; i < data.FlowStepIDs.Length; i++)
+            for (int i = 0; i < data.HitFlowStepIDs.Length; i++)
             {
-                list.Add(GenerateStep(data.FlowStepIDs[i], context));
+                list.Add(GenerateStep(data.HitFlowStepIDs[i], context));
             }
 
             var sequence = new SkillSequence();

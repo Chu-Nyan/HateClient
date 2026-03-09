@@ -1,8 +1,6 @@
 ﻿using Chu.Collision.Layer;
 using Chu.Utility;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chu.Collision
 {

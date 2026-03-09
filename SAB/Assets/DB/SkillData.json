@@ -1,12 +1,23 @@
 {
-  "BasicMelee": {
+  "Unarmed": {
     "ID": 100000,
     "StringID": 300000,
     "CastingTime": 0.0,
     "Cooldown": 1.0,
     "Cost": 0.0,
-    "AttackTriggerTiming": 0.7,
-    "FlowStepIDs": [
+    "AttackTriggerTiming": 0.0,
+    "AttachPoint": null,
+    "HitBoxes": [
+      {
+        "Type": 0,
+        "OffsetX": 0.0,
+        "OffsetY": 0.1,
+        "Radius": 1.0,
+        "Width": 1.0,
+        "Height": 0.3
+      }
+    ],
+    "HitFlowStepIDs": [
       100000
     ]
   },
@@ -16,8 +27,19 @@
     "CastingTime": 0.0,
     "Cooldown": 0.4,
     "Cost": 0.0,
-    "AttackTriggerTiming": 0.7,
-    "FlowStepIDs": [
+    "AttackTriggerTiming": 0.0,
+    "AttachPoint": null,
+    "HitBoxes": [
+      {
+        "Type": 1,
+        "OffsetX": 0.0,
+        "OffsetY": 0.0,
+        "Radius": 0.3,
+        "Width": 0.3,
+        "Height": 0.0
+      }
+    ],
+    "HitFlowStepIDs": [
       100001
     ]
   },
@@ -27,8 +49,27 @@
     "CastingTime": 1.0,
     "Cooldown": 4.0,
     "Cost": 3.0,
-    "AttackTriggerTiming": 0.5,
-    "FlowStepIDs": [
+    "AttackTriggerTiming": 0.0,
+    "AttachPoint": null,
+    "HitBoxes": [
+      {
+        "Type": 1,
+        "OffsetX": 0.0,
+        "OffsetY": 0.0,
+        "Radius": 0.2,
+        "Width": 0.2,
+        "Height": 0.0
+      },
+      {
+        "Type": 0,
+        "OffsetX": 0.0,
+        "OffsetY": -0.5,
+        "Radius": 0.0,
+        "Width": 0.0,
+        "Height": 1.0
+      }
+    ],
+    "HitFlowStepIDs": [
       100002
     ]
   },
@@ -38,8 +79,19 @@
     "CastingTime": 1.0,
     "Cooldown": 5.0,
     "Cost": 5.0,
-    "AttackTriggerTiming": 0.5,
-    "FlowStepIDs": [
+    "AttackTriggerTiming": 0.0,
+    "AttachPoint": null,
+    "HitBoxes": [
+      {
+        "Type": 1,
+        "OffsetX": 0.0,
+        "OffsetY": 0.0,
+        "Radius": 0.5,
+        "Width": 0.5,
+        "Height": 0.0
+      }
+    ],
+    "HitFlowStepIDs": [
       200000
     ]
   },
@@ -49,8 +101,19 @@
     "CastingTime": 1.0,
     "Cooldown": 6.0,
     "Cost": 7.0,
-    "AttackTriggerTiming": 0.5,
-    "FlowStepIDs": [
+    "AttackTriggerTiming": 0.0,
+    "AttachPoint": null,
+    "HitBoxes": [
+      {
+        "Type": 1,
+        "OffsetX": 0.0,
+        "OffsetY": 0.0,
+        "Radius": 0.5,
+        "Width": 0.5,
+        "Height": 0.0
+      }
+    ],
+    "HitFlowStepIDs": [
       100003,
       400001,
       300000

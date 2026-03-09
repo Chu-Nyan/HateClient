@@ -33,9 +33,11 @@ namespace SAB.Unit.Combat
         public void Awake()
         {
             var mask = new NyanLayerMask(NyanLayer.Unit);
+            var shape = ShapeFactory.Instance.Generate<CircleShape>();
+            shape.Setup(new CircleRangeData(Vector2.zero, 1));
 
             _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                .GenerateCollider(this, CircleShape.Invalid, $"투사체")
+                .GenerateCollider(this, shape, $"스킬 투사체")
                 .SetLayer(_layer, mask)
                 .GetCollider();
         }
@@ -67,8 +69,10 @@ namespace SAB.Unit.Combat
             _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
         }
 
-        public void Refresh(IShape shape, int instigator, AttackContext context)
+        public void Setup(int instigator, AttackContext context)
         {
+            _nyanCollider.SetInstigatorID(instigator);
+            var shape = ShapeParam.GetShape(context.SkillData.HitBoxes);
             _nyanCollider.SetShape(shape);
             _context = context;
         }

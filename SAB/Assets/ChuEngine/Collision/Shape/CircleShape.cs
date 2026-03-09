@@ -5,8 +5,6 @@ namespace Chu.Collision
 {
     public class CircleShape : IShape
     {
-        public static readonly IShape Invalid = new CircleShape(new CircleRangeData(Vector3.zero, 1));
-
         private CircleRangeData _data;
         private RectBound _aabb;
 
@@ -25,11 +23,10 @@ namespace Chu.Collision
             get => _aabb;
         }
 
-        public void Setup(CircleRangeData data, Vector2 position)
+        public void Setup(CircleRangeData data)
         {
             _data = data;
             _aabb = new(-_data.Radius, _data.Radius, -_data.Radius, _data.Radius);
-            _aabb.RefreshAABB(position);
         }
 
         public void UpdateAABB(Vector2 position, float degree)

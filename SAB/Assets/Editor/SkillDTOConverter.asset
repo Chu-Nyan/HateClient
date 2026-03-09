@@ -18,4 +18,5 @@ MonoBehaviour:
   _dot: {fileID: 4900000, guid: 0d9fb49d2e58b10428964e92146af243, type: 3}
   _aoe: {fileID: 4900000, guid: d7f037448889f06409855533553c100c, type: 3}
   _time: {fileID: 4900000, guid: 8047203a7c287954d8f7dd0f8a7941bc, type: 3}
+  _hitBox: {fileID: 4900000, guid: 346a5e64681a5c74e8d4d1024e51980c, type: 3}
   _jsonGeneratePath: Assets/DB
