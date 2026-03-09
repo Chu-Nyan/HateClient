@@ -22,7 +22,8 @@ public class ExcelHelper : ScriptableObject
 
     private ExcelConfigLoader _configLoader = new();
     private Dictionary<string, SheetData> _sheetDatas;
-    private ConvertSetting _convertSetting;
+    public ConvertSetting ConvertSetting;
+    public ExcelGeneratePath GeneratePath;
     private DateTime _excelUpdateTime;
 
     public bool HasExcelData
@@ -62,8 +63,7 @@ public class ExcelHelper : ScriptableObject
             var stream = new MemoryStream(www.downloadHandler.data);
             var tables = ExcelReaderFactory.CreateReader(stream).AsDataSet().Tables;
 
-            _convertSetting = _configLoader.LoadConvertSetting(tables);
-            _sheetDatas = _configLoader.LoadSheetProperty(tables, _convertSetting);
+            _sheetDatas = _configLoader.LoadSheetProperty(tables, ConvertSetting, GeneratePath);
             Debug.Log("요청 수락됨");
         }
     }
@@ -76,7 +76,7 @@ public class ExcelHelper : ScriptableObject
         {
             var sheet = item.Value;
 
-            if (sheet.HasFlag(SheetProperty.Enum) == false)
+            if (sheet.Type != SheetType.Enum)
                 continue;
 
             var list = GetEnumScriptText(sheet);
@@ -110,7 +110,7 @@ public class ExcelHelper : ScriptableObject
             var sheet = item.Value;
             var table = sheet.Table;
 
-            if (sheet.HasFlag(SheetProperty.Data) == false)
+            if (sheet.Type != SheetType.Data)
                 continue;
 
             var type = assemblies
@@ -146,7 +146,7 @@ public class ExcelHelper : ScriptableObject
         var rows = table.Rows;
         for (int i = 0; i < table.Columns.Count; i++)
         {
-            if (HasIgnoreSymbol(rows[_convertSetting.DBNameRow][i].ToString()) == false)
+            if (HasIgnoreSymbol(rows[ConvertSetting.DBNameRow][i].ToString()) == false)
                 continue;
 
             exceptionColumns.Add(i);
@@ -160,7 +160,7 @@ public class ExcelHelper : ScriptableObject
             if (exceptionColumns.Contains(i) == true)
                 continue;
 
-            code += $"\t public {rows[_convertSetting.DBTypeRow][i]} {rows[_convertSetting.DBNameRow][i]};\n";
+            code += $"\t public {rows[ConvertSetting.DBTypeRow][i]} {rows[ConvertSetting.DBNameRow][i]};\n";
         }
         code += $"}}\n";
 
@@ -177,7 +177,7 @@ public class ExcelHelper : ScriptableObject
 
         foreach (var item in _sheetDatas)
         {
-            if (item.Value.HasFlag(SheetProperty.Data) == false)
+            if (item.Value.Type != SheetType.Data)
                 continue;
 
             var sheet = item.Value;
@@ -202,18 +202,18 @@ public class ExcelHelper : ScriptableObject
             .Select(a => a.GetType(sheet.GetNameFromOptions()))
             .FirstOrDefault(t => t != null);
 
-        var datas = new System.Object[table.Rows.Count - _convertSetting.DBDataStartedRow];
-        var filedNames = table.Rows[_convertSetting.DBNameRow];
+        var datas = new System.Object[table.Rows.Count - ConvertSetting.DBDataStartedRow];
+        var filedNames = table.Rows[ConvertSetting.DBNameRow];
         var isSucceed = true;
         for (int i = 0; i < datas.Length; i++)
         {
-            var data = table.Rows[_convertSetting.DBDataStartedRow + i];
+            var data = table.Rows[ConvertSetting.DBDataStartedRow + i];
             try
             {
                 var instance = Activator.CreateInstance(type);
                 for (int j = 0; j < table.Columns.Count; j++)
                 {
-                    if (HasIgnoreSymbol(table.Rows[_convertSetting.DBNameRow][j].ToString()) == true)
+                    if (HasIgnoreSymbol(table.Rows[ConvertSetting.DBNameRow][j].ToString()) == true)
                         continue;
 
                     var fieldInfo = type.GetField(filedNames[j].ToString());
@@ -249,19 +249,19 @@ public class ExcelHelper : ScriptableObject
         var arr = new List<string>(8);
         var template = "public enum {0}\n{{\n{1}}}\n";
 
-        var index = _convertSetting.EnumDataStartedRow;
+        var index = ConvertSetting.EnumDataStartedRow;
 
         while (index < rows.Count)
         {
-            var typeText = rows[index][_convertSetting.EnumTypeColumn].ToString();
+            var typeText = rows[index][ConvertSetting.EnumTypeColumn].ToString();
 
             sb.Clear();
-            while (index < rows.Count && rows[index][_convertSetting.EnumTypeColumn].ToString() == typeText)
+            while (index < rows.Count && rows[index][ConvertSetting.EnumTypeColumn].ToString() == typeText)
             {
-                sb.Append($"\t{rows[index][_convertSetting.EnumKeyColumn]} = {rows[index][_convertSetting.EnumValueColumn]},");
-                if (rows[index][_convertSetting.EnumCommentsColumn].ToString() != string.Empty)
+                sb.Append($"\t{rows[index][ConvertSetting.EnumKeyColumn]} = {rows[index][ConvertSetting.EnumValueColumn]},");
+                if (rows[index][ConvertSetting.EnumCommentsColumn].ToString() != string.Empty)
                 {
-                    sb.Append($" // {rows[index][_convertSetting.EnumCommentsColumn]}");
+                    sb.Append($" // {rows[index][ConvertSetting.EnumCommentsColumn]}");
                 }
                 sb.AppendLine();
                 index++;
@@ -277,7 +277,7 @@ public class ExcelHelper : ScriptableObject
     {
         foreach (var sheet in _sheetDatas.Values)
         {
-            if (sheet.HasFlag(SheetProperty.Localization) == false)
+            if (sheet.Type != SheetType.Localization)
                 continue;
 
             var dic = ConvertLocalizationSheetToJson(sheet.Table);
@@ -294,25 +294,25 @@ public class ExcelHelper : ScriptableObject
 
         for (int x = 0; x < table.Columns.Count; x++)
         {
-            if (HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == _convertSetting.LocalizationKeyColumn)
+            if (HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == ConvertSetting.LocalizationKeyColumn)
                 continue;
 
             var dic = new Dictionary<string, string>();
 
-            for (int y = _convertSetting.LocalizationFirstDataRow; y < table.Rows.Count; y++)
+            for (int y = ConvertSetting.LocalizationFirstDataRow; y < table.Rows.Count; y++)
             {
-                var key = table.Rows[y][_convertSetting.LocalizationKeyColumn].ToString();
+                var key = table.Rows[y][ConvertSetting.LocalizationKeyColumn].ToString();
                 if (key == string.Empty)
                     break;
 
                 if (dic.ContainsKey(key) == true)
-                    throw new Exception("중복 키 발견");
+                    throw new Exception($"{key}중복 키 발견");
 
                 dic.Add(key, table.Rows[y][x].ToString());
             }
 
             var json = JsonConvert.SerializeObject(dic, Formatting.Indented);
-            var languageName = table.Rows[_convertSetting.LocalizationNameRow][x].ToString();
+            var languageName = table.Rows[ConvertSetting.LocalizationNameRow][x].ToString();
             texts.Add(languageName, json);
         }
 

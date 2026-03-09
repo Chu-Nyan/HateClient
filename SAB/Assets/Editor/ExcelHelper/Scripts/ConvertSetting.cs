@@ -1,47 +1,49 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class ConvertSetting
 {
-    public int DBNameRow;
-    public int DBTypeRow;
-    public int DBDataStartedRow;
+    [SerializeField] private int _dbNameRow = 1;
+    [SerializeField] private int _dbTypeRow = 2;
+    [SerializeField] private int _dbDataStartedRow = 4;
 
-    public int EnumDataStartedRow;
-    public int EnumTypeColumn;
-    public int EnumKeyColumn;
-    public int EnumValueColumn;
-    public int EnumCommentsColumn;
+    [SerializeField] private int _enumDataStartedRow = 2;
+    [SerializeField] private int _enumTypeColumn = 1;
+    [SerializeField] private int _enumKeyColumn = 2;
+    [SerializeField] private int _enumValueColumn = 3;
+    [SerializeField] private int _enumCommentsColumn = 4;
 
-    public int LocalizationNameRow;
-    public int LocalizationKeyColumn;
-    public int LocalizationFirstDataRow;
+    [SerializeField] private int _localizationNameRow = 1;
+    [SerializeField] private int _localizationKeyColumn = 1;
+    [SerializeField] private int _localizationFirstDataRow = 2;
 
-    public int SheetPropertyNameColumn;
-    public int SheetPropertyFirstDataRow;
-    public string SheetPropertyGeneratePathName;
+    [SerializeField] private int _sheetPropertyNameColumn = 1;
+    [SerializeField] private int _sheetPropertyTypeColumn = 2;
+    [SerializeField] private int _sheetPropertyFirstDataRow = 3;
 
-    private bool _isZeroBase;
+    public bool IsZeroBase = true;
 
-    public void SetZeroBase()
+    public int DBNameRow => GetBaseValue(_dbNameRow);
+    public int DBTypeRow => GetBaseValue(_dbTypeRow);
+    public int DBDataStartedRow => GetBaseValue(_dbDataStartedRow);
+
+    public int EnumDataStartedRow => GetBaseValue(_enumDataStartedRow);
+    public int EnumTypeColumn => GetBaseValue(_enumTypeColumn);
+    public int EnumKeyColumn => GetBaseValue(_enumKeyColumn);
+    public int EnumValueColumn => GetBaseValue(_enumValueColumn);
+    public int EnumCommentsColumn => GetBaseValue(_enumCommentsColumn);
+
+    public int LocalizationNameRow => GetBaseValue(_localizationNameRow);
+    public int LocalizationKeyColumn => GetBaseValue(_localizationKeyColumn);
+    public int LocalizationFirstDataRow => GetBaseValue(_localizationFirstDataRow);
+
+    public int SheetPropertyNameColumn => GetBaseValue(_sheetPropertyNameColumn);
+    public int SheetPropertyTypeColumn => GetBaseValue(_sheetPropertyTypeColumn);
+    public int SheetPropertyFirstDataRow => GetBaseValue(_sheetPropertyFirstDataRow);
+
+    private int GetBaseValue(int value)
     {
-        if (_isZeroBase == true)
-            return;
-
-        _isZeroBase = true;
-
-        DBNameRow--;
-        DBTypeRow--;
-        DBDataStartedRow--;
-
-        EnumDataStartedRow--;
-        EnumTypeColumn--;
-        EnumKeyColumn--;
-        EnumValueColumn--;
-        EnumCommentsColumn--;
-
-        LocalizationKeyColumn--;
-        LocalizationNameRow--;
-        LocalizationFirstDataRow--;
-
-        SheetPropertyNameColumn--;
-        SheetPropertyFirstDataRow--;
+        return IsZeroBase == true ? value - 1 : value;
     }
 }

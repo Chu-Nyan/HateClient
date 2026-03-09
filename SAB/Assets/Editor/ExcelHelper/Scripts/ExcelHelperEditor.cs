@@ -5,7 +5,16 @@ using UnityEngine;
 public class ExcelHelperEditor : Editor
 {
     private bool _isDataClassSettingFoldedOut = false;
+    private SerializedProperty _convertSetting;
+    private SerializedProperty _pathSetting;
     private string _foldoutName = "설정";
+
+    private void OnEnable()
+    {
+        var helper = (ExcelHelper)target;
+        _convertSetting = serializedObject.FindProperty("ConvertSetting");
+        _pathSetting = serializedObject.FindProperty("GeneratePath");
+    }
 
     public override void OnInspectorGUI()
     {
@@ -17,9 +26,14 @@ public class ExcelHelperEditor : Editor
         DrawGenerateClassTextUI(helper);
         GUILayout.Space(10);
         DrawGenerateLocalization(helper);
+        GUILayout.Space(10);
+        DrawConvertOption();
 
         if (GUI.changed)
             EditorUtility.SetDirty(helper);
+
+        serializedObject.ApplyModifiedProperties();
+
     }
 
     private void DrawSheetSettingUI(ExcelHelper helper)
@@ -50,7 +64,7 @@ public class ExcelHelperEditor : Editor
     {
         EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
 
-          _isDataClassSettingFoldedOut = EditorGUILayout.Foldout(_isDataClassSettingFoldedOut, _foldoutName);
+        _isDataClassSettingFoldedOut = EditorGUILayout.Foldout(_isDataClassSettingFoldedOut, _foldoutName);
         if (_isDataClassSettingFoldedOut == true)
         {
             helper.IsClassAvoidDuplication = EditorGUILayout.Toggle("클래스 중복 방지", helper.IsClassAvoidDuplication);
@@ -85,6 +99,14 @@ public class ExcelHelperEditor : Editor
             helper.ConvertLocalization();
             AssetDatabase.Refresh();
         }
+    }
+
+    private void DrawConvertOption()
+    {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("엑셀 설정", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_convertSetting, new GUIContent("시트 레이아웃"), true);
+        EditorGUILayout.PropertyField(_pathSetting, new GUIContent("생성 경로"), true);
     }
 
     private async void LoadExcel(ExcelHelper helper)

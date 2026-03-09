@@ -1,13 +1,9 @@
 using System.Data;
-using System.IO;
-using UnityEngine;
 
 public class SheetData
 {
-    private static readonly string _assetPath = Application.dataPath;
-
     private readonly DataTable _table;
-    private int _option;
+    private SheetType _type;
     private string _generatePath;
 
     public DataTable Table
@@ -15,10 +11,9 @@ public class SheetData
         get => _table;
     }
 
-    public int Options
+    public SheetType Type
     {
-        get => _option;
-        set => _option = value;
+        get => _type;
     }
 
     public string GeneratePath
@@ -26,25 +21,17 @@ public class SheetData
         get => _generatePath;
     }
 
-    public SheetData(DataTable table)
+    public SheetData(DataTable table, SheetType type, string path)
     {
         _table = table;
-    }
-
-    public void SetPathFromAssetFolder(string path)
-    {
-        _generatePath = Path.Combine(_assetPath, path);
-    }
-
-    public bool HasFlag(SheetProperty type)
-    {
-        return (Options & (int)type) == (int)type;
+        _type = type;
+        _generatePath = path;
     }
 
     public string GetNameFromOptions()
     {
         var suffix = string.Empty;
-        if (HasFlag(SheetProperty.Data) == true)
+        if (_type == SheetType.Data)
             suffix += "_DTO";
 
         return $"{Table.TableName}{suffix}";
