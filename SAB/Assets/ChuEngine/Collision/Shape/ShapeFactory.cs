@@ -1,6 +1,7 @@
 ﻿using Chu.Utility;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -28,7 +29,7 @@ namespace Chu.Collision
             if (shape == null)
                 return;
 
-            _pool[typeof(T)].Enqueue(shape);
+            _pool[shape.GetType()].Enqueue(shape);
         }
     }
 }
