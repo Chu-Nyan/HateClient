@@ -5,12 +5,10 @@ using UnityEngine;
 public class ExcelHelperEditor : Editor
 {
     private SerializedProperty _convertSetting;
-    private SerializedProperty _pathSetting;
 
     private void OnEnable()
     {
         _convertSetting = serializedObject.FindProperty("ConvertSetting");
-        _pathSetting = serializedObject.FindProperty("GeneratePath");
     }
 
     public override void OnInspectorGUI()
@@ -25,9 +23,7 @@ public class ExcelHelperEditor : Editor
         if (GUILayout.Button("All-In-One 생성"))
             helper.SetupAllInOneAsync();
         GUILayout.Space(10);
-
         DrawConvertOption();
-
 
         if (GUI.changed)
             EditorUtility.SetDirty(helper);
@@ -68,10 +64,7 @@ public class ExcelHelperEditor : Editor
 
     private void DrawConvertOption()
     {
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("엑셀 설정", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(_convertSetting, new GUIContent("시트 레이아웃"), true);
-        EditorGUILayout.PropertyField(_pathSetting, new GUIContent("생성 경로"), true);
+        EditorGUILayout.PropertyField(_convertSetting, new GUIContent("Config"), true);
     }
 
     private async void GenerateEnumScript(ExcelHelper helper)

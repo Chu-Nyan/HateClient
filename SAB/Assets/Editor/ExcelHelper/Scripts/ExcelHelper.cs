@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +11,7 @@ using UnityEngine;
 public class ExcelHelper : ScriptableObject
 {
     public GoogleSheetsLoader ExcelLoader;
-    public ConvertSetting ConvertSetting;
-    public ExcelGeneratePath GeneratePath;
+    public DBConvertConfig ConvertSetting;
 
     private Dictionary<SheetType, List<SheetData>> _sheetsByType;
 
@@ -34,10 +32,10 @@ public class ExcelHelper : ScriptableObject
     public async Task LoadExcelFile()
     {
         await ExcelLoader.RequestExcelFile();
-        _sheetsByType = LoadSheetProperty(ExcelLoader.Sheets, ConvertSetting);
+        _sheetsByType = ParseSheet(ExcelLoader.Sheets, ConvertSetting);
     }
 
-    public Dictionary<SheetType, List<SheetData>> LoadSheetProperty(DataTableCollection table, ConvertSetting setting)
+    public Dictionary<SheetType, List<SheetData>> ParseSheet(DataTableCollection table, DBConvertConfig setting)
     {
         var sheetDatas = new Dictionary<SheetType, List<SheetData>>();
         var config = table[ConvertSetting.ConfigSheetName];
@@ -66,7 +64,7 @@ public class ExcelHelper : ScriptableObject
             if (sheetDatas.TryGetValue(type, out var list) == false)
                 sheetDatas[type] = list = new();
 
-            list.Add(new SheetData(table[name], type, GeneratePath.GetPath(type)));
+            list.Add(new SheetData(table[name], type, ConvertSetting.GetPath(type)));
         }
         Debug.Log("시트 불러오기 완료");
         return sheetDatas;
@@ -155,7 +153,7 @@ public class ExcelHelper : ScriptableObject
             if (TryConvertExcelToJson(sheet, out var text) == true)
                 ExcelUtility.GenerateFile(sheet.GeneratePath, $"{name}.json", text);
 
-            log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 생성 실패\n";
+            log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 오류 발생\n";
 
             await Task.Yield();
         }
@@ -165,7 +163,6 @@ public class ExcelHelper : ScriptableObject
 
     private bool TryConvertExcelToJson(SheetData sheet, out string text)
     {
-        text = string.Empty;
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         var table = sheet.Table;
         Type type = assemblies
@@ -205,14 +202,14 @@ public class ExcelHelper : ScriptableObject
                 }
                 catch
                 {
-                    Debug.Log($"{table.TableName} {i + 1}행 {fieldName} 변환 실패");
-                    return false;
+                    Debug.LogError($"{table.TableName}, {ConvertSetting.DBDataStartedRow + i + 1}행 {fieldName} {data[j]} 변환 실패");
+                    isSucceed = false;
                 }
             }
 
             datas[i] = instance;
         }
-        text = isSucceed == true ? JsonConvert.SerializeObject(datas, Formatting.Indented) : "";
+        text = JsonConvert.SerializeObject(datas, Formatting.Indented);
         return isSucceed;
     }
 
