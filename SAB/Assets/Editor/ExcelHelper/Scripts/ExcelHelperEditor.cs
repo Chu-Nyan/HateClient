@@ -14,12 +14,13 @@ public class ExcelHelperEditor : Editor
         var helper = (ExcelHelper)target;
         _convertSetting = serializedObject.FindProperty("ConvertSetting");
         _pathSetting = serializedObject.FindProperty("GeneratePath");
+        _pathSetting = serializedObject.FindProperty("GeneratePath");
     }
 
     public override void OnInspectorGUI()
     {
         var helper = (ExcelHelper)target;
-        DrawSheetSettingUI(helper);
+        helper.ExcelLoader.DrawSheetSettingUI();
         GUILayout.Space(10);
         DrawEnumSettingUI(helper);
         GUILayout.Space(10);
@@ -27,28 +28,17 @@ public class ExcelHelperEditor : Editor
         GUILayout.Space(10);
         DrawGenerateLocalization(helper);
         GUILayout.Space(10);
+        if (GUILayout.Button("All-In-One 생성"))
+            helper.SetupAllInOneAsync();
+        GUILayout.Space(10);
+
         DrawConvertOption();
+
 
         if (GUI.changed)
             EditorUtility.SetDirty(helper);
 
         serializedObject.ApplyModifiedProperties();
-
-    }
-
-    private void DrawSheetSettingUI(ExcelHelper helper)
-    {
-        EditorGUILayout.LabelField("구글 스프레드 시트 설정", EditorStyles.boldLabel);
-        helper.GoogleSheetID = EditorGUILayout.TextField("시트 ID", helper.GoogleSheetID);
-
-        GUILayout.Space(5);
-        if (GUILayout.Button("All-In-One 생성"))
-            helper.SetupAllInOneAsync();
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("엑셀 파일 요청", GUILayout.MaxWidth(200)))
-            LoadExcel(helper);
-        EditorGUILayout.LabelField(helper.HasExcelData == true ? $"업데이트 시간 : {helper.ExcelUpdateTime}" : $"데이터 없음");
-        EditorGUILayout.EndHorizontal();
     }
 
     private void DrawEnumSettingUI(ExcelHelper helper)
@@ -107,11 +97,6 @@ public class ExcelHelperEditor : Editor
         EditorGUILayout.LabelField("엑셀 설정", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(_convertSetting, new GUIContent("시트 레이아웃"), true);
         EditorGUILayout.PropertyField(_pathSetting, new GUIContent("생성 경로"), true);
-    }
-
-    private async void LoadExcel(ExcelHelper helper)
-    {
-        await helper.LoadExcelFile();
     }
 
     private async void GenerateEnumScript(ExcelHelper helper)

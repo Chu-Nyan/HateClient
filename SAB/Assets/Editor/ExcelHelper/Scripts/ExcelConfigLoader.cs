@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using UnityEngine;
 
 public class ExcelConfigLoader
 {
     private const string _sheetPropertyName = "SheetProperty";
 
-    public Dictionary<string, SheetData> LoadSheetProperty(DataTableCollection table, ConvertSetting setting, ExcelGeneratePath path)
+    public static Dictionary<string, SheetData> LoadSheetProperty(DataTableCollection table, ConvertSetting setting, ExcelGeneratePath path)
     {
         var _sheetDatas = new Dictionary<string, SheetData>();
         var option = table[_sheetPropertyName];

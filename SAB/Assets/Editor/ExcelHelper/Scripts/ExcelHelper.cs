@@ -5,35 +5,23 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ExcelDataReader;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Networking;
 
 [CreateAssetMenu(fileName = "ExcelHelper", menuName = "Scriptable Objects/ExcelHelper", order = 1)]
 public class ExcelHelper : ScriptableObject
 {
-    private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
-    public const char IgnoreSymbol = '#';
-
-    public string GoogleSheetID;
-
     public bool IsClassAvoidDuplication = true;
 
-    private ExcelConfigLoader _configLoader = new();
-    private Dictionary<string, SheetData> _sheetDatas;
+    public GoogleSheetsLoader ExcelLoader;
     public ConvertSetting ConvertSetting;
     public ExcelGeneratePath GeneratePath;
-    private DateTime _excelUpdateTime;
+
+    private Dictionary<string, SheetData> _sheetDatas;
 
     public bool HasExcelData
     {
         get => _sheetDatas != null;
-    }
-
-    public DateTime ExcelUpdateTime
-    {
-        get => _excelUpdateTime;
     }
 
     #region Excel to File 파이프라인
@@ -48,25 +36,10 @@ public class ExcelHelper : ScriptableObject
 
     public async Task LoadExcelFile()
     {
-        Debug.Log("데이터 요청 중");
-        var www = UnityWebRequest.Get(string.Format(_googleDownloadURL, GoogleSheetID));
-        var operation = www.SendWebRequest();
-
-        while (!operation.isDone)
-            await Task.Yield();
-
-        if (www.result != UnityWebRequest.Result.Success)
-            Debug.LogError("실패: " + www.error);
-        else
-        {
-            _excelUpdateTime = DateTime.Now;
-            var stream = new MemoryStream(www.downloadHandler.data);
-            var tables = ExcelReaderFactory.CreateReader(stream).AsDataSet().Tables;
-
-            _sheetDatas = _configLoader.LoadSheetProperty(tables, ConvertSetting, GeneratePath);
-            Debug.Log("요청 수락됨");
-        }
+        await ExcelLoader.RequestExcelFile();
+        _sheetDatas = ExcelConfigLoader.LoadSheetProperty(ExcelLoader.Sheets, ConvertSetting, GeneratePath);
     }
+
     public async Task GenerateEnumScript()
     {
         Debug.Log("Enum 스크립트 생성 시작");
@@ -335,7 +308,7 @@ public class ExcelHelper : ScriptableObject
 
     public static bool HasIgnoreSymbol(string text)
     {
-        return text.Length == 0 || text[0] == IgnoreSymbol;
+        return text.Length == 0 || text[0] == GoogleSheetsLoader.IgnoreSymbol;
     }
     #endregion
 
