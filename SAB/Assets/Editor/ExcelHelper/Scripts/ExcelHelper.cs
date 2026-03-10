@@ -31,7 +31,6 @@ public class ExcelHelper : ScriptableObject
         await GenerateEnumScript();
         await GenerateClass();
         await GenerateDBJson();
-        ConvertLocalization();
     }
 
     public async Task LoadExcelFile()
@@ -243,53 +242,6 @@ public class ExcelHelper : ScriptableObject
         }
 
         return arr;
-    }
-
-    // 현지화 텍스트 불러오기
-    public void ConvertLocalization()
-    {
-        foreach (var sheet in _sheetDatas.Values)
-        {
-            if (sheet.Type != SheetType.Localization)
-                continue;
-
-            var dic = ConvertLocalizationSheetToJson(sheet.Table);
-            foreach (var item in dic)
-            {
-                GenerateFile(sheet.GeneratePath, $"{item.Key}.json", item.Value, true);
-            }
-        }
-    }
-
-    private Dictionary<string, string> ConvertLocalizationSheetToJson(DataTable table)
-    {
-        var texts = new Dictionary<string, string>();
-
-        for (int x = 0; x < table.Columns.Count; x++)
-        {
-            if (HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == ConvertSetting.LocalizationKeyColumn)
-                continue;
-
-            var dic = new Dictionary<string, string>();
-
-            for (int y = ConvertSetting.LocalizationFirstDataRow; y < table.Rows.Count; y++)
-            {
-                var key = table.Rows[y][ConvertSetting.LocalizationKeyColumn].ToString();
-                if (key == string.Empty)
-                    break;
-
-                if (dic.ContainsKey(key) == true)
-                    throw new Exception($"{key}중복 키 발견");
-
-                dic.Add(key, table.Rows[y][x].ToString());
-            }
-
-            var json = JsonConvert.SerializeObject(dic, Formatting.Indented);
-            var languageName = table.Rows[ConvertSetting.LocalizationNameRow][x].ToString();
-            texts.Add(languageName, json);
-        }
-
-        return texts;
     }
     #endregion
 

@@ -14,10 +14,6 @@ public class ConvertSetting
     [SerializeField] private int _enumValueColumn = 3;
     [SerializeField] private int _enumCommentsColumn = 4;
 
-    [SerializeField] private int _localizationNameRow = 1;
-    [SerializeField] private int _localizationKeyColumn = 1;
-    [SerializeField] private int _localizationFirstDataRow = 2;
-
     [SerializeField] private int _sheetPropertyNameColumn = 1;
     [SerializeField] private int _sheetPropertyTypeColumn = 2;
     [SerializeField] private int _sheetPropertyFirstDataRow = 3;
@@ -33,10 +29,6 @@ public class ConvertSetting
     public int EnumKeyColumn => GetBaseValue(_enumKeyColumn);
     public int EnumValueColumn => GetBaseValue(_enumValueColumn);
     public int EnumCommentsColumn => GetBaseValue(_enumCommentsColumn);
-
-    public int LocalizationNameRow => GetBaseValue(_localizationNameRow);
-    public int LocalizationKeyColumn => GetBaseValue(_localizationKeyColumn);
-    public int LocalizationFirstDataRow => GetBaseValue(_localizationFirstDataRow);
 
     public int SheetPropertyNameColumn => GetBaseValue(_sheetPropertyNameColumn);
     public int SheetPropertyTypeColumn => GetBaseValue(_sheetPropertyTypeColumn);

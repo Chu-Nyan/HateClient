@@ -11,9 +11,7 @@ public class ExcelHelperEditor : Editor
 
     private void OnEnable()
     {
-        var helper = (ExcelHelper)target;
         _convertSetting = serializedObject.FindProperty("ConvertSetting");
-        _pathSetting = serializedObject.FindProperty("GeneratePath");
         _pathSetting = serializedObject.FindProperty("GeneratePath");
     }
 
@@ -25,8 +23,6 @@ public class ExcelHelperEditor : Editor
         DrawEnumSettingUI(helper);
         GUILayout.Space(10);
         DrawGenerateClassTextUI(helper);
-        GUILayout.Space(10);
-        DrawGenerateLocalization(helper);
         GUILayout.Space(10);
         if (GUILayout.Button("All-In-One 생성"))
             helper.SetupAllInOneAsync();
@@ -80,17 +76,6 @@ public class ExcelHelperEditor : Editor
         }
     }
 
-    private void DrawGenerateLocalization(ExcelHelper helper)
-    {
-        EditorGUILayout.LabelField("텍스트 생성 설정", EditorStyles.boldLabel);
-        GUILayout.Space(5);
-        if (GUILayout.Button("텍스트 생성"))
-        {
-            helper.ConvertLocalization();
-            AssetDatabase.Refresh();
-        }
-    }
-
     private void DrawConvertOption()
     {
         EditorGUILayout.Space();
@@ -114,3 +99,4 @@ public class ExcelHelperEditor : Editor
         await helper.GenerateDBJson();
     }
 }
+
