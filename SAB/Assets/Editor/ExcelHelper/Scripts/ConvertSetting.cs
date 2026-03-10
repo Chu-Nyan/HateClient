@@ -4,6 +4,8 @@ using UnityEngine;
 [Serializable]
 public class ConvertSetting
 {
+    public string ConfigSheetName = "@SheetConfig";
+
     [SerializeField] private int _dbNameRow = 1;
     [SerializeField] private int _dbTypeRow = 2;
     [SerializeField] private int _dbDataStartedRow = 4;
@@ -15,7 +17,7 @@ public class ConvertSetting
     [SerializeField] private int _enumCommentsColumn = 4;
 
     [SerializeField] private int _sheetPropertyNameColumn = 1;
-    [SerializeField] private int _sheetPropertyTypeColumn = 2;
+    [SerializeField] private int _sheetTypeColumn = 2;
     [SerializeField] private int _sheetPropertyFirstDataRow = 3;
 
     public bool IsZeroBase = true;
@@ -31,7 +33,7 @@ public class ConvertSetting
     public int EnumCommentsColumn => GetBaseValue(_enumCommentsColumn);
 
     public int SheetPropertyNameColumn => GetBaseValue(_sheetPropertyNameColumn);
-    public int SheetPropertyTypeColumn => GetBaseValue(_sheetPropertyTypeColumn);
+    public int SheetTypeColumn => GetBaseValue(_sheetTypeColumn);
     public int SheetPropertyFirstDataRow => GetBaseValue(_sheetPropertyFirstDataRow);
 
     private int GetBaseValue(int value)

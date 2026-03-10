@@ -4,10 +4,8 @@ using UnityEngine;
 [CustomEditor(typeof(ExcelHelper))]
 public class ExcelHelperEditor : Editor
 {
-    private bool _isDataClassSettingFoldedOut = false;
     private SerializedProperty _convertSetting;
     private SerializedProperty _pathSetting;
-    private string _foldoutName = "설정";
 
     private void OnEnable()
     {
@@ -49,14 +47,6 @@ public class ExcelHelperEditor : Editor
     private void DrawGenerateClassTextUI(ExcelHelper helper)
     {
         EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
-
-        _isDataClassSettingFoldedOut = EditorGUILayout.Foldout(_isDataClassSettingFoldedOut, _foldoutName);
-        if (_isDataClassSettingFoldedOut == true)
-        {
-            helper.IsClassAvoidDuplication = EditorGUILayout.Toggle("클래스 중복 방지", helper.IsClassAvoidDuplication);
-        }
-
-        GUILayout.Space(5);
         DrawGenerateClassFuntion(helper);
 
         void DrawGenerateClassFuntion(ExcelHelper helper)
@@ -96,7 +86,7 @@ public class ExcelHelperEditor : Editor
 
     private async void GenerateDBJson(ExcelHelper helper)
     {
-        await helper.GenerateDBJson();
+        await helper.ExportDataToJson();
     }
 }
 

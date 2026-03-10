@@ -11,7 +11,6 @@ using UnityEngine.Networking;
 public class GoogleSheetsLoader
 {
     private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
-    public const char IgnoreSymbol = '#';
 
     [SerializeField]
     private string _googleSheetID;

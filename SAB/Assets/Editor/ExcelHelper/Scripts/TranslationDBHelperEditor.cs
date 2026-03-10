@@ -6,6 +6,7 @@ public class TranslationDBHelperEditor : Editor
 {
     private SerializedProperty _config;
     private TranslationDBHelper _helper;
+
     private void OnEnable()
     {
         _helper = (TranslationDBHelper)target;

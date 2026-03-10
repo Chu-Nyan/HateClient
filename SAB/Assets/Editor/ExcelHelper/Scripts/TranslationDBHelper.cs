@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,7 +19,7 @@ public class TranslationDBHelper : ScriptableObject
             var dic = ConvertSheetToJson(ExcelLoader.Sheets[i]);
             foreach (var item in dic)
             {
-                GenerateFile(path, $"{item.Key}.json", item.Value);
+                ExcelUtility.GenerateFile(path, $"{item.Key}.json", item.Value);
             }
         }
 
@@ -34,7 +33,7 @@ public class TranslationDBHelper : ScriptableObject
 
         for (int x = 0; x < table.Columns.Count; x++)
         {
-            if (ExcelHelper.HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == Config.KeyColumn)
+            if (ExcelUtility.HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == Config.KeyColumn)
                 continue;
 
             dic.Clear();
@@ -45,7 +44,7 @@ public class TranslationDBHelper : ScriptableObject
                 if (key == string.Empty)
                     throw new Exception($"{y}행의 키값이 비어있음");
                 if (dic.ContainsKey(key) == true)
-                    throw new Exception($"{key}중복 키 발견");
+                    throw new Exception($"{key} : 중복 키 발견");
 
                 dic.Add(key, table.Rows[y][x].ToString());
             }
@@ -56,14 +55,5 @@ public class TranslationDBHelper : ScriptableObject
         }
 
         return texts;
-    }
-
-    private void GenerateFile(string path, string fileName, string text)
-    {
-        if (Directory.Exists(path) == false)
-            Directory.CreateDirectory(path);
-
-        var pathAndFile = Path.Combine(path, fileName);
-        File.WriteAllText(pathAndFile, text);
     }
 }
