@@ -35,7 +35,7 @@ public class ExcelHelper : ScriptableObject
         _sheetsByType = ParseSheet(ExcelLoader.Sheets, ConvertSetting);
     }
 
-    public Dictionary<SheetType, List<SheetData>> ParseSheet(DataTableCollection table, DBConvertConfig setting)
+    private Dictionary<SheetType, List<SheetData>> ParseSheet(DataTableCollection table, DBConvertConfig setting)
     {
         var sheetDatas = new Dictionary<SheetType, List<SheetData>>();
         var config = table[ConvertSetting.ConfigSheetName];
@@ -70,7 +70,7 @@ public class ExcelHelper : ScriptableObject
         return sheetDatas;
     }
 
-    public async Task GenerateEnumScript()
+    private async Task GenerateEnumScript()
     {
         var sb = new StringBuilder();
         foreach (var sheet in _sheetsByType[SheetType.Enum])
@@ -93,7 +93,7 @@ public class ExcelHelper : ScriptableObject
         Debug.Log("Enum 스크립트 생성 완료");
     }
 
-    public async Task GenerateClass()
+    private async Task GenerateClass()
     {
         if (HasExcelData == false)
             throw new Exception("엑셀 데이터 없음");
@@ -140,7 +140,7 @@ public class ExcelHelper : ScriptableObject
         return namespaceText.Append(sb).ToString();
     }
 
-    public async Task ExportDataToJson()
+    private async Task ExportDataToJson()
     {
         if (HasExcelData == false)
             throw new Exception("DB 없음");

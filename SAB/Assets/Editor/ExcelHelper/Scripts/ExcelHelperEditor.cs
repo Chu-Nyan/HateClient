@@ -4,82 +4,30 @@ using UnityEngine;
 [CustomEditor(typeof(ExcelHelper))]
 public class ExcelHelperEditor : Editor
 {
+    private ExcelHelper _helper;
     private SerializedProperty _convertSetting;
 
     private void OnEnable()
     {
         _convertSetting = serializedObject.FindProperty("ConvertSetting");
+        _helper = (ExcelHelper)target;
     }
 
     public override void OnInspectorGUI()
     {
-        var helper = (ExcelHelper)target;
-        helper.ExcelLoader.DrawSheetSettingUI();
+        _helper.ExcelLoader.DrawSheetSettingUI();
+
         GUILayout.Space(10);
-        DrawEnumSettingUI(helper);
+        if (GUILayout.Button("Export Data From DB"))
+            _helper.SetupAllInOneAsync();
+
         GUILayout.Space(10);
-        DrawGenerateClassTextUI(helper);
-        GUILayout.Space(10);
-        if (GUILayout.Button("All-In-One 생성"))
-            helper.SetupAllInOneAsync();
-        GUILayout.Space(10);
-        DrawConvertOption();
+        EditorGUILayout.PropertyField(_convertSetting, new GUIContent("Config"), true);
 
         if (GUI.changed)
-            EditorUtility.SetDirty(helper);
+            EditorUtility.SetDirty(_helper);
 
         serializedObject.ApplyModifiedProperties();
-    }
-
-    private void DrawEnumSettingUI(ExcelHelper helper)
-    {
-        if (GUILayout.Button("Enum 스크립트 생성"))
-        {
-            GenerateEnumScript(helper);
-            AssetDatabase.Refresh();
-        }
-    }
-
-    private void DrawGenerateClassTextUI(ExcelHelper helper)
-    {
-        EditorGUILayout.LabelField("파일 생성 설정", EditorStyles.boldLabel);
-        DrawGenerateClassFuntion(helper);
-
-        void DrawGenerateClassFuntion(ExcelHelper helper)
-        {
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("데이터 스크립트 생성"))
-            {
-                GenerateClass(helper);
-                AssetDatabase.Refresh();
-            }
-            if (GUILayout.Button("DB를 Json으로 생성"))
-            {
-                GenerateDBJson(helper);
-                AssetDatabase.Refresh();
-            }
-            EditorGUILayout.EndHorizontal();
-        }
-    }
-
-    private void DrawConvertOption()
-    {
-        EditorGUILayout.PropertyField(_convertSetting, new GUIContent("Config"), true);
-    }
-
-    private async void GenerateEnumScript(ExcelHelper helper)
-    {
-        await helper.GenerateEnumScript();
-    }
-
-    private async void GenerateClass(ExcelHelper helper)
-    {
-        await helper.GenerateClass();
-    }
-
-    private async void GenerateDBJson(ExcelHelper helper)
-    {
-        await helper.ExportDataToJson();
     }
 }
 
