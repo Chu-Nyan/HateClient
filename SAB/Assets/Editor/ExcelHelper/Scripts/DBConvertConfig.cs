@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 [Serializable]
 public class DBConvertConfig
 {
-    private const int _zeroBase = -1;
+    public readonly Dictionary<string, string> NameSpaceByType = new()
+    {
+        { "ShapeType", "Chu.Collision" }
+    }; 
 
     [Header("Data Sheet Config")]
     [SerializeField] private int _dbNameRow = 1;
@@ -25,6 +29,8 @@ public class DBConvertConfig
     [Space, Header("Export Path")]
     [SerializeField] private DefaultAsset _dtoPath;
     [SerializeField] private DefaultAsset _enumPath;
+
+    private const int _zeroBase = -1;
 
     public int DBNameRow => _dbNameRow + _zeroBase;
     public int DBTypeRow => _dbTypeRow + _zeroBase;

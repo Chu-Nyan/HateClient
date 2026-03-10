@@ -101,7 +101,7 @@ public class ExcelHelper : ScriptableObject
         var log = "스크립트 생성 결과\n";
         foreach (SheetData sheet in _sheetsByType[SheetType.Data])
         {
-            var text = GetDataScriptText(sheet);
+            var text = GetDataScriptText(sheet, ConvertSetting.NameSpaceByType);
             ExcelUtility.GenerateFile(sheet.GeneratePath, $"{sheet.GetNameFromOptions()}.cs", text);
             log += $"- {sheet.Table.TableName} 생성\n";
 
@@ -111,33 +111,33 @@ public class ExcelHelper : ScriptableObject
         Debug.Log(log);
     }
 
-    private string GetDataScriptText(SheetData sheet)
+    private string GetDataScriptText(SheetData sheet, Dictionary<string, string> namespaceByType)
     {
-        // 주석용 열 제거
-        var table = sheet.Table;
-        var exceptionColumns = new HashSet<int>();
-        var rows = table.Rows;
-        for (int i = 0; i < table.Columns.Count; i++)
+        var usedNamespace = new HashSet<string>();
+        var nameRow = sheet.Table.Rows[ConvertSetting.DBNameRow];
+        var typeRow = sheet.Table.Rows[ConvertSetting.DBTypeRow];
+        var sb = new StringBuilder();
+        var namespaceText = new StringBuilder();
+
+        sb.AppendLine($"public class {sheet.GetNameFromOptions()}");
+        sb.AppendLine("{");
+        for (int i = 0; i < sheet.Table.Columns.Count; i++)
         {
-            if (ExcelUtility.HasIgnoreSymbol(rows[ConvertSetting.DBNameRow][i].ToString()) == false)
+            if (ExcelUtility.HasIgnoreSymbol(nameRow[i].ToString()) == true)
                 continue;
 
-            exceptionColumns.Add(i);
+            if (namespaceByType.TryGetValue(typeRow[i].ToString(), out string ns) == true)
+                usedNamespace.Add(ns);
+            sb.AppendLine($"\t public {typeRow[i]} {nameRow[i]};");
         }
+        sb.AppendLine("}");
 
-        // 스크립트 작성
-        var code = $"public class {sheet.GetNameFromOptions()}\n";
-        code += $"{{\n";
-        for (int i = 0; i < table.Columns.Count; i++)
-        {
-            if (exceptionColumns.Contains(i) == true)
-                continue;
+        foreach (var ns in usedNamespace.OrderBy(n => n))
+            namespaceText.AppendLine($"using {ns};");
+        if (usedNamespace.Count > 0)
+            namespaceText.AppendLine();
 
-            code += $"\t public {rows[ConvertSetting.DBTypeRow][i]} {rows[ConvertSetting.DBNameRow][i]};\n";
-        }
-        code += $"}}\n";
-
-        return code;
+        return namespaceText.Append(sb).ToString();
     }
 
     public async Task ExportDataToJson()
