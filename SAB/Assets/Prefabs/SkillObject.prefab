@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1530088206377778756}
   - component: {fileID: 4299288183287177754}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: SkillObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4558312010506483518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64a4ae33ae0044438163210f3218534, type: 3}
+  m_Script: {fileID: 11500000, guid: e5f44620d569d8e49990727e38efc57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &4299288183287177754

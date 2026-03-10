@@ -34,7 +34,7 @@ public class GameSceneTrigger : MonoBehaviour
     {
         new InputManager();
         new AIGenerator();
-        new ProjectileGenerator();
+        new SkillObjectFactory();
         new SkillGenerator();
         new ItemFactory();
     }

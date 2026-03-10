@@ -8,7 +8,7 @@ namespace SAB.Unit.Combat
     /// <summary>
     /// 스킬의 이펙트, 환경 오브젝트 충돌 처리
     /// </summary>
-    public class SkillProjectile : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
+    public class SkillObject : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
     {
         private const NyanLayer _layer = NyanLayer.Projectile;
         private const float _maxLifeSpan = 5f;
