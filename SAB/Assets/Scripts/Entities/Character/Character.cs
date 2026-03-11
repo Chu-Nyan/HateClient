@@ -103,7 +103,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void SetupStats(BaseStats baseStats)
     {
         _stats.SetBaseData(baseStats);
-        var skill = SkillGenerator.Instance.GetSkill(SkillID.Unarmed);
+        var skill = SkillGenerator.Instance.GetSkill(1);
         _combatSystem.AddSkill(skill);
     }
 

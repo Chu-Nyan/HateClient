@@ -1,6 +1,6 @@
 public struct Skill_Base_DTO
 {
-	 public SkillID ID;
+	 public int ID;
 	 public TextID StringID;
 	 public float CastingTime;
 	 public float Cooldown;

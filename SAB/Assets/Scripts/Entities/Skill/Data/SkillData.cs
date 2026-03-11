@@ -7,7 +7,7 @@ namespace SAB.Unit.Combat
     /// </summary>
     public class SkillData
     {
-        public readonly SkillID ID;
+        public readonly int ID;
         public readonly TextID StringID;
         public readonly float CastingTime;
         public readonly float Cooldown;

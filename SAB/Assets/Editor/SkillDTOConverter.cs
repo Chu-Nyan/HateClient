@@ -34,7 +34,7 @@ public class SkillDTOConverter : ScriptableObject
     [ContextMenu("GOGO")]
     public void ConvertCharacterDTO()
     {
-        var baseById = JsonToDictionary<SkillID, Skill_Base_DTO>(_skillBase.text, x => x.ID);
+        var baseById = JsonToDictionary<int, Skill_Base_DTO>(_skillBase.text, x => x.ID);
         var collsionLogicByID = ConvertJsonToListByID<Skill_CollisionLogic_DTO>(_collisionLogic.text, "ID");
         var hitboxesById = ConvertJsonToListByID<Skill_HitBox_DTO>(_hitBox.text, "ID");
         var flowstepDTO = ConvertJsonToListByID<Skill_FlowStep_DTO>(_skillstep.text, "ID");

@@ -36,3 +36,15 @@ public enum CustomizingPart
 {
     Eye, Eyebrow, Hair, Mouth
 }
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum SkillStepType
+{
+    Instant = 1,
+    DoT = 2,
+    AoE = 3,
+    Timer = 4,
+}
+
+
+

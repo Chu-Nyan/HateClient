@@ -8,7 +8,7 @@ namespace SAB.Unit.Combat
     public class SkillGenerator : Singleton<SkillGenerator>
     {
         private readonly IDNumbering _numbering;
-        private readonly Dictionary<SkillID, SkillData> _skillDataByID;
+        private readonly Dictionary<int, SkillData> _skillDataByID;
 
         private Dictionary<SkillStepType, Func<ISkillStep>> _generateFuncByProcessType;
 
@@ -31,7 +31,7 @@ namespace SAB.Unit.Combat
             };
         }
 
-        public Skill GetSkill(SkillID id)
+        public Skill GetSkill(int id)
         {
             var skill = new Skill(_numbering.GetID());
             skill.Setup(_skillDataByID[id]);

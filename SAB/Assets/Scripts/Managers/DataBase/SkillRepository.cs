@@ -18,7 +18,7 @@ namespace SAB.DataManger
         public const string HitBoxes = "HitBoxData";
         public const string CollisionLogic = "CollisionLogic";
 
-        public readonly Dictionary<SkillID, SkillData> SkillByID;
+        public readonly Dictionary<int, SkillData> SkillByID;
 
         public readonly Dictionary<int, IStepData[]> FlowStepByID;
         public readonly Dictionary<int, ShapeParam[]> HitBoxByID;
@@ -40,16 +40,16 @@ namespace SAB.DataManger
             SkillByID = DeserializeSkillData();
         }
 
-        private Dictionary<SkillID, SkillData> DeserializeSkillData()
+        private Dictionary<int, SkillData> DeserializeSkillData()
         {
-            var dic = new Dictionary<SkillID, SkillData>();
-            var dto = AssetManager.DeserializeJsonSync<Dictionary<SkillID, Skill_Base_DTO>>(SkillDataPath);
+            var dic = new Dictionary<int, SkillData>();
+            var dto = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_Base_DTO>>(SkillDataPath);
 
             foreach (var item in dto)
             {
                 // TODO : 히트박스 개편시 변경해야함
                 var dtoData = dto[item.Key];
-                dic[item.Key] = new SkillData(dtoData, HitBoxByID[(int)dtoData.ID - 99999], FlowStepByID[dtoData.FlowStepID]);
+                dic[item.Key] = new SkillData(dtoData, HitBoxByID[dtoData.ID], FlowStepByID[dtoData.FlowStepID]);
             }
 
             return dic;

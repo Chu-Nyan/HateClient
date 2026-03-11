@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac3bcea95e82c34dac9c6c73337edc0, type: 3}
   m_Name: SkillDTOConverter
   m_EditorClassIdentifier: 
-  _skillBase: {fileID: 4900000, guid: c9f4e5c5dac34d4448df2126111ce673, type: 3}
-  _skillstep: {fileID: 4900000, guid: 2a7fd2ce367d1e84e87c90248460c617, type: 3}
-  _instance: {fileID: 4900000, guid: dba1a815c4593d64ab370b83e333cecc, type: 3}
-  _dot: {fileID: 4900000, guid: 0d9fb49d2e58b10428964e92146af243, type: 3}
-  _aoe: {fileID: 4900000, guid: d7f037448889f06409855533553c100c, type: 3}
-  _time: {fileID: 4900000, guid: 8047203a7c287954d8f7dd0f8a7941bc, type: 3}
-  _collisionLogic: {fileID: 4900000, guid: 7a1522f21dc12a6439d7ddcfda1f0b81, type: 3}
-  _hitBox: {fileID: 4900000, guid: 346a5e64681a5c74e8d4d1024e51980c, type: 3}
+  _skillBase: {fileID: 4900000, guid: 6c882d7766587c54c9a32534a69a9aef, type: 3}
+  _skillstep: {fileID: 4900000, guid: e16f0294abc71b240a0229757be63821, type: 3}
+  _instance: {fileID: 4900000, guid: 8c73126d24ffd7648a100db561468de2, type: 3}
+  _dot: {fileID: 4900000, guid: 89aa7241a7b519d4686885c555c182cd, type: 3}
+  _aoe: {fileID: 4900000, guid: 8bca99a4aee239541a1852e03342aa37, type: 3}
+  _time: {fileID: 4900000, guid: 8df4523e1aceaa647a12ad3cce2ac72c, type: 3}
+  _collisionLogic: {fileID: 4900000, guid: daa09d99a203e334ea01c266762a8a1c, type: 3}
+  _hitBox: {fileID: 4900000, guid: 5c0bbe4cb2486a0478337d69c4d73a65, type: 3}
   _jsonGeneratePath: Assets/DB

@@ -22,20 +22,3 @@ public enum ItemType
 	IronSword = 20000,
 	SteelShield = 20001,
 }
-
-public enum SkillStepType
-{
-	Instant = 1,
-	DoT = 2,
-	AoE = 3,
-	Timer = 4,
-}
-
-public enum SkillID
-{
-	Unarmed = 100000,
-	BasicRanged = 100001,
-	Firebolt = 100002,
-	FrogPoison = 100003,
-	StickyBomb = 100004,
-}

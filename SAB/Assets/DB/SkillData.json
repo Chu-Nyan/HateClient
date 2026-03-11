@@ -1,6 +1,6 @@
 {
-  "Unarmed": {
-    "ID": 100000,
+  "1": {
+    "ID": 1,
     "StringID": 300000,
     "CastingTime": 0.0,
     "Cooldown": 1.0,
@@ -10,8 +10,8 @@
     "FlowStepID": 1,
     "MaxHitCount": 10
   },
-  "BasicRanged": {
-    "ID": 100001,
+  "2": {
+    "ID": 2,
     "StringID": 300001,
     "CastingTime": 0.0,
     "Cooldown": 0.4,
@@ -21,8 +21,8 @@
     "FlowStepID": 2,
     "MaxHitCount": 1
   },
-  "Firebolt": {
-    "ID": 100002,
+  "3": {
+    "ID": 3,
     "StringID": 300002,
     "CastingTime": 1.0,
     "Cooldown": 4.0,
@@ -32,8 +32,8 @@
     "FlowStepID": 3,
     "MaxHitCount": 1
   },
-  "FrogPoison": {
-    "ID": 100003,
+  "4": {
+    "ID": 4,
     "StringID": 300003,
     "CastingTime": 1.0,
     "Cooldown": 5.0,
@@ -43,8 +43,8 @@
     "FlowStepID": 4,
     "MaxHitCount": 1
   },
-  "StickyBomb": {
-    "ID": 100004,
+  "5": {
+    "ID": 5,
     "StringID": 300004,
     "CastingTime": 1.0,
     "Cooldown": 6.0,
