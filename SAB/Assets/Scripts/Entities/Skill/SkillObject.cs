@@ -1,6 +1,5 @@
 ﻿using Chu;
 using Chu.Collision;
-using Chu.Collision.Layer;
 using UnityEngine;
 
 namespace SAB.Unit.Combat
@@ -32,14 +31,9 @@ namespace SAB.Unit.Combat
 
         public void Awake()
         {
-            var mask = new NyanLayerMask(NyanLayer.Unit);
-            var shape = ShapeFactory.Instance.Generate<CircleShape>();
-            shape.Setup(new CircleRangeData(Vector2.zero, 1));
-
             _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                .GenerateCollider(this, shape, $"스킬 투사체")
-                .SetLayer(_layer, mask)
-                .GetCollider();
+                .GenerateCollider(this, $"스킬 투사체")
+                .GetCollider(false);
         }
 
         private void Update()
@@ -71,9 +65,10 @@ namespace SAB.Unit.Combat
 
         public void Setup(int instigator, AttackContext context)
         {
-            _nyanCollider.SetInstigatorID(instigator);
             var shape = ShapeParam.GetShape(context.SkillData.HitBoxes);
+            _nyanCollider.SetInstigatorID(instigator);
             _nyanCollider.SetShape(shape);
+            _nyanCollider.SetLayer(_layer, context.Mask);
             _context = context;
         }
 

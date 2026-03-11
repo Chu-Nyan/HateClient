@@ -1,4 +1,5 @@
 ﻿using Chu.Collision;
+using Chu.Collision.Layer;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ namespace SAB.Unit.Combat
 
         private void Attack(float damage, int index, Vector3 targetPoint)
         {
-            var context = new AttackContext(SkillList[index].Data, damage);
+            var context = new AttackContext(SkillList[index].Data, new NyanLayerMask(NyanLayer.Unit), damage);
             var dir = targetPoint - _origin.position;
             dir.y = 0f;
             dir.Normalize();

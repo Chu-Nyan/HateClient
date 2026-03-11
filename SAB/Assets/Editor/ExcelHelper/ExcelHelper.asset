@@ -12,22 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8fa4bae8b5a8442a42a65f05260aa0, type: 3}
   m_Name: ExcelHelper
   m_EditorClassIdentifier: 
-  IsClassAvoidDuplication: 1
   ExcelLoader:
     _googleSheetID: 1hzh6sZHyNAznkKQVJcs0T0IyYANyY6ywekRyjp2LYJU
   ConvertSetting:
     _dbNameRow: 1
     _dbTypeRow: 2
-    _dbDataStartedRow: 4
+    _dbDataStartRow: 4
     _enumDataStartedRow: 2
     _enumTypeColumn: 1
     _enumKeyColumn: 2
     _enumValueColumn: 3
     _enumCommentsColumn: 4
-    _sheetPropertyNameColumn: 1
-    _sheetPropertyTypeColumn: 2
-    _sheetPropertyFirstDataRow: 3
-    IsZeroBase: 1
-  GeneratePath:
-    DataDTO: {fileID: 102900000, guid: e2a770b85b7766743a2f650480960c8c, type: 3}
-    Enum: {fileID: 102900000, guid: e930cd6b2446e914f8cbb0512e55eacd, type: 3}
+    _configSheetName: '@SheetConfig'
+    _sheetHeader: 1
+    _sheetTypeColumn: 2
+    _sheetDataStartRow: 3
+    _dtoPath: {fileID: 102900000, guid: e2a770b85b7766743a2f650480960c8c, type: 3}
+    _enumPath: {fileID: 102900000, guid: e930cd6b2446e914f8cbb0512e55eacd, type: 3}

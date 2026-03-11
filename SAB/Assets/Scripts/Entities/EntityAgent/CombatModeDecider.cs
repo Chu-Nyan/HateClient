@@ -42,10 +42,11 @@ namespace SAB.EntityAgent
                 shape.Setup(new CircleRangeData(Vector2.zero, 1));
                 var mask = new NyanLayerMask(NyanLayer.Unit);
                 _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                    .GenerateCollider(this, shape, "전투 판정")
+                    .GenerateCollider(this, "전투 판정")
+                    .SetShape(shape)
                     .SetLayer(NyanLayer.UnitSensor, mask)
                     .SetInstigatorID(instigatorID)
-                    .GetCollider();
+                    .GetCollider(true);
 
                 _collider.SetActive(false);
             }

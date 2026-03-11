@@ -1,6 +1,7 @@
 ﻿using Chu.Collision.Layer;
 using Chu.Utility;
 using System;
+using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -29,18 +30,25 @@ namespace Chu.Collision
         }
 
         #region 생성 함수
-        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, IShape shape, string comment = default)
+        public NyanColliderGenerator GenerateCollider(INyanCollisionProvider provider, string comment = default)
         {
             if (_initialized == false)
                 throw new Exception("초기화 되지 않음");
 
-            _newCollider = new NyanCollider(provider, shape, _iDNumbering.GetID(), comment);
+            _newCollider = new NyanCollider(provider, _iDNumbering.GetID(), comment);
+            return this;
+        }
+
+        public NyanColliderGenerator SetShape(IShape shape)
+        {
+            _newCollider.SetShape(shape);
+
             return this;
         }
 
         public NyanColliderGenerator SetLayer(NyanLayer layer, NyanLayerMask mask)
         {
-            _newCollider.InitLayer(layer, mask);
+            _newCollider.SetLayer(layer, mask);
             return this;
         }
 
@@ -50,12 +58,13 @@ namespace Chu.Collision
             return this;
         }
 
-        public NyanCollider GetCollider()
+        public NyanCollider GetCollider(bool isActivate)
         {
 #if UNITY_EDITOR
             VerifyCollider(_newCollider);
 #endif
             _system.RegisterEntity(_newCollider);
+            _newCollider.SetActive(isActivate);
             return _newCollider;
         }
         #endregion
@@ -65,7 +74,7 @@ namespace Chu.Collision
         {
             if (collider.IsValid(out var log) == false)
             {
-                throw new Exception(log);
+                Debug.LogError(log);
             }
         }
 #endif

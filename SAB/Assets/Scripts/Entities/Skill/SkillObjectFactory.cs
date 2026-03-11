@@ -20,7 +20,6 @@ namespace SAB.Unit.Combat
             return this;
         }
 
-
         public SkillObject Get()
         {
             return _new;

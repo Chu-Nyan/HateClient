@@ -29,10 +29,11 @@ public class CharacterBody : INyanCollisionProvider
         var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
 
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-            .GenerateCollider(this, body, "캐릭터 바디")
+            .GenerateCollider(this, "캐릭터 바디")
+            .SetShape(body)
             .SetLayer(_layer, mask)
             .SetInstigatorID(instigatorID)
-            .GetCollider();
+            .GetCollider(true);
 
         _collider.SetActive(true);
     }

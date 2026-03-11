@@ -2,7 +2,6 @@
 using Chu.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -20,7 +19,6 @@ namespace Chu.Collision
 
         private NyanLayer _layer;
         private NyanLayerMask _mask;
-        private bool _isLayerInitialized;
 
         private bool _isActive;
         private string _comment;
@@ -37,7 +35,6 @@ namespace Chu.Collision
         {
             get => _instigatorID;
         }
-
 
         public HashSet<int> InsertedNodesID
         {
@@ -79,21 +76,19 @@ namespace Chu.Collision
             get => _comment;
         }
 
-        public NyanCollider(INyanCollisionProvider provider, IShape shape, int id, string comment = null)
+        public NyanCollider(INyanCollisionProvider provider, int id, string comment = null)
         {
             InstanceID = id;
-            _shape = shape;
             _provider = provider;
             _insertedNodes = new(4);
             _contactIDs = new();
             _comment = comment;
         }
 
-        public void InitLayer(NyanLayer layer, NyanLayerMask mask)
+        public void SetLayer(NyanLayer layer, NyanLayerMask mask)
         {
             _layer = layer;
             _mask = mask;
-            _isLayerInitialized = true;
         }
 
         public void SetInstigatorID(int id)
@@ -103,19 +98,21 @@ namespace Chu.Collision
 
         public void SetShape(IShape shape)
         {
-            ShapeFactory.Instance.Release(_shape);
+            if (_shape != null)
+                ShapeFactory.Instance.Release(_shape);
+            if (shape == null)
+                SetActive(false);
+
             _shape = shape;
         }
 
         public void SetActive(bool value)
         {
-#if UNITY_EDITOR
-            if (value && _shape == null)
-                throw new Exception("Shape is null.");
-#else
-            if (_shape == null)
+            if (_isActive == value)
                 return;
-#endif
+            if (_shape == null)
+                value = false;
+
             _isActive = value;
             if (_isActive == true)
                 _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
@@ -197,12 +194,6 @@ namespace Chu.Collision
 
             if (_provider == null)
                 sb.AppendLine("Provider is null");
-
-            if (_shape == null)
-                sb.AppendLine("Shape is null");
-
-            if (!_isLayerInitialized)
-                sb.AppendLine("Layer is not initialized");
 
             log = sb.ToString();
             return sb.Length == 0;
