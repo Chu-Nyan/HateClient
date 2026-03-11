@@ -1,4 +1,4 @@
-public class Item_Base_DTO
+public struct Item_Base_DTO
 {
 	 public int ID;
 	 public TextID TextID;

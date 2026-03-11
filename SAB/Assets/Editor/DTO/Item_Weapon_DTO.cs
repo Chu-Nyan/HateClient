@@ -1,4 +1,4 @@
-public class Item_Weapon_DTO
+public struct Item_Weapon_DTO
 {
 	 public int ID;
 	 public float Damage;

@@ -1,4 +1,4 @@
-public class Skill_Base_DTO
+public struct Skill_Base_DTO
 {
 	 public SkillID ID;
 	 public TextID StringID;

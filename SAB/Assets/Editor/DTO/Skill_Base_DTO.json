@@ -6,7 +6,7 @@
     "Cooldown": 1.0,
     "Cost": 0.0,
     "MotionFileName": "Unarmed_Attack",
-    "HitBoxID": 0,
+    "ObjectLogicID": 1,
     "MaxHitCount": 10
   },
   {
@@ -16,7 +16,7 @@
     "Cooldown": 0.4,
     "Cost": 0.0,
     "MotionFileName": "Unarmed_Attack",
-    "HitBoxID": 0,
+    "ObjectLogicID": 2,
     "MaxHitCount": 1
   },
   {
@@ -26,7 +26,7 @@
     "Cooldown": 4.0,
     "Cost": 3.0,
     "MotionFileName": "Unarmed_Attack",
-    "HitBoxID": 0,
+    "ObjectLogicID": 3,
     "MaxHitCount": 1
   },
   {
@@ -36,7 +36,7 @@
     "Cooldown": 5.0,
     "Cost": 5.0,
     "MotionFileName": "Unarmed_Attack",
-    "HitBoxID": 0,
+    "ObjectLogicID": 4,
     "MaxHitCount": 1
   },
   {
@@ -46,7 +46,7 @@
     "Cooldown": 6.0,
     "Cost": 7.0,
     "MotionFileName": "Unarmed_Attack",
-    "HitBoxID": 0,
+    "ObjectLogicID": 5,
     "MaxHitCount": 1
   }
 ]

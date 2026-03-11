@@ -1,4 +1,4 @@
-public class Item_Equipment_DTO
+public struct Item_Equipment_DTO
 {
 	 public int ID;
 	 public EquipSlot Slot;

@@ -119,7 +119,7 @@ public class ExcelHelper : ScriptableObject
         var sb = new StringBuilder();
         var namespaceText = new StringBuilder();
 
-        sb.AppendLine($"public class {sheet.GetNameFromOptions()}");
+        sb.AppendLine($"public struct {sheet.GetNameFromOptions()}");
         sb.AppendLine("{");
         for (int i = 0; i < sheet.Table.Columns.Count; i++)
         {

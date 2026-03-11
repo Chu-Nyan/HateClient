@@ -1,4 +1,4 @@
-public class Character_Base_Stats_DTO
+public struct Character_Base_Stats_DTO
 {
 	 public UnitType Type;
 	 public TextID Name;

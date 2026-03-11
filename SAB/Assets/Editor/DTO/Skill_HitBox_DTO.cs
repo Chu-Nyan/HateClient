@@ -1,6 +1,6 @@
 using Chu.Collision;
 
-public class Skill_HitBox_DTO
+public struct Skill_HitBox_DTO
 {
 	 public int ID;
 	 public ShapeType ShapeType;

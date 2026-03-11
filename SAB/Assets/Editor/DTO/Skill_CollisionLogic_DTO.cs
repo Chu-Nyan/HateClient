@@ -1,4 +1,4 @@
-public class Skill_CollisionLogic_DTO
+public struct Skill_CollisionLogic_DTO
 {
 	 public int ID;
 	 public int HitboxID;
