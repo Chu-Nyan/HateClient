@@ -6,6 +6,6 @@ public class Skill_Base_DTO
 	 public float Cooldown;
 	 public float Cost;
 	 public string MotionFileName;
-	 public int HitBoxID;
+	 public int ObjectLogicID;
 	 public int MaxHitCount;
 }
