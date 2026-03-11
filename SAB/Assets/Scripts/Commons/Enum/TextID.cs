@@ -1,3 +1,4 @@
+
 public enum TextID
 {
 	UI_Title = 100000, // 타이틀

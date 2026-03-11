@@ -1,4 +1,5 @@
 ﻿using Chu.Utility;
+using SAB.DataManger;
 using System;
 using System.Collections.Generic;
 
@@ -8,20 +9,15 @@ namespace SAB.Unit.Combat
     {
         private readonly IDNumbering _numbering;
         private readonly Dictionary<SkillID, SkillData> _skillDataByID;
-        private readonly Dictionary<int, IStepData> _stepDataByID;
+
         private Dictionary<SkillStepType, Func<ISkillStep>> _generateFuncByProcessType;
 
-        public SkillGenerator() : base()
+        public SkillGenerator(DataBase db) : base()
         {
-            _skillDataByID = AssetManager.DeserializeJsonSync<Dictionary<SkillID, SkillData>>(Const.Asset_Data_SkillData);
-            _stepDataByID = new();
             _numbering = new();
+            _skillDataByID = db.SkillRepo.SkillByID;
 
             InitGenerateFunc();
-            InitStepData<InstanceStepData>(Const.Asset_Data_SkillStepInstance);
-            InitStepData<DotStepData>(Const.Asset_Data_SkillStepDoT);
-            InitStepData<AoEStepData>(Const.Asset_Data_SkillStepAoE);
-            InitStepData<TimerStepData>(Const.Asset_Data_SkillStepTimer);
         }
 
         private void InitGenerateFunc()
@@ -35,16 +31,6 @@ namespace SAB.Unit.Combat
             };
         }
 
-        private void InitStepData<T>(string path) where T : IStepData
-        {
-            Dictionary<int, T> dic = AssetManager.DeserializeJsonSync<Dictionary<int, T>>(path);
-
-            foreach (var item in dic)
-            {
-                _stepDataByID.Add(item.Key, item.Value);
-            }
-        }
-
         public Skill GetSkill(SkillID id)
         {
             var skill = new Skill(_numbering.GetID());
@@ -56,9 +42,9 @@ namespace SAB.Unit.Combat
         {
             var data = context.SkillData;
             var list = new List<ISkillStep>();
-            for (int i = 0; i < data.HitFlowStepIDs.Length; i++)
+            for (int i = 0; i < data.OnHitFlowStep.Length; i++)
             {
-                list.Add(GenerateStep(data.HitFlowStepIDs[i], context));
+                list.Add(GenerateStep(data.OnHitFlowStep[i], context));
             }
 
             var sequence = new SkillSequence();
@@ -67,11 +53,11 @@ namespace SAB.Unit.Combat
             return sequence;
         }
 
-        private ISkillStep GenerateStep(int id, AttackContext context)
+        private ISkillStep GenerateStep(IStepData data, AttackContext context)
         {
-            var type = (SkillStepType)(id / 100000);
+            var type = (SkillStepType)(data.GetID / 100000);
             ISkillStep step = _generateFuncByProcessType[type]?.Invoke();
-            step.Refresh(_stepDataByID[id], context);
+            step.Refresh(data, context);
 
             return step;
         }

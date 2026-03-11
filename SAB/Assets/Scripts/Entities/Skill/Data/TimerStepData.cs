@@ -2,12 +2,18 @@
 {
     public class TimerStepData : IStepData
     {
-        public int ID;
-        public float Duration;
+        public readonly int ID;
+        public readonly float Duration;
 
         public int GetID
         {
             get => ID;
+        }
+
+        public TimerStepData(int id, float duration)
+        {
+            ID = id;
+            Duration = duration;
         }
     }
 }

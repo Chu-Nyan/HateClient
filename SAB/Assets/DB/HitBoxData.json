@@ -1,60 +1,66 @@
 {
   "1": [
     {
-      "Type": 0,
+      "ID": 1,
+      "ShapeType": 0,
+      "Rotation": 45.0,
+      "Param1": 1.0,
+      "Param2": 0.3,
       "OffsetX": 0.0,
-      "OffsetY": 0.1,
-      "Radius": 1.0,
-      "Width": 1.0,
-      "Height": 0.3
+      "OffsetY": 0.1
     }
   ],
   "2": [
     {
-      "Type": 1,
+      "ID": 2,
+      "ShapeType": 1,
+      "Rotation": 0.0,
+      "Param1": 0.3,
+      "Param2": 0.0,
       "OffsetX": 0.0,
-      "OffsetY": 0.0,
-      "Radius": 0.3,
-      "Width": 0.3,
-      "Height": 0.0
+      "OffsetY": 0.0
     }
   ],
   "3": [
     {
-      "Type": 1,
+      "ID": 3,
+      "ShapeType": 1,
+      "Rotation": 0.0,
+      "Param1": 0.2,
+      "Param2": 0.0,
       "OffsetX": 0.0,
-      "OffsetY": 0.0,
-      "Radius": 0.2,
-      "Width": 0.2,
-      "Height": 0.0
+      "OffsetY": 0.0
     },
     {
-      "Type": 0,
+      "ID": 3,
+      "ShapeType": 0,
+      "Rotation": 0.0,
+      "Param1": 0.0,
+      "Param2": 1.0,
       "OffsetX": 0.0,
-      "OffsetY": -0.5,
-      "Radius": 0.0,
-      "Width": 0.0,
-      "Height": 1.0
+      "OffsetY": -0.5
     }
   ],
   "4": [
     {
-      "Type": 1,
+      "ID": 4,
+      "ShapeType": 1,
+      "Rotation": 0.0,
+      "Param1": 0.5,
+      "Param2": 0.0,
       "OffsetX": 0.0,
-      "OffsetY": 0.0,
-      "Radius": 0.5,
-      "Width": 0.5,
-      "Height": 0.0
+      "OffsetY": 0.0
     }
   ],
   "5": [
     {
-      "Type": 1,
+      "ID": 5,
+      "ShapeType": 1,
+      "Rotation": 0.0,
+      "Param1": 0.5,
+      "Param2": 0.0,
       "OffsetX": 0.0,
-      "OffsetY": 0.0,
-      "Radius": 0.5,
-      "Width": 0.5,
-      "Height": 0.0
+      "OffsetY": 0.0
     }
   ]
 }

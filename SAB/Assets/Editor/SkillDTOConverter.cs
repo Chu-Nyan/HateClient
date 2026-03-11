@@ -1,11 +1,12 @@
-﻿using SAB.Unit.Combat;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Chu.Collision;
 using Newtonsoft.Json;
+using SAB.Unit.Combat;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System;
-using Chu.Collision;
+using System.Reflection;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "SkillDTOConverter", menuName = "Scriptable Objects/SkillDTOConverter", order = 3)]
 public class SkillDTOConverter : ScriptableObject
@@ -23,6 +24,8 @@ public class SkillDTOConverter : ScriptableObject
     [SerializeField]
     private TextAsset _time;
     [SerializeField]
+    private TextAsset _collisionLogic;
+    [SerializeField]
     private TextAsset _hitBox;
 
     [SerializeField]
@@ -31,74 +34,48 @@ public class SkillDTOConverter : ScriptableObject
     [ContextMenu("GOGO")]
     public void ConvertCharacterDTO()
     {
-        var baseData = JsonToDictionary<SkillID, SkillData>(_skillBase.text, x => x.ID);
-        var baseDataDTO = ConvertFromJson<Skill_Base_DTO[]>(_skillBase.text);
-        var hitboxData = ConvertHitboxDataFromDTO(ConvertFromJson<Skill_HitBox_DTO[]>(_hitBox.text));
+        var baseById = JsonToDictionary<SkillID, Skill_Base_DTO>(_skillBase.text, x => x.ID);
+        var collsionLogicByID = ConvertJsonToListByID<Skill_CollisionLogic_DTO>(_collisionLogic.text, "ID");
+        var hitboxesById = ConvertJsonToListByID<Skill_HitBox_DTO>(_hitBox.text, "ID");
+        var flowstepDTO = ConvertJsonToListByID<Skill_FlowStep_DTO>(_skillstep.text, "ID");
+        var instanceDTO = JsonToDictionary<int, Skill_Step_Instance_DTO>(_instance.text, x => x.ID);
+        var dotDTO = JsonToDictionary<int, Skill_Step_DoT_DTO>(_dot.text, x => x.ID);
+        var aoeDTO = JsonToDictionary<int, Skill_Step_AoE_DTO>(_aoe.text, x => x.ID);
+        var timeDTO = JsonToDictionary<int, Skill_Step_Timer_DTO>(_time.text, x => x.ID);
 
-        var flowstepDTO = ConvertFromJson<Skill_FlowStep_DTO[]>(_skillstep.text);
-        var instanceDTO = JsonToDictionary<int, InstanceStepData>(_instance.text, x => x.ID);
-        var dotDTO = JsonToDictionary<int, DotStepData>(_dot.text, x => x.ID);
-        var aoeDTO = JsonToDictionary<int, AoEStepData>(_aoe.text, x => x.ID);
-        var timeDTO = JsonToDictionary<int, TimerStepData>(_time.text, x => x.ID);
-
-        var flowByID = new Dictionary<SkillID, List<int>>();
-        for (int i = 0; i < flowstepDTO.Length; i++)
-        {
-            if (flowByID.ContainsKey(flowstepDTO[i].ID) == false)
-            {
-                flowByID.Add(flowstepDTO[i].ID, new List<int>());
-            }
-
-            flowByID[flowstepDTO[i].ID].Add(flowstepDTO[i].LogicID);
-        }
-
-        foreach (var item in flowByID)
-        {
-            baseData[item.Key].HitFlowStepIDs = item.Value.ToArray();
-        }
-
-        foreach (var item in baseDataDTO)
-        {
-            baseData[item.ID].HitBoxes = hitboxData[item.HitBoxID];
-        }
-
-        WriteAllText(baseData, "SkillData.json");
+        WriteAllText(baseById, "SkillData.json");
+        WriteAllText(collsionLogicByID, "CollisionLogic.json");
+        WriteAllText(hitboxesById, "HitBoxData.json");
+        WriteAllText(flowstepDTO, "SkillFlowStep.json");
         WriteAllText(instanceDTO, "SkillStepInstance.json");
         WriteAllText(dotDTO, "SkillStepDoT.json");
         WriteAllText(aoeDTO, "SkillStepAoE.json");
         WriteAllText(timeDTO, "SkillStepTimer.json");
     }
 
-    private Dictionary<int, ShapeParam[]> ConvertHitboxDataFromDTO(Skill_HitBox_DTO[] baseDTO)
+    private Dictionary<int, List<T>> ConvertJsonToListByID<T>(string json, string idFieldName)
     {
-        var dic = new Dictionary<int, List<Skill_HitBox_DTO>>();
-        for (int i = 0; i < baseDTO.Length; i++)
-        {
-            if (dic.TryGetValue(baseDTO[i].ID, out var list) ==  false)
-            {
-                list = new List<Skill_HitBox_DTO>();
-                dic[baseDTO[i].ID] = list;
-            }
+        var dtoArray = JsonConvert.DeserializeObject<T[]>(json);
+        var dtoDictionary = new Dictionary<int, List<T>>();
+        FieldInfo fieldInfo = typeof(T).GetField(idFieldName);
 
-            list.Add(baseDTO[i]);
+        if (fieldInfo == null)
+            throw new ArgumentException($"필드 {idFieldName}을 찾을 수 없습니다.");
+
+        foreach (var item in dtoArray)
+        {
+            // 2. 리플렉션으로 객체의 값을 가져옵니다.
+            int id = (int)fieldInfo.GetValue(item);
+
+            if (!dtoDictionary.TryGetValue(id, out var list))
+            {
+                list = new List<T>();
+                dtoDictionary.Add(id, list);
+            }
+            list.Add(item);
         }
 
-        var hitBoxByID = new Dictionary<int, ShapeParam[]>();
-
-        foreach (var item in dic)
-        {
-            List<Skill_HitBox_DTO> list = item.Value;
-            var hitboxArr = new ShapeParam[list.Count];
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                hitboxArr[i] = new ShapeParam(list[i].ShapeType, list[i].OffsetX, list[i].OffsetY, list[i].Param1, list[i].Param2); ;
-            }
-
-            hitBoxByID[item.Key] = hitboxArr;
-        }
-
-        return hitBoxByID;
+        return dtoDictionary;
     }
 
     private Dictionary<T, K> JsonToDictionary<T, K>(string json, Func<K, T> keySelctor)
@@ -112,9 +89,5 @@ public class SkillDTOConverter : ScriptableObject
         string text = JsonConvert.SerializeObject(obj, Formatting.Indented);
         File.WriteAllText(Path.Combine(_jsonGeneratePath, fileName), text);
     }
-
-    private T ConvertFromJson<T>(string json)
-    {
-        return JsonConvert.DeserializeObject<T>(json);
-    }
 }
+

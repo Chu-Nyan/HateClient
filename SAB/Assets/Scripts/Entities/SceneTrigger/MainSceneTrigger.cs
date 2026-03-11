@@ -1,4 +1,5 @@
 using Chu;
+using SAB.DataManger;
 using SAB.EntityAgent.AI;
 using SAB.Item;
 using SAB.Unit.Combat;
@@ -32,10 +33,12 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void GenerateStatic()
     {
+        new DataBase();
         new InputManager();
+
         new AIGenerator();
         new SkillObjectFactory();
-        new SkillGenerator();
+        new SkillGenerator(DataBase.Instance);
         new ItemFactory();
     }
 

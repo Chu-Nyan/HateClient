@@ -2,7 +2,6 @@
   "200000": {
     "ID": 200000,
     "DamageRate": 0.5,
-    "Duration": 2.0,
-    "GetID": 200000
+    "Duration": 2.0
   }
 }
