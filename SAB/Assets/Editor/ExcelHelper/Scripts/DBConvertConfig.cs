@@ -27,7 +27,8 @@ public class DBConvertConfig
     [SerializeField] private int _sheetTypeColumn = 2;
     [SerializeField] private int _sheetDataStartRow = 3;
     [Space, Header("Export Path")]
-    [SerializeField] private DefaultAsset _dtoPath;
+    [SerializeField] private DefaultAsset _dtoScriptPath;
+    [SerializeField] private DefaultAsset _dtoJsonPath;
     [SerializeField] private DefaultAsset _enumPath;
 
     private const int _zeroBase = -1;
@@ -47,11 +48,18 @@ public class DBConvertConfig
     public int SheetTypeColumn => _sheetTypeColumn + _zeroBase;
     public int SheetPropertyFirstDataRow => _sheetDataStartRow + _zeroBase;
 
-    public string GetPath(SheetType type)
+    public string DTOPath
     {
-        if (type == SheetType.Data)
-            return AssetDatabase.GetAssetPath(_dtoPath);
-        else /*(type == SheetType.Enum)*/
-            return AssetDatabase.GetAssetPath(_enumPath);
+        get => AssetDatabase.GetAssetPath(_dtoScriptPath);
+    }
+
+    public string DTOJsonPath
+    {
+        get => AssetDatabase.GetAssetPath(_dtoJsonPath);
+    }
+
+    public string EnumPath
+    {
+        get => AssetDatabase.GetAssetPath(_enumPath);
     }
 }

@@ -1,0 +1,60 @@
+{
+  "1": [
+    {
+      "Type": 0,
+      "OffsetX": 0.0,
+      "OffsetY": 0.1,
+      "Radius": 1.0,
+      "Width": 1.0,
+      "Height": 0.3
+    }
+  ],
+  "2": [
+    {
+      "Type": 1,
+      "OffsetX": 0.0,
+      "OffsetY": 0.0,
+      "Radius": 0.3,
+      "Width": 0.3,
+      "Height": 0.0
+    }
+  ],
+  "3": [
+    {
+      "Type": 1,
+      "OffsetX": 0.0,
+      "OffsetY": 0.0,
+      "Radius": 0.2,
+      "Width": 0.2,
+      "Height": 0.0
+    },
+    {
+      "Type": 0,
+      "OffsetX": 0.0,
+      "OffsetY": -0.5,
+      "Radius": 0.0,
+      "Width": 0.0,
+      "Height": 1.0
+    }
+  ],
+  "4": [
+    {
+      "Type": 1,
+      "OffsetX": 0.0,
+      "OffsetY": 0.0,
+      "Radius": 0.5,
+      "Width": 0.5,
+      "Height": 0.0
+    }
+  ],
+  "5": [
+    {
+      "Type": 1,
+      "OffsetX": 0.0,
+      "OffsetY": 0.0,
+      "Radius": 0.5,
+      "Width": 0.5,
+      "Height": 0.0
+    }
+  ]
+}

@@ -64,7 +64,7 @@ public class ExcelHelper : ScriptableObject
             if (sheetDatas.TryGetValue(type, out var list) == false)
                 sheetDatas[type] = list = new();
 
-            list.Add(new SheetData(table[name], type, ConvertSetting.GetPath(type)));
+            list.Add(new SheetData(table[name], type));
         }
         Debug.Log("시트 불러오기 완료");
         return sheetDatas;
@@ -86,7 +86,7 @@ public class ExcelHelper : ScriptableObject
             }
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-            ExcelUtility.GenerateFile(sheet.GeneratePath, $"{sheet.GetNameFromOptions()}.cs", normalizedText);
+            ExcelUtility.GenerateFile(ConvertSetting.EnumPath, $"{sheet.GetName()}.cs", normalizedText);
             await Task.Yield();
         }
 
@@ -102,7 +102,7 @@ public class ExcelHelper : ScriptableObject
         foreach (SheetData sheet in _sheetsByType[SheetType.Data])
         {
             var text = GetDataScriptText(sheet, ConvertSetting.NameSpaceByType);
-            ExcelUtility.GenerateFile(sheet.GeneratePath, $"{sheet.GetNameFromOptions()}.cs", text);
+            ExcelUtility.GenerateFile(ConvertSetting.DTOPath, $"{sheet.GetName()}.cs", text);
             log += $"- {sheet.Table.TableName} 생성\n";
 
             await Task.Yield();
@@ -119,7 +119,7 @@ public class ExcelHelper : ScriptableObject
         var sb = new StringBuilder();
         var namespaceText = new StringBuilder();
 
-        sb.AppendLine($"public struct {sheet.GetNameFromOptions()}");
+        sb.AppendLine($"public struct {sheet.GetName()}");
         sb.AppendLine("{");
         for (int i = 0; i < sheet.Table.Columns.Count; i++)
         {
@@ -149,9 +149,9 @@ public class ExcelHelper : ScriptableObject
 
         foreach (SheetData sheet in _sheetsByType[SheetType.Data])
         {
-            var name = sheet.GetNameFromOptions();
+            var name = sheet.GetName();
             if (TryConvertExcelToJson(sheet, out var text) == true)
-                ExcelUtility.GenerateFile(sheet.GeneratePath, $"{name}.json", text);
+                ExcelUtility.GenerateFile(ConvertSetting.DTOJsonPath, $"{name}.json", text);
 
             log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 오류 발생\n";
 
@@ -166,7 +166,7 @@ public class ExcelHelper : ScriptableObject
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         var table = sheet.Table;
         Type type = assemblies
-            .Select(a => a.GetType(sheet.GetNameFromOptions()))
+            .Select(a => a.GetType(sheet.GetName()))
             .FirstOrDefault(t => t != null);
 
         var fieldMap = type.GetFields().ToDictionary(f => f.Name);

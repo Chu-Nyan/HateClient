@@ -4,7 +4,6 @@ public class SheetData
 {
     private readonly DataTable _table;
     private SheetType _type;
-    private string _generatePath;
 
     public DataTable Table
     {
@@ -16,19 +15,13 @@ public class SheetData
         get => _type;
     }
 
-    public string GeneratePath
-    {
-        get => _generatePath;
-    }
-
-    public SheetData(DataTable table, SheetType type, string path)
+    public SheetData(DataTable table, SheetType type)
     {
         _table = table;
         _type = type;
-        _generatePath = path;
     }
 
-    public string GetNameFromOptions()
+    public string GetName()
     {
         var suffix = string.Empty;
         if (_type == SheetType.Data)
