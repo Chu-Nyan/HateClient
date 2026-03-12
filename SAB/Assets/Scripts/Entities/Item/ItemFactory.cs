@@ -1,4 +1,5 @@
 ﻿using Chu.Utility;
+using SAB.DataManger;
 using SAB.Item;
 using System.Collections.Generic;
 
@@ -8,11 +9,11 @@ public class ItemFactory : Singleton<ItemFactory>
     private Dictionary<int, EquipmentTemplateData> _equipmentData;
     private Dictionary<int, WeaponTemplateData> _weaponData;
 
-    public ItemFactory()
+    public ItemFactory(DataBase db)
     {
-        _itemData = AssetManager.DeserializeJsonSync<Dictionary<int, ItemTemplateData>>("ItemData");
-        _equipmentData = AssetManager.DeserializeJsonSync<Dictionary<int, EquipmentTemplateData>>("EquipmentData");
-        _weaponData = AssetManager.DeserializeJsonSync<Dictionary<int, WeaponTemplateData>>("WeaponData");
+        _itemData = db.ItemRepo.Base;
+        _equipmentData = db.ItemRepo.Equipment;
+        _weaponData = db.ItemRepo.Weapon;
     }
 
     public IHasItemData GenerateItem(int id)

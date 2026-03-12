@@ -40,7 +40,7 @@ public class GameSceneTrigger : MonoBehaviour
         new SkillObjectFactory();
         new CharacterGenerator(DataBase.Instance);
         new SkillGenerator(DataBase.Instance);
-        new ItemFactory();
+        new ItemFactory(DataBase.Instance);
     }
 
     private void GenerateInstance()

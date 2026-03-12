@@ -1,137 +1,137 @@
-{
-  "1": {
+[
+  {
     "ID": 1,
     "TextID": 400001,
     "Category": "Weapon"
   },
-  "2": {
+  {
     "ID": 2,
     "TextID": 400002,
     "Category": "Weapon"
   },
-  "3": {
+  {
     "ID": 3,
     "TextID": 400003,
     "Category": "Weapon"
   },
-  "4": {
+  {
     "ID": 4,
     "TextID": 400004,
     "Category": "Weapon"
   },
-  "5": {
+  {
     "ID": 5,
     "TextID": 400005,
     "Category": "Armor"
   },
-  "6": {
+  {
     "ID": 6,
     "TextID": 400006,
     "Category": "Armor"
   },
-  "7": {
+  {
     "ID": 7,
     "TextID": 400007,
     "Category": "Armor"
   },
-  "8": {
+  {
     "ID": 8,
     "TextID": 400008,
     "Category": "Armor"
   },
-  "9": {
+  {
     "ID": 9,
     "TextID": 400009,
     "Category": "Armor"
   },
-  "10": {
+  {
     "ID": 10,
     "TextID": 400010,
     "Category": "Armor"
   },
-  "11": {
+  {
     "ID": 11,
     "TextID": 400011,
     "Category": "Armor"
   },
-  "12": {
+  {
     "ID": 12,
     "TextID": 400012,
     "Category": "Armor"
   },
-  "13": {
+  {
     "ID": 13,
     "TextID": 400013,
     "Category": "Armor"
   },
-  "14": {
+  {
     "ID": 14,
     "TextID": 400014,
     "Category": "Armor"
   },
-  "15": {
+  {
     "ID": 15,
     "TextID": 400015,
     "Category": "Armor"
   },
-  "16": {
+  {
     "ID": 16,
     "TextID": 400016,
     "Category": "Armor"
   },
-  "17": {
+  {
     "ID": 17,
     "TextID": 400017,
     "Category": "Armor"
   },
-  "18": {
+  {
     "ID": 18,
     "TextID": 400018,
     "Category": "Armor"
   },
-  "19": {
+  {
     "ID": 19,
     "TextID": 400019,
     "Category": "Armor"
   },
-  "20": {
+  {
     "ID": 20,
     "TextID": 400020,
     "Category": "Armor"
   },
-  "21": {
+  {
     "ID": 21,
     "TextID": 400021,
     "Category": "Armor"
   },
-  "22": {
+  {
     "ID": 22,
     "TextID": 400022,
     "Category": "Armor"
   },
-  "23": {
+  {
     "ID": 23,
     "TextID": 400023,
     "Category": "Armor"
   },
-  "24": {
+  {
     "ID": 24,
     "TextID": 400024,
     "Category": "Armor"
   },
-  "25": {
+  {
     "ID": 25,
     "TextID": 400025,
     "Category": "Armor"
   },
-  "26": {
+  {
     "ID": 26,
     "TextID": 400026,
     "Category": "Armor"
   },
-  "27": {
+  {
     "ID": 27,
     "TextID": 400027,
     "Category": "Armor"
   }
-}
+]
