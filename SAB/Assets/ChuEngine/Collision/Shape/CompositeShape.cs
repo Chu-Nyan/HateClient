@@ -39,7 +39,7 @@ namespace Chu.Collision
         {
             ShapeFactory.Instance.Release(_shapeList);
             _shapeList.Clear();
-            ShapeFactory.Instance.ConvertShapesNonAlloc(list, _shapeList);
+            ShapeFactory.ConvertShapesNonAlloc(list, _shapeList);
         }
 
         public void UpdateAABB(Vector2 position, float degree)

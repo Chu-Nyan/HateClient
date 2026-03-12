@@ -13,11 +13,10 @@ namespace SAB.Unit.Combat
         public readonly float Cooldown;
         public readonly float Cost;
 
-        public readonly ShapeParam[] HitBoxes;
         public readonly IStepData[] OnHitFlowStep;
         public readonly CollisionLogicData[] CollisionLogics;
 
-        public SkillData(SkillBaseDto dto, ShapeParam[] hitBoxes, IStepData[] flowStep, CollisionLogicData[] collisionLogics)
+        public SkillData(SkillBaseDto dto, IStepData[] flowStep, CollisionLogicData[] collisionLogics)
         {
             ID = dto.ID;
             StringID = dto.StringID;
@@ -25,7 +24,6 @@ namespace SAB.Unit.Combat
             Cooldown = dto.Cooldown;
             Cost = dto.Cost;
 
-            HitBoxes = hitBoxes;
             OnHitFlowStep = flowStep;
             CollisionLogics = collisionLogics;
         }

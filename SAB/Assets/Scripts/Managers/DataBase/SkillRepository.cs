@@ -76,7 +76,7 @@ namespace SAB.DataManger
             SkillByID = DataBase.DeserializeObjectByKey(
                 dtos: AssetManager.DeserializeJsonSync<SkillBaseDto[]>(SkillDataPath),
                 keySelector: dto => dto.ID,
-                converter: dto => new SkillData(dto, HitBoxByID[dto.ID], FlowStepByID[dto.FlowStepID], CollisionLogicByID[dto.ObjectLogicID])
+                converter: dto => new SkillData(dto, FlowStepByID[dto.FlowStepID], CollisionLogicByID[dto.ObjectLogicID])
                 );
         }
 

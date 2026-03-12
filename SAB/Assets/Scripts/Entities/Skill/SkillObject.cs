@@ -10,13 +10,12 @@ namespace SAB.Unit.Combat
     public class SkillObject : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
     {
         private const NyanLayer _layer = NyanLayer.Projectile;
-        private const float _maxLifeSpan = 5f;
-
         private static int _hitUnityLayer;
 
         private NyanCollider _nyanCollider;
         private AttackContext _context;
         private Vector3 _dir;
+        private int _logicStep;
         private float _timer;
 
         public NyanCollider Collider
@@ -38,14 +37,22 @@ namespace SAB.Unit.Combat
 
         private void Update()
         {
-            _timer += Time.deltaTime;
-            if (_timer >= _maxLifeSpan)
-                gameObject.SetActive(false);
-            else
+            var logics = Context.SkillData.CollisionLogics;
+            if (_timer <= logics[_logicStep].ActiveTime)
             {
-                transform.position += 10f * Time.deltaTime * transform.forward;
-                _nyanCollider.RefreshTransform();
+                _logicStep++;
+                if (_logicStep < logics.Length)
+                    ChangeShape(_logicStep);
+                else
+                {
+                    gameObject.SetActive(false);
+                    return;
+                }
             }
+
+            _timer += Time.deltaTime;
+            transform.position += logics[_logicStep].Speed * Time.deltaTime * transform.forward;
+            _nyanCollider.RefreshTransform();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -65,11 +72,12 @@ namespace SAB.Unit.Combat
 
         public void Setup(int instigator, AttackContext context)
         {
-            var shape = ShapeParam.GetShape(context.SkillData.HitBoxes);
-            _nyanCollider.SetInstigatorID(instigator);
-            _nyanCollider.SetShape(shape);
-            _nyanCollider.SetLayer(_layer, context.Mask);
             _context = context;
+            _logicStep = 0;
+            _nyanCollider.SetInstigatorID(instigator);
+            _nyanCollider.SetLayer(_layer, _context.Mask);
+
+            ChangeShape(_logicStep);
         }
 
         public void SetActive(bool value)
@@ -78,9 +86,12 @@ namespace SAB.Unit.Combat
             _nyanCollider.SetActive(value);
         }
 
-        public void SetColiderShape(IShape shape)
+        private void ChangeShape(int step)
         {
+            var logic = Context.SkillData.CollisionLogics[step];
+            var shape = ShapeFactory.GenerateShape(logic.Hitboxes);
             _nyanCollider.SetShape(shape);
+            _timer = 0;
         }
 
         public void SetTarget(Vector3 start, Vector3 dir)

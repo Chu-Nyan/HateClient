@@ -1,7 +1,6 @@
 ﻿using Chu.Utility;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -40,20 +39,37 @@ namespace Chu.Collision
             }
         }
 
-        public void ConvertShapesNonAlloc(ReadOnlySpan<ShapeParam> list, List<IShape> shapes)
+        public static IShape ConverShape(ShapeParam param)
         {
-            for (int i = 0; i < list.Length; i++)
+            if (param.Type == ShapeType.Rectangle)
+                return ConvertRectShape(param);
+            if (param.Type == ShapeType.Circle)
+                return ConvertCircleShape(param);
+
+            throw new Exception("잘못된 타입 입력됨");
+        }
+
+        public static IShape GenerateShape(ShapeParam[] param)
+        {
+            if (param.Length == 1)
+                return ConverShape(param[0]);
+            else
             {
-                if (list[i].Type == ShapeType.Composite)
-                    Debug.Log("잘못된 타입 입력됨");
-                else if (list[i].Type == ShapeType.Rectangle)
-                    shapes.Add(ConvertRectShape(list[i]));
-                else if (list[i].Type == ShapeType.Circle)
-                    shapes.Add(ConvertCircleShape(list[i]));
+                var composite = Instance.Generate<CompositeShape>();
+                composite.Setup(param);
+                return composite;
             }
         }
 
-        public RectShape ConvertRectShape(ShapeParam param)
+        public static void ConvertShapesNonAlloc(ReadOnlySpan<ShapeParam> list, List<IShape> shapes)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                shapes.Add(ConverShape(list[i]));
+            }
+        }
+
+        private static RectShape ConvertRectShape(ShapeParam param)
         {
             var rectShape = Instance.Generate<RectShape>();
             var data = param.GetRectData();
@@ -61,7 +77,7 @@ namespace Chu.Collision
             return rectShape;
         }
 
-        public CircleShape ConvertCircleShape(ShapeParam param)
+        private static CircleShape ConvertCircleShape(ShapeParam param)
         {
             var circleShape = Instance.Generate<CircleShape>();
             var data = param.GetCircleData();
