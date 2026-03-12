@@ -30,69 +30,47 @@ namespace SAB.DataManger
 
         public SkillRepository()
         {
-            InstanceStepByID = DeserializeInstanceStep();
-            AoEStepByID = DeserializeAoEStep();
-            DotStepByID = DeserializeDotStep();
-            TimerStepByID = DeserializeTimerStep();
-            FlowStepByID = DeserializeFlowStepData();
+            InstanceStepByID = DataBase.DeserializeObjectByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_Step_Instance_DTO[]>(InstanceStepPath),
+                keySelector: dto => dto.ID,
+                converter: dto => new InstanceStepData(dto.ID, dto.DamageRate, dto.Count)
+                );
 
-            HitBoxByID = DeserializeHitBox();
-            SkillByID = DeserializeSkillData();
-        }
+            AoEStepByID = DataBase.DeserializeObjectByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_Step_AoE_DTO[]>(AoEStepPath),
+                keySelector: dto => dto.ID,
+                converter: dto => new AoEStepData(dto.ID, dto.DamageRate, dto.Ranged, dto.Count)
+                );
 
-        private Dictionary<int, SkillData> DeserializeSkillData()
-        {
-            var dic = new Dictionary<int, SkillData>();
-            var dto = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_Base_DTO>>(SkillDataPath);
+            DotStepByID = DataBase.DeserializeObjectByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_Step_DoT_DTO[]>(DoTStepPath),
+                keySelector: dto => dto.ID,
+                converter: dto => new DotStepData(dto.ID, dto.DamageRate, dto.Duration)
+                );
 
-            foreach (var item in dto)
-            {
-                // TODO : 히트박스 개편시 변경해야함
-                var dtoData = dto[item.Key];
-                dic[item.Key] = new SkillData(dtoData, HitBoxByID[dtoData.ID], FlowStepByID[dtoData.FlowStepID]);
-            }
+            TimerStepByID = DataBase.DeserializeObjectByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_Step_Timer_DTO[]>(TimerStepPath),
+                keySelector: dto => dto.ID,
+                converter: dto => new TimerStepData(dto.ID, dto.Duration)
+                );
 
-            return dic;
-        }
+            FlowStepByID = DataBase.DeserializeArrayByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_FlowStep_DTO[]>(FlowStepPath),
+                keySelector: dto => dto.ID,
+                converter: dto => GetStepData(dto.LogicID)
+                );
 
-        private Dictionary<int, ShapeParam[]> DeserializeHitBox()
-        {
-            var dic = new Dictionary<int, ShapeParam[]>();
-            var dtoDic = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_HitBox_DTO[]>>(HitBoxes);
+            HitBoxByID = DataBase.DeserializeArrayByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_HitBox_DTO[]>(HitBoxes),
+                keySelector: dto => dto.ID,
+                converter: dto => new ShapeParam(dto.ShapeType, dto.OffsetX, dto.OffsetY, dto.Param1, dto.Param2)
+                );
 
-            foreach (var item in dtoDic)
-            {
-                var dto = item.Value;
-                dic[item.Key] = new ShapeParam[dto.Length];
-                for (int i = 0; i < dto.Length; i++)
-                {
-                    dic[item.Key][i] = new ShapeParam(dto[i].ShapeType, dto[i].OffsetX, dto[i].OffsetY, dto[i].Param1, dto[i].Param2);
-                }
-            }
-
-            return dic;
-        }
-
-        private Dictionary<int, IStepData[]> DeserializeFlowStepData()
-        {
-            var flowByID = new Dictionary<int, IStepData[]>();
-            var flow = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_FlowStep_DTO[]>>(FlowStepPath);
-
-            foreach (var item in flow)
-            {
-                var dtoArr = item.Value;
-                var id = item.Key;
-
-                if (flowByID.ContainsKey(id) == false)
-                    flowByID[id] = new IStepData[dtoArr.Length];
-
-                for (int i = 0; i < dtoArr.Length; i++)
-                {
-                    flowByID[id][i] = GetStepData(dtoArr[i].LogicID);
-                }
-            }
-
-            return flowByID;
+            SkillByID = DataBase.DeserializeObjectByKey(
+                dtos: AssetManager.DeserializeJsonSync<Skill_Base_DTO[]>(SkillDataPath),
+                keySelector: dto => dto.ID,
+                converter: dto => new SkillData(dto, HitBoxByID[dto.ID], FlowStepByID[dto.FlowStepID])
+                );
         }
 
         private IStepData GetStepData(int id)
@@ -107,67 +85,6 @@ namespace SAB.DataManger
                 return TimerStepByID[id];
 
             throw new Exception($"Don't have skill step {id}");
-        }
-
-
-        private Dictionary<int, InstanceStepData> DeserializeInstanceStep()
-        {
-            var dic = new Dictionary<int, InstanceStepData>();
-            var dto = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_Step_Instance_DTO>>(InstanceStepPath);
-
-            foreach (var item in dto)
-            {
-                var dtoData = item.Value;
-                var data = new InstanceStepData(dtoData.ID, dtoData.DamageRate, dtoData.Count);
-                dic.Add(item.Value.ID, data);
-            }
-
-            return dic;
-        }
-
-        private Dictionary<int, AoEStepData> DeserializeAoEStep()
-        {
-            var dic = new Dictionary<int, AoEStepData>();
-            var dto = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_Step_AoE_DTO>>(AoEStepPath);
-
-            foreach (var item in dto)
-            {
-                var dtoData = item.Value;
-                var data = new AoEStepData(dtoData.ID, dtoData.DamageRate, dtoData.Ranged, dtoData.Count);
-                dic.Add(item.Value.ID, data);
-            }
-
-            return dic;
-        }
-
-        private Dictionary<int, DotStepData> DeserializeDotStep()
-        {
-            var dic = new Dictionary<int, DotStepData>();
-            var dto = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_Step_DoT_DTO>>(DoTStepPath);
-
-            foreach (var item in dto)
-            {
-                var dtoData = item.Value;
-                var data = new DotStepData(dtoData.ID, dtoData.DamageRate, dtoData.Duration);
-                dic.Add(item.Value.ID, data);
-            }
-
-            return dic;
-        }
-
-        private Dictionary<int, TimerStepData> DeserializeTimerStep()
-        {
-            var dic = new Dictionary<int, TimerStepData>();
-            var dto = AssetManager.DeserializeJsonSync<Dictionary<int, Skill_Step_Timer_DTO>>(TimerStepPath);
-
-            foreach (var item in dto)
-            {
-                var dtoData = item.Value;
-                var data = new TimerStepData(dtoData.ID, dtoData.Duration);
-                dic.Add(item.Value.ID, data);
-            }
-
-            return dic;
         }
     }
 }
