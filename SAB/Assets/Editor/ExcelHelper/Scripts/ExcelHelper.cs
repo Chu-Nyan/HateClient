@@ -105,7 +105,7 @@ public class ExcelHelper : ScriptableObject
         foreach (SheetData sheet in _sheetsByType[SheetType.Data])
         {
             var text = GetDataScriptText(sheet, ConvertSetting.NameSpaceByType);
-            ExcelUtility.GenerateFile(ConvertSetting.DTOPath, $"{sheet.GetPacalCaseName()}Dto.cs", text);
+            ExcelUtility.GenerateFile(ConvertSetting.DTOPath, $"{sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}.cs", text);
             log += $"- {sheet.Table.TableName} 생성\n";
 
             await Task.Yield();
@@ -122,7 +122,7 @@ public class ExcelHelper : ScriptableObject
         var sb = new StringBuilder();
         var namespaceText = new StringBuilder();
 
-        sb.AppendLine($"public struct {sheet.GetPacalCaseName()}Dto");
+        sb.AppendLine($"public struct {sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}");
         sb.AppendLine("{");
         for (int i = 0; i < sheet.Table.Columns.Count; i++)
         {
@@ -169,7 +169,7 @@ public class ExcelHelper : ScriptableObject
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         var table = sheet.Table;
         Type type = assemblies
-            .Select(a => a.GetType($"{sheet.GetPacalCaseName()}Dto"))
+            .Select(a => a.GetType($"{sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}"))
             .FirstOrDefault(t => t != null);
 
         var fieldMap = type.GetFields().ToDictionary(f => f.Name);

@@ -31,6 +31,7 @@ public class DBConvertConfig
     [SerializeField] private DefaultAsset _dtoJsonPath;
     [SerializeField] private DefaultAsset _enumPath;
     [SerializeField] private string _jsonPrefix;
+    [SerializeField] private string _scriptSuffix;
 
     private const int _zeroBase = -1;
 
@@ -67,5 +68,10 @@ public class DBConvertConfig
     public string JsonPrefix
     {
         get => _jsonPrefix;
+    }
+
+    public string ScriptSuffix
+    {
+        get => _scriptSuffix;
     }
 }
