@@ -16,7 +16,7 @@ namespace SAB.Unit.Combat
         public readonly ShapeParam[] HitBoxes;
         public readonly IStepData[] OnHitFlowStep;
 
-        public SkillData(Skill_Base_DTO dto, ShapeParam[] hitBoxes, IStepData[] flowStep)
+        public SkillData(SkillBaseDto dto, ShapeParam[] hitBoxes, IStepData[] flowStep)
         {
             ID = dto.ID;
             StringID = dto.StringID;

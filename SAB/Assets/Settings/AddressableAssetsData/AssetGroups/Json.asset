@@ -15,63 +15,63 @@ MonoBehaviour:
   m_GroupName: Json
   m_GUID: 3b297e2eed8646447994015dae1ca296
   m_SerializeEntries:
-  - m_GUID: 050e9f228f32a9a4888b7efef9184063
-    m_Address: SkillData
+  - m_GUID: 028435c920e701d4c8f03107cf9cab9d
+    m_Address: Dto_Item_Equipment
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 081d1401ff196d34ebe459ba23322c84
-    m_Address: WeaponData
+  - m_GUID: 05fc6998f655f3f4f9e099052ece8e4f
+    m_Address: Dto_Skill_Step_AoE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3a12c45ba5fda534080bab90046d5364
-    m_Address: ItemData
+  - m_GUID: 1e958985c7ae16a48a05251a51d10d56
+    m_Address: Dto_Item_Weapon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3c632c858282176428ed0a23b119de3b
-    m_Address: HitBoxData
+  - m_GUID: 2a113915596899043a67a4d863840990
+    m_Address: Dto_Skill_Base
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 452f2511e060cb64c8933e959b0e6a37
-    m_Address: CollisionLogic
+  - m_GUID: 3fa553b6044a5584f9d9bbe972beb6df
+    m_Address: Dto_Skill_HitBox
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5c64e17d2b6376948a019179b9b32725
-    m_Address: SkillStepDoT
+  - m_GUID: 6c4ec1d398517a0499677f96cf494985
+    m_Address: Dto_Skill_FlowStep
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 716dab13a0a01fa4d8333e094feccd96
-    m_Address: SkillStepInstance
+  - m_GUID: 7a7f9e20a0212954c9ee7b2cdda7635f
+    m_Address: Dto_Character_Base_Stats
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7e58e35e66136834d9c85e8dd7da287c
-    m_Address: EquipmentData
+  - m_GUID: 9a76883793ea5ba42b01b01550a6afa4
+    m_Address: Dto_Item_Base
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ceb8e5f267f660459273eeab958238c
-    m_Address: CharacterBaseData
+  - m_GUID: a26e81d7beabec6459d431774758551f
+    m_Address: Dto_Skill_Step_DoT
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8e99c6d1c7231cc40bc7f228229eb798
-    m_Address: SkillStepTimer
+  - m_GUID: dda1425313992004aab28da97a2dbd95
+    m_Address: Dto_Skill_CollisionLogic
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b6af661ba0778024b8bc97a6ad995a1c
-    m_Address: SkillStepAoE
+  - m_GUID: e14af8317d707414e88893e95ca5ef81
+    m_Address: Dto_Skill_Step_Instance
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: be67a8b94b6bca647aa1a71bd8e06d38
-    m_Address: SkillFlowStep
+  - m_GUID: e78e68579181c6543a77edc0da11e83b
+    m_Address: Dto_Skill_Step_Timer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -30,6 +30,7 @@ public class DBConvertConfig
     [SerializeField] private DefaultAsset _dtoScriptPath;
     [SerializeField] private DefaultAsset _dtoJsonPath;
     [SerializeField] private DefaultAsset _enumPath;
+    [SerializeField] private string _jsonPrefix;
 
     private const int _zeroBase = -1;
 
@@ -61,5 +62,10 @@ public class DBConvertConfig
     public string EnumPath
     {
         get => AssetDatabase.GetAssetPath(_enumPath);
+    }
+
+    public string JsonPrefix
+    {
+        get => _jsonPrefix;
     }
 }

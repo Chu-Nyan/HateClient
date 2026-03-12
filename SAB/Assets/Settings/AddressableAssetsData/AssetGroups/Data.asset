@@ -14,67 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Data
   m_GUID: 0f2a1d0cd8d6f5044bb6f6845d704968
-  m_SerializeEntries:
-  - m_GUID: 050e9f228f32a9a4888b7efef9184063
-    m_Address: SkillData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 081d1401ff196d34ebe459ba23322c84
-    m_Address: WeaponData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3a12c45ba5fda534080bab90046d5364
-    m_Address: ItemData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3c632c858282176428ed0a23b119de3b
-    m_Address: HitBoxData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 452f2511e060cb64c8933e959b0e6a37
-    m_Address: CollisionLogic
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5c64e17d2b6376948a019179b9b32725
-    m_Address: SkillStepDoT
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 716dab13a0a01fa4d8333e094feccd96
-    m_Address: SkillStepInstance
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7e58e35e66136834d9c85e8dd7da287c
-    m_Address: EquipmentData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ceb8e5f267f660459273eeab958238c
-    m_Address: CharacterData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8e99c6d1c7231cc40bc7f228229eb798
-    m_Address: SkillStepTimer
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b6af661ba0778024b8bc97a6ad995a1c
-    m_Address: SkillStepAoE
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: be67a8b94b6bca647aa1a71bd8e06d38
-    m_Address: SkillFlowStep
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1f1c78bf333ed9549b35bfec8d20fc4a, type: 2}
   m_SchemaSet:

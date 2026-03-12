@@ -72,6 +72,9 @@ public class ExcelHelper : ScriptableObject
 
     private async Task GenerateEnumScript()
     {
+        if (_sheetsByType.ContainsKey(SheetType.Enum) == false)
+            return;
+
         var sb = new StringBuilder();
         foreach (var sheet in _sheetsByType[SheetType.Enum])
         {
@@ -86,7 +89,7 @@ public class ExcelHelper : ScriptableObject
             }
 
             var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-            ExcelUtility.GenerateFile(ConvertSetting.EnumPath, $"{sheet.GetName()}.cs", normalizedText);
+            ExcelUtility.GenerateFile(ConvertSetting.EnumPath, $"{sheet.GetPacalCaseName()}.cs", normalizedText);
             await Task.Yield();
         }
 
@@ -102,7 +105,7 @@ public class ExcelHelper : ScriptableObject
         foreach (SheetData sheet in _sheetsByType[SheetType.Data])
         {
             var text = GetDataScriptText(sheet, ConvertSetting.NameSpaceByType);
-            ExcelUtility.GenerateFile(ConvertSetting.DTOPath, $"{sheet.GetName()}.cs", text);
+            ExcelUtility.GenerateFile(ConvertSetting.DTOPath, $"{sheet.GetPacalCaseName()}Dto.cs", text);
             log += $"- {sheet.Table.TableName} 생성\n";
 
             await Task.Yield();
@@ -119,7 +122,7 @@ public class ExcelHelper : ScriptableObject
         var sb = new StringBuilder();
         var namespaceText = new StringBuilder();
 
-        sb.AppendLine($"public struct {sheet.GetName()}");
+        sb.AppendLine($"public struct {sheet.GetPacalCaseName()}Dto");
         sb.AppendLine("{");
         for (int i = 0; i < sheet.Table.Columns.Count; i++)
         {
@@ -149,9 +152,9 @@ public class ExcelHelper : ScriptableObject
 
         foreach (SheetData sheet in _sheetsByType[SheetType.Data])
         {
-            var name = sheet.GetName();
+            var name = sheet.SheetName;
             if (TryConvertExcelToJson(sheet, out var text) == true)
-                ExcelUtility.GenerateFile(ConvertSetting.DTOJsonPath, $"{name}.json", text);
+                ExcelUtility.GenerateFile(ConvertSetting.DTOJsonPath, $"{ConvertSetting.JsonPrefix}{name}.json", text);
 
             log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 오류 발생\n";
 
@@ -166,7 +169,7 @@ public class ExcelHelper : ScriptableObject
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         var table = sheet.Table;
         Type type = assemblies
-            .Select(a => a.GetType(sheet.GetName()))
+            .Select(a => a.GetType($"{sheet.GetPacalCaseName()}Dto"))
             .FirstOrDefault(t => t != null);
 
         var fieldMap = type.GetFields().ToDictionary(f => f.Name);

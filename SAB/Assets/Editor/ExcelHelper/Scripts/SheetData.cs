@@ -15,18 +15,24 @@ public class SheetData
         get => _type;
     }
 
+    public string SheetName
+    {
+        get=> _table.TableName;
+    }
+
     public SheetData(DataTable table, SheetType type)
     {
         _table = table;
         _type = type;
     }
 
-    public string GetName()
+    public string GetPacalCaseName()
     {
-        var suffix = string.Empty;
-        if (_type == SheetType.Data)
-            suffix += "_DTO";
+        string cleanName = Table.TableName
+            .Replace("_", "")
+            .Replace("-", "")
+            .Replace(" ", "");
 
-        return $"{Table.TableName}{suffix}";
+        return cleanName;
     }
 }

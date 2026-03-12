@@ -5,9 +5,9 @@ namespace SAB.DataManger
 {
     public class ItemRepository
     {
-        private const string _basePath = "ItemData";
-        private const string _equipmentPath = "EquipmentData";
-        private const string _weaponPath = "WeaponData";
+        private const string _basePath = "Dto_Item_Base";
+        private const string _equipmentPath = "Dto_Item_Equipment";
+        private const string _weaponPath = "Dto_Item_Weapon";
 
         public readonly Dictionary<int, ItemTemplateData> Base;
         public readonly Dictionary<int, EquipmentTemplateData> Equipment;
@@ -17,17 +17,17 @@ namespace SAB.DataManger
         {
 
             Base = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<Item_Base_DTO[]>(_basePath),
+                dtos: AssetManager.DeserializeJsonSync<ItemBaseDto[]>(_basePath),
                 keySelector: a => a.ID,
                 converter: a => new ItemTemplateData(a.ID, a.TextID, a.Category)
                 );
             Equipment = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<Item_Equipment_DTO[]>(_equipmentPath),
+                dtos: AssetManager.DeserializeJsonSync<ItemEquipmentDto[]>(_equipmentPath),
                 keySelector: a => a.ID,
                 converter: a => new EquipmentTemplateData(a.ID, a.Slot, a.MeshPath)
                 );
             Weapon = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<Item_Weapon_DTO[]>(_weaponPath),
+                dtos: AssetManager.DeserializeJsonSync<ItemWeaponDto[]>(_weaponPath),
                 keySelector: a =>a.ID,
                 converter: a => new WeaponTemplateData(a.ID,a.Damage,a.UpgradeSlot)
                 );

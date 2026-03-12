@@ -28,5 +28,6 @@ MonoBehaviour:
     _sheetTypeColumn: 2
     _sheetDataStartRow: 3
     _dtoScriptPath: {fileID: 102900000, guid: 43e6a0f0ea408364780910c2b86467d4, type: 3}
-    _dtoJsonPath: {fileID: 102900000, guid: e2a770b85b7766743a2f650480960c8c, type: 3}
+    _dtoJsonPath: {fileID: 102900000, guid: 37a4ab47d36118243a7602ac6afbf4ec, type: 3}
     _enumPath: {fileID: 102900000, guid: e930cd6b2446e914f8cbb0512e55eacd, type: 3}
+    _jsonPrefix: Dto_
