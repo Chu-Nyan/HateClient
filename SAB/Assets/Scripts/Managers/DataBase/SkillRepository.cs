@@ -22,6 +22,7 @@ namespace SAB.DataManger
 
         public readonly Dictionary<int, IStepData[]> FlowStepByID;
         public readonly Dictionary<int, ShapeParam[]> HitBoxByID;
+        public readonly Dictionary<int, CollisionLogicData[]> CollisionLogicByID;
 
         public readonly Dictionary<int, InstanceStepData> InstanceStepByID;
         public readonly Dictionary<int, AoEStepData> AoEStepByID;
@@ -66,10 +67,16 @@ namespace SAB.DataManger
                 converter: dto => new ShapeParam(dto.ShapeType, dto.OffsetX, dto.OffsetY, dto.Param1, dto.Param2)
                 );
 
+            CollisionLogicByID = DataBase.DeserializeArrayByKey(
+                dtos: AssetManager.DeserializeJsonSync<SkillCollisionLogicDto[]>(CollisionLogic),
+                keySelector: dto => dto.ID,
+                converter: dto => new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID])
+                );
+
             SkillByID = DataBase.DeserializeObjectByKey(
                 dtos: AssetManager.DeserializeJsonSync<SkillBaseDto[]>(SkillDataPath),
                 keySelector: dto => dto.ID,
-                converter: dto => new SkillData(dto, HitBoxByID[dto.ID], FlowStepByID[dto.FlowStepID])
+                converter: dto => new SkillData(dto, HitBoxByID[dto.ID], FlowStepByID[dto.FlowStepID], CollisionLogicByID[dto.ObjectLogicID])
                 );
         }
 

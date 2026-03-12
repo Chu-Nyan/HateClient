@@ -5,4 +5,5 @@ public struct SkillCollisionLogicDto
 	 public int Order;
 	 public float ActiveTime;
 	 public float Speed;
+	 public int FlowStepID;
 }

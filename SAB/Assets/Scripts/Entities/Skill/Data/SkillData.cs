@@ -15,8 +15,9 @@ namespace SAB.Unit.Combat
 
         public readonly ShapeParam[] HitBoxes;
         public readonly IStepData[] OnHitFlowStep;
+        public readonly CollisionLogicData[] CollisionLogics;
 
-        public SkillData(SkillBaseDto dto, ShapeParam[] hitBoxes, IStepData[] flowStep)
+        public SkillData(SkillBaseDto dto, ShapeParam[] hitBoxes, IStepData[] flowStep, CollisionLogicData[] collisionLogics)
         {
             ID = dto.ID;
             StringID = dto.StringID;
@@ -26,6 +27,7 @@ namespace SAB.Unit.Combat
 
             HitBoxes = hitBoxes;
             OnHitFlowStep = flowStep;
+            CollisionLogics = collisionLogics;
         }
     }
 }
