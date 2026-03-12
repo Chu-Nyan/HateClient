@@ -9,20 +9,18 @@ public class UnitController
 {
     public enum Oner { Player, AI, None }
 
-    private CharacterGenerator _actorGenerator;
     private AgentController _controller;
 
     public UnitController(Transform gameObj)
     {
-        _actorGenerator = new();
         _controller = gameObj.AddComponent<AgentController>();
     }
 
-    public Character GenerateCharacter(UnitType type, Vector3 respawn, CustomizingData customizingData)
+    public Character GenerateCharacter(int id, Vector3 respawn, CustomizingData customizingData)
     {
-        var unit = _actorGenerator
+        var unit = CharacterGenerator.Instance
             .Ready(respawn)
-            .SetData(type)
+            .SetData(id)
             .SetCustomizing(customizingData)
             .Release();
 

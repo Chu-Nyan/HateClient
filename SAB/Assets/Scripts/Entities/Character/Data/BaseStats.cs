@@ -2,9 +2,17 @@
 {
     public class BaseStats
     {
-        public UnitType Type;
-        public TextID NameID;
-        public TextID DescID;
-        public float[] Stats;
+        public readonly int ID;
+        public readonly TextID NameID;
+        public readonly TextID DescID;
+        public readonly float[] Stats;
+
+        public BaseStats(int iD, TextID nameID, TextID descID, float[] stats)
+        {
+            ID = iD;
+            NameID = nameID;
+            DescID = descID;
+            Stats = stats;
+        }
     }
 }

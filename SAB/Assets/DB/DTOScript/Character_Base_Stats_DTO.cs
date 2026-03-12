@@ -1,6 +1,6 @@
 public struct Character_Base_Stats_DTO
 {
-	 public UnitType Type;
+	 public int ID;
 	 public TextID Name;
 	 public TextID Desc;
 	 public float HP;

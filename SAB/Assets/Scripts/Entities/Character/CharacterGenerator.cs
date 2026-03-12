@@ -1,19 +1,21 @@
 ﻿using Chu.Utility;
+using SAB.DataManger;
 using SAB.Unit;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterGenerator
+public class CharacterGenerator : Singleton<CharacterGenerator>
 {
-    private Dictionary<UnitType, BaseStats> _unitDatas;
+    private readonly Dictionary<int, BaseStats> _unitDatas;
+
     private IDNumbering _numbering;
     private Character _new;
     private bool _canRelease;
 
-    public CharacterGenerator()
+    public CharacterGenerator(DataBase db)
     {
-        _unitDatas = AssetManager.DeserializeJsonSync<Dictionary<UnitType, BaseStats>>(Const.Asset_Data_CharacterData);
+        _unitDatas = db.CharacterRepo.CharacterBaseData;
         _numbering = new IDNumbering();
     }
 
@@ -26,9 +28,9 @@ public class CharacterGenerator
         return this;
     }
 
-    public CharacterGenerator SetData(UnitType type)
+    public CharacterGenerator SetData(int id)
     {
-        _new.SetupStats(_unitDatas[type]);
+        _new.SetupStats(_unitDatas[id]);
 
         return this;
     }

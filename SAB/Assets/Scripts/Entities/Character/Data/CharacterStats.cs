@@ -1,6 +1,4 @@
-﻿using SAB.Unit;
-
-namespace SAB.Unit
+﻿namespace SAB.Unit
 {
     public enum StatType
     {

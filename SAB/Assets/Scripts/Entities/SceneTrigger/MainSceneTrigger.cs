@@ -38,6 +38,7 @@ public class GameSceneTrigger : MonoBehaviour
 
         new AIGenerator();
         new SkillObjectFactory();
+        new CharacterGenerator(DataBase.Instance);
         new SkillGenerator(DataBase.Instance);
         new ItemFactory();
     }
@@ -72,19 +73,18 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void SetPracticeScene()
     {
-        _player = _unitController.GenerateCharacter(UnitType.Human, new Vector3(50, 0, 50), new CustomizingData(1, 1, 1, 1));
+        _player = _unitController.GenerateCharacter(1, new Vector3(50, 0, 50), new CustomizingData(1, 1, 1, 1));
         _unitController.BindRecevier(_player, UnitController.Oner.Player, true);
 
         var weapon = ItemFactory.Instance.GenerateItem(1);
         var armor = ItemFactory.Instance.GenerateItem(7);
         var shield = ItemFactory.Instance.GenerateItem(16);
 
-
         _player.Equip(weapon as IHasEquipmentData);
         _player.Equip(armor as IHasEquipmentData);
         _player.Equip(shield as IHasEquipmentData);
 
-        var _npc = _unitController.GenerateCharacter(UnitType.Mimic, new Vector3(50, 0, 50), new CustomizingData(2, 1, 1, 1));
+        var _npc = _unitController.GenerateCharacter(2, new Vector3(50, 0, 50), new CustomizingData(2, 1, 1, 1));
         _unitController.BindRecevier(_npc, UnitController.Oner.AI, true);
 
         _topViewCam.StickCameraArm(_player.transform);

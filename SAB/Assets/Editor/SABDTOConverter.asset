@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d44f07b8e0d4564d871db12abe4e9cf, type: 3}
   m_Name: SABDTOConverter
   m_EditorClassIdentifier: 
-  _characterCommon: {fileID: 4900000, guid: 2e1620617ed87244cb9a431ab88d872b, type: 3}
+  _characterCommon: {fileID: 4900000, guid: b6377609b0cd0b14ab05931c26084ac5, type: 3}
   _characterDBGeneratePath: Assets/DB

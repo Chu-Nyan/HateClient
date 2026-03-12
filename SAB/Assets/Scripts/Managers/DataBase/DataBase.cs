@@ -7,10 +7,12 @@ namespace SAB.DataManger
     public class DataBase : Singleton<DataBase>
     {
         public readonly SkillRepository SkillRepo;
+        public readonly CharacterRepository CharacterRepo;
 
         public DataBase()
         {
             SkillRepo = new SkillRepository();
+            CharacterRepo = new CharacterRepository();
         }
 
         public static  Dictionary<K, V[]> DeserializeArrayByKey<TDTO, K, V>(TDTO[] dtos, Func<TDTO, K> keySelector, Func<TDTO, V> converter)
