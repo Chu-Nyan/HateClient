@@ -61,15 +61,14 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _stats = new CharacterStats();
         _stateContext = new StateContext();
         CircleShape shape = ShapeFactory.Instance.Generate<CircleShape>();
-        shape.Setup(new CircleRangeData(Vector2.zero, 1));
-        _body = new(_instanceID, transform, shape);
+        shape.Setup(new CircleRangeData(Vector2.one, 1));
+        _body = new(_instanceID, this, transform, shape);
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();
         _animator = new CharacterAnimator(GetComponent<Animator>());
         _equipmentSys = new();
 
-        _body.RegisterOnSkillHit(Defend);
         _state.Setup(_stateContext);
         _animator.RegisterAnimationEvent(AniState.Attack, "AttackFinished", new AniEventData(), 1, a => _stateContext.IsAttacking = false);
         _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSystem.AttackWithAnimator);
@@ -79,7 +78,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     {
         StateUpdate();
         if (_stateContext.IsMoveing == true)
-            _body.RefreshTransform();
+            _body.Collider.RefreshTransform();
 
         _state.Tick(_stateContext);
         _combatSystem.Tick();
@@ -143,9 +142,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _animator.ChangeEventData(AniState.Attack, "BasicAttack", data);
     }
 
-    public void Defend(AttackContext context)
+    public void Defend(AttackContext attack, HitResult hit)
     {
-        _defenseSystem.Attack(context);
+        _defenseSystem.Attack(attack, hit);
 
         if (_stats.IsDead == true)
             Die();

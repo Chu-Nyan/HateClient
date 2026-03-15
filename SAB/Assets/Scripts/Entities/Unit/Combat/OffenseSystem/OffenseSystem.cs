@@ -54,7 +54,6 @@ namespace SAB.Unit.Combat
             var dir = targetPoint - _origin.position;
             dir.y = 0f;
             dir.Normalize();
-            Debug.Log(dir);
             SkillObjectFactory.Instance.Set(_instigatorID, context, _origin.position, dir);
             // 계획
             // 스킬의 DB를 읽어보고 원거리, 근거리

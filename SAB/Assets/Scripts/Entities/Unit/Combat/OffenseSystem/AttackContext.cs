@@ -8,11 +8,13 @@ public struct AttackContext
 {
     public SkillData SkillData;
     public NyanLayerMask Mask;
+
     public float Damage;
 
     public AttackContext(SkillData data, NyanLayerMask mask, float damage)
     {
         SkillData = data;
+
         Mask = mask;
         Damage = damage;
     }

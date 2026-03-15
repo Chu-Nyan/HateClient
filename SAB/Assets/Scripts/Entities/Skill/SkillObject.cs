@@ -32,13 +32,13 @@ namespace SAB.Unit.Combat
         {
             _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
                 .GenerateCollider(this, $"스킬 투사체")
-                .GetCollider(false);
+                .GetCollider(true);
         }
 
         private void Update()
         {
             var logics = Context.SkillData.CollisionLogics;
-            if (_timer <= logics[_logicStep].ActiveTime)
+            if (_timer > logics[_logicStep].ActiveTime)
             {
                 _logicStep++;
                 if (_logicStep < logics.Length)
@@ -102,10 +102,16 @@ namespace SAB.Unit.Combat
             transform.rotation = Quaternion.LookRotation(_dir);
         }
 
-        public void OnNyanCollisionEnter(INyanCollisionProvider collider)
+        public void OnNyanCollisionEnter(INyanCollisionProvider provider)
         {
             // 충돌 처리
-            Debug.Log(collider.Collider.Comment + " 충돌");
+            if (provider.Collider.Layer == NyanLayer.Unit)
+            {
+                var acter = provider as IDefendable;
+                acter.Defend(_context, new HitResult(_logicStep));
+
+            }
+            Debug.Log(provider.Collider.Comment + " 충돌");
         }
 
         public void OnNyanCollisionExit(INyanCollisionProvider collider)

@@ -114,15 +114,17 @@ namespace Chu.Collision
                 value = false;
 
             _isActive = value;
-            if (_isActive == true)
-                _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
             EnabledChanged?.Invoke(this);
         }
 
         public void RefreshTransform()
         {
-            _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
             PositionChanged?.Invoke(this);
+        }
+
+        public void UpdateAABB()
+        {
+            _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
         }
 
         public bool Intersects(IShape shape)

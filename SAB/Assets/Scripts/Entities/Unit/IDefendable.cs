@@ -3,5 +3,5 @@
 /// </summary>
 public interface IDefendable
 {
-    public void Defend(AttackContext context);
+    public void Defend(AttackContext context, HitResult hit);
 }

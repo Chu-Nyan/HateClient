@@ -38,13 +38,13 @@ namespace SAB.Unit.Combat
             return skill;
         }
 
-        public SkillSequence GenerateSequence(AttackContext context)
+        public SkillSequence GenerateSequence(AttackContext context, HitResult hit)
         {
-            var data = context.SkillData;
+            var onHitStep = context.SkillData.CollisionLogics[hit.LogicID].OnHitSteps;
             var list = new List<ISkillStep>();
-            for (int i = 0; i < data.OnHitFlowStep.Length; i++)
+            for (int i = 0; i < onHitStep.Length; i++)
             {
-                list.Add(GenerateStep(data.OnHitFlowStep[i], context));
+                list.Add(GenerateStep(onHitStep[i], context));
             }
 
             var sequence = new SkillSequence();

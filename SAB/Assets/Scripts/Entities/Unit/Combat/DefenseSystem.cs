@@ -10,9 +10,9 @@ public class DefenseSystem
         _sequences = new();
     }
 
-    public void Attack(AttackContext context)
+    public void Attack(AttackContext context, HitResult hit)
     {
-        SkillSequence sequence = SkillGenerator.Instance.GenerateSequence(context);
+        SkillSequence sequence = SkillGenerator.Instance.GenerateSequence(context,hit);
         _sequences.Add(sequence);
     }
 

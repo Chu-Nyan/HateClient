@@ -1,17 +1,15 @@
 ﻿using Chu;
 using Chu.Collision;
 using Chu.Collision.Layer;
-using SAB.Unit.Combat;
-using System;
 using UnityEngine;
 
-public class CharacterBody : INyanCollisionProvider
+public class CharacterBody : INyanCollisionProvider, IDefendable
 {
     private const NyanLayer _layer = NyanLayer.Unit;
 
+    private IDefendable _hitReceiver;
     private Transform _transform;
     private NyanCollider _collider;
-    private event Action<AttackContext> _onHit;
 
     public Transform transform
     {
@@ -23,9 +21,10 @@ public class CharacterBody : INyanCollisionProvider
         get => _collider;
     }
 
-    public CharacterBody(int instigatorID, Transform transform, IShape body)
+    public CharacterBody(int instigatorID, IDefendable hitReceiver, Transform transform, IShape body)
     {
         _transform = transform;
+        _hitReceiver = hitReceiver;
         var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
 
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
@@ -34,31 +33,18 @@ public class CharacterBody : INyanCollisionProvider
             .SetLayer(_layer, mask)
             .SetInstigatorID(instigatorID)
             .GetCollider(true);
-
-        _collider.SetActive(true);
     }
 
     public void OnNyanCollisionEnter(INyanCollisionProvider provider)
     {
-        if (provider.Collider.Layer == NyanLayer.Projectile)
-        {
-            var handler = provider as IAttackContextProvider;
-            AttackContext excutor = handler.Context;
-            _onHit?.Invoke(excutor);
-        }
     }
 
     public void OnNyanCollisionExit(INyanCollisionProvider provider)
     {
     }
 
-    public void RegisterOnSkillHit(Action<AttackContext> action)
+    public void Defend(AttackContext context, HitResult hit)
     {
-        _onHit += action;
-    }
-
-    public void RefreshTransform()
-    {
-        _collider.RefreshTransform();
+        _hitReceiver.Defend(context, hit);
     }
 }

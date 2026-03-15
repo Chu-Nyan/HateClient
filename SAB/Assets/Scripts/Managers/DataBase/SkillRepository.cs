@@ -70,13 +70,13 @@ namespace SAB.DataManger
             CollisionLogicByID = DataBase.DeserializeArrayByKey(
                 dtos: AssetManager.DeserializeJsonSync<SkillCollisionLogicDto[]>(CollisionLogic),
                 keySelector: dto => dto.ID,
-                converter: dto => new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID])
+                converter: dto => new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID], FlowStepByID[dto.FlowStepID])
                 );
 
             SkillByID = DataBase.DeserializeObjectByKey(
                 dtos: AssetManager.DeserializeJsonSync<SkillBaseDto[]>(SkillDataPath),
                 keySelector: dto => dto.ID,
-                converter: dto => new SkillData(dto, FlowStepByID[dto.FlowStepID], CollisionLogicByID[dto.ObjectLogicID])
+                converter: dto => new SkillData(dto, CollisionLogicByID[dto.ObjectLogicID])
                 );
         }
 

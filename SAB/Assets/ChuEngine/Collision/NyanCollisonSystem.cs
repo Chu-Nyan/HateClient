@@ -13,6 +13,7 @@ namespace Chu.Collision
     {
         private QuadTree<NyanCollider> _root;
 
+        private HashSet<int> _dirtyObjects;
         private HashSet<int> _frameChecked;
         private HashSet<int> _candidateChecked;
         private Queue<CollisionInfo> _collisionInfoQueue;
@@ -23,6 +24,8 @@ namespace Chu.Collision
         /// </summary>
         public void InitArray(int capacity)
         {
+            // todo: 생성자로 빼기
+            _dirtyObjects = new (capacity);
             _candidateChecked = new(capacity);
             _collisionInfoQueue = new(capacity);
             _frameChecked = new(capacity);
@@ -41,8 +44,18 @@ namespace Chu.Collision
         {
             // 충돌 실행
             _frameChecked.Clear();
-            if (_collisionInfoQueue.Count == 0)
-                return;
+            foreach (var dirtyObj in _dirtyObjects)
+            {
+                _collidersByID[dirtyObj].UpdateAABB();
+                Insert(_collidersByID[dirtyObj]);
+            }
+
+            foreach (var dirtyObj in _dirtyObjects)
+            {
+                CheckCollision(_collidersByID[dirtyObj]);
+            }
+
+            _dirtyObjects.Clear();
 
             foreach (var info in _collisionInfoQueue)
             {
@@ -85,14 +98,19 @@ namespace Chu.Collision
         {
             if (collider.IsActive == true)
             {
-                collider.RegisterPositionChanged(Insert);
+                collider.RegisterPositionChanged(MarkAsDirty);
                 Insert(collider);
             }
             else // false
             {
-                collider.UnregisterPositionChanged(Insert);
+                collider.UnregisterPositionChanged(MarkAsDirty);
                 Remove(collider);
             }
+        }
+
+        private void MarkAsDirty(NyanCollider obj)
+        {
+            _dirtyObjects.Add(obj.InstanceID);
         }
 
         private void Insert(NyanCollider obj)
@@ -104,14 +122,12 @@ namespace Chu.Collision
                 {
                     if (_root.GetNode(item).IsFullyInside(obj.RectBound) == true)
                     {
-                        CheckCollision(obj);
                         return;
                     }
                 }
             }
 
             _root.Insert(obj);
-            CheckCollision(obj);
         }
 
         private void Remove(NyanCollider obj)
@@ -142,6 +158,11 @@ namespace Chu.Collision
             }
         }
 
+        /// <summary>
+        /// 두 오브젝트의 충돌 여부 판단 후 충돌 큐에 추가
+        /// </summary>
+        /// <param name="primary">주체</param>
+        /// <param name="candidate">대상</param>
         private void CheckCollisionState(NyanCollider primary, NyanCollider candidate)
         {
             if (primary.InstigatorID == candidate.InstigatorID)
