@@ -104,6 +104,7 @@ namespace Chu.Collision
             else // false
             {
                 collider.UnregisterPositionChanged(MarkAsDirty);
+                _dirtyObjects.Remove(collider.InstanceID);
                 Remove(collider);
             }
         }

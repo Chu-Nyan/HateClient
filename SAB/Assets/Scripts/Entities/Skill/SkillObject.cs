@@ -45,7 +45,7 @@ namespace SAB.Unit.Combat
                     ChangeShape(_logicStep);
                 else
                 {
-                    gameObject.SetActive(false);
+                    SetActive(false);
                     return;
                 }
             }
@@ -82,6 +82,9 @@ namespace SAB.Unit.Combat
 
         public void SetActive(bool value)
         {
+            if (gameObject.activeSelf == value)
+                return;
+
             gameObject.SetActive(value);
             _nyanCollider.SetActive(value);
         }
