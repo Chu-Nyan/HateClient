@@ -82,9 +82,6 @@ namespace SAB.Unit.Combat
 
         public void SetActive(bool value)
         {
-            if (gameObject.activeSelf == value)
-                return;
-
             gameObject.SetActive(value);
             _nyanCollider.SetActive(value);
         }
