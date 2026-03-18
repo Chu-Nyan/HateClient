@@ -3,7 +3,9 @@ using SAB.DataManger;
 using SAB.EntityAgent.AI;
 using SAB.Item;
 using SAB.Unit.Combat;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameSceneTrigger : MonoBehaviour
 {
@@ -22,7 +24,6 @@ public class GameSceneTrigger : MonoBehaviour
 
         InitStatic();
         InitInstance();
-        GameStart();
     }
 
     private void StartChuEngine()
@@ -41,6 +42,7 @@ public class GameSceneTrigger : MonoBehaviour
         new CharacterGenerator(DataBase.Instance);
         new SkillGenerator(DataBase.Instance);
         new ItemFactory(DataBase.Instance);
+        StartCoroutine(LoadMap("Scene_Forest"));
     }
 
     private void GenerateInstance()
@@ -88,5 +90,19 @@ public class GameSceneTrigger : MonoBehaviour
         _unitController.BindRecevier(_npc, UnitController.Oner.AI, true);
 
         _topViewCam.StickCameraArm(_player.transform);
+    }
+
+    private IEnumerator LoadMap(string name)
+    {
+        AsyncOperation op = SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
+
+        yield return op.isDone; // 🔥 로드 완료까지 대기
+
+        Debug.Log("씬 로드 완료");
+
+        Scene scene = SceneManager.GetSceneByName(name);
+        SceneManager.SetActiveScene(scene);
+
+        GameStart(); // 여기서 안전하게 시작
     }
 }
