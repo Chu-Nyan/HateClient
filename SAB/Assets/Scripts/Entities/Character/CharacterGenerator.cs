@@ -22,8 +22,8 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
     public CharacterGenerator Ready(Vector3 respawn)
     {
         _new = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
-        _new.transform.position = respawn;
         _new.Init(_numbering.GetID());
+        _new.SetPositionWithNavMash(respawn);
         _canRelease = true;
         return this;
     }

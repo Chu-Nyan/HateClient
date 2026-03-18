@@ -1,6 +1,7 @@
 ﻿using Chu.AI;
 using Chu.Art;
 using Chu.Collision;
+using SAB.EntityAgent;
 using SAB.Item;
 using SAB.Unit;
 using SAB.Unit.Combat;
@@ -112,6 +113,14 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
             return;
 
         _nav.SetDestination(destination);
+    }
+
+    public void SetPositionWithNavMash(Vector3 position)
+    {
+        if (NavMesh.SamplePosition(position, out var hit, 2f, NavMesh.AllAreas))
+        {
+            _nav.Warp(hit.position);
+        }
     }
 
     public void StopMovement()
