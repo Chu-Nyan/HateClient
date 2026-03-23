@@ -75647,12 +75647,12 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: db412fe0a5c6e7e4092801137eae6ddf, type: 2}
-  m_TreeDistance: 0
+  m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 400
-  m_DetailObjectDensity: 0.5
+  m_DetailObjectDistance: 1000
+  m_DetailObjectDensity: 1
   m_HeightmapPixelError: 17
   m_SplatMapDistance: 100
   m_HeightmapMinimumLODSimplification: 0
@@ -98506,6 +98506,56 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946856366}
   m_Mesh: {fileID: 3023671693195099197, guid: 3ebf65d3a6489594ca09a35d85d43b0a, type: 3}
+--- !u!1 &947072948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947072950}
+  - component: {fileID: 947072949}
+  m_Layer: 0
+  m_Name: GrassRenderer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &947072949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947072948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef506905727602c4a9aa64b17a13c226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _terrain: {fileID: 706184481}
+  _grassMaterial: {fileID: 2100000, guid: 76ef7e3a05c197a4ca75eadeb25e8c48, type: 2}
+  _grassMesh: {fileID: -1507585806025751008, guid: a8a66a89963935b4e966c8e617de4cb3, type: 3}
+  _seed: zz
+  _grassMinDistance: 1.5
+  _densityWeight: 87
+--- !u!4 &947072950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947072948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947503561
 GameObject:
   m_ObjectHideFlags: 0
@@ -192651,7 +192701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1817709319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228956,3 +229006,4 @@ SceneRoots:
   - {fileID: 796957850}
   - {fileID: 322294366}
   - {fileID: 1817709322}
+  - {fileID: 947072950}
