@@ -84585,7 +84585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &796957850
 Transform:
   m_ObjectHideFlags: 0
@@ -98539,8 +98539,8 @@ MonoBehaviour:
   _grassMaterial: {fileID: 2100000, guid: 76ef7e3a05c197a4ca75eadeb25e8c48, type: 2}
   _grassMesh: {fileID: -1507585806025751008, guid: a8a66a89963935b4e966c8e617de4cb3, type: 3}
   _seed: zz
-  _grassMinDistance: 1.5
-  _densityWeight: 87
+  _grassMinDistance: 0.75
+  _densityWeight: 50
 --- !u!4 &947072950
 Transform:
   m_ObjectHideFlags: 0
