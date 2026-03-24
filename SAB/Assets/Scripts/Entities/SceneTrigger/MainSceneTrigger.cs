@@ -42,6 +42,7 @@ public class GameSceneTrigger : MonoBehaviour
         new CharacterGenerator(DataBase.Instance);
         new SkillGenerator(DataBase.Instance);
         new ItemFactory(DataBase.Instance);
+        new UIManager();
         StartCoroutine(LoadMap("Scene_Forest"));
     }
 
@@ -65,6 +66,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void GameStart()
     {
         SetPracticeScene();
+        UIManager.Instance.GetUI<DialogueUI>();
     }
 
     private void InitText(string lang)
