@@ -15,9 +15,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (_baseUIByID.TryGetValue(typeof(T), out var ui) == false)
         {
-            ui = new T();
-            var view = AssetManager.GenerateLoadAssetSync<DialogueUIView>(ui.ViewAssetPath);
-            ui.Init(view);
+            ui = AssetManager.GenerateLoadAssetSync<SpeechBubbleUI>(typeof(T).ToString());
             _baseUIByID[typeof(T)] = ui;
         }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 1ce80f895d529c44590a4380d0493771
   m_SerializeEntries:
   - m_GUID: 6c281ae74bb5b45468f6991dd7703752
-    m_Address: DialogueUIView
+    m_Address: SpeechBubbleUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

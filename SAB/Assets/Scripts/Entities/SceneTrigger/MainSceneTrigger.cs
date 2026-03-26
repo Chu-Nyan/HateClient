@@ -66,7 +66,6 @@ public class GameSceneTrigger : MonoBehaviour
     private void GameStart()
     {
         SetPracticeScene();
-        UIManager.Instance.GetUI<DialogueUI>();
     }
 
     private void InitText(string lang)
