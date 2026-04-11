@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chu.Utility.UnityHelper;
+using System;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -9,22 +10,22 @@ namespace Chu.Collision
         public ShapeType Type;
         public float OffsetX;
         public float OffsetY;
-        private float _param1;
-        private float _param2;
+        public float Param1;
+        public float Param2;
 
-        public float Radius
+        public readonly float Radius
         {
-            get => _param1;
+            get => Param1;
         }
 
-        public float Width
+        public readonly float Width
         {
-            get => _param1;
+            get => Param1;
         }
 
-        public float Height
+        public readonly float Height
         {
-            get => _param2;
+            get => Param2;
         }
 
         public ShapeParam(ShapeType type, float offsetX, float offsetY, float param1, float param2)
@@ -35,11 +36,11 @@ namespace Chu.Collision
             Type = type;
             OffsetX = offsetX;
             OffsetY = offsetY;
-            _param1 = param1;
-            _param2 = param2;
+            Param1 = param1;
+            Param2 = param2;
         }
 
-        public RectRangeData GetRectData()
+        public readonly RectRangeData GetRectData()
         {
             if (Type != ShapeType.Rectangle)
                 Debug.LogWarning("지정된 타입과 호환되지 않는 데이터를 사용 중");
@@ -47,12 +48,27 @@ namespace Chu.Collision
             return new RectRangeData(new Vector2(OffsetX, OffsetY), 0, Width, Height);
         }
 
-        public CircleRangeData GetCircleData()
+        public readonly CircleRangeData GetCircleData()
         {
-            if (Type != ShapeType.Rectangle)
+            if (Type != ShapeType.Circle)
                 Debug.LogWarning("지정된 타입과 호환되지 않는 데이터를 사용 중");
 
             return new CircleRangeData(new Vector2(OffsetX, OffsetY), Radius);
+        }
+
+        public readonly void DrawGizmo(Vector3 anchor, Quaternion quaternion)
+        {
+            Vector3 center = new(anchor.x + OffsetX, anchor.y, anchor.z + OffsetY);
+
+            Gizmos.color = Color.yellow;
+            if (Type == ShapeType.Rectangle)
+            {
+                GizmoDrawer.DrawRectangle(center, Width, Height, quaternion);
+            }
+            else if (Type == ShapeType.Circle)
+            {
+                GizmoDrawer.DrawCircle(center, Radius);
+            }
         }
 
         public static IShape GetShape(ShapeParam[] data)
