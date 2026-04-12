@@ -99,7 +99,7 @@ namespace Chu.Collision
             if (collider.IsActive == true)
             {
                 collider.RegisterPositionChanged(MarkAsDirty);
-                Insert(collider);
+                MarkAsDirty(collider);
             }
             else // false
             {

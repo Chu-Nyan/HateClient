@@ -24,21 +24,6 @@ namespace Chu.Data
             HalfY = (maxY - minY) * 0.5f;
         }
 
-        public RectBound(Vector2[] radius, Vector2 pos)
-        {
-            Vector2 center = pos;
-            Vector2 r0 = radius[0];
-            Vector2 r1 = radius[1];
-
-            MinX = center.x - Mathf.Abs(r0.x) - Mathf.Abs(r1.x);
-            MaxX = center.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x);
-            MinY = center.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y);
-            MaxY = center.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y);
-
-            HalfX = (MaxX - MinX) * 0.5f;
-            HalfY = (MaxY - MinY) * 0.5f;
-        }
-
         private void SetBound(float minX, float maxX, float minY, float maxY)
         {
             MinX = minX;
@@ -66,11 +51,6 @@ namespace Chu.Data
                      center.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x),
                      center.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y),
                      center.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y));
-        }
-
-        public void RefreshAABB(Vector2[] radius)
-        {
-            RefreshAABB(Center, radius);
         }
 
         // 내부에 target이 완벽하게 포함되는가?

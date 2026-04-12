@@ -2,6 +2,7 @@
 using Chu.Data;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chu.Collision
 {
@@ -124,7 +125,9 @@ namespace Chu.Collision
 
         public void UpdateAABB()
         {
-            _shape.UpdateAABB(_provider.transform.position, _provider.transform.eulerAngles.y);
+            Vector3 v3 = _provider.transform.position;
+            Vector2 v2 = new Vector2(v3.x, v3.z);
+            _shape.UpdateAABB(v2, _provider.transform.eulerAngles.y);
         }
 
         public bool Intersects(IShape shape)
