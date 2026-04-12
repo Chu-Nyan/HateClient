@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterBody : INyanCollisionProvider, IDefendable
 {
-    private const NyanLayer _layer = NyanLayer.Unit;
+    private const NyanLayer _npcLayer = NyanLayer.NPCUnit;
 
     private IDefendable _hitReceiver;
     private Transform _transform;
@@ -30,7 +30,7 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
             .GenerateCollider(this, "캐릭터 바디")
             .SetShape(body)
-            .SetLayer(_layer, mask)
+            .SetLayer(_npcLayer, mask)
             .SetInstigatorID(instigatorID)
             .GetCollider(true);
     }

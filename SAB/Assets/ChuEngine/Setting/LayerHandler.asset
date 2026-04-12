@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layer:
   - Defalut
-  - Unit
+  - NPCUnit
   - Projectile
   - UnitSensor
   - 
-  - 
+  - PlayerUnit
   - 
   - 
   - 

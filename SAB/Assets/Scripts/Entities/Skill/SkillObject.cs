@@ -104,13 +104,12 @@ namespace SAB.Unit.Combat
 
         public void OnNyanCollisionEnter(INyanCollisionProvider provider)
         {
-            // 충돌 처리
-            if (provider.Collider.Layer == NyanLayer.Unit)
+            if (((int)provider.Collider.Layer & Const.Layer_Unit) != 0)
             {
                 var acter = provider as IDefendable;
                 acter.Defend(_context, new HitResult(_logicStep));
-
             }
+
             Debug.Log(provider.Collider.Comment + " 충돌");
         }
 

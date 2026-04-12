@@ -6,8 +6,10 @@ namespace Chu.Collision
 	 public enum NyanLayer
 	{
 		Defalut = 1 << 0,
-		Unit = 1 << 1,
+		NPCUnit = 1 << 1,
 		Projectile = 1 << 2,
 		UnitSensor = 1 << 3,
+		PlayerUnit = 1 << 4,
+		TriggerZone = 1 << 5,
 	}
 }

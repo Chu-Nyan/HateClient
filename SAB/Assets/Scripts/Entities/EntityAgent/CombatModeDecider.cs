@@ -40,7 +40,7 @@ namespace SAB.EntityAgent
             {
                 var shape = ShapeFactory.Instance.Generate<CircleShape>();
                 shape.Setup(new CircleRangeData(Vector2.zero, 1));
-                var mask = new NyanLayerMask(NyanLayer.Unit);
+                var mask = new NyanLayerMask(NyanLayer.PlayerUnit, NyanLayer.NPCUnit);
                 _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
                     .GenerateCollider(this, "전투 판정")
                     .SetShape(shape)
@@ -80,13 +80,13 @@ namespace SAB.EntityAgent
         public void OnNyanCollisionEnter(INyanCollisionProvider provider)
         {
             // 적일 경우만 처리
-            if (provider.Collider.Layer == NyanLayer.Unit)
+            if (((int)provider.Collider.Layer | Const.Layer_Unit) != 0)
                 _enemiesInRange++;
         }
 
         public void OnNyanCollisionExit(INyanCollisionProvider provider)
         {
-            if (provider.Collider.Layer == NyanLayer.Unit)
+            if (((int)provider.Collider.Layer | Const.Layer_Unit) != 0)
                 _enemiesInRange--;
         }
     }

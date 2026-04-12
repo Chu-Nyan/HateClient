@@ -50,13 +50,11 @@ namespace SAB.Unit.Combat
 
         private void Attack(float damage, int index, Vector3 targetPoint)
         {
-            var context = new AttackContext(SkillList[index].Data, new NyanLayerMask(NyanLayer.Unit), damage);
+            var context = new AttackContext(SkillList[index].Data, new NyanLayerMask(Const.Layer_Unit), damage);
             var dir = targetPoint - _origin.position;
             dir.y = 0f;
             dir.Normalize();
             SkillObjectFactory.Instance.Set(_instigatorID, context, _origin.position, dir);
-            // 계획
-            // 스킬의 DB를 읽어보고 원거리, 근거리
         }
 
         public AniEventData TriggerAttackAndGetAniEventData(float damage, int index, Vector3 targetPoint)
