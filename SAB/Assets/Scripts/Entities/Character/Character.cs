@@ -1,6 +1,7 @@
 ﻿using Chu.AI;
 using Chu.Art;
 using Chu.Collision;
+using Chu.Collision.Layer;
 using SAB.EntityAgent;
 using SAB.Item;
 using SAB.Unit;
@@ -202,5 +203,10 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _animator.ChangeStance(stance);
         float BasicAttackTimeing = 0.5f;// 무기 데이터에서 추출할 것
 
+    }
+
+    public void OnOwnerChanged(BrainType type)
+    {
+        _body.OnOwnerChanged(type == BrainType.Player);
     }
 }

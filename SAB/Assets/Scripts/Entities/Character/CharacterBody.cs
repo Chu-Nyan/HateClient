@@ -47,4 +47,14 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
     {
         _hitReceiver.Defend(context, hit);
     }
+
+    public void OnOwnerChanged(bool isPlayer)
+    {
+        int maskNumber = (int)NyanLayer.Projectile | (int)NyanLayer.UnitSensor;
+        if (isPlayer == true)
+            maskNumber |= (int)NyanLayer.TriggerZone;
+
+        NyanLayer layer = isPlayer == true ? NyanLayer.PlayerUnit : _npcLayer;
+        _collider.SetLayer(layer, new NyanLayerMask(maskNumber));
+    }
 }

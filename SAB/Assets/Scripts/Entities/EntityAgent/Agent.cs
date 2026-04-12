@@ -54,6 +54,7 @@
                 SetMovementReceiver(movement);
 
             _receiverID = receiver.ReceiverID;
+            receiver.OnOwnerChanged(_behaviorStrategy.BrainType);
         }
 
         private void SetActionReceiver(IOffenseReceiver receiver)
