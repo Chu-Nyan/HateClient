@@ -8,4 +8,5 @@ public static class Const
 
     // LayerGroup
     public const int Layer_Unit = (int)NyanLayer.PlayerUnit | (int)NyanLayer.NPCUnit;
+    public const int Layer_AdditionalPlayerUnit = (int)NyanLayer.TriggerZone;
 }
