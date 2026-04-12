@@ -17,6 +17,11 @@ namespace SAB.EntityAgent.AI
         private readonly CombatModeDecider _combatModeDecider;
         private AIContext _context;
 
+        public BrainType BrainType
+        {
+            get => BrainType.AI;
+        }
+
         public AIBrain(BehaviorAI<AIContext> brain)
         {
             _decider = brain;

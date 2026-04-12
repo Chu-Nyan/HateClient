@@ -5,6 +5,8 @@
     /// </summary>
     public interface IBrainStrategy
     {
+        public BrainType BrainType { get; }
+
         public void Enable();
         public void Disable();
         public void SetMovementReceiver(IMovementReceiver receiver);

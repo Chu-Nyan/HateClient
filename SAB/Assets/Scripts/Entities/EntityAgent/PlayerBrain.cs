@@ -13,6 +13,11 @@ namespace SAB.EntityAgent
         private Vector2 _direction;
         private bool _isMoving;
 
+        public BrainType BrainType
+        {
+            get => BrainType.Player;
+        }
+
         public PlayerBrain()
         {
             _combatModeDecider = new();
