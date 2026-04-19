@@ -1,5 +1,6 @@
 ﻿using Chu;
 using Chu.Collision;
+using Chu.Utility.UnityHelper;
 using UnityEngine;
 
 namespace SAB.Unit.Combat
@@ -52,7 +53,7 @@ namespace SAB.Unit.Combat
 
             _timer += Time.deltaTime;
             transform.position += logics[_logicStep].Speed * Time.deltaTime * transform.forward;
-            _nyanCollider.RefreshTransform();
+            _nyanCollider.SetTransform(transform.position, transform.eulerAngles.y);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -100,6 +101,7 @@ namespace SAB.Unit.Combat
             _dir = dir;
             _timer = 0f;
             transform.rotation = Quaternion.LookRotation(_dir);
+            _nyanCollider.SetTransform(start, transform.eulerAngles.y);
         }
 
         public void OnNyanCollisionEnter(INyanCollisionProvider provider)

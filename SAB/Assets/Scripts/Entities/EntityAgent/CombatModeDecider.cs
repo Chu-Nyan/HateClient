@@ -10,17 +10,11 @@ namespace SAB.EntityAgent
         private const float _searchRange = 5;
         private const float _waitTime = 5;
 
-        private Transform _transform;
         private NyanCollider _collider;
 
         private int _enemiesInRange;
         private float _offTimer;
         private bool _isActivate;
-
-        public Transform transform
-        {
-            get => _transform;
-        }
 
         public NyanCollider Collider
         {
@@ -32,10 +26,8 @@ namespace SAB.EntityAgent
             get => _isActivate;
         }
 
-        public void Setup(Transform origin, int instigatorID)
+        public void Setup(int instigatorID)
         {
-            _transform = origin;
-
             if (_collider == null)
             {
                 var shape = ShapeFactory.Instance.Generate<CircleShape>();
@@ -54,7 +46,7 @@ namespace SAB.EntityAgent
 
         public void TickForExit(float time)
         {
-            _collider.RefreshTransform(); // TODO : 캐릭터에 이벤트 추가하기
+            //_collider.RefreshTransform(); // TODO : 캐릭터에 이벤트 추가하기
             if (_enemiesInRange > 0)
             {
                 _offTimer = 0;

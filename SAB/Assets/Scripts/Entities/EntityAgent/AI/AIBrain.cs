@@ -68,7 +68,9 @@ namespace SAB.EntityAgent.AI
         public void SetCombatReceiver(IOffenseReceiver receiver)
         {
             _context.CombatReceiver = receiver;
-            _combatModeDecider.Setup(receiver.transform, receiver.InstanceID);
+            _combatModeDecider.Setup(receiver.InstanceID);
+
+            // TODO : 캐릭터로 옮기기
         }
 
         public void SetMovementReceiver(IMovementReceiver receiver)

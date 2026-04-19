@@ -8,31 +8,30 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
     private const NyanLayer _npcLayer = NyanLayer.NPCUnit;
 
     private IDefendable _hitReceiver;
-    private Transform _transform;
     private NyanCollider _collider;
-
-    public Transform transform
-    {
-        get => _transform;
-    }
 
     public NyanCollider Collider
     {
         get => _collider;
     }
 
-    public CharacterBody(int instigatorID, IDefendable hitReceiver, Transform transform, IShape body)
+    public CharacterBody(int instigatorID, Vector2 pos, float euler, IDefendable hitReceiver, IShape body)
     {
-        _transform = transform;
         _hitReceiver = hitReceiver;
         var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
 
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
             .GenerateCollider(this, "캐릭터 바디")
             .SetShape(body)
+            .SetTransform(pos, euler)
             .SetLayer(_npcLayer, mask)
             .SetInstigatorID(instigatorID)
             .GetCollider(true);
+    }
+
+    public void OnPositionChanged(Vector2 pos, float euler)
+    {
+        _collider.SetTransform(pos, euler);
     }
 
     public void OnNyanCollisionEnter(INyanCollisionProvider provider)

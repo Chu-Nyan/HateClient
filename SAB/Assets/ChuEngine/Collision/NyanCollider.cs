@@ -1,5 +1,6 @@
 ﻿using Chu.Collision.Layer;
 using Chu.Data;
+using Chu.Utility.UnityHelper;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,10 @@ namespace Chu.Collision
         private readonly INyanCollisionProvider _provider;
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
+
         private int _instigatorID;
         private IShape _shape;
+        private Pose2D _pose2D;
 
         private NyanLayer _layer;
         private NyanLayerMask _mask;
@@ -118,16 +121,20 @@ namespace Chu.Collision
             EnabledChanged?.Invoke(this);
         }
 
-        public void RefreshTransform()
+        public void SetTransform(Pose2D pose)
         {
+            _pose2D = pose;
             PositionChanged?.Invoke(this);
+        }
+
+        public void SetTransform(Vector2 pos, float eulerY)
+        {
+            SetTransform(new Pose2D(pos, eulerY));
         }
 
         public void UpdateAABB()
         {
-            Vector3 v3 = _provider.transform.position;
-            Vector2 v2 = new Vector2(v3.x, v3.z);
-            _shape.UpdateAABB(v2, _provider.transform.eulerAngles.y);
+            _shape.UpdateAABB(_pose2D.Position, _pose2D.EulerY);
         }
 
         public bool Intersects(IShape shape)

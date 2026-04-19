@@ -1,4 +1,5 @@
 ﻿using Chu.Utility.UnityHelper;
+using Newtonsoft.Json;
 using System;
 using UnityEngine;
 
@@ -13,16 +14,19 @@ namespace Chu.Collision
         public float Param1;
         public float Param2;
 
+        [JsonIgnore]
         public readonly float Radius
         {
             get => Param1;
         }
 
+        [JsonIgnore]
         public readonly float Width
         {
             get => Param1;
         }
 
+        [JsonIgnore]
         public readonly float Height
         {
             get => Param2;

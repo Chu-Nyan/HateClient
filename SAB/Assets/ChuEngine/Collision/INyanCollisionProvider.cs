@@ -8,7 +8,6 @@ namespace Chu.Collision
     /// 상속받은 객체는 반드시 하나의 NyanCollider를 제공해야함
     public interface INyanCollisionProvider
     {
-        public Transform transform { get; }
         public NyanCollider Collider { get; }
         public void OnNyanCollisionEnter(INyanCollisionProvider provider);
         public void OnNyanCollisionExit(INyanCollisionProvider provider);

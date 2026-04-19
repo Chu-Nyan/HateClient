@@ -2,6 +2,7 @@
 using Chu.Art;
 using Chu.Collision;
 using Chu.Collision.Layer;
+using Chu.Utility.UnityHelper;
 using SAB.EntityAgent;
 using SAB.Item;
 using SAB.Unit;
@@ -64,7 +65,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _stateContext = new StateContext();
         CircleShape shape = ShapeFactory.Instance.Generate<CircleShape>();
         shape.Setup(new CircleRangeData(Vector2.one, 1));
-        _body = new(_instanceID, this, transform, shape);
+        _body = new(_instanceID, transform.position, transform.eulerAngles.y, this, shape);
         _state = GenerateStateHandler();
         _nav = GetComponent<NavMeshAgent>();
         _meshHub = GetComponent<MeshSlotHub>();
@@ -80,7 +81,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     {
         StateUpdate();
         if (_stateContext.IsMoveing == true)
-            _body.Collider.RefreshTransform();
+        {
+            var pos = transform.position.ToVector2XZ();
+            var eulerY = transform.eulerAngles.y;
+            _body.OnPositionChanged(pos, eulerY);
+        }
 
         _state.Tick(_stateContext);
         _combatSystem.Tick();

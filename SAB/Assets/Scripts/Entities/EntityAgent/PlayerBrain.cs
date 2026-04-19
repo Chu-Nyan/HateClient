@@ -43,7 +43,9 @@ namespace SAB.EntityAgent
         public void SetCombatReceiver(IOffenseReceiver receiver)
         {
             _combatReceiver = receiver;
-            _combatModeDecider.Setup(receiver.transform, receiver.InstanceID);
+            _combatModeDecider.Setup(receiver.InstanceID);
+
+            // TODO : 캐릭터로 컴백 모드 옮기기
         }
 
         public void Enable()

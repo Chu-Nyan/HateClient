@@ -58,6 +58,12 @@ namespace Chu.Collision
             return this;
         }
 
+        public NyanColliderGenerator SetTransform(Vector2 pos, float eulerY)
+        {
+            _newCollider.SetTransform(pos, eulerY);
+            return this;
+        }
+
         public NyanCollider GetCollider(bool isActivate)
         {
 #if UNITY_EDITOR

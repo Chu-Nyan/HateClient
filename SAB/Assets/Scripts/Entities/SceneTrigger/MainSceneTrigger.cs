@@ -29,7 +29,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void StartChuEngine()
     {
         var engine = new ChuEngine(gameObject);
-        engine.ActivateCollisionSystem(new(-100, 100, -100, 100), 20);
+        engine.ActivateCollisionSystem(new(0, 200, 0, 200), 20);
     }
 
     private void GenerateStatic()
