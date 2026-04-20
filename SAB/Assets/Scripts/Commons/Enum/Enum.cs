@@ -8,3 +8,8 @@ public enum ItemType
 	IronSword = 20000,
 	SteelShield = 20001,
 }
+
+public enum MapType
+{
+    Forest,
+}
