@@ -10,6 +10,12 @@ namespace SAB.Cutscene
             get => gameObject.GetInstanceID();
         }
 
+#if UNITY_EDITOR
+        void OnValidate()
+        {
+            gameObject.tag = "EditorOnly";
+        }
+#endif
         public GenericAniTrackData GetData()
         {
             int id = gameObject.GetInstanceID();
