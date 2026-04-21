@@ -9,12 +9,14 @@ namespace SAB.DataManger
         public readonly SkillRepository SkillRepo;
         public readonly CharacterRepository CharacterRepo;
         public readonly ItemRepository ItemRepo;
+        public readonly CutSceneRepository CutSceneRepo;
 
         public DataBase()
         {
             SkillRepo = new SkillRepository();
             CharacterRepo = new CharacterRepository();
             ItemRepo = new ItemRepository();
+            CutSceneRepo = new CutSceneRepository();
         }
 
         public static  Dictionary<K, V[]> DeserializeArrayByKey<TDTO, K, V>(TDTO[] dtos, Func<TDTO, K> keySelector, Func<TDTO, V> converter)
