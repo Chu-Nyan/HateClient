@@ -4,7 +4,8 @@ namespace SAB.Cutscene
 {
     public interface IVCam
     {
-        public IVCamData GetSerializedData();
         public CinemachineCamera CinemachineCamera { get; }
+        public IVCamData GetSerializedData();
+        public void SetActive(bool value);
     }
 }

@@ -34,5 +34,10 @@ namespace SAB.Cutscene
         {
             return GetStaticData();
         }
+
+        public void SetActive(bool value)
+        {
+            gameObject.SetActive(value);
+        }
     }
 }

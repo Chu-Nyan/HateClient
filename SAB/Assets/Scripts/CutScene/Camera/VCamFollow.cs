@@ -39,5 +39,10 @@ namespace SAB.Cutscene
         {
             return GetFollowData();
         }
+
+        public void SetActive(bool value)
+        {
+            gameObject.SetActive(value);
+        }
     }
 }
