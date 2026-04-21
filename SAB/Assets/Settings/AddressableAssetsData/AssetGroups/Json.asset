@@ -50,6 +50,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96277e45d40c45947a8bd5bd59ada0a0
+    m_Address: Forest_Cutscene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a76883793ea5ba42b01b01550a6afa4
     m_Address: Dto_Item_Base
     m_ReadOnly: 0
