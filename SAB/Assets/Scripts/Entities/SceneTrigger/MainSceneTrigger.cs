@@ -1,19 +1,25 @@
 using Chu;
+using SAB.Cutscene;
 using SAB.DataManger;
 using SAB.EntityAgent.AI;
 using SAB.Item;
 using SAB.Unit.Combat;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class GameSceneTrigger : MonoBehaviour
 {
     [SerializeField]
+    private GameObject _mainCamera;
+    [SerializeField]
     private GameObject _camera;
     private TopViewCamera _topViewCam;
     private Character _player;
     private UnitController _unitController;
+    private MainCutsceneDirector _cutsceneDirector;
 
     private void Awake()
     {
@@ -24,6 +30,8 @@ public class GameSceneTrigger : MonoBehaviour
 
         InitStatic();
         InitInstance();
+
+        StartCoroutine(ChangeMap(MapType.Forest));
     }
 
     private void StartChuEngine()
@@ -43,13 +51,13 @@ public class GameSceneTrigger : MonoBehaviour
         new SkillGenerator(DataBase.Instance);
         new ItemFactory(DataBase.Instance);
         new UIManager();
-        StartCoroutine(LoadMap("Scene_Forest"));
     }
 
     private void GenerateInstance()
     {
         _topViewCam = new TopViewCamera();
         _unitController = new(transform);
+        _cutsceneDirector = new(GetComponent<PlayableDirector>(), _mainCamera.GetComponent<CinemachineBrain>());
     }
 
     private void InitStatic()
@@ -93,10 +101,11 @@ public class GameSceneTrigger : MonoBehaviour
         _topViewCam.StickCameraArm(_player.transform);
     }
 
-    private IEnumerator LoadMap(string name)
+    private IEnumerator ChangeMap(MapType type)
     {
-        AsyncOperation op = SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
-        yield return op.isDone; // 🔥 로드 완료까지 대기
-        GameStart(); // 여기서 안전하게 시작
+        AsyncOperation op = SceneManager.LoadSceneAsync($"Scene_{type}", LoadSceneMode.Additive);
+        yield return op.isDone;
+        _cutsceneDirector.ChangeMap(type);
+        GameStart();
     }
 }
