@@ -28,11 +28,16 @@ namespace SAB.Cutscene
             {
                 ID = gameObject.GetInstanceID(),
                 POV = _vcam.Lens.FieldOfView,
-                TargetID = _vcam.Follow.GetInstanceID(),
+                TargetID = _vcam.Follow.gameObject.GetInstanceID(),
             };
             data.SetPose(transform.rotation);
             data.SetFollow(_follow.FollowOffset);
             return data;
+        }
+
+        public void SetFollow(Transform obj)
+        {
+            _vcam.Target.TrackingTarget = obj;
         }
 
         public IVCamData GetSerializedData()

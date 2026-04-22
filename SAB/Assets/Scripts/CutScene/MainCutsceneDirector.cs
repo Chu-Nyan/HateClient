@@ -22,6 +22,7 @@ namespace SAB.Cutscene
 
         private readonly ObjectPooling<CollisionTrigger> _triggerPool;
         private readonly Dictionary<Type, ObjectPooling<IVCam>> _vcamPool;
+        private readonly ObjectPooling<SingleMesh> _singleMeshPool;
 
         // Map
         private readonly List<CollisionTrigger> _mapTriggers;
@@ -30,7 +31,7 @@ namespace SAB.Cutscene
         // Cutscene in progress
         private readonly Dictionary<string, TrackAsset> _trackByName;
         private readonly Dictionary<int, IVCam> _vcamsByID;
-        private readonly Dictionary<int, UnityEngine.Object> _actorsByID;
+        private readonly Dictionary<int, SingleMesh> _singleMeshByID;
 
         public MainCutsceneDirector(PlayableDirector director, CinemachineBrain brain)
         {
@@ -38,14 +39,15 @@ namespace SAB.Cutscene
             _vcamPool = new()
             {
                 { typeof(VCamStatic), new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(Const.Asset_VCamStatic), a => a.SetActive(true))},
-                { typeof(VCamFollow), new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(Const.Asset_VCamFollow), a => a.SetActive(true)) },
+                { typeof(VCamFollow), new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(Const.Asset_VCamFollow), a => a.SetActive(true))},
             };
+            _singleMeshPool = new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(Const.Asset_SingleMesh), a => a.SetActive(true));
 
             _mapTriggers = new();
             _dataByTriggerID = new();
             _trackByName = new();
             _vcamsByID = new();
-            _actorsByID = new();
+            _singleMeshByID = new();
 
             _director = director;
             _cameraBrain = brain;
@@ -93,9 +95,12 @@ namespace SAB.Cutscene
 
             CacheTracks(playableAsset);
             PrepareCutsceneObject(data);
-            BindingVCamTrack(data);
-
-            _director.Play(playableAsset);
+            BindingObject(data);
+            _director.playableAsset = playableAsset;
+            _director.RebuildGraph();
+            _director.time = 0;
+            _director.Evaluate();
+            _director.Play();
             Debug.Log("Play");
         }
 
@@ -115,7 +120,12 @@ namespace SAB.Cutscene
         // 직렬화된 키값으로 오브젝트 생성 후 바인딩
         private void PrepareCutsceneObject(CutsceneData data)
         {
-            var vcamData = data.VCamData;
+            PrepareVCam(data.VCamData);
+            PrepareSingleMesh(data.SingleMeshDataByID);
+        }
+
+        private void PrepareVCam(List<CutsceneVCamData> vcamData)
+        {
             for (int i = 0; i < vcamData.Count; i++)
             {
                 foreach (var item in vcamData[i].StaticData)
@@ -134,9 +144,27 @@ namespace SAB.Cutscene
             }
         }
 
-        private void BindingVCamTrack(CutsceneData data)
+        private void PrepareSingleMesh(Dictionary<int, SingleMeshData> datas)
         {
-            foreach (var trackData in data.VCamData)
+            foreach (var item in datas)
+            {
+                SingleMeshData data = item.Value;
+                var singleMesh = _singleMeshPool.Dequeue();
+                singleMesh.ApplySerializedData(data);
+
+                _singleMeshByID.Add(data.ID, singleMesh);
+            }
+        }
+
+        private void BindingObject(CutsceneData data)
+        {
+            BindingSingleMeshTrack(data.BindingIDByTrack, data.SingleMeshDataByID);
+            BindingVCamTrack(data.VCamData);
+        }
+
+        private void BindingVCamTrack(List<CutsceneVCamData> data)
+        {
+            foreach (var trackData in data)
             {
                 if (_trackByName.TryGetValue(trackData.Name, out var track))
                 {
@@ -153,12 +181,48 @@ namespace SAB.Cutscene
                             var id = trackData.VCamIDByClipName[clip.displayName];
                             var shot = clip.asset as CinemachineShot;
                             _director.SetReferenceValue(shot.VirtualCamera.exposedName, _vcamsByID[id].CinemachineCamera);
-                        }
 
+                        }
+                        BindingVcamFollowTrack(trackData.FollowData);
                     }
                 }
                 else
                     Debug.LogWarning($"TrackName : {trackData}, Not Found");
+            }
+        }
+
+        private void BindingVcamFollowTrack(Dictionary<int, VCamFollowData> datas)
+        {
+            foreach (var item in datas)
+            {
+                var data = item.Value;
+                if (_vcamsByID[data.ID] is VCamFollow follow)
+                {
+                    follow.SetFollow(_singleMeshByID[data.TargetID].transform);
+                }
+            }
+        }
+
+        private void BindingSingleMeshTrack(Dictionary<string, int> trackBinding, Dictionary<int, SingleMeshData> datas)
+        {
+            foreach (var item in datas)
+            {
+                var data = item.Value;
+
+                if (_trackByName.TryGetValue(data.TrackName, out var track))
+                {
+                    if (track is not AnimationTrack)
+                    {
+                        Debug.LogWarning($"TrackName : {data.TrackName}, Not AnimationTrack");
+                    }
+                    else
+                    {
+                        var id = trackBinding[track.name];
+                        _director.SetGenericBinding(track, _singleMeshByID[id].Animator);
+                    }
+                }
+                else
+                    Debug.LogWarning($"TrackName : {data.TrackName}, Not Found");
             }
         }
 
@@ -170,14 +234,15 @@ namespace SAB.Cutscene
                 _vcamPool[item.Value.GetType()].Enqueue(item.Value);
             }
 
-            foreach (var item in _actorsByID)
+            foreach (var item in _singleMeshByID)
             {
-                // TODO
+                item.Value.SetActive(false);
+                _singleMeshPool.Enqueue(item.Value);
             }
 
             _trackByName.Clear();
             _vcamsByID.Clear();
-            _actorsByID.Clear();
+            _singleMeshByID.Clear();
         }
 
         private void MapClear()

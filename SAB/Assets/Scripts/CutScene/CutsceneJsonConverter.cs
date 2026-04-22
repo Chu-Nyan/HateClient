@@ -35,7 +35,7 @@ namespace SAB.Cutscene
             {
                 HashSet<string> nameChecker = new();
                 Dictionary<string, int> binding = new();
-                Dictionary<int, GenericAniTrackData> GenericAniData = new();
+                Dictionary<int, SingleMeshData> GenericAniData = new();
                 List<CutsceneVCamData> cameraTracks = new();
 
                 TimelineAsset timelineAssets = authoring.PlayableDirector.playableAsset as TimelineAsset;
@@ -64,8 +64,8 @@ namespace SAB.Cutscene
                         continue;
 
                     binding.Add(track.name, serializableObj.ID);
-                    if (serializableObj is GenericAniTrackObject generic == true)
-                        GenericAniData.TryAdd(serializableObj.ID, generic.GetData());
+                    if (serializableObj is SingleMesh generic == true)
+                        GenericAniData.TryAdd(serializableObj.ID, generic.GetData(track.name));
                 }
 
                 string path = AssetDatabase.GetAssetPath(authoring.PlayableDirector.playableAsset);
@@ -78,7 +78,7 @@ namespace SAB.Cutscene
                     center: authoring.Center,
                     triggerZones: authoring.TriggerZone,
                     idByTrack: binding,
-                    genericAniData: GenericAniData,
+                    singleMesh: GenericAniData,
                     vcamDatas: cameraTracks
                     );
 
