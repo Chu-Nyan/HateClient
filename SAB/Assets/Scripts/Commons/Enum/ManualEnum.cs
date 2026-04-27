@@ -46,5 +46,9 @@ public enum SkillStepType
     Timer = 4,
 }
 
-
-
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Gender
+{
+    Male = 0,
+    Female = 1
+}

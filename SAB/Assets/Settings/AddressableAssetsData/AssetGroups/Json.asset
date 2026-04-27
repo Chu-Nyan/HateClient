@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31c7a45385be2b04fa762de6b311fbbc
+    m_Address: Dto_Character_Customizing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3fa553b6044a5584f9d9bbe972beb6df
     m_Address: Dto_Skill_HitBox
     m_ReadOnly: 0
@@ -62,6 +67,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a26e81d7beabec6459d431774758551f
     m_Address: Dto_Skill_Step_DoT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a91466f4b66de7f4286901cdf4837915
+    m_Address: Dto_Character_DefaultEquipment
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

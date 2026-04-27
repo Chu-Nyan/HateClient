@@ -15,11 +15,6 @@ MonoBehaviour:
   m_GroupName: Equipment
   m_GUID: 20ac5b6f0e0d7a64baba54ee37cc44e5
   m_SerializeEntries:
-  - m_GUID: 17669c32c14a8e54a8ed9cd84fea872f
-    m_Address: Mesh_Body_Beast
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d3b195b2ab1113448a23d921a6dcbd6
     m_Address: Mesh_Shield_Wood
     m_ReadOnly: 0
@@ -35,28 +30,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 30a67a352fc1da84c9e7e4d464119ba7
-    m_Address: Mesh_Body_Hero
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 32e0d6de9e0fb6e4dbc7668ce9270610
-    m_Address: Mesh_Body_Cloth
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3c082ef9e7521e84fa53bc53468554c9
-    m_Address: Mesh_Body_ScoutLeather
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3db38a69b91096b44a76568411864f3e
     m_Address: CharacterBody18
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 40d766032c084ff41af789df2aa1694f
-    m_Address: Mesh_Body_SageRobe
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -90,16 +65,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 78fd895a7118f624fae313402092be75
-    m_Address: Mesh_Body_Demon
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7b96547fd2b1cf54c9ccdd76bbb37b74
-    m_Address: Mesh_Body_Adventurer
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 84d9303b93cd5f14587370da410aefbe
     m_Address: Mesh_Shield_Legendary
     m_ReadOnly: 0
@@ -115,18 +80,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a6fa8d82b2e06784292553b9b350489b
-    m_Address: Mesh_Body_MaleDefault
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b7bd0fa99f7282d4eb03b454a14caae5
     m_Address: Mesh_Cloak_DemonLord
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: baaebbf76d23f4947bcd8ceb6b1e6041
-    m_Address: Mesh_Body_Knight
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -145,23 +100,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f1b7d27af15e90b44a8f4934d5b60a8b
-    m_Address: Mesh_Body_RedKnight
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f46df7b415cc1e5489ba73a2496aaf6a
-    m_Address: Mesh_Body_MageRobe
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6d9d986e5696834aae43daade22c933
     m_Address: Mesh_Shield_Knight
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ff0237b1aeedba641a190382c48a4197
-    m_Address: Mesh_Body_Soldier
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

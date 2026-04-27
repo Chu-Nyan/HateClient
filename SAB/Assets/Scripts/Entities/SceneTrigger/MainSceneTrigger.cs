@@ -84,7 +84,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void SetPracticeScene()
     {
-        _player = _unitController.GenerateCharacter(1, new Vector3(100, 0, 100), new CustomizingData(1, 1, 1, 1));
+        _player = _unitController.GenerateCharacter(1, new Vector3(100, 0, 100), new CustomizingData(Gender.Male, 1, 1, 1, 1));
         _unitController.BindRecevier(_player, UnitController.Oner.Player, true);
 
         var weapon = ItemFactory.Instance.GenerateItem(1);
@@ -95,7 +95,7 @@ public class GameSceneTrigger : MonoBehaviour
         _player.Equip(armor as IHasEquipmentData);
         _player.Equip(shield as IHasEquipmentData);
 
-        var _npc = _unitController.GenerateCharacter(2, new Vector3(101, 0, 101), new CustomizingData(2, 1, 1, 1));
+        var _npc = _unitController.GenerateCharacter(2, new Vector3(101, 0, 101), new CustomizingData(Gender.Male, 2, 1, 1, 1));
         _unitController.BindRecevier(_npc, UnitController.Oner.AI, true);
 
         _topViewCam.StickCameraArm(_player.transform);
