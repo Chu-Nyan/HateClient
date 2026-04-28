@@ -22,27 +22,9 @@ namespace SAB.Cutscene
             _follow.FollowOffset = data.FollowOffset;
         }
 
-        public VCamFollowData GetFollowData()
-        {
-            VCamFollowData data = new()
-            {
-                ID = gameObject.GetInstanceID(),
-                POV = _vcam.Lens.FieldOfView,
-                TargetID = _vcam.Follow.gameObject.GetInstanceID(),
-            };
-            data.SetPose(transform.rotation);
-            data.SetFollow(_follow.FollowOffset);
-            return data;
-        }
-
         public void SetFollow(Transform obj)
         {
             _vcam.Target.TrackingTarget = obj;
-        }
-
-        public IVCamData GetSerializedData()
-        {
-            return GetFollowData();
         }
 
         public void SetActive(bool value)

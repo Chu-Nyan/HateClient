@@ -59,13 +59,13 @@ namespace SAB.Cutscene
                     if (bindingTrack == null)
                         continue;
 
-                    var serializableObj = bindingTrack.GetComponent<ICutsceneSerializable>();
-                    if (serializableObj == null)
+                    var cutsceneObj = bindingTrack.GetComponent<CutsceneObject>();
+                    if (cutsceneObj == null)
                         continue;
 
-                    binding.Add(track.name, serializableObj.ID);
-                    if (serializableObj is SingleMesh generic == true)
-                        GenericAniData.TryAdd(serializableObj.ID, generic.GetData(track.name));
+                    binding.Add(track.name, cutsceneObj.ID);
+                    if (cutsceneObj.Type == CutsceneObjectType.SingleMesh)
+                        GenericAniData.TryAdd(cutsceneObj.ID, cutsceneObj.GetSingleMeshData(track.name));
                 }
 
                 string path = AssetDatabase.GetAssetPath(authoring.PlayableDirector.playableAsset);
@@ -135,11 +135,11 @@ namespace SAB.Cutscene
                 var shot = clip.asset as CinemachineShot;
                 if (shot == null)
                     continue;
-                var vcam = shot.VirtualCamera.Resolve(director).GetComponent<IVCam>();
-                if (vcam == null)
+                var obj = shot.VirtualCamera.Resolve(director).GetComponent<CutsceneObject>();
+                if (obj == null)
                     continue;
 
-                IVCamData data = vcam.GetSerializedData();
+                IVCamData data = obj.GetVCamData();
                 Type type = data.GetType();
                 dic.TryAdd(type, new());
                 dic[type].Add(data);

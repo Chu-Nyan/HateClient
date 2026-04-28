@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using UnityEditor.AddressableAssets;
 using UnityEngine;
 
 namespace Chu.Utility.UnityHelper
@@ -36,6 +37,20 @@ namespace Chu.Utility.UnityHelper
                 Directory.CreateDirectory(path);
 
             File.WriteAllText(Path.Combine(path, fileName), text);
+        }
+
+        public static string GetAddressablePath(UnityEngine.Object obj)
+        {
+            string path = UnityEditor.AssetDatabase.GetAssetPath(obj);
+            string guid = UnityEditor.AssetDatabase.AssetPathToGUID(path);
+
+            var settings = AddressableAssetSettingsDefaultObject.Settings;
+            var entry = settings.FindAssetEntry(guid);
+
+            if (entry != null)
+                return entry.address;
+            else
+                throw new System.Exception($"{obj.name}, No Addressable Asset");
         }
     }
 }

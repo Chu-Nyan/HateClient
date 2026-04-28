@@ -19,22 +19,6 @@ namespace SAB.Cutscene
             _vcam.Lens.FieldOfView = data.POV;
         }
 
-        public VCamStaticData GetStaticData()
-        {
-            VCamStaticData data = new()
-            {
-                ID = gameObject.GetInstanceID(),
-                POV = _vcam.Lens.FieldOfView
-            };
-            data.SetPose(transform.position, transform.rotation);
-            return data;
-        }
-
-        public IVCamData GetSerializedData()
-        {
-            return GetStaticData();
-        }
-
         public void SetActive(bool value)
         {
             gameObject.SetActive(value);

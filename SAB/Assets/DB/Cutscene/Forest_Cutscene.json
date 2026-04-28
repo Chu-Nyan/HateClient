@@ -14,13 +14,13 @@
       }
     ],
     "BindingIDByTrack": {
-      "Animation Track22": -45504
+      "Animation Track22": -54384
     },
     "SingleMeshDataByID": {
-      "-45504": {
-        "ID": -45504,
+      "-54384": {
+        "ID": -54384,
         "TrackName": "Animation Track22",
-        "MeshPath": "Mesh_Weapon_HeroSword",
+        "MeshPath": "Mesh_Weapon_KnightSword",
         "posX": 100.0,
         "posY": 0.0,
         "posZ": 53.0,
@@ -34,12 +34,12 @@
       {
         "Name": "Cinemachine Track",
         "VCamIDByClipName": {
-          "VCamStatic": -45494,
-          "VCamFollow": -45498
+          "VCamStatic_Cutscene": -54378,
+          "VCamFollow_Cutscene": -54392
         },
         "StaticData": {
-          "-45494": {
-            "ID": -45494,
+          "-54378": {
+            "ID": -54378,
             "posX": 100.0,
             "posY": 2.15,
             "posZ": 50.58,
@@ -51,14 +51,14 @@
           }
         },
         "FollowData": {
-          "-45498": {
-            "ID": -45498,
+          "-54392": {
+            "ID": -54392,
             "RotX": 0.079211,
             "RotY": -0.005890844,
             "RotZ": 0.09230791,
             "RotW": 0.9925574,
             "POV": 40.0,
-            "TargetID": -45504,
+            "TargetID": -54384,
             "OffsetX": 0.0,
             "OffsetY": 2.13,
             "OffsetZ": -12.88

@@ -1,11 +1,9 @@
 ﻿using SAB.Cutscene;
-using System;
-using UnityEditor.AddressableAssets;
 using UnityEngine;
 
 namespace SAB
 {
-    public class SingleMesh : MonoBehaviour, ICutsceneSerializable
+    public class SingleMesh : MonoBehaviour
     {
         [SerializeField]
         private MeshFilter _filter;
@@ -42,42 +40,6 @@ namespace SAB
         private void SetMesh(Mesh mesh)
         {
             _filter.mesh = mesh;
-        }
-
-        public SingleMeshData GetData(string trackName)
-        {
-            int id = gameObject.GetInstanceID();
-
-            SingleMeshData data = new()
-            {
-                ID = id,
-                TrackName = trackName,
-                MeshPath = GetAddressablePath(GetComponent<MeshFilter>().sharedMesh)
-            };
-            data.SetPose(transform.position, transform.rotation);
-
-            return data;
-        }
-
-        private string GetAddressablePath(Mesh mesh)
-        {
-            string path = UnityEditor.AssetDatabase.GetAssetPath(mesh);
-            string guid = UnityEditor.AssetDatabase.AssetPathToGUID(path);
-
-            var settings = AddressableAssetSettingsDefaultObject.Settings;
-            var entry = settings.FindAssetEntry(guid);
-
-            if (entry != null)
-                return entry.address;
-            else
-                throw new System.Exception($"{mesh.name}, No Addressable Asset");
-        }
-
-        [ContextMenu("Print Data Log")]
-        public void PrintDebugLog()
-        {
-            SingleMeshData data = GetData("Debug");
-            Debug.Log(data.ToString());
         }
     }
 }
