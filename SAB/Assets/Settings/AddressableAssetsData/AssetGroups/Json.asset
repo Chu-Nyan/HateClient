@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d460132cb9148349b31dde6e603f5b1
+    m_Address: Dto_Human_DefaultEquipment
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1e958985c7ae16a48a05251a51d10d56
     m_Address: Dto_Item_Weapon
     m_ReadOnly: 0
@@ -32,11 +37,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a113915596899043a67a4d863840990
     m_Address: Dto_Skill_Base
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 31c7a45385be2b04fa762de6b311fbbc
-    m_Address: Dto_Character_Customizing
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -70,8 +70,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a91466f4b66de7f4286901cdf4837915
-    m_Address: Dto_Character_DefaultEquipment
+  - m_GUID: a70e95f57e3983442acd568c6a98bff5
+    m_Address: Dto_Human_Customizing
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

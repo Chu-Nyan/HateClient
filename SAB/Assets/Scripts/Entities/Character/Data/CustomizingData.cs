@@ -15,7 +15,7 @@
         Mouth = mouth;
     }
 
-    public CustomizingData(CharacterCustomizingDto dto)
+    public CustomizingData(HumanCustomizingDto dto)
     {
         Gender = dto.Gender;
         Eye = dto.Eye;
