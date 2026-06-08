@@ -30676,12 +30676,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0cea9220de7c7045bd1ac36e090e4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 0
-  _prevType: 0
-  _variantParam: []
+  _type: 3
+  _prevType: 3
+  _variantParam:
+  - Key: NPCID
+    Param:
+      rid: 4927116227077210113
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4927116227077210113
+      type: {class: 'VariantParam`1[[System.Int32, mscorlib]]', ns: Chu.Data, asm: Assembly-CSharp}
+      data:
+        value: 0
 --- !u!1 &272236554
 GameObject:
   m_ObjectHideFlags: 0
@@ -84656,13 +84663,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 795219478}
+  - component: {fileID: 795219479}
   m_Layer: 0
   m_Name: '[EditorOnly]'
   m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &795219478
 Transform:
   m_ObjectHideFlags: 0
@@ -84681,6 +84689,18 @@ Transform:
   - {fileID: 322294366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &795219479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795219477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7ea5a601f0f3e47bc1aeec057073c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &796832634
 GameObject:
   m_ObjectHideFlags: 0
@@ -213980,8 +214000,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007928996}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.079211, y: -0.005890844, z: 0.09230791, w: 0.9925574}
-  m_LocalPosition: {x: 100, y: 2.13, z: 40.12}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 100, y: 2.15, z: 50.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
