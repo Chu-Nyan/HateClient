@@ -1,9 +1,9 @@
-﻿using Chu.Utility.UnityHelper;
+﻿using Chu.Utility;
+using Chu.Utility.UnityHelper;
 using Newtonsoft.Json;
 using SAB.DataManger;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -28,34 +28,26 @@ namespace SAB.Cutscene
         public void ExportJson()
         {
             List<CutsceneData> cutSceneDatas = new();
-
-            var authorings = Utility.GetComponentsWithDepth<CutsceneAuthoring>(_root, _searchDepth);
+            List<CutsceneDirector> directors = Utility.GetComponentsWithDepth<CutsceneDirector>(_root, _searchDepth);
             var settings = AddressableAssetSettingsDefaultObject.Settings;
-            foreach (var authoring in authorings)
-            {
-                HashSet<string> nameChecker = new();
-                Dictionary<string, int> binding = new();
-                Dictionary<int, SingleMeshData> GenericAniData = new();
-                List<CutsceneVCamData> cameraTracks = new();
 
-                TimelineAsset timelineAssets = authoring.PlayableDirector.playableAsset as TimelineAsset;
+            foreach (var director in directors)
+            {
+                Dictionary<string, int> objIDByTrackName = new();
+                ObjectDataContainer objDataByID = new();
+
+                TimelineAsset timelineAssets = director.PlayableDirector.playableAsset as TimelineAsset;
                 var tracks = timelineAssets.GetOutputTracks();
 
                 foreach (var track in tracks)
                 {
-                    if (nameChecker.Add(track.name) == false)
+                    if (track is CinemachineTrack camTrack)
                     {
-                        Debug.LogError($"{track.name}, 중복된 트랙 이름");
+                        ExtractCameraTrackData(objIDByTrackName, objDataByID, director.PlayableDirector, camTrack);
                         continue;
                     }
 
-                    if (track is CinemachineTrack cinemachineTrack)
-                    {
-                        cameraTracks.Add(CameraTrackToData(authoring.PlayableDirector, cinemachineTrack));
-                        continue;
-                    }
-
-                    var bindingTrack = authoring.PlayableDirector.GetGenericBinding(track);
+                    var bindingTrack = director.PlayableDirector.GetGenericBinding(track);
                     if (bindingTrack == null)
                         continue;
 
@@ -63,89 +55,55 @@ namespace SAB.Cutscene
                     if (cutsceneObj == null)
                         continue;
 
-                    binding.Add(track.name, cutsceneObj.ID);
-                    if (cutsceneObj.Type == CutsceneObjectType.SingleMesh)
-                        GenericAniData.TryAdd(cutsceneObj.ID, cutsceneObj.GetSingleMeshData(track.name));
+                    objDataByID.Add(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
+                    TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.ID);
                 }
 
-                string path = AssetDatabase.GetAssetPath(authoring.PlayableDirector.playableAsset);
+                string path = AssetDatabase.GetAssetPath(director.PlayableDirector.playableAsset);
                 string guid = AssetDatabase.AssetPathToGUID(path);
                 var entry = settings.FindAssetEntry(guid);
 
-                CutsceneData data = new(
-                    name: authoring.name,
+                CutsceneData cutsceneData = new(
+                    name: director.PlayableDirector.playableAsset.name,
                     assetPath: entry.address,
-                    center: authoring.Center,
-                    triggerZones: authoring.TriggerZone,
-                    idByTrack: binding,
-                    singleMesh: GenericAniData,
-                    vcamDatas: cameraTracks
+                    center: director.Center,
+                    triggerZones: director.TriggerZone,
+                    idByTrack: objIDByTrackName,
+                    objData: objDataByID
                     );
 
-                cutSceneDatas.Add(data);
+                cutSceneDatas.Add(cutsceneData);
             }
 
             string json = JsonConvert.SerializeObject(cutSceneDatas, Formatting.Indented);
             AssetDatabase.GetAssetPath(_path);
             string fileName = $"{string.Format(CutSceneRepository.FileNameFormat, _mapType)}";
             Utility.GenerateFile(AssetDatabase.GetAssetPath(_path), $"{fileName}.json", json);
+            Debug.Log("Cutscene Data Exported");
         }
 
-        private CutsceneVCamData CameraTrackToData(PlayableDirector director, CinemachineTrack track)
+        private void ExtractCameraTrackData(Dictionary<string, int> objIdByTrackName, ObjectDataContainer datas, PlayableDirector director, CinemachineTrack track)
         {
-            var vcamData = CameraClipToData(director, track);
-            var staticDic = vcamData[typeof(VCamStaticData)].OfType<VCamStaticData>().ToDictionary((k) => k.ID);
-            var followDic = vcamData[typeof(VCamFollowData)].OfType<VCamFollowData>().ToDictionary((k) => k.ID);
-            var trackData = new CutsceneVCamData
-            {
-                Name = track.name,
-                VCamIDByClipName = GetVCamClipBinding(director, track),
-                StaticData = staticDic,
-                FollowData = followDic
-            };
-
-            return trackData;
-        }
-
-        private Dictionary<string, int> GetVCamClipBinding(PlayableDirector director, CinemachineTrack track)
-        {
-            Dictionary<string, int> dic = new();
-
             foreach (var clip in track.GetClips())
             {
                 var shot = clip.asset as CinemachineShot;
                 if (shot == null)
                     continue;
-                var vcam = shot.VirtualCamera.Resolve(director);
-                if (vcam == null)
+                if (shot.VirtualCamera.Resolve(director).TryGetComponent<CutsceneObject>(out var cutsceneObj) == false)
                     continue;
 
-                dic.Add(clip.displayName, vcam.gameObject.GetInstanceID());
+                datas.Add(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
+                TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.ID);
             }
-
-            return dic;
         }
 
-        private Dictionary<Type, List<IVCamData>> CameraClipToData(PlayableDirector director, CinemachineTrack track)
+        private void TryAddDictionary(Dictionary<string, int> dic, string key, int value)
         {
-            Dictionary<Type, List<IVCamData>> dic = new();
-
-            foreach (var clip in track.GetClips())
+            if (dic.TryAdd(key, value) == false
+             && dic[key] != value)
             {
-                var shot = clip.asset as CinemachineShot;
-                if (shot == null)
-                    continue;
-                var obj = shot.VirtualCamera.Resolve(director).GetComponent<CutsceneObject>();
-                if (obj == null)
-                    continue;
-
-                IVCamData data = obj.GetVCamData();
-                Type type = data.GetType();
-                dic.TryAdd(type, new());
-                dic[type].Add(data);
+                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, key, dic[key], value));
             }
-
-            return dic;
         }
     }
 }

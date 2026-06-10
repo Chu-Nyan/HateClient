@@ -3,18 +3,23 @@ using UnityEngine;
 
 namespace SAB.Cutscene
 {
-    public class VCamStaticData : IVCamData
+    public class VCamStaticData : IObjectConfig
     {
         // VCam
-        public int ID;
-        public float posX, posY, posZ;
+        public float PosX, PosY, PosZ;
         public float RotX, RotY, RotZ, RotW;
         public float POV;
 
         [JsonIgnore]
+        public CutsceneObjectType Type
+        {
+            get => CutsceneObjectType.VCamStatic;
+        }
+
+        [JsonIgnore]
         public Vector3 Position
         {
-            get => new(posX, posY, posZ);
+            get => new(PosX, PosY, PosZ);
         }
 
         [JsonIgnore]
@@ -25,9 +30,9 @@ namespace SAB.Cutscene
 
         public void SetPose(Vector3 pos, Quaternion quaternion)
         {
-            posX = pos.x;
-            posY = pos.y;
-            posZ = pos.z;
+            PosX = pos.x;
+            PosY = pos.y;
+            PosZ = pos.z;
             RotX = quaternion.x;
             RotY = quaternion.y;
             RotZ = quaternion.z;

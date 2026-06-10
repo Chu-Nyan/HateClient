@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SAB
 {
-    public class SingleMesh : MonoBehaviour
+    public class SingleMesh : MonoBehaviour, ICutsceneObject
     {
         [SerializeField]
         private MeshFilter _filter;
@@ -14,7 +14,12 @@ namespace SAB
 
         public int ID
         {
-            get => gameObject.GetInstanceID();
+            get => gameObject.name.GetHashCode();
+        }
+
+        public CutsceneObjectType CutsceneType
+        {
+            get => CutsceneObjectType.SingleMesh;
         }
 
         public Animator Animator
@@ -24,12 +29,34 @@ namespace SAB
 
         public void ApplySerializedData(SingleMeshData data)
         {
-            transform.position = data.Position;
-            transform.rotation = data.Rotation;
-
+            transform.SetPositionAndRotation(data.Position, data.Rotation);
             var mesh = AssetManager.LoadAssetSync<Mesh>(data.MeshPath);
             _filter.mesh = mesh;
             SetMesh(mesh);
+        }
+
+        public void SetCutsceneData(IObjectConfig data)
+        {
+            if (data is not SingleMeshData singleMeshData)
+                throw new System.Exception(data.GetType().ToString());
+
+            ApplySerializedData(singleMeshData);
+        }
+
+        public SingleMeshData GetSingleMeshData()
+        {
+            SingleMeshData data = new()
+            {
+                MeshPath = Chu.Utility.UnityHelper.Utility.GetAddressablePath(_filter.sharedMesh)
+            };
+            data.SetPose(transform.position, transform.rotation);
+
+            return data;
+        }
+
+        public IObjectConfig GetCutsceneConfig()
+        {
+            return GetSingleMeshData();
         }
 
         public void SetActive(bool value)

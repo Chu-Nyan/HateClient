@@ -1,15 +1,15 @@
 ﻿using Chu.Data;
 using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
 
 namespace SAB.Cutscene
 {
-    public partial class CutsceneObject : MonoBehaviour
+    public class CutsceneObject : MonoBehaviour
     {
-        private const string _meshFilter = "MeshFilter";
-        private const string _vcam = "VCam";
-        private const string _vcamFollow = "VCamFollow";
+        public const string _meshFilter = "MeshFilter";
+        public const string _vcam = "VCam";
+        public const string _vcamFollow = "VCamFollow";
+        public const string _npcID = "NPCID";
 
         [SerializeField]
         private CutsceneObjectType _type;
@@ -25,7 +25,7 @@ namespace SAB.Cutscene
 
         public int ID
         {
-            get => gameObject.GetInstanceID();
+            get => gameObject.name.GetHashCode();
         }
 
         public Vector3 Position
@@ -59,128 +59,27 @@ namespace SAB.Cutscene
             {
                 _variantParam.Add(new VariantParamPair(_vcam, new VariantParam<Component>()));
             }
-        }
-
-        public T GetVariantParam<T>(string key)
-        {
-            foreach (var item in _variantParam)
+            else if (_type == CutsceneObjectType.Character)
             {
-                if (item.Key != key)
-                    continue;
-                if (item.Param.GetValue() is not T)
-                {
-                    Debug.Log(item.Key);
-                    Debug.Log(item.Param);
-                    Debug.Log(typeof(T).ToString());
-                }
-
-                return (T)item.Param.GetValue();
-            }
-
-            return default;
-        }
-
-        public bool ContainVariantParam(string key)
-        {
-            foreach (var item in _variantParam)
-            {
-                if (item.Key != key)
-                    continue;
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public SingleMeshData GetSingleMeshData(string trackName)
-        {
-            if (_type != CutsceneObjectType.SingleMesh)
-            {
-                Debug.LogError($"{gameObject.name} is {_type}");
-                return default;
-            }
-
-            SingleMeshData data = new()
-            {
-                ID = ID,
-                TrackName = trackName,
-                MeshPath = Chu.Utility.UnityHelper.Utility.GetAddressablePath(GetVariantParam<MeshFilter>(_meshFilter).sharedMesh)
-            };
-            data.SetPose(Position, Rotation);
-
-            return data;
-        }
-
-        public IVCamData GetVCamData()
-        {
-            if (_type == CutsceneObjectType.VCamStatic)
-            {
-                return GetVCamStaticData();
-            }
-            else if (_type == CutsceneObjectType.VCamFollow)
-            {
-                return GetVCamFollowData();
-            }
-            else
-            {
-                Debug.LogError($"{gameObject.name} is not VCam");
-                return null;
+                _variantParam.Add(new VariantParamPair(_npcID, new VariantParam<int>()));
             }
         }
 
-        public VCamStaticData GetVCamStaticData()
+        public IObjectConfig GetCutsceneObjectData()
         {
-            if (_type != CutsceneObjectType.VCamStatic)
-            {
-                Debug.LogError($"{gameObject.name} is {_type}");
-                return default;
-            }
-
-            var vcam = GetVariantParam<CinemachineCamera>(_vcam);
-
-            VCamStaticData data = new()
-            {
-                ID = gameObject.GetInstanceID(),
-                POV = vcam.Lens.FieldOfView
-            };
-            data.SetPose(transform.position, transform.rotation);
-
-            return data;
-        }
-
-        public VCamFollowData GetVCamFollowData()
-        {
-            if (_type != CutsceneObjectType.VCamFollow)
-            {
-                Debug.LogError($"{gameObject.name} is {_type}");
-                return default;
-            }
-
-            var vcam = GetVariantParam<CinemachineCamera>(_vcam);
-            var follow = GetVariantParam<CinemachineFollow>(_vcamFollow);
-
-            VCamFollowData data = new()
-            {
-                ID = gameObject.GetInstanceID(),
-                POV = vcam.Lens.FieldOfView,
-                TargetID = vcam.Follow.gameObject.GetInstanceID(),
-            };
-            data.SetPose(transform.rotation);
-            data.SetFollow(follow.FollowOffset);
-
-            return data;
+            return GetComponent<ICutsceneObject>().GetCutsceneConfig();
         }
 
         [ContextMenu("Print Data Log")]
         public void PrintDebugLog()
         {
-            if (_type == CutsceneObjectType.SingleMesh)
-                Debug.Log(GetSingleMeshData("None").ToString());
-            else if (_type == CutsceneObjectType.VCamStatic)
-                Debug.Log(GetVCamStaticData());
-            else if (_type == CutsceneObjectType.VCamFollow)
-                Debug.Log(GetVCamFollowData());
+            string log = "";
+            foreach (var item in _variantParam)
+            {
+                log += $"{item.Key} : {item.Param}";
+            }
+
+            Debug.Log($"{log}\n{GetCutsceneObjectData()}");
         }
     }
 }

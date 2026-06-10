@@ -10,6 +10,11 @@ namespace SAB.Cutscene
         [SerializeField]
         private CinemachineFollow _follow;
 
+        public CutsceneObjectType CutsceneType
+        {
+            get => CutsceneObjectType.VCamFollow;
+        }
+
         public CinemachineCamera CinemachineCamera
         {
             get => _vcam;
@@ -22,6 +27,14 @@ namespace SAB.Cutscene
             _follow.FollowOffset = data.FollowOffset;
         }
 
+        public void SetCutsceneData(IObjectConfig data)
+        {
+            if (data is not VCamFollowData followData)
+                throw new System.Exception(data.GetType().ToString());
+
+            ApplySerializedData(followData);
+        }
+
         public void SetFollow(Transform obj)
         {
             _vcam.Target.TrackingTarget = obj;
@@ -30,6 +43,25 @@ namespace SAB.Cutscene
         public void SetActive(bool value)
         {
             gameObject.SetActive(value);
+        }
+
+        public VCamFollowData GetVCamFollowData()
+        {
+            VCamFollowData data = new()
+            {
+                POV = _vcam.Lens.FieldOfView,
+                TargetID = _vcam.Follow.gameObject.name.GetHashCode(),
+            };
+
+            data.SetPose(transform.rotation);
+            data.SetFollow(_follow.FollowOffset);
+
+            return data;
+        }
+
+        public IObjectConfig GetCutsceneConfig()
+        {
+            return GetVCamFollowData();
         }
     }
 }

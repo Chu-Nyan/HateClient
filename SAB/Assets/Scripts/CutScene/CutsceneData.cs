@@ -13,8 +13,7 @@ namespace SAB.Cutscene
         public float CenterY;
         public ShapeParam[] TriggerZones;
         public Dictionary<string, int> BindingIDByTrack;
-        public Dictionary<int, SingleMeshData> SingleMeshDataByID;
-        public List<CutsceneVCamData> VCamData;
+        public ObjectDataContainer ObjectDataContainer;
 
         [JsonIgnore]
         public Vector2 Center
@@ -22,7 +21,7 @@ namespace SAB.Cutscene
             get => new Vector2(CenterX, CenterY);
         }
 
-        public CutsceneData(string name, string assetPath, Vector2 center, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack, Dictionary<int, SingleMeshData> singleMesh, List<CutsceneVCamData> vcamDatas)
+        public CutsceneData(string name, string assetPath, Vector2 center, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack, ObjectDataContainer objData)
         {
             Name = name;
             AssetPath = assetPath;
@@ -30,8 +29,7 @@ namespace SAB.Cutscene
             CenterY = center.y;
             TriggerZones = triggerZones;
             BindingIDByTrack = idByTrack;
-            SingleMeshDataByID = singleMesh;
-            VCamData = vcamDatas;
+            ObjectDataContainer = objData;
         }
     }
 }

@@ -3,41 +3,44 @@ using UnityEngine;
 
 namespace SAB.Cutscene
 {
-    public struct SingleMeshData
+    public class SingleMeshData : IObjectConfig
     {
-        public int ID;
-        public string TrackName;
         public string MeshPath;
 
-        public float posX, posY, posZ;
+        public float PosX, PosY, PosZ;
         public float RotX, RotY, RotZ, RotW;
 
         [JsonIgnore]
-        public readonly Vector3 Position
+        public Vector3 Position
         {
-            get => new(posX, posY, posZ);
+            get => new(PosX, PosY, PosZ);
         }
 
         [JsonIgnore]
-        public readonly Quaternion Rotation
+        public Quaternion Rotation
         {
             get => new(RotX, RotY, RotZ, RotW);
         }
 
+        public CutsceneObjectType Type
+        {
+            get => CutsceneObjectType.SingleMesh;
+        }
+
         public void SetPose(Vector3 pos, Quaternion quaternion)
         {
-            posX = pos.x;
-            posY = pos.y;
-            posZ = pos.z;
+            PosX = pos.x;
+            PosY = pos.y;
+            PosZ = pos.z;
             RotX = quaternion.x;
             RotY = quaternion.y;
             RotZ = quaternion.z;
             RotW = quaternion.w;
         }
 
-        public readonly override string ToString()
+        public override string ToString()
         {
-            return $"ID : {ID}, Name : {TrackName}, Mesh Path : {MeshPath}, Position : {Position}, Rotation : {Rotation} ";
+            return $"Mesh Path : {MeshPath}, Position : {Position}, Rotation : {Rotation}";
         }
     }
 }

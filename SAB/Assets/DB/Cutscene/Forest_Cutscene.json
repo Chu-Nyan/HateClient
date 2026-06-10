@@ -1,6 +1,6 @@
 [
   {
-    "Name": "CH01_010_EnterTheForestBattle",
+    "Name": "CH01_01_EnterTheForestBattle",
     "AssetPath": "CH01_01_EnterTheForestBattle",
     "CenterX": 100.0,
     "CenterY": 58.0,
@@ -14,57 +14,49 @@
       }
     ],
     "BindingIDByTrack": {
-      "Animation Track22": -8606
+      "Animation Track22": -581580805,
+      "VCamStatic": 687161609,
+      "VCamFollow": -876568946
     },
-    "SingleMeshDataByID": {
-      "-8606": {
-        "ID": -8606,
-        "TrackName": "Animation Track22",
-        "MeshPath": "Mesh_Weapon_KnightSword",
-        "posX": 100.0,
-        "posY": 0.0,
-        "posZ": 53.0,
-        "RotX": 0.0,
-        "RotY": 0.0,
-        "RotZ": 0.0,
-        "RotW": 1.0
-      }
-    },
-    "VCamData": [
-      {
-        "Name": "Cinemachine Track",
-        "VCamIDByClipName": {
-          "VCamStatic_Cutscene": -8642,
-          "VCamFollow_Cutscene": -8600
-        },
-        "StaticData": {
-          "-8642": {
-            "ID": -8642,
-            "posX": 100.0,
-            "posY": 2.15,
-            "posZ": 50.58,
-            "RotX": 0.0,
-            "RotY": 0.0,
-            "RotZ": 0.0,
-            "RotW": 1.0,
-            "POV": 40.0
-          }
-        },
-        "FollowData": {
-          "-8600": {
-            "ID": -8600,
-            "RotX": 0.079211,
-            "RotY": -0.005890844,
-            "RotZ": 0.09230791,
-            "RotW": 0.9925574,
-            "POV": 40.0,
-            "TargetID": -8606,
-            "OffsetX": 0.0,
-            "OffsetY": 2.13,
-            "OffsetZ": -12.88
-          }
+    "ObjectDataContainer": {
+      "StaticDatas": {
+        "687161609": {
+          "PosX": 100.0,
+          "PosY": 2.15,
+          "PosZ": 50.58,
+          "RotX": 0.0,
+          "RotY": 0.0,
+          "RotZ": 0.0,
+          "RotW": 1.0,
+          "POV": 40.0
+        }
+      },
+      "FollowDatas": {
+        "-876568946": {
+          "RotX": 0.079211,
+          "RotY": -0.005890844,
+          "RotZ": 0.09230791,
+          "RotW": 0.9925574,
+          "POV": 40.0,
+          "TargetID": -581580805,
+          "OffsetX": 0.0,
+          "OffsetY": 2.13,
+          "OffsetZ": -12.88
+        }
+      },
+      "SingleMeshDatas": {
+        "-581580805": {
+          "MeshPath": "Mesh_Weapon_KnightSword",
+          "PosX": 100.0,
+          "PosY": 0.0,
+          "PosZ": 53.0,
+          "RotX": 0.0,
+          "RotY": 0.0,
+          "RotZ": 0.0,
+          "RotW": 1.0,
+          "Type": 2
         }
       }
-    ]
+    }
   }
 ]

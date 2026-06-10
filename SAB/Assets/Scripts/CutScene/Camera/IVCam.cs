@@ -2,9 +2,8 @@
 
 namespace SAB.Cutscene
 {
-    public interface IVCam
+    public interface IVCam : ICutsceneObject
     {
         public CinemachineCamera CinemachineCamera { get; }
-        public void SetActive(bool value);
     }
 }

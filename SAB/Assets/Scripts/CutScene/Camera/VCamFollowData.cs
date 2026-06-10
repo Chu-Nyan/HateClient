@@ -3,21 +3,31 @@ using UnityEngine;
 
 namespace SAB.Cutscene
 {
-    public class VCamFollowData : IVCamData
+    public class VCamFollowData : IObjectConfig
     {
         // VCam
-        public int ID;
-        public float RotX, RotY, RotZ, RotW;
+        public float RotX;
+        public float RotY;
+        public float RotZ;
+        public float RotW;
         public float POV;
 
         // Follow
         public int TargetID;
-        public float OffsetX, OffsetY, OffsetZ;
+        public float OffsetX;
+        public float OffsetY;
+        public float OffsetZ;
+
+        [JsonIgnore]
+        public CutsceneObjectType Type
+        {
+            get => CutsceneObjectType.VCamFollow;
+        }
 
         [JsonIgnore]
         public Quaternion Rotation
         {
-            get => new (RotX, RotY, RotZ, RotW);
+            get => new(RotX, RotY, RotZ, RotW);
         }
 
         [JsonIgnore]
