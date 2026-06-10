@@ -19,12 +19,6 @@ namespace SAB.Cutscene
         public float OffsetZ;
 
         [JsonIgnore]
-        public CutsceneObjectType Type
-        {
-            get => CutsceneObjectType.VCamFollow;
-        }
-
-        [JsonIgnore]
         public Quaternion Rotation
         {
             get => new(RotX, RotY, RotZ, RotW);

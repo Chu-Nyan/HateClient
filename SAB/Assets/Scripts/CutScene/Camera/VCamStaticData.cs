@@ -11,12 +11,6 @@ namespace SAB.Cutscene
         public float POV;
 
         [JsonIgnore]
-        public CutsceneObjectType Type
-        {
-            get => CutsceneObjectType.VCamStatic;
-        }
-
-        [JsonIgnore]
         public Vector3 Position
         {
             get => new(PosX, PosY, PosZ);

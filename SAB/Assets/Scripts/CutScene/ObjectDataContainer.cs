@@ -40,14 +40,14 @@ namespace SAB.Cutscene
             SingleMeshDatas.Add(id, data);
         }
 
-        public IEnumerator<KeyValuePair<int, IObjectConfig>> GetEnumerator()
+        public IEnumerator<CutsceneObjectConfig> GetEnumerator()
         {
             foreach (var item in StaticDatas)
-                yield return new(item.Key, item.Value);
+                yield return new(item.Key, CutsceneObjectType.VCamStatic, item.Value);
             foreach (var item in FollowDatas)
-                yield return new(item.Key, item.Value);
+                yield return new(item.Key, CutsceneObjectType.VCamFollow, item.Value);
             foreach (var item in SingleMeshDatas)
-                yield return new(item.Key, item.Value);
+                yield return new(item.Key, CutsceneObjectType.SingleMesh, item.Value);
         }
     }
 }

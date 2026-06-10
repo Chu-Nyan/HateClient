@@ -22,11 +22,6 @@ namespace SAB.Cutscene
             get => new(RotX, RotY, RotZ, RotW);
         }
 
-        public CutsceneObjectType Type
-        {
-            get => CutsceneObjectType.SingleMesh;
-        }
-
         public void SetPose(Vector3 pos, Quaternion quaternion)
         {
             PosX = pos.x;

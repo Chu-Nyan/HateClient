@@ -85,7 +85,7 @@ namespace SAB.Cutscene
 
         private void OnCutsceneTriggerEnter(int id)
         {
-            CutSceneClear();
+            ClearPlayingCutscene();
             CutsceneData data = _dataByTriggerID[id];
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
 
@@ -117,11 +117,11 @@ namespace SAB.Cutscene
         private void PrepareCutsceneObject(ObjectDataContainer container)
         {
             // Generate
-            foreach (var pair in container)
+            foreach (var config in container)
             {
-                var obj = _objPool[pair.Value.Type].Dequeue();
-                obj.SetCutsceneData(pair.Value);
-                _objectByID[pair.Key] = obj;
+                var obj = _objPool[config.Type].Dequeue();
+                obj.SetCutsceneData(config.ObjectConfig);
+                _objectByID[config.ID] = obj;
             }
 
             // Init
@@ -161,7 +161,7 @@ namespace SAB.Cutscene
             }
         }
 
-        private void CutSceneClear()
+        private void ClearPlayingCutscene()
         {
             if (_trackByName.Count == 0)
                 return;
