@@ -55,6 +55,10 @@ namespace Chu.Art
 
         public void SetMesh(int hash, Mesh mesh)
         {
+#if (UNITY_EDITOR)
+            if (_adapterByPart == null)
+                Awake();
+#endif
             if (_adapterByPart.ContainsKey(hash) == false)
             {
                 Debug.Log("Slot이 존재하지 않음");

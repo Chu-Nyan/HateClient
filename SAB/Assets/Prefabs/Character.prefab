@@ -2074,6 +2074,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackOrigin: {fileID: 6782839593392791857}
+  _nav: {fileID: 6510419280220273067}
+  _meshHub: {fileID: 4222736799046786298}
 --- !u!195 &6510419280220273067
 NavMeshAgent:
   m_ObjectHideFlags: 0

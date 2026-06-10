@@ -24,7 +24,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private StateContext _stateContext;
     private FSM<CharacterState, StateContext> _state;
 
+    [SerializeField]
     private NavMeshAgent _nav;
+    [SerializeField]
     private MeshSlotHub _meshHub;
     private CharacterAnimator _animator;
 
@@ -56,19 +58,21 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         get => _combatSystem.SkillList;
     }
 
+    private void Awake()
+    {
+        _defenseSystem = new DefenseSystem();
+        _stateContext = new StateContext();
+        _stats = new CharacterStats();
+        CircleShape shape = ShapeFactory.Instance.Generate<CircleShape>();
+        shape.Setup(new CircleRangeData(Vector2.one, 1));
+        _body = new(_instanceID, transform.position, transform.eulerAngles.y, this, shape);
+    }
+
     public void Init(int instanceID)
     {
         _instanceID = instanceID;
         _combatSystem = new OffenseSystem(instanceID, _attackOrigin);
-        _defenseSystem = new DefenseSystem();
-        _stats = new CharacterStats();
-        _stateContext = new StateContext();
-        CircleShape shape = ShapeFactory.Instance.Generate<CircleShape>();
-        shape.Setup(new CircleRangeData(Vector2.one, 1));
-        _body = new(_instanceID, transform.position, transform.eulerAngles.y, this, shape);
         _state = GenerateStateHandler();
-        _nav = GetComponent<NavMeshAgent>();
-        _meshHub = GetComponent<MeshSlotHub>();
         _animator = new CharacterAnimator(GetComponent<Animator>());
         _equipmentSys = new();
 
@@ -132,6 +136,14 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void StopMovement()
     {
         _nav.ResetPath();
+    }
+
+    public void SetCustomizing(CustomizingData data)
+    {
+        SetCustomizing(CustomizingPart.Eye, data.Eye);
+        SetCustomizing(CustomizingPart.Eyebrow, data.Eyebrow);
+        SetCustomizing(CustomizingPart.Hair, data.Hair);
+        SetCustomizing(CustomizingPart.Mouth, data.Mouth);
     }
 
     public void SetCustomizing(CustomizingPart part, int number)
