@@ -15,7 +15,8 @@ namespace SAB.DataManger
             DataByMapType = new();
             foreach (MapType type in Enum.GetValues(typeof(MapType)))
             {
-                CutsceneData[] data = AssetManager.DeserializeJsonSync<CutsceneData[]>(string.Format(FileNameFormat, type.ToString()));
+                string json = AssetManager.LoadJson(string.Format(FileNameFormat, type.ToString()));
+                CutsceneData[] data = DataBase.ConvertJsonToArray<CutsceneData>(json);
                 if (data == null)
                 {
                     Debug.LogWarning($"{type} CutScene Data can't find");

@@ -1,4 +1,5 @@
 ﻿using Chu.Data;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,7 +68,10 @@ namespace SAB.Cutscene
 
         public IObjectConfig GetCutsceneObjectData()
         {
-            return GetComponent<ICutsceneObject>().GetCutsceneConfig();
+            if (TryGetComponent<ICutsceneObject>(out var comp) == false)
+                throw new Exception($"{name} was not found 'ICutsceneObject'");
+
+            return comp.GetCutsceneConfig();
         }
 
         [ContextMenu("Print Data Log")]

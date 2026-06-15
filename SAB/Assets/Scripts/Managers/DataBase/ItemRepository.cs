@@ -15,21 +15,20 @@ namespace SAB.DataManger
 
         public ItemRepository()
         {
-
             Base = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<ItemBaseDto[]>(_basePath),
+                dtos: DataBase.ConvertJsonToArray<ItemBaseDto>(AssetManager.LoadJson(_basePath)),
                 keySelector: a => a.ID,
                 converter: a => new ItemTemplateData(a.ID, a.TextID, a.Category)
                 );
             Equipment = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<ItemEquipmentDto[]>(_equipmentPath),
+                dtos: DataBase.ConvertJsonToArray<ItemEquipmentDto>(AssetManager.LoadJson(_equipmentPath)),
                 keySelector: a => a.ID,
                 converter: a => new EquipmentTemplateData(a.ID, a.Slot, a.MeshPath)
                 );
             Weapon = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<ItemWeaponDto[]>(_weaponPath),
-                keySelector: a =>a.ID,
-                converter: a => new WeaponTemplateData(a.ID,a.Damage,a.UpgradeSlot)
+                dtos: DataBase.ConvertJsonToArray<ItemWeaponDto>(AssetManager.LoadJson(_weaponPath)),
+                keySelector: a => a.ID,
+                converter: a => new WeaponTemplateData(a.ID, a.Damage, a.UpgradeSlot)
                 );
         }
     }

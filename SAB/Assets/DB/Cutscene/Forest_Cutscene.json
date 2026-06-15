@@ -15,45 +15,58 @@
     ],
     "BindingIDByTrack": {
       "Animation Track22": -581580805,
-      "VCamStatic": 687161609,
-      "VCamFollow": -876568946
+      "Cam_SwordStatic": 687161609,
+      "Cam_SwordFollow": -876568946,
+      "Activation Track": 424060134
     },
     "ObjectDataContainer": {
       "StaticDatas": {
         "687161609": {
-          "PosX": 100.0,
-          "PosY": 2.15,
-          "PosZ": 50.58,
-          "RotX": 0.0,
-          "RotY": 0.0,
-          "RotZ": 0.0,
-          "RotW": 1.0,
+          "Position": {
+            "x": 100.0,
+            "y": 2.15,
+            "z": 50.58
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
           "POV": 40.0
         }
       },
       "FollowDatas": {
         "-876568946": {
-          "RotX": 0.079211,
-          "RotY": -0.005890844,
-          "RotZ": 0.09230791,
-          "RotW": 0.9925574,
+          "Rotation": {
+            "x": 0.079211,
+            "y": -0.005890844,
+            "z": 0.09230791,
+            "w": 0.9925574
+          },
           "POV": 40.0,
           "TargetID": -581580805,
-          "OffsetX": 0.0,
-          "OffsetY": 2.13,
-          "OffsetZ": -12.88
+          "FollowOffset": {
+            "x": 0.0,
+            "y": 2.13,
+            "z": -12.88
+          }
         }
       },
       "SingleMeshDatas": {
         "-581580805": {
           "MeshPath": "Mesh_Weapon_KnightSword",
-          "PosX": 100.0,
-          "PosY": 0.0,
-          "PosZ": 53.0,
-          "RotX": 0.0,
-          "RotY": 0.0,
-          "RotZ": 0.0,
-          "RotW": 1.0
+          "Position": {
+            "x": 100.0,
+            "y": 0.0,
+            "z": 53.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          }
         }
       }
     }

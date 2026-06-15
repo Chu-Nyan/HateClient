@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.U2D;
@@ -42,20 +41,10 @@ public static class AssetManager
         return gameObj.GetComponent<T>();
     }
 
-    // Json 역직렬화 , 함수이름 Path로 변경
-    public static T DeserializeJsonSync<T>(string path)
+    // Json 불러오기
+    public static string LoadJson(string path)
     {
-        var handle = LoadAssetSync<TextAsset>(path);
-        T datas = JsonConvert.DeserializeObject<T>(handle.text);
-
-        return datas;
-    }
-
-    // Json만 불러오기
-    public static string LoadJsonText(string path)
-    {
-        var handle = LoadAssetSync<TextAsset>(path);
-        return handle.text;
+        return LoadAssetSync<TextAsset>(path).text;
     }
 
     public static Sprite GetSpriteWithAtlas(string path, string name)

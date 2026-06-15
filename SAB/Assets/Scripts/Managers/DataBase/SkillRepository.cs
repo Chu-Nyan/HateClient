@@ -32,52 +32,52 @@ namespace SAB.DataManger
         public SkillRepository()
         {
             InstanceStepByID = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillStepInstanceDto[]>(InstanceStepPath),
+                dtos: DataBase.ConvertJsonToArray<SkillStepInstanceDto>(AssetManager.LoadJson(InstanceStepPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new InstanceStepData(dto.ID, dto.DamageRate, dto.Count)
-                );
+            );
 
             AoEStepByID = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillStepAoEDto[]>(AoEStepPath),
+                dtos: DataBase.ConvertJsonToArray<SkillStepAoEDto>(AssetManager.LoadJson(AoEStepPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new AoEStepData(dto.ID, dto.DamageRate, dto.Ranged, dto.Count)
-                );
+            );
 
             DotStepByID = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillStepDoTDto[]>(DoTStepPath),
+                dtos: DataBase.ConvertJsonToArray<SkillStepDoTDto>(AssetManager.LoadJson(DoTStepPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new DotStepData(dto.ID, dto.DamageRate, dto.Duration)
-                );
+            );
 
             TimerStepByID = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillStepTimerDto[]>(TimerStepPath),
+                dtos: DataBase.ConvertJsonToArray<SkillStepTimerDto>(AssetManager.LoadJson(TimerStepPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new TimerStepData(dto.ID, dto.Duration)
-                );
+            );
 
             FlowStepByID = DataBase.DeserializeArrayByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillFlowStepDto[]>(FlowStepPath),
+                dtos: DataBase.ConvertJsonToArray<SkillFlowStepDto>(AssetManager.LoadJson(FlowStepPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => GetStepData(dto.LogicID)
-                );
+            );
 
             HitBoxByID = DataBase.DeserializeArrayByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillHitBoxDto[]>(HitBoxes),
+                dtos: DataBase.ConvertJsonToArray<SkillHitBoxDto>(AssetManager.LoadJson(HitBoxes)),
                 keySelector: dto => dto.ID,
                 converter: dto => new ShapeParam(dto.ShapeType, dto.OffsetX, dto.OffsetY, dto.Param1, dto.Param2)
-                );
+            );
 
             CollisionLogicByID = DataBase.DeserializeArrayByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillCollisionLogicDto[]>(CollisionLogic),
+                dtos: DataBase.ConvertJsonToArray<SkillCollisionLogicDto>(AssetManager.LoadJson(CollisionLogic)),
                 keySelector: dto => dto.ID,
                 converter: dto => new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID], FlowStepByID[dto.FlowStepID])
-                );
+            );
 
             SkillByID = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<SkillBaseDto[]>(SkillDataPath),
+                dtos: DataBase.ConvertJsonToArray<SkillBaseDto>(AssetManager.LoadJson(SkillDataPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new SkillData(dto, CollisionLogicByID[dto.ObjectLogicID])
-                );
+            );
         }
 
         private IStepData GetStepData(int id)

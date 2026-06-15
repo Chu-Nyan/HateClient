@@ -16,22 +16,22 @@ namespace SAB.DataManger
         public CharacterRepository()
         {
             CharacterBaseData = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<CharacterBaseStatsDto[]>(_characterBaseJson),
+                dtos: DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(_characterBaseJson)),
                 keySelector: a => a.ID,
                 converter: a => new BaseStats(a.ID, a.Name, a.Desc, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
-                );
+            );
 
             CustomizingData = DataBase.DeserializeObjectByKey(
-                dtos: AssetManager.DeserializeJsonSync<HumanCustomizingDto[]>(_customizingJson),
+                dtos: DataBase.ConvertJsonToArray<HumanCustomizingDto>(AssetManager.LoadJson(_customizingJson)),
                 keySelector: a => a.ID,
                 converter: a => new CustomizingData(a)
-                );
+            );
 
             DefaultEquipment = DataBase.DeserializeArrayByKey(
-                dtos: AssetManager.DeserializeJsonSync<HumanDefaultEquipmentDto[]>(_defaultEquipmentJson),
+                dtos: DataBase.ConvertJsonToArray<HumanDefaultEquipmentDto>(AssetManager.LoadJson(_defaultEquipmentJson)),
                 keySelector: a => a.ID,
                 converter: a => (ItemType)a.EquipmentID
-                );
+            );
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Chu.Utility;
+using Chu.Utility.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +8,8 @@ namespace SAB.DataManger
 {
     public class DataBase : Singleton<DataBase>
     {
+        public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings().WithUnity();
+
         public readonly SkillRepository SkillRepo;
         public readonly CharacterRepository CharacterRepo;
         public readonly ItemRepository ItemRepo;
@@ -19,7 +23,7 @@ namespace SAB.DataManger
             CutSceneRepo = new CutSceneRepository();
         }
 
-        public static  Dictionary<K, V[]> DeserializeArrayByKey<TDTO, K, V>(TDTO[] dtos, Func<TDTO, K> keySelector, Func<TDTO, V> converter)
+        public static Dictionary<K, V[]> DeserializeArrayByKey<TDTO, K, V>(TDTO[] dtos, Func<TDTO, K> keySelector, Func<TDTO, V> converter)
         {
             var dic = new Dictionary<K, V[]>();
 
@@ -58,8 +62,13 @@ namespace SAB.DataManger
                 var data = converter(dtos[i]);
                 dic.Add(keySelector(dtos[i]), data);
             }
-  
+
             return dic;
+        }
+
+        public static T[] ConvertJsonToArray<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T[]>(json, JsonSerializerSettings);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Chu.Utility;
+using Chu.Utility.Json;
 using Chu.Utility.UnityHelper;
 using Newtonsoft.Json;
 using SAB.DataManger;
@@ -75,7 +76,7 @@ namespace SAB.Cutscene
                 cutSceneDatas.Add(cutsceneData);
             }
 
-            string json = JsonConvert.SerializeObject(cutSceneDatas, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(cutSceneDatas, Formatting.Indented, new JsonSerializerSettings().WithUnity());
             AssetDatabase.GetAssetPath(_path);
             string fileName = $"{string.Format(CutSceneRepository.FileNameFormat, _mapType)}";
             Utility.GenerateFile(AssetDatabase.GetAssetPath(_path), $"{fileName}.json", json);
