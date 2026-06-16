@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Chu.Utility
+namespace Chu.Utility.Unity
 {
     [ExecuteAlways]
     [DefaultExecutionOrder(-1000)]

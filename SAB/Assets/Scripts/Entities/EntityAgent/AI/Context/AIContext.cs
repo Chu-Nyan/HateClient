@@ -1,4 +1,4 @@
-﻿using ChampagneSupernova.Library.BehaviorTree;
+﻿using Chu.AI;
 
 namespace SAB.EntityAgent.AI.Context
 {
@@ -23,13 +23,13 @@ namespace SAB.EntityAgent.AI.Context
         }
 
         public IOffenseReceiver CombatReceiver
-        { 
+        {
             get => _combatReceiver;
             set => _combatReceiver = value;
         }
 
-        public CommandType Command 
-        { 
+        public CommandType Command
+        {
             get => _command;
         }
 
@@ -38,8 +38,8 @@ namespace SAB.EntityAgent.AI.Context
             get => _progress;
             set => _progress = value;
         }
-        public MoveCommandData MoveCommandData 
-        { 
+        public MoveCommandData MoveCommandData
+        {
             get => _moveCommandData;
         }
 

@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor.AddressableAssets;
 using UnityEngine;
 
-namespace Chu.Utility.UnityHelper
+namespace Chu.Utility.Unity
 {
     public static class Utility
     {

@@ -1,4 +1,4 @@
-﻿namespace ChampagneSupernova.Library.BehaviorTree
+﻿namespace Chu.AI
 {
     public enum MethodResult
     {

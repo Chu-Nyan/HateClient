@@ -10,7 +10,6 @@ namespace Chu
         private readonly GameObject _root;
 
         private NyanCollisonSystem _collisionSys;
-        private InstanceIDService _idService;
         private GlobalObjectPool _objectPool;
         private GeneratorHub _hub;
 
@@ -23,7 +22,6 @@ namespace Chu
         {
             _root = root;
             _hub = new GeneratorHub();
-            _idService = new InstanceIDService();
             _objectPool = new GlobalObjectPool();
         }
 

@@ -1,4 +1,4 @@
-﻿using ChampagneSupernova.Library.BehaviorTree;
+﻿using Chu.AI;
 using Chu.Utility;
 using SAB.EntityAgent.AI.Context;
 
@@ -18,7 +18,7 @@ namespace SAB.EntityAgent.AI
             var selector_2 = new Selector<AIContext>();
             ai.AddRootChild(condition_1);
             ai.AddRootChild(selector_2);
-            
+
             var sequence_2_1 = new Sequence<AIContext>();
             selector_2.AddNode(sequence_2_1);
 

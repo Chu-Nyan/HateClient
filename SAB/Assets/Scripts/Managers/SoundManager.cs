@@ -1,4 +1,4 @@
-﻿using Chu.Utility;
+﻿using Chu.Utility.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

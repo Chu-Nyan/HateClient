@@ -1,4 +1,4 @@
-﻿namespace ChampagneSupernova.Library.BehaviorTree
+﻿namespace Chu.AI
 {
     public class Sequence<T> : BaseContollerNode<T> where T : class
     {

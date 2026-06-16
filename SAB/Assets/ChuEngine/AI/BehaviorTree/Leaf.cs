@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChampagneSupernova.Library.BehaviorTree
+namespace Chu.AI
 {
     public class Leaf<T> : IBTNode<T> where T : class
     {

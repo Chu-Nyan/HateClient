@@ -1,4 +1,4 @@
-﻿using ChampagneSupernova.Library.BehaviorTree;
+﻿using Chu.AI;
 using SAB.EntityAgent.AI.Context;
 using SAB.EntityAgent.AI.StateMachine;
 using System.Collections.Generic;

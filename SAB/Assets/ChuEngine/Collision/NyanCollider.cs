@@ -1,6 +1,4 @@
-﻿using Chu.Collision.Layer;
-using Chu.Data;
-using Chu.Utility.UnityHelper;
+﻿using Chu.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

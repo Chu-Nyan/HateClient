@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChampagneSupernova.Library.BehaviorTree
+﻿namespace Chu.AI
 {
     public class BehaviorAI<T> where T : class
     {

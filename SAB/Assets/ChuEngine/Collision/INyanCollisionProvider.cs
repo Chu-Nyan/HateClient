@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Chu.Collision
+﻿namespace Chu.Collision
 {
     /// <summary>
     /// NyanCollider를 제공하고 충돌 시점에 따라 함수를 실행하는 인터페이스

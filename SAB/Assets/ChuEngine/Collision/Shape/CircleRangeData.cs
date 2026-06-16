@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public struct CircleRangeData
+namespace Chu.Collision
 {
-    public Vector3 Offset;
-    public float Radius;
-
-    public CircleRangeData(Vector3 offset, float radius)
+    public struct CircleRangeData
     {
-        Offset = offset;
-        Radius = radius;
+        public Vector3 Offset;
+        public float Radius;
+
+        public CircleRangeData(Vector3 offset, float radius)
+        {
+            Offset = offset;
+            Radius = radius;
+        }
     }
 }

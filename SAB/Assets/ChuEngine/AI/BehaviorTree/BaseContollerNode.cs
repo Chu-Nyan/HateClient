@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChampagneSupernova.Library.BehaviorTree
+namespace Chu.AI
 {
     public abstract class BaseContollerNode<T> : IBTNode<T> where T : class
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chu.Utility.UnityHelper
+namespace Chu.Utility.Unity
 {
     public static class GizmoDrawer
     {
@@ -42,7 +42,7 @@ namespace Chu.Utility.UnityHelper
             Gizmos.DrawLine(-diag1, diag1);
             Gizmos.DrawLine(-diag2, diag2);
 
-            Vector3 prevPoint = new (radius, 0, 0);
+            Vector3 prevPoint = new(radius, 0, 0);
 
             for (int i = 1; i <= CircleSegement; i++)
             {

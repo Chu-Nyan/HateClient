@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Chu.Utility
+namespace Chu.Utility.Unity
 {
     public class TerrainToMesh : MonoBehaviour
     {

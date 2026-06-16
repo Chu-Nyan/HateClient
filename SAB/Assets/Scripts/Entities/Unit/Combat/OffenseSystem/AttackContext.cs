@@ -1,4 +1,4 @@
-﻿using Chu.Collision.Layer;
+﻿using Chu.Collision;
 using SAB.Unit.Combat;
 
 /// <summary>

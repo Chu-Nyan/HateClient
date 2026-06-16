@@ -1,7 +1,7 @@
 ﻿using Chu.AI;
 using Chu.Art;
 using Chu.Utility;
-using Chu.Utility.UnityHelper;
+using Chu.Utility.Unity;
 using SAB.Cutscene;
 using SAB.EntityAgent;
 using SAB.Item;

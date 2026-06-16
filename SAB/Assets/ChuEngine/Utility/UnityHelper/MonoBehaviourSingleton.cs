@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chu.Utility
+namespace Chu.Utility.Unity
 {
     public abstract class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviourSingleton<T>
     {

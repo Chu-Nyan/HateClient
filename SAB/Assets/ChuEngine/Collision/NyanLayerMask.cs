@@ -1,4 +1,4 @@
-namespace Chu.Collision.Layer
+namespace Chu.Collision
 {
     public struct NyanLayerMask
     {

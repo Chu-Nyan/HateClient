@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace Chu.Collision.Layer
+namespace Chu.Collision
 {
     [CreateAssetMenu(fileName = "LayerHandler", menuName = "Scriptable Objects/LayerHandler", order = 1)]
     public class LayerHandler : ScriptableObject

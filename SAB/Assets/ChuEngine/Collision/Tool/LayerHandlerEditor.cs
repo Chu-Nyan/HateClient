@@ -1,7 +1,7 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace Chu.Collision.Layer
+namespace Chu.Collision
 {
     [CustomEditor(typeof(LayerHandler))]
     public class LayerHandlerEditor : Editor

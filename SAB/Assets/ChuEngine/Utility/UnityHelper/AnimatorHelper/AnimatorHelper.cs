@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chu.Utility
+namespace Chu.Utility.Unity
 {
     /// <summary>
     /// 애니메이터 해쉬 접근을 도와줌

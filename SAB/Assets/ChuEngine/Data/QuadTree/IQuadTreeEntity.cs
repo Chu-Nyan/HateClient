@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
-using Chu.Data;
 
-public interface IQuadTreeEntity
+namespace Chu.Data
 {
-    public RectBound RectBound { get; }
-    public HashSet<int> InsertedNodesID { get; }
+    public interface IQuadTreeEntity
+    {
+        public RectBound RectBound { get; }
+        public HashSet<int> InsertedNodesID { get; }
 
-    public void RegisterQuadTreeNodeID(int id);
-    public void ResetInsertedNodes();
+        public void RegisterQuadTreeNodeID(int id);
+        public void ResetInsertedNodes();
+    }
 }

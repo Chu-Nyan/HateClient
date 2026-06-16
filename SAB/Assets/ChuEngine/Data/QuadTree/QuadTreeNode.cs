@@ -1,156 +1,157 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Chu.Data;
-using UnityEngine;
 
-public class QuadTreeNode<T> where T : IQuadTreeEntity
+namespace Chu.Data
 {
-    private RectBound _boundary;
-    private readonly int _index;
-    private readonly int _level;
-    private readonly HashSet<T> _entities;
-
-    private bool _isDivided;
-    private QuadTreeNode<T>[] _childNodes; // RT, LT, LB, RB
-
-    private readonly float _halfX;
-    private readonly float _halfY;
-
-    public int Index
+    public class QuadTreeNode<T> where T : IQuadTreeEntity
     {
-        get => _index;
-    }
+        private RectBound _boundary;
+        private readonly int _index;
+        private readonly int _level;
+        private readonly HashSet<T> _entities;
 
-    public bool IsDivided
-    {
-        get => _isDivided;
-    }
+        private bool _isDivided;
+        private QuadTreeNode<T>[] _childNodes; // RT, LT, LB, RB
 
-    public QuadTreeNode<T>[] ChildNodes
-    {
-        get => _childNodes;
-    }
+        private readonly float _halfX;
+        private readonly float _halfY;
 
-    public HashSet<T> Entities
-    {
-        get => _entities;
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool IsIntersection(RectBound target)
-    {
-        return RectBound.IsIntersecting(_boundary, target);
-    }
-
-    public bool IsFullyInside(RectBound target)
-    {
-        return _boundary.IsFullyInside(target);
-    }
-
-    public QuadTreeNode(int level, RectBound area, int index)
-    {
-        _level = level;
-        _boundary = area;
-        _index = index;
-        _entities = new(_level < QuadTree<T>.MaxLevel ? QuadTree<T>.MaxCount : QuadTree<T>.MaxCount * 2);
-        _halfX = _boundary.HalfX;
-        _halfY = _boundary.HalfY;
-    }
-
-    public void Insert(T handler)
-    {
-        if (RectBound.IsIntersecting(_boundary, handler.RectBound) == false)
-            return;
-
-        if (_isDivided == true)
-            InsertChild(handler);
-        else
+        public int Index
         {
-            _entities.Add(handler);
-            handler.RegisterQuadTreeNodeID(_index);
-
-            if (_entities.Count >= QuadTree<T>.MaxCount && _level < QuadTree<T>.MaxLevel)
-                Subdivide();
-        }
-    }
-
-    public void Remove(T handler)
-    {
-        _entities.Remove(handler);
-    }
-
-    private void Subdivide()
-    {
-        if (_isDivided == true)
-            throw new System.Exception("트리가 분열 된 상태에서 분열을 시도함");
-
-        var startIndex = _index * 4;
-        _childNodes = new QuadTreeNode<T>[4];
-
-        _childNodes[0] = new(_level + 1, new(_halfX, _boundary.MaxX, _halfY, _boundary.MaxY), startIndex + 1);
-        _childNodes[1] = new(_level + 1, new(_boundary.MinX, _halfX, _halfY, _boundary.MaxY), startIndex + 2);
-        _childNodes[2] = new(_level + 1, new(_boundary.MinX, _halfX, _boundary.MinY, _halfY), startIndex + 3);
-        _childNodes[3] = new(_level + 1, new(_halfX, _boundary.MaxX, _boundary.MinY, _halfY), startIndex + 4);
-
-        foreach (var item in _entities)
-        {
-            item.ResetInsertedNodes();
-            InsertChild(item);
+            get => _index;
         }
 
-        _entities.Clear();
-        _isDivided = true;
-    }
-
-    private void InsertChild(T entity)
-    {
-        var bound = entity.RectBound;
-
-        if (bound.MinX >= _halfX && bound.MinY >= _halfY)
-            _childNodes[0].Insert(entity);
-        else if (bound.MaxX <= _halfX && bound.MinY >= _halfY)
-            _childNodes[1].Insert(entity);
-        else if (bound.MaxX <= _halfX && bound.MaxY <= _halfY)
-            _childNodes[2].Insert(entity);
-        else if (bound.MinX >= _halfX && bound.MaxY <= _halfY)
-            _childNodes[3].Insert(entity);
-        else
+        public bool IsDivided
         {
-            foreach (var item in _childNodes)
+            get => _isDivided;
+        }
+
+        public QuadTreeNode<T>[] ChildNodes
+        {
+            get => _childNodes;
+        }
+
+        public HashSet<T> Entities
+        {
+            get => _entities;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsIntersection(RectBound target)
+        {
+            return RectBound.IsIntersecting(_boundary, target);
+        }
+
+        public bool IsFullyInside(RectBound target)
+        {
+            return _boundary.IsFullyInside(target);
+        }
+
+        public QuadTreeNode(int level, RectBound area, int index)
+        {
+            _level = level;
+            _boundary = area;
+            _index = index;
+            _entities = new(_level < QuadTree<T>.MaxLevel ? QuadTree<T>.MaxCount : QuadTree<T>.MaxCount * 2);
+            _halfX = _boundary.HalfX;
+            _halfY = _boundary.HalfY;
+        }
+
+        public void Insert(T handler)
+        {
+            if (RectBound.IsIntersecting(_boundary, handler.RectBound) == false)
+                return;
+
+            if (_isDivided == true)
+                InsertChild(handler);
+            else
             {
-                if (item.IsIntersection(bound))
+                _entities.Add(handler);
+                handler.RegisterQuadTreeNodeID(_index);
+
+                if (_entities.Count >= QuadTree<T>.MaxCount && _level < QuadTree<T>.MaxLevel)
+                    Subdivide();
+            }
+        }
+
+        public void Remove(T handler)
+        {
+            _entities.Remove(handler);
+        }
+
+        private void Subdivide()
+        {
+            if (_isDivided == true)
+                throw new System.Exception("트리가 분열 된 상태에서 분열을 시도함");
+
+            var startIndex = _index * 4;
+            _childNodes = new QuadTreeNode<T>[4];
+
+            _childNodes[0] = new(_level + 1, new(_halfX, _boundary.MaxX, _halfY, _boundary.MaxY), startIndex + 1);
+            _childNodes[1] = new(_level + 1, new(_boundary.MinX, _halfX, _halfY, _boundary.MaxY), startIndex + 2);
+            _childNodes[2] = new(_level + 1, new(_boundary.MinX, _halfX, _boundary.MinY, _halfY), startIndex + 3);
+            _childNodes[3] = new(_level + 1, new(_halfX, _boundary.MaxX, _boundary.MinY, _halfY), startIndex + 4);
+
+            foreach (var item in _entities)
+            {
+                item.ResetInsertedNodes();
+                InsertChild(item);
+            }
+
+            _entities.Clear();
+            _isDivided = true;
+        }
+
+        private void InsertChild(T entity)
+        {
+            var bound = entity.RectBound;
+
+            if (bound.MinX >= _halfX && bound.MinY >= _halfY)
+                _childNodes[0].Insert(entity);
+            else if (bound.MaxX <= _halfX && bound.MinY >= _halfY)
+                _childNodes[1].Insert(entity);
+            else if (bound.MaxX <= _halfX && bound.MaxY <= _halfY)
+                _childNodes[2].Insert(entity);
+            else if (bound.MinX >= _halfX && bound.MaxY <= _halfY)
+                _childNodes[3].Insert(entity);
+            else
+            {
+                foreach (var item in _childNodes)
                 {
-                    item.Insert(entity);
+                    if (item.IsIntersection(bound))
+                    {
+                        item.Insert(entity);
+                    }
                 }
             }
         }
-    }
 
-    public override string ToString()
-    {
-        return $"ID : {_index} Lv : {_level}, {_boundary}\n";
-    }
-
-    #region Debug
-    public string PrintLog(string log = null)
-    {
-        log += ToString();
-        var index = 0;
-        foreach (var entity in _entities)
+        public override string ToString()
         {
-            log += $"- obj{index} : {entity.RectBound}\n";
-            index++;
+            return $"ID : {_index} Lv : {_level}, {_boundary}\n";
         }
 
-        if (_isDivided == true)
+        #region Debug
+        public string PrintLog(string log = null)
         {
-            foreach (var item in _childNodes)
+            log += ToString();
+            var index = 0;
+            foreach (var entity in _entities)
             {
-                log = item.PrintLog(log) + "\n";
+                log += $"- obj{index} : {entity.RectBound}\n";
+                index++;
             }
-        }
 
-        return log;
-    }
+            if (_isDivided == true)
+            {
+                foreach (var item in _childNodes)
+                {
+                    log = item.PrintLog(log) + "\n";
+                }
+            }
+
+            return log;
+        }
         #endregion
+    }
 }

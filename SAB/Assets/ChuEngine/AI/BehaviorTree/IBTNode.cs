@@ -1,4 +1,4 @@
-﻿namespace ChampagneSupernova.Library.BehaviorTree
+﻿namespace Chu.AI
 {
     public interface IBTNode<T> where T : class
     {

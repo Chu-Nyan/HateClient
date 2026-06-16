@@ -1,6 +1,5 @@
 ﻿using Chu;
 using Chu.Collision;
-using Chu.Collision.Layer;
 using UnityEngine;
 
 namespace SAB.EntityAgent

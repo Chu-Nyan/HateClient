@@ -1,6 +1,5 @@
 ﻿using Chu;
 using Chu.Collision;
-using Chu.Collision.Layer;
 using UnityEngine;
 
 public class CharacterBody : INyanCollisionProvider, IDefendable
