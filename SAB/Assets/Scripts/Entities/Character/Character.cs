@@ -148,8 +148,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void SetCustomizing(CustomizingPart part, int number)
     {
-        string path = HumanoidCustomizingConst.GetPath(part, number);
-        Mesh mesh = AssetManager.LoadAssetSync<Mesh>(path);
+        Mesh mesh = HumanoidCustomizingUtility.GetMesh(part, number);
         _meshHub.SetMesh(part.ToString(), mesh);
     }
 

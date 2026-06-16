@@ -1,4 +1,6 @@
-﻿public static class HumanoidCustomizingConst
+﻿using UnityEngine;
+
+public static class HumanoidCustomizingUtility
 {
     public const int EyeCount = 12;
     public const int EyebrowCount = 2;
@@ -15,6 +17,12 @@
             CustomizingPart.Mouth => GetMouthPath(number),
             _ => throw new System.Exception(),
         };
+    }
+
+    public static Mesh GetMesh(CustomizingPart part, int id)
+    {
+        string path = GetPath(part, id);
+        return AssetManager.LoadAssetSync<Mesh>(path);
     }
 
     public static string GetEyePath(int number)
