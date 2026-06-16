@@ -1,7 +1,6 @@
 ﻿using SAB.Cutscene;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SAB.DataManger
 {
@@ -16,15 +15,17 @@ namespace SAB.DataManger
             foreach (MapType type in Enum.GetValues(typeof(MapType)))
             {
                 string json = AssetManager.LoadJson(string.Format(FileNameFormat, type.ToString()));
-                CutsceneData[] data = DataBase.ConvertJsonToArray<CutsceneData>(json);
-                if (data == null)
+                CutsceneDataDto[] dataDtos = DataBase.ConvertJsonToArray<CutsceneDataDto>(json);
+                if (dataDtos == null)
+                    throw new Exception($"{type} CutScene Data can't find");
+
+                var datas = new CutsceneData[dataDtos.Length];
+                for (int i = 0; i < dataDtos.Length; i++)
                 {
-                    Debug.LogWarning($"{type} CutScene Data can't find");
+                    datas[i] = dataDtos[i].GetContainer();
                 }
-                else
-                {
-                    DataByMapType.Add(type, data);
-                }
+
+                DataByMapType.Add(type, datas);
             }
         }
     }

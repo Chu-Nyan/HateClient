@@ -1,7 +1,6 @@
 ﻿using Chu.Collision;
 using Chu.Collision.Layer;
 using Chu.Data;
-using Chu.Utility;
 using SAB.DataManger;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -19,9 +18,7 @@ namespace SAB.Cutscene
         private readonly PlayableDirector _director;
         private readonly CinemachineBrain _cameraBrain;
 
-        private readonly ObjectPooling<CollisionTrigger> _triggerPool;
-        private readonly Dictionary<CutsceneObjectType, ObjectPooling<ICutsceneObject>> _objPool;
-
+        private readonly CutscenePool _pool;
         // Map
         private readonly List<CollisionTrigger> _mapTriggers;
         private readonly Dictionary<int, CutsceneData> _dataByTriggerID;
@@ -32,19 +29,11 @@ namespace SAB.Cutscene
 
         public MainCutsceneDirector(PlayableDirector director, CinemachineBrain brain)
         {
-            _triggerPool = new(() => new CollisionTrigger());
-
-            _objPool = new()
-            {
-                { CutsceneObjectType.VCamStatic, new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(Const.Asset_VCamStatic), a => a.SetActive(true))},
-                { CutsceneObjectType.VCamFollow, new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(Const.Asset_VCamFollow), a => a.SetActive(true))},
-                { CutsceneObjectType.SingleMesh, new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(Const.Asset_SingleMesh), a => a.SetActive(true))},
-            };
-
             _mapTriggers = new();
             _dataByTriggerID = new();
             _objectByID = new();
             _trackByName = new();
+            _pool = new();
 
             _director = director;
             _cameraBrain = brain;
@@ -74,7 +63,7 @@ namespace SAB.Cutscene
 
         private void GenerateCutsceneTrigger(CutsceneData data)
         {
-            CollisionTrigger trigger = _triggerPool.Dequeue();
+            CollisionTrigger trigger = _pool.DequeueTrigger();
             IShape shape = ShapeFactory.GenerateShape(data.TriggerZones);
             trigger.Setup(shape, new Pose2D(data.Center, 0), _layer, _mask, true); // TODO : 컷씬 활성화 여부
             trigger.RegisterOnEntered(OnCutsceneTriggerEnter);
@@ -119,17 +108,16 @@ namespace SAB.Cutscene
             // Generate
             foreach (var config in container)
             {
-                var obj = _objPool[config.Type].Dequeue();
-                obj.SetCutsceneData(config.ObjectConfig);
-                _objectByID[config.ID] = obj;
+                var obj = _pool.DequeueObject(config.Value);
+                obj.SetCutsceneData(config.Value);
+                _objectByID[config.Key] = obj;
             }
 
             // Init
-            foreach (var item in container.FollowDatas)
+            foreach (var item in container.GetTable<VCamFollowData>())
             {
                 VCamFollow cam = (VCamFollow)_objectByID[item.Key];
-                VCamFollowData data = item.Value;
-                cam.SetFollow(_objectByID[data.TargetID].transform);
+                cam.SetFollow(_objectByID[item.Value.TargetID].transform);
             }
         }
 
@@ -169,7 +157,7 @@ namespace SAB.Cutscene
             foreach (var item in _objectByID)
             {
                 item.Value.SetActive(false);
-                _objPool[item.Value.CutsceneType].Enqueue(item.Value);
+                _pool.EnqueueObject(item.Value);
             }
 
             _objectByID.Clear();
@@ -183,7 +171,7 @@ namespace SAB.Cutscene
             for (int i = 0; i < _mapTriggers.Count; i++)
             {
                 _mapTriggers[i].SetActive(false);
-                _triggerPool.Enqueue(_mapTriggers[i]);
+                _pool.EnqueueTrigger(_mapTriggers[i]);
             }
             _mapTriggers.Clear();
         }

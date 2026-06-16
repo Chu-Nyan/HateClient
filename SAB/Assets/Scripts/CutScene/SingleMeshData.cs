@@ -9,10 +9,11 @@ namespace SAB.Cutscene
         public Vector3 Position;
         public Quaternion Rotation;
 
-        public void SetPose(Vector3 pos, Quaternion quaternion)
+        public SingleMeshData(string meshPath, Vector3 position, Quaternion rotation)
         {
-            Position = pos;
-            Rotation = quaternion;
+            MeshPath = meshPath;
+            Position = position;
+            Rotation = rotation;
         }
 
         public override string ToString()

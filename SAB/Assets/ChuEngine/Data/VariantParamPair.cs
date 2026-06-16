@@ -15,5 +15,10 @@ namespace Chu.Data
             Key = key;
             Param = value;
         }
+
+        public override string ToString()
+        {
+            return $"{Key} / {Param}";
+        }
     }
 }

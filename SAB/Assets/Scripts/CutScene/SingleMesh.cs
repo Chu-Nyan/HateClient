@@ -17,9 +17,9 @@ namespace SAB
             get => gameObject.name.GetHashCode();
         }
 
-        public CutsceneObjectType CutsceneType
+        public MeshFilter MeshFilter
         {
-            get => CutsceneObjectType.SingleMesh;
+            get => _filter;
         }
 
         public Animator Animator
@@ -41,22 +41,6 @@ namespace SAB
                 throw new System.Exception(data.GetType().ToString());
 
             ApplySerializedData(singleMeshData);
-        }
-
-        public SingleMeshData GetSingleMeshData()
-        {
-            SingleMeshData data = new()
-            {
-                MeshPath = Chu.Utility.UnityHelper.Utility.GetAddressablePath(_filter.sharedMesh)
-            };
-            data.SetPose(transform.position, transform.rotation);
-
-            return data;
-        }
-
-        public IObjectConfig GetCutsceneConfig()
-        {
-            return GetSingleMeshData();
         }
 
         public void SetActive(bool value)

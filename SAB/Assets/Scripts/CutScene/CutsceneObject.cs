@@ -1,5 +1,6 @@
 ﻿using Chu.Data;
-using System;
+using Chu.Utility.UnityHelper;
+using SAB.Unit;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,10 +69,48 @@ namespace SAB.Cutscene
 
         public IObjectConfig GetCutsceneObjectData()
         {
-            if (TryGetComponent<ICutsceneObject>(out var comp) == false)
-                throw new Exception($"{name} was not found 'ICutsceneObject'");
+            if (_type == CutsceneObjectType.SingleMesh)
+            {
+                var singlemesh = GetComponent<SingleMesh>();
+                string path = Utility.GetAddressablePath(singlemesh.MeshFilter.sharedMesh);
+                return new SingleMeshData(path, transform.position, transform.rotation);
+            }
+            else if (_type == CutsceneObjectType.VCamFollow)
+            {
+                var vcam = GetComponent<VCamFollow>();
+                var pov = vcam.CinemachineCamera.Lens.FieldOfView;
+                return new VCamFollowData(transform.rotation, pov, vcam.TargetID, vcam.CinemachineFollow.FollowOffset);
+            }
+            else if (_type == CutsceneObjectType.VCamStatic)
+            {
+                var vcam = GetComponent<VCamStatic>();
+                return new VCamStaticData(transform.position, transform.rotation, vcam.CinemachineCamera.Lens.FieldOfView);
+            }
+            else if (_type == CutsceneObjectType.Character)
+            {
+                // id 수정 필요
+                //var acter = GetComponent<Character>();
+                var id = GetVariantParam<int>(_npcID);
+                return new SpawnRequest(id, transform.position, transform.rotation);
+            }
 
-            return comp.GetCutsceneConfig();
+            throw new System.Exception($"{gameObject.name}: is not {_type}");
+        }
+
+        private T GetVariantParam<T>(string key)
+        {
+            foreach (var item in _variantParam)
+            {
+                if (item.Key != key)
+                    continue;
+
+                if (item.Param.GetValue() is not T value)
+                    throw new System.Exception($"{gameObject.name}:  {item.Key} is not {typeof(T).Name}");
+
+                return value;
+            }
+
+            throw new System.Exception($"{gameObject.name}: {key} not found");
         }
 
         [ContextMenu("Print Data Log")]

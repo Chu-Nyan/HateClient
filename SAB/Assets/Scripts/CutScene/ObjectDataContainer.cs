@@ -1,53 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SAB.Cutscene
 {
     public class ObjectDataContainer
     {
-        public Dictionary<int, VCamStaticData> StaticDatas;
-        public Dictionary<int, VCamFollowData> FollowDatas;
-        public Dictionary<int, SingleMeshData> SingleMeshDatas;
+        public Dictionary<Type, IDictionary> _datasByType;
 
         public ObjectDataContainer()
         {
-            StaticDatas = new();
-            FollowDatas = new();
-            SingleMeshDatas = new();
+            _datasByType = new();
         }
 
-        public void Add(int id, IObjectConfig data)
+        public Dictionary<int, T> GetTable<T>() where T : IObjectConfig
         {
-            if (data is VCamStaticData tatic)
-                Add(id, tatic);
-            else if (data is VCamFollowData follow)
-                Add(id, follow);
-            else if (data is SingleMeshData singleMesh)
-                Add(id, singleMesh);
+            var type = typeof(T);
+
+            if (_datasByType.TryGetValue(type, out var table) == false)
+            {
+                table = new Dictionary<int, T>();
+                _datasByType[type] = table;
+            }
+
+            return (Dictionary<int, T>)table;
         }
 
-        public void Add(int id, VCamStaticData data)
+        public void Add<T>(int id, T data) where T : IObjectConfig
         {
-            StaticDatas.Add(id, data);
+            var table = GetTable<T>();
+            table[id] = data;
         }
 
-        public void Add(int id, VCamFollowData data)
+        public IEnumerator<KeyValuePair<int, IObjectConfig>> GetEnumerator()
         {
-            FollowDatas.Add(id, data);
-        }
-
-        public void Add(int id, SingleMeshData data)
-        {
-            SingleMeshDatas.Add(id, data);
-        }
-
-        public IEnumerator<CutsceneObjectConfig> GetEnumerator()
-        {
-            foreach (var item in StaticDatas)
-                yield return new(item.Key, CutsceneObjectType.VCamStatic, item.Value);
-            foreach (var item in FollowDatas)
-                yield return new(item.Key, CutsceneObjectType.VCamFollow, item.Value);
-            foreach (var item in SingleMeshDatas)
-                yield return new(item.Key, CutsceneObjectType.SingleMesh, item.Value);
+            foreach (var table in _datasByType.Values)
+            {
+                foreach (DictionaryEntry entry in table)
+                {
+                    yield return new KeyValuePair<int, IObjectConfig>(
+                        (int)entry.Key,
+                        (IObjectConfig)entry.Value);
+                }
+            }
         }
     }
 }

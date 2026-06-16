@@ -19,54 +19,68 @@
       "Cam_SwordFollow": -876568946,
       "Activation Track": 424060134
     },
-    "ObjectDataContainer": {
-      "StaticDatas": {
-        "687161609": {
-          "Position": {
-            "x": 100.0,
-            "y": 2.15,
-            "z": 50.58
-          },
-          "Rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 1.0
-          },
-          "POV": 40.0
+    "StaticData": {
+      "687161609": {
+        "Position": {
+          "x": 100.0,
+          "y": 2.15,
+          "z": 50.58
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "POV": 40.0
+      }
+    },
+    "FollowData": {
+      "-876568946": {
+        "Rotation": {
+          "x": 0.079211,
+          "y": -0.005890844,
+          "z": 0.09230791,
+          "w": 0.9925574
+        },
+        "POV": 40.0,
+        "TargetID": -581580805,
+        "FollowOffset": {
+          "x": 0.0,
+          "y": 2.13,
+          "z": -12.88
         }
-      },
-      "FollowDatas": {
-        "-876568946": {
-          "Rotation": {
-            "x": 0.079211,
-            "y": -0.005890844,
-            "z": 0.09230791,
-            "w": 0.9925574
-          },
-          "POV": 40.0,
-          "TargetID": -581580805,
-          "FollowOffset": {
-            "x": 0.0,
-            "y": 2.13,
-            "z": -12.88
-          }
+      }
+    },
+    "CharacterData": {
+      "424060134": {
+        "ID": 1,
+        "Position": {
+          "x": 100.0,
+          "y": 0.0,
+          "z": 60.0
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
         }
-      },
-      "SingleMeshDatas": {
-        "-581580805": {
-          "MeshPath": "Mesh_Weapon_KnightSword",
-          "Position": {
-            "x": 100.0,
-            "y": 0.0,
-            "z": 53.0
-          },
-          "Rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 1.0
-          }
+      }
+    },
+    "SingleMeshData": {
+      "-581580805": {
+        "MeshPath": "Mesh_Weapon_KnightSword",
+        "Position": {
+          "x": 100.0,
+          "y": 0.0,
+          "z": 53.0
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
         }
       }
     }

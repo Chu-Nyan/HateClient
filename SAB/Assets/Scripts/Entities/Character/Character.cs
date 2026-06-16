@@ -1,8 +1,8 @@
 ﻿using Chu.AI;
 using Chu.Art;
 using Chu.Collision;
-using Chu.Collision.Layer;
 using Chu.Utility.UnityHelper;
+using SAB.Cutscene;
 using SAB.EntityAgent;
 using SAB.Item;
 using SAB.Unit;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable
+public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ICutsceneObject
 {
     [SerializeField]
     private Transform _attackOrigin;
@@ -225,5 +225,14 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void OnOwnerChanged(BrainType type)
     {
         _body.OnOwnerChanged(type == BrainType.Player);
+    }
+
+    public void SetCutsceneData(IObjectConfig data)
+    {
+        if (data is not SpawnRequest request)
+            throw new Exception(data.GetType().ToString());
+
+        transform.position = request.Position;
+        transform.rotation = request.Rotation;
     }
 }

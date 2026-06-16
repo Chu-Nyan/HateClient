@@ -8,10 +8,11 @@ namespace SAB.Cutscene
         public Quaternion Rotation;
         public float POV;
 
-        public void SetPose(Vector3 pos, Quaternion quaternion)
+        public VCamStaticData(Vector3 pos, Quaternion rot, float pov)
         {
             Position = pos;
-            Rotation = quaternion;
+            Rotation = rot;
+            POV = pov;
         }
     }
 }

@@ -1,0 +1,84 @@
+﻿using Chu.Collision;
+using SAB.Unit;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace SAB.Cutscene
+{
+    public class CutsceneDataDto
+    {
+        public string Name;
+        public string AssetPath;
+        public float CenterX;
+        public float CenterY;
+        public ShapeParam[] TriggerZones;
+        public Dictionary<string, int> BindingIDByTrack;
+
+        public Dictionary<int, VCamStaticData> StaticData;
+        public Dictionary<int, VCamFollowData> FollowData;
+        public Dictionary<int, SpawnRequest> CharacterData;
+        public Dictionary<int, SingleMeshData> SingleMeshData;
+
+        public CutsceneDataDto(string name, string assetPath, Vector2 center, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack)
+        {
+            StaticData = new();
+            FollowData = new();
+            CharacterData = new();
+            SingleMeshData = new();
+
+            Name = name;
+            AssetPath = assetPath;
+            CenterX = center.x;
+            CenterY = center.y;
+            TriggerZones = triggerZones;
+            BindingIDByTrack = idByTrack;
+        }
+
+        public CutsceneData GetContainer()
+        {
+            return new CutsceneData(Name, AssetPath, new(CenterX, CenterY), TriggerZones, BindingIDByTrack, GetObjectDataContainer());
+        }
+
+        private ObjectDataContainer GetObjectDataContainer()
+        {
+            var container = new ObjectDataContainer();
+            foreach (var item in StaticData)
+            {
+                container.Add(item.Key, item.Value);
+            }
+            foreach (var item in FollowData)
+            {
+                container.Add(item.Key, item.Value);
+            }
+            foreach (var item in CharacterData)
+            {
+                container.Add(item.Key, item.Value);
+            }
+            foreach (var item in SingleMeshData)
+            {
+                container.Add(item.Key, item.Value);
+            }
+
+            return container;
+        }
+
+        public void AddObjectData(int id, IObjectConfig data)
+        {
+            switch (data)
+            {
+                case VCamStaticData staticData:
+                    StaticData.Add(id, staticData);
+                    break;
+                case VCamFollowData follow:
+                    FollowData.Add(id, follow);
+                    break;
+                case SpawnRequest character:
+                    CharacterData.Add(id, character);
+                    break;
+                case SingleMeshData mesh:
+                    SingleMeshData.Add(id, mesh);
+                    break;
+            }
+        }
+    }
+}

@@ -8,11 +8,6 @@ namespace SAB.Cutscene
         [SerializeField]
         private CinemachineCamera _vcam;
 
-        public CutsceneObjectType CutsceneType
-        {
-            get => CutsceneObjectType.VCamStatic;
-        }
-
         public CinemachineCamera CinemachineCamera
         {
             get => _vcam;
@@ -35,22 +30,6 @@ namespace SAB.Cutscene
         public void SetActive(bool value)
         {
             gameObject.SetActive(value);
-        }
-
-        public VCamStaticData GetVCamStaticConfig()
-        {
-            VCamStaticData data = new()
-            {
-                POV = _vcam.Lens.FieldOfView
-            };
-            data.SetPose(transform.position, transform.rotation);
-
-            return data;
-        }
-
-        public IObjectConfig GetCutsceneConfig()
-        {
-            return GetVCamStaticConfig();
         }
     }
 }

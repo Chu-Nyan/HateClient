@@ -28,14 +28,25 @@ namespace SAB.Cutscene
 
         public void ExportJson()
         {
-            List<CutsceneData> cutSceneDatas = new();
+            List<CutsceneDataDto> cutSceneDatas = new();
             List<CutsceneDirector> directors = Utility.GetComponentsWithDepth<CutsceneDirector>(_root, _searchDepth);
             var settings = AddressableAssetSettingsDefaultObject.Settings;
 
             foreach (var director in directors)
             {
                 Dictionary<string, int> objIDByTrackName = new();
-                ObjectDataContainer objDataByID = new();
+
+                string path = AssetDatabase.GetAssetPath(director.PlayableDirector.playableAsset);
+                string guid = AssetDatabase.AssetPathToGUID(path);
+                var entry = settings.FindAssetEntry(guid);
+
+                CutsceneDataDto cutsceneData = new(
+                    name: director.PlayableDirector.playableAsset.name,
+                    assetPath: entry.address,
+                    center: director.Center,
+                    triggerZones: director.TriggerZone,
+                    idByTrack: objIDByTrackName
+                    );
 
                 TimelineAsset timelineAssets = director.PlayableDirector.playableAsset as TimelineAsset;
                 var tracks = timelineAssets.GetOutputTracks();
@@ -44,7 +55,7 @@ namespace SAB.Cutscene
                 {
                     if (track is CinemachineTrack camTrack)
                     {
-                        ExtractCameraTrackData(objIDByTrackName, objDataByID, director.PlayableDirector, camTrack);
+                        ExtractCameraTrackData(objIDByTrackName, cutsceneData, director.PlayableDirector, camTrack);
                         continue;
                     }
 
@@ -56,22 +67,9 @@ namespace SAB.Cutscene
                     if (cutsceneObj == null)
                         continue;
 
-                    objDataByID.Add(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
+                    cutsceneData.AddObjectData(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
                     TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.ID);
                 }
-
-                string path = AssetDatabase.GetAssetPath(director.PlayableDirector.playableAsset);
-                string guid = AssetDatabase.AssetPathToGUID(path);
-                var entry = settings.FindAssetEntry(guid);
-
-                CutsceneData cutsceneData = new(
-                    name: director.PlayableDirector.playableAsset.name,
-                    assetPath: entry.address,
-                    center: director.Center,
-                    triggerZones: director.TriggerZone,
-                    idByTrack: objIDByTrackName,
-                    objData: objDataByID
-                    );
 
                 cutSceneDatas.Add(cutsceneData);
             }
@@ -83,7 +81,7 @@ namespace SAB.Cutscene
             Debug.Log("Cutscene Data Exported");
         }
 
-        private void ExtractCameraTrackData(Dictionary<string, int> objIdByTrackName, ObjectDataContainer datas, PlayableDirector director, CinemachineTrack track)
+        private void ExtractCameraTrackData(Dictionary<string, int> objIdByTrackName, CutsceneDataDto dto, PlayableDirector director, CinemachineTrack track)
         {
             foreach (var clip in track.GetClips())
             {
@@ -93,7 +91,7 @@ namespace SAB.Cutscene
                 if (shot.VirtualCamera.Resolve(director).TryGetComponent<CutsceneObject>(out var cutsceneObj) == false)
                     continue;
 
-                datas.Add(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
+                dto.AddObjectData(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
                 TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.ID);
             }
         }

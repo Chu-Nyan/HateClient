@@ -8,20 +8,25 @@ using UnityEngine;
 public class CharacterGenerator : Singleton<CharacterGenerator>
 {
     private readonly Dictionary<int, BaseStats> _unitDatas;
+    private readonly Dictionary<int, CustomizingData> _customizingData;
 
+    private readonly ObjectPooling<Character> _pool;
     private IDNumbering _numbering;
+
     private Character _new;
     private bool _canRelease;
 
     public CharacterGenerator(DataBase db)
     {
         _unitDatas = db.CharacterRepo.CharacterBaseData;
+        _customizingData = db.CharacterRepo.CustomizingData;
         _numbering = new IDNumbering();
+        _pool = new(() => AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character));
     }
 
     public CharacterGenerator Ready(Vector3 respawn)
     {
-        _new = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+        _new = _pool.Dequeue();
         _new.Init(_numbering.GetID());
         _new.SetPositionWithNavMash(respawn);
         _canRelease = true;
@@ -44,6 +49,14 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
         return this;
     }
 
+    public CharacterGenerator SetCustomizing(int id)
+    {
+        if (_customizingData.TryGetValue(id, out var data) == true)
+            SetCustomizing(data);
+
+        return this;
+    }
+
     public Character Release()
     {
         if (_canRelease == false)
@@ -52,5 +65,10 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
         _canRelease = false;
 
         return _new;
+    }
+
+    public void Enqueue(Character character)
+    {
+        _pool.Enqueue(character);
     }
 }
