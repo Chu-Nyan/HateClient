@@ -1,5 +1,4 @@
-﻿using Chu.Collision;
-using Chu.Collision.Layer;
+﻿using Chu.Collision.Layer;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,11 +20,10 @@ namespace SAB.Unit.Combat
 
         public OffenseSystem(int instigatorID, Transform origin)
         {
+            _instigatorID = instigatorID;
             _skillList = new List<Skill>();
             _used = new List<int>();
-            _instigatorID = instigatorID;
             _origin = origin;
-
         }
 
         public void Tick()

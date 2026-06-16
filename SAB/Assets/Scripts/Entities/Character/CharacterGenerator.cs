@@ -11,7 +11,6 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
     private readonly Dictionary<int, CustomizingData> _customizingData;
 
     private readonly ObjectPooling<Character> _pool;
-    private IDNumbering _numbering;
 
     private Character _new;
     private bool _canRelease;
@@ -20,14 +19,12 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
     {
         _unitDatas = db.CharacterRepo.CharacterBaseData;
         _customizingData = db.CharacterRepo.CustomizingData;
-        _numbering = new IDNumbering();
         _pool = new(() => AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character));
     }
 
     public CharacterGenerator Ready(Vector3 respawn)
     {
         _new = _pool.Dequeue();
-        _new.Init(_numbering.GetID());
         _new.SetPositionWithNavMash(respawn);
         _canRelease = true;
         return this;

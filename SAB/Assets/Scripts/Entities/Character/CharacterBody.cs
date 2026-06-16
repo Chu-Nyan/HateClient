@@ -15,14 +15,16 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
         get => _collider;
     }
 
-    public CharacterBody(int instigatorID, Vector2 pos, float euler, IDefendable hitReceiver, IShape body)
+    public CharacterBody(int instigatorID, Vector2 pos, float euler, IDefendable hitReceiver)
     {
         _hitReceiver = hitReceiver;
         var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
+        CircleShape defaultshape = ShapeFactory.Instance.Generate<CircleShape>();
+        defaultshape.Setup(new CircleRangeData(Vector2.one, 1));
 
         _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
             .GenerateCollider(this, "캐릭터 바디")
-            .SetShape(body)
+            .SetShape(defaultshape)
             .SetTransform(pos, euler)
             .SetLayer(_npcLayer, mask)
             .SetInstigatorID(instigatorID)

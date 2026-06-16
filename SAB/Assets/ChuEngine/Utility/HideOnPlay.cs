@@ -8,10 +8,7 @@ namespace Chu.Utility
     {
         private void Awake()
         {
-            if (Application.isPlaying)
-            {
-                Destroy(gameObject);
-            }
+            gameObject.SetActive(false);
         }
     }
 }
