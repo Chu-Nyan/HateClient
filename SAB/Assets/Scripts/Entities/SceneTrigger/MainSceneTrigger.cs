@@ -1,4 +1,4 @@
-using Chu;
+using Chu.Core;
 using SAB.Cutscene;
 using SAB.DataManger;
 using SAB.EntityAgent.AI;
@@ -36,7 +36,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void StartChuEngine()
     {
-        var engine = new ChuEngine(gameObject);
+        var engine = new ChuEngine(gameObject, "en");
         engine.ActivateCollisionSystem(new(0, 200, 0, 200), 20);
     }
 
@@ -63,7 +63,6 @@ public class GameSceneTrigger : MonoBehaviour
     private void InitStatic()
     {
         InputManager.Instance.SetActive(true);
-        InitText("en");
     }
 
     private void InitInstance()
@@ -74,12 +73,6 @@ public class GameSceneTrigger : MonoBehaviour
     private void GameStart()
     {
         SetPracticeScene();
-    }
-
-    private void InitText(string lang)
-    {
-        new TextResource<TextID>();
-        TextResource<TextID>.Instance.LoadTexts(lang);
     }
 
     private void SetPracticeScene()

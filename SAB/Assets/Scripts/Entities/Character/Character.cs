@@ -1,5 +1,6 @@
 ﻿using Chu.AI;
 using Chu.Art;
+using Chu.Core;
 using Chu.Utility;
 using Chu.Utility.Unity;
 using SAB.Cutscene;

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Chu
+namespace Chu.Core
 {
     /// <summary>
     /// 전역으로 사용하는 오브젝트 풀

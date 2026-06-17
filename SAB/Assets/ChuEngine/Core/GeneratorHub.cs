@@ -1,7 +1,7 @@
 ﻿using Chu.Collision;
 using Chu.Utility;
 
-namespace Chu
+namespace Chu.Core
 {
     public class GeneratorHub : Singleton<GeneratorHub>
     {

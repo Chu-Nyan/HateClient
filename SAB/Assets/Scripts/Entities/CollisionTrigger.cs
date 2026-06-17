@@ -1,5 +1,5 @@
-﻿using Chu;
-using Chu.Collision;
+﻿using Chu.Collision;
+using Chu.Core;
 using Chu.Data;
 using System;
 

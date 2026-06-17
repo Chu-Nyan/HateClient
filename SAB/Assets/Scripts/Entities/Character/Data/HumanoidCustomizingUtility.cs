@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Chu.Core;
+using UnityEngine;
 
 public static class HumanoidCustomizingUtility
 {

@@ -1,4 +1,5 @@
-﻿using SAB.Unit;
+﻿using Chu.Core;
+using SAB.Unit;
 using System.Collections.Generic;
 
 namespace SAB.DataManger

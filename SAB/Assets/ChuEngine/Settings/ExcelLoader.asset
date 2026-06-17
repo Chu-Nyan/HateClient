@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe8fa4bae8b5a8442a42a65f05260aa0, type: 3}
-  m_Name: ExcelHelper
+  m_Name: ExcelLoader
   m_EditorClassIdentifier: 
   ExcelLoader:
     _googleSheetID: 1hzh6sZHyNAznkKQVJcs0T0IyYANyY6ywekRyjp2LYJU

@@ -1,3 +1,4 @@
+using Chu.Core;
 using Chu.Utility;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using SAB.Cutscene;
+﻿using Chu.Core;
+using SAB.Cutscene;
 using System;
 using System.Collections.Generic;
 

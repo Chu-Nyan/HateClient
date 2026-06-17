@@ -1,6 +1,5 @@
-﻿using Chu;
-using Chu.Collision;
-using Chu.Utility.Unity;
+﻿using Chu.Collision;
+using Chu.Core;
 using UnityEngine;
 
 namespace SAB.Unit.Combat

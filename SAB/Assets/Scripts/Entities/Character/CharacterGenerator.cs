@@ -1,4 +1,5 @@
-﻿using Chu.Utility;
+﻿using Chu.Core;
+using Chu.Utility;
 using SAB.DataManger;
 using SAB.Unit;
 using System;
