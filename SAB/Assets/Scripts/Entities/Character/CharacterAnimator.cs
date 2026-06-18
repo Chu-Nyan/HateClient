@@ -16,20 +16,22 @@ public class CharacterAnimator
         {
             { AniParamator.MoveSpeed, "MoveSpeed" },
             { AniParamator.CombatMode, "IsCombatMode" },
-            { AniParamator.Attack, "Attack" }
+            { AniParamator.Attack, "Attack" },
+            { AniParamator.Emote, "PlayingEmote" }
         };
 
         var stateData = new Dictionary<AniState, string>()
         {
             { AniState.Movement, "IdleAndMove" },
             { AniState.CombatMoveMent, "Combat_Movement" },
-            { AniState.Attack, "Attack" }
+            { AniState.Attack, "Attack" },
+            { AniState.Emote, "Emote" }
         };
         _animator = new(animator, clipData, stateData);
 
         _animatorByWeaponType = new Dictionary<WeaponStance, RuntimeAnimatorController>()
         {
-            { WeaponStance.Unarmed, _animator.RuntimeAnaimator},
+            { WeaponStance.Unarmed, AssetManager.LoadAssetSync<AnimatorOverrideController>("UnarmedHumanoid")},
             { WeaponStance.Sword, AssetManager.LoadAssetSync<AnimatorOverrideController>("SwordAnimator") },
             { WeaponStance.SwordAndShield, AssetManager.LoadAssetSync<AnimatorOverrideController>("SwordAndShieldAnimator") }
         };
@@ -77,5 +79,17 @@ public class CharacterAnimator
     public void SetAttack()
     {
         _animator.SetTrigger(AniParamator.Attack);
+    }
+
+    public void SetPlayEmote(AnimationClip clip)
+    {
+        if (clip != null)
+        {
+            if (_animator.RuntimeAnaimator is AnimatorOverrideController overrideController)
+            {
+                overrideController["Emote"] = clip;
+            }
+        }
+        _animator.SetTrigger(AniParamator.Emote);
     }
 }

@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad68a53c0f8f8e346b1c079a4d7edc5f
+    m_Address: UnarmedHumanoid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2704fcf890f18740ac50b264f0acbb8
     m_Address: SwordAnimator
     m_ReadOnly: 0

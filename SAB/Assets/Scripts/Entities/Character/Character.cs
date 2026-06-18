@@ -231,4 +231,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         transform.position = request.Position;
         transform.rotation = request.Rotation;
     }
+
+    public void PlayEmote(AnimationClip clip)
+    {
+        _animator.SetPlayEmote(clip);
+    }
 }

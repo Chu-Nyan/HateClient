@@ -1,12 +1,12 @@
 ﻿namespace SAB.Unit
 {
-    public enum AniParamator 
+    public enum AniParamator
     {
-        None, MoveSpeed, Attack, CombatMode
+        None, MoveSpeed, Attack, CombatMode, Emote
     }
 
-    public enum AniState 
+    public enum AniState
     {
-        Movement, CombatMoveMent, Attack
+        Movement, CombatMoveMent, Attack, Emote
     }
 }
