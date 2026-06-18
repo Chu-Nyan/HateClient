@@ -40,5 +40,11 @@ namespace Chu.Core
             _collisionSys.InitArray(capacity);
             _collisionSys.InitBound(bound);
         }
+
+        public static void Run(string language)
+        {
+            new ChuEngine(new GameObject("ChuEngine"), language);
+            ChuEngine.Instance.ActivateCollisionSystem(new(0, 100, 0, 100), 20);
+        }
     }
 }

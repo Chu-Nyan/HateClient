@@ -75,6 +75,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _stateMachine.Setup(_stateContext);
         _animator.RegisterAnimationEvent(AniState.Attack, "AttackFinished", new AniEventData(), 1, a => _stateContext.IsAttacking = false);
         _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSystem.AttackWithAnimator);
+
+        SetPositionWithNavMash(transform.position);
     }
 
 

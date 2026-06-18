@@ -141,10 +141,20 @@ namespace SAB.Cutscene
 
                     }
                 }
-                if (track is AnimationTrack)
+                else if (track is AnimationTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
                     _director.SetGenericBinding(track, ((SingleMesh)_objectByID[id]).Animator);
+                }
+                else if (track is ActivationTrack)
+                {
+                    var id = cutsceneData.BindingIDByTrack[track.name];
+                    _director.SetGenericBinding(track, _objectByID[id].transform.gameObject);
+                }
+                else if (track is InGameTrack)
+                {
+                    var id = cutsceneData.BindingIDByTrack[track.name];
+                    _director.SetGenericBinding(track, (MonoBehaviour)_objectByID[id]);
                 }
             }
         }

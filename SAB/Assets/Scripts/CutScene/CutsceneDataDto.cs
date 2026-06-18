@@ -1,5 +1,6 @@
 ﻿using Chu.Collision;
 using SAB.Unit;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,22 +63,34 @@ namespace SAB.Cutscene
             return container;
         }
 
-        public void AddObjectData(int id, IObjectConfig data)
+        public void AddObjectData(string name, IObjectConfig data)
         {
             switch (data)
             {
                 case VCamStaticData staticData:
-                    StaticData.Add(id, staticData);
+                    AddDataArray(StaticData, name, staticData);
                     break;
                 case VCamFollowData follow:
-                    FollowData.Add(id, follow);
+                    AddDataArray(FollowData, name, follow);
                     break;
                 case SpawnRequest character:
-                    CharacterData.Add(id, character);
+                    AddDataArray(CharacterData, name, character);
                     break;
                 case SingleMeshData mesh:
-                    SingleMeshData.Add(id, mesh);
+                    AddDataArray(SingleMeshData, name, mesh);
                     break;
+            }
+        }
+
+        private void AddDataArray<T, K>(T arr, string name, K value) where T : IDictionary<int, K> where K : IObjectConfig
+        {
+            int key = name.GetHashCode();
+            if (arr.TryAdd(key, value) == true)
+            {
+                if (arr[key].Equals(value) == false)
+                {
+                    throw new Exception($"Object Name : {name}, Type : {typeof(K).Name} : Duplicate object name found");
+                }
             }
         }
     }

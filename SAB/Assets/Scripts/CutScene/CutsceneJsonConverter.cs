@@ -67,8 +67,8 @@ namespace SAB.Cutscene
                     if (cutsceneObj == null)
                         continue;
 
-                    cutsceneData.AddObjectData(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
-                    TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.ID);
+                    cutsceneData.AddObjectData(cutsceneObj.Name, cutsceneObj.GetCutsceneObjectData());
+                    TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.Name);
                 }
 
                 cutSceneDatas.Add(cutsceneData);
@@ -91,17 +91,18 @@ namespace SAB.Cutscene
                 if (shot.VirtualCamera.Resolve(director).TryGetComponent<CutsceneObject>(out var cutsceneObj) == false)
                     continue;
 
-                dto.AddObjectData(cutsceneObj.ID, cutsceneObj.GetCutsceneObjectData());
-                TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.ID);
+                dto.AddObjectData(cutsceneObj.Name, cutsceneObj.GetCutsceneObjectData());
+                TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.Name);
             }
         }
 
-        private void TryAddDictionary(Dictionary<string, int> dic, string key, int value)
+        private void TryAddDictionary(Dictionary<string, int> dic, string key, string objName)
         {
-            if (dic.TryAdd(key, value) == false
-             && dic[key] != value)
+            int id = objName.GetHashCode();
+            if (dic.TryAdd(key, id) == false
+             && dic[key] != id)
             {
-                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, key, dic[key], value));
+                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, key, dic[key], objName));
             }
         }
     }

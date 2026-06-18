@@ -25,9 +25,9 @@ namespace SAB.Cutscene
             get => _type;
         }
 
-        public int ID
+        public string Name
         {
-            get => gameObject.name.GetHashCode();
+            get => gameObject.name;
         }
 
         public Vector3 Position
