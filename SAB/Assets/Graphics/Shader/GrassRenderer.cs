@@ -16,8 +16,8 @@ public class GrassRenderer : MonoBehaviour
     [SerializeField]
     private float _grassMinDistance;
     [SerializeField]
-    [Range(1, 255)]
-    private int _densityWeight;
+    [Range(0, 1)]
+    private float _densityWeight;
 
     private ComputeBuffer _positionBuffer;
     private ComputeBuffer _rotationBuffer;
@@ -67,7 +67,10 @@ public class GrassRenderer : MonoBehaviour
 
             if (densityArr[z, x] <= 0)
                 continue;
-            if (random.NextDouble() > densityArr[z, x] / _densityWeight)
+
+            float normalizedDensity = densityArr[z, x] / 255f; // 255 : 터레인 잔디 샘플링 최대 수치
+
+            if (random.NextDouble() > (normalizedDensity * _densityWeight))
                 continue;
 
             Vector3 worldPos = new(sampling.x, 0f, sampling.y);
