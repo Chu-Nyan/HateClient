@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpeechBubbleUI : MonoBehaviour, IUIPresenter
+public class SpeechBubbleUI : BaseUI
 {
     [SerializeField]
     private SpeechBubbleUIView _view;
@@ -41,12 +41,12 @@ public class SpeechBubbleUI : MonoBehaviour, IUIPresenter
         }
     }
 
-    public void Show()
+    public override void Show()
     {
         gameObject.SetActive(true);
     }
 
-    public void Hide()
+    public override void Hide()
     {
         gameObject.SetActive(false);
     }

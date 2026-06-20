@@ -5,22 +5,21 @@ using System.Collections.Generic;
 
 public class UIManager : Singleton<UIManager>
 {
-    private readonly Dictionary<Type, IUIPresenter> _baseUIByID;
+    private readonly Dictionary<Type, BaseUI> _baseUIByID;
 
     public UIManager() : base()
     {
         _baseUIByID = new();
     }
 
-    public T GetUI<T>() where T : IUIPresenter, new()
+    public T GetUI<T>() where T : BaseUI, new()
     {
         if (_baseUIByID.TryGetValue(typeof(T), out var ui) == false)
         {
-            ui = AssetManager.GenerateLoadAssetSync<SpeechBubbleUI>(typeof(T).ToString());
+            ui = AssetManager.GenerateLoadAssetSync<T>(typeof(T).ToString());
             _baseUIByID[typeof(T)] = ui;
         }
 
-        ui.Show();
         return (T)ui;
     }
 }
