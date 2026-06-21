@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6fa5148fb5acd234980d1c50ea091391
+    m_Address: CutSceneManager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed999518dc377794582c69f458575681
     m_Address: CH01_01_EnterTheForestBattle
     m_ReadOnly: 0

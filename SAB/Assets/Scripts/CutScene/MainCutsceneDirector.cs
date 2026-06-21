@@ -10,32 +10,38 @@ using UnityEngine.Timeline;
 
 namespace SAB.Cutscene
 {
-    public class MainCutsceneDirector
+    public class MainCutsceneDirector : MonoBehaviour
     {
         private readonly static NyanLayer _layer = NyanLayer.TriggerZone;
         private readonly static NyanLayerMask _mask = new(NyanLayer.PlayerUnit);
 
-        private readonly PlayableDirector _director;
-        private readonly CinemachineBrain _cameraBrain;
+        [SerializeField]
+        private PlayableDirector _director;
+        [SerializeField]
+        private CinemachineBrain _cameraBrain;
 
-        private readonly CutscenePool _pool;
+        private readonly CutscenePool _pool = new();
         // Map
-        private readonly List<CollisionTrigger> _mapTriggers;
-        private readonly Dictionary<int, CutsceneData> _dataByTriggerID;
+        private readonly List<CollisionTrigger> _mapTriggers = new(16);
+        private readonly Dictionary<int, CutsceneData> _dataByTriggerID = new();
 
         // Cutscene in progress
-        private readonly Dictionary<string, TrackAsset> _trackByName;
-        private readonly Dictionary<int, ICutsceneObject> _objectByID;
+        private readonly Dictionary<string, TrackAsset> _trackByName = new();
+        private readonly Dictionary<int, ICutsceneObject> _objectByID = new();
 
-        public MainCutsceneDirector(PlayableDirector director, CinemachineBrain brain)
+        private void Awake()
         {
-            _mapTriggers = new();
-            _dataByTriggerID = new();
-            _objectByID = new();
-            _trackByName = new();
-            _pool = new();
+            if (_cameraBrain == null)
+            {
+                if (Camera.main.TryGetComponent<CinemachineBrain>(out var brain) == true)
+                {
+                    _cameraBrain = brain;
+                }
+            }
+        }
 
-            _director = director;
+        public void InitCinemachineBrain(CinemachineBrain brain)
+        {
             _cameraBrain = brain;
         }
 

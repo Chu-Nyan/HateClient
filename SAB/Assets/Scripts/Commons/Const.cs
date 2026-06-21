@@ -7,6 +7,7 @@ public static class Const
     public const string Asset_Mesh_CharacterBody = "CharacterBody";
 
     // Cutscene
+    public const string Asset_CutsceneManger = "CutSceneManager";
     public const string Asset_VCamStatic = "VCamStatic";
     public const string Asset_VCamFollow = "VCamFollow";
     public const string Asset_SingleMesh = "SingleMesh";

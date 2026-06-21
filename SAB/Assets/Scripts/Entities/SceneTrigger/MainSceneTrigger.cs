@@ -5,17 +5,13 @@ using SAB.EntityAgent.AI;
 using SAB.Item;
 using SAB.Unit.Combat;
 using System.Collections;
-using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class GameSceneTrigger : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _mainCamera;
-    [SerializeField]
-    private GameObject _camera;
+    private GameObject _topviewCam;
     private TopViewCamera _topViewCam;
     private Character _player;
     private UnitController _unitController;
@@ -51,13 +47,15 @@ public class GameSceneTrigger : MonoBehaviour
         new SkillGenerator(DataBase.Instance);
         new ItemFactory(DataBase.Instance);
         new UIManager();
+
+        _cutsceneDirector = AssetManager.GenerateLoadAssetSync<MainCutsceneDirector>(Const.Asset_CutsceneManger, "CutsceneManager", transform);
     }
 
     private void GenerateInstance()
     {
         _topViewCam = new TopViewCamera();
         _unitController = new(transform);
-        _cutsceneDirector = new(GetComponent<PlayableDirector>(), _mainCamera.GetComponent<CinemachineBrain>());
+
     }
 
     private void InitStatic()
@@ -67,7 +65,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void InitInstance()
     {
-        _topViewCam.InitCamera(_camera);
+        _topViewCam.InitCamera(_topviewCam);
     }
 
     private void GameStart()

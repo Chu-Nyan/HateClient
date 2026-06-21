@@ -354,8 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecae7dd133db374478f5c9a1d2da46ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 2034999866}
-  _camera: {fileID: 1565791519}
+  _topviewCam: {fileID: 1565791519}
 --- !u!4 &1633778412
 Transform:
   m_ObjectHideFlags: 0
