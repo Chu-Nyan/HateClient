@@ -36,10 +36,10 @@ namespace Chu.Core
         }
 
         // 동기 로드 후 오브젝트 생성
-        public static T GenerateLoadAssetSync<T>(string path, string name = default) where T : Behaviour
+        public static T GenerateLoadAssetSync<T>(string path, string name = default, Transform parent = null) where T : Behaviour
         {
             var item = LoadAssetSync<GameObject>(path);
-            var gameObj = Object.Instantiate(item);
+            var gameObj = Object.Instantiate(item, parent);
             gameObj.name = name == default ? item.name : name;
             return gameObj.GetComponent<T>();
         }
