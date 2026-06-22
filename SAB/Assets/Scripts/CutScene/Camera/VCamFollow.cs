@@ -20,11 +20,6 @@ namespace SAB.Cutscene
             get => _follow;
         }
 
-        public int TargetID
-        {
-            get => _follow.FollowTarget.gameObject.name.GetHashCode();
-        }
-
         public void ApplySerializedData(VCamFollowData data)
         {
             transform.rotation = data.Rotation;

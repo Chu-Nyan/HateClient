@@ -63,33 +63,32 @@ namespace SAB.Cutscene
             return container;
         }
 
-        public void AddObjectData(string name, IObjectConfig data)
+        public void AddObjectData(int id, IObjectConfig data)
         {
             switch (data)
             {
                 case VCamStaticData staticData:
-                    AddDataArray(StaticData, name, staticData);
+                    AddDataArray(StaticData, id, staticData);
                     break;
                 case VCamFollowData follow:
-                    AddDataArray(FollowData, name, follow);
+                    AddDataArray(FollowData, id, follow);
                     break;
                 case SpawnRequest character:
-                    AddDataArray(CharacterData, name, character);
+                    AddDataArray(CharacterData, id, character);
                     break;
                 case SingleMeshData mesh:
-                    AddDataArray(SingleMeshData, name, mesh);
+                    AddDataArray(SingleMeshData, id, mesh);
                     break;
             }
         }
 
-        private void AddDataArray<T, K>(T arr, string name, K value) where T : IDictionary<int, K> where K : IObjectConfig
+        private void AddDataArray<T, K>(T arr, int id, K value) where T : IDictionary<int, K> where K : IObjectConfig
         {
-            int key = name.GetHashCode();
-            if (arr.TryAdd(key, value) == true)
+            if (arr.TryAdd(id, value) == true)
             {
-                if (arr[key].Equals(value) == false)
+                if (arr[id].Equals(value) == false)
                 {
-                    throw new Exception($"Object Name : {name}, Type : {typeof(K).Name} : Duplicate object name found");
+                    throw new Exception($"Object ID : {id}, Type : {typeof(K).Name} : Duplicate object name found");
                 }
             }
         }

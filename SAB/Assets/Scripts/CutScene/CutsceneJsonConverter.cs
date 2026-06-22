@@ -58,6 +58,8 @@ namespace SAB.Cutscene
                         ExtractCameraTrackData(objIDByTrackName, cutsceneData, director.PlayableDirector, camTrack);
                         continue;
                     }
+                    if (track is MarkerTrack)
+                        continue;
 
                     var bindingTrack = director.PlayableDirector.GetGenericBinding(track);
                     if (bindingTrack == null)
@@ -67,8 +69,8 @@ namespace SAB.Cutscene
                     if (cutsceneObj == null)
                         continue;
 
-                    cutsceneData.AddObjectData(cutsceneObj.Name, cutsceneObj.GetCutsceneObjectData());
-                    TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.Name);
+                    cutsceneData.AddObjectData(cutsceneObj.ObjectID, cutsceneObj.GetCutsceneObjectData());
+                    TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.ObjectID);
                 }
 
                 cutSceneDatas.Add(cutsceneData);
@@ -91,18 +93,17 @@ namespace SAB.Cutscene
                 if (shot.VirtualCamera.Resolve(director).TryGetComponent<CutsceneObject>(out var cutsceneObj) == false)
                     continue;
 
-                dto.AddObjectData(cutsceneObj.Name, cutsceneObj.GetCutsceneObjectData());
-                TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.Name);
+                dto.AddObjectData(cutsceneObj.ObjectID, cutsceneObj.GetCutsceneObjectData());
+                TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.ObjectID);
             }
         }
 
-        private void TryAddDictionary(Dictionary<string, int> dic, string key, string objName)
+        private void TryAddDictionary(Dictionary<string, int> dic, string key, int objID)
         {
-            int id = objName.GetHashCode();
-            if (dic.TryAdd(key, id) == false
-             && dic[key] != id)
+            if (dic.TryAdd(key, objID) == false
+             && dic[key] != objID)
             {
-                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, key, dic[key], objName));
+                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, key, dic[key], objID));
             }
         }
     }

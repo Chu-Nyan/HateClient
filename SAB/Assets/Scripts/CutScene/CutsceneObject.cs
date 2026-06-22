@@ -13,22 +13,12 @@ namespace SAB.Cutscene
         public const string _vcamFollow = "VCamFollow";
         public const string _npcID = "NPCID";
 
-        [SerializeField]
-        private CutsceneObjectType _type;
+        public CutsceneObjectType Type;
         [SerializeField, HideInInspector]
         private CutsceneObjectType _prevType = CutsceneObjectType.SingleMesh;
+        public int ObjectID;
         [SerializeField]
         private List<VariantParamPair> _variantParam;
-
-        public CutsceneObjectType Type
-        {
-            get => _type;
-        }
-
-        public string Name
-        {
-            get => gameObject.name;
-        }
 
         public Vector3 Position
         {
@@ -42,26 +32,30 @@ namespace SAB.Cutscene
 
         private void OnValidate()
         {
-            if (_type == _prevType)
+            if (Type == _prevType)
                 return;
 
-            _prevType = _type;
-            _variantParam = new();
+            _prevType = Type;
 
-            if (_type == CutsceneObjectType.SingleMesh)
+            if (_variantParam == null)
+                _variantParam = new();
+            else
+                _variantParam.Clear();
+
+            if (Type == CutsceneObjectType.SingleMesh)
             {
                 _variantParam.Add(new VariantParamPair(_meshFilter, new VariantParam<MeshFilter>()));
             }
-            else if (_type == CutsceneObjectType.VCamFollow)
+            else if (Type == CutsceneObjectType.VCamFollow)
             {
                 _variantParam.Add(new VariantParamPair(_vcam, new VariantParam<Component>()));
                 _variantParam.Add(new VariantParamPair(_vcamFollow, new VariantParam<Component>()));
             }
-            else if (_type == CutsceneObjectType.VCamStatic)
+            else if (Type == CutsceneObjectType.VCamStatic)
             {
                 _variantParam.Add(new VariantParamPair(_vcam, new VariantParam<Component>()));
             }
-            else if (_type == CutsceneObjectType.Character)
+            else if (Type == CutsceneObjectType.Character)
             {
                 _variantParam.Add(new VariantParamPair(_npcID, new VariantParam<int>()));
             }
@@ -69,24 +63,25 @@ namespace SAB.Cutscene
 
         public IObjectConfig GetCutsceneObjectData()
         {
-            if (_type == CutsceneObjectType.SingleMesh)
+            if (Type == CutsceneObjectType.SingleMesh)
             {
                 var singlemesh = GetComponent<SingleMesh>();
                 string path = Utility.GetAddressablePath(singlemesh.MeshFilter.sharedMesh);
                 return new SingleMeshData(path, transform.position, transform.rotation);
             }
-            else if (_type == CutsceneObjectType.VCamFollow)
+            else if (Type == CutsceneObjectType.VCamFollow)
             {
                 var vcam = GetComponent<VCamFollow>();
                 var pov = vcam.CinemachineCamera.Lens.FieldOfView;
-                return new VCamFollowData(transform.rotation, pov, vcam.TargetID, vcam.CinemachineFollow.FollowOffset);
+                var targetID = vcam.CinemachineFollow.FollowTarget.GetComponent<CutsceneObject>().ObjectID;
+                return new VCamFollowData(transform.rotation, pov, targetID, vcam.CinemachineFollow.FollowOffset);
             }
-            else if (_type == CutsceneObjectType.VCamStatic)
+            else if (Type == CutsceneObjectType.VCamStatic)
             {
                 var vcam = GetComponent<VCamStatic>();
                 return new VCamStaticData(transform.position, transform.rotation, vcam.CinemachineCamera.Lens.FieldOfView);
             }
-            else if (_type == CutsceneObjectType.Character)
+            else if (Type == CutsceneObjectType.Character)
             {
                 // id 수정 필요
                 //var acter = GetComponent<Character>();
@@ -94,7 +89,7 @@ namespace SAB.Cutscene
                 return new SpawnRequest(id, transform.position, transform.rotation);
             }
 
-            throw new System.Exception($"{gameObject.name}: is not {_type}");
+            throw new System.Exception($"{gameObject.name}: is not {Type}");
         }
 
         private T GetVariantParam<T>(string key)
