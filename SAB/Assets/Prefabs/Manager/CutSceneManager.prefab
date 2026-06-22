@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 935661119975173921}
   - component: {fileID: 29254523088986942}
+  - component: {fileID: 6749548641977223996}
   - component: {fileID: 2147519319014378318}
   m_Layer: 0
   m_Name: CutSceneManager
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _director: {fileID: 2147519319014378318}
   _cameraBrain: {fileID: 0}
+  _markerReceiver: {fileID: 6749548641977223996}
+--- !u!114 &6749548641977223996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106933827826116663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e71a1d794805a488a5d11291994853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!320 &2147519319014378318
 PlayableDirector:
   m_ObjectHideFlags: 0

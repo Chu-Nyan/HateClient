@@ -6,5 +6,4 @@ using UnityEngine.Timeline;
 [TrackColor(1f, 1f, 1f)]
 public class InGameTrack : TrackAsset
 {
-    public int ID;
 }

@@ -73024,7 +73024,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5868594457377889653, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 271489226}
   m_SourcePrefab: {fileID: 100100000, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
 --- !u!4 &271489224 stripped
@@ -73049,19 +73049,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0cea9220de7c7045bd1ac36e090e4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 3
+  Type: 3
   _prevType: 3
+  ObjectID: 1
   _variantParam:
   - Key: NPCID
     Param:
-      rid: 1460415719204192348
+      rid: 1460415813939888220
   references:
     version: 2
     RefIds:
-    - rid: 1460415719204192348
+    - rid: 1460415813939888220
       type: {class: 'VariantParam`1[[System.Int32, mscorlib]]', ns: Chu.Data, asm: Assembly-CSharp}
       data:
-        value: 1
+        value: 2
 --- !u!95 &271489227 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3459693657140729801, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
@@ -162203,6 +162204,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: ObjectID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: _prevType
       value: 0
       objectReference: {fileID: 0}
@@ -217724,8 +217729,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1004179265}
-  - {fileID: 2007929001}
   - {fileID: 322294366}
+  - {fileID: 2007929001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &795219479
@@ -338875,8 +338880,16 @@ PrefabInstance:
       value: 2.13
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _type
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: ObjectID
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _prevType
@@ -338892,11 +338905,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _variantParam.Array.data[0].Param
-      value: 8498091935808094326
+      value: 1460415813939888218
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _variantParam.Array.data[1].Param
-      value: 8498091935808094327
+      value: 1460415813939888219
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: 'managedReferences[1460415813939888211]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: 'managedReferences[1460415813939888218]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: 'managedReferences[1460415813939888219]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: 'managedReferences[8498091935808094323]'
@@ -338918,6 +338943,18 @@ PrefabInstance:
       propertyPath: 'managedReferences[8498091935808094327]'
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: managedReferences[1460415813939888211].value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: managedReferences[1460415813939888218].value
+      value: 
+      objectReference: {fileID: 1254296752}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: managedReferences[1460415813939888219].value
+      value: 
+      objectReference: {fileID: 1254296751}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: managedReferences[8498091935808094323].value
       value: 
@@ -465457,8 +465494,16 @@ PrefabInstance:
       value: Prop_Sword
       objectReference: {fileID: 0}
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
+      propertyPath: Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: _type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
+      propertyPath: ObjectID
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: _prevType
@@ -465478,7 +465523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: _variantParam.Array.data[0].Param
-      value: 8498091935808094319
+      value: 1460415813939888217
       objectReference: {fileID: 0}
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: _variantParam.Array.data[0].Value
@@ -465491,6 +465536,14 @@ PrefabInstance:
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: _variantParam.Array.data[1].Value
       value: 8498091935808094315
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
+      propertyPath: 'managedReferences[1460415813939888210]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
+      propertyPath: 'managedReferences[1460415813939888217]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.MeshFilter, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: 'managedReferences[8498091935808094314]'
@@ -465516,6 +465569,14 @@ PrefabInstance:
       propertyPath: 'managedReferences[8498091935808094319]'
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.MeshFilter, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
+    - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
+      propertyPath: managedReferences[1460415813939888210].value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
+      propertyPath: managedReferences[1460415813939888217].value
+      value: 
+      objectReference: {fileID: 1727725914}
     - target: {fileID: 3012806129297284256, guid: 8f634a2945917374ba7345278bd8c9b8, type: 3}
       propertyPath: managedReferences[8498091935808094314].value
       value: 
@@ -540280,8 +540341,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007928996}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 2.15, z: 50.58}
+  m_LocalRotation: {x: 0.079211, y: -0.005890844, z: 0.09230791, w: 0.9925574}
+  m_LocalPosition: {x: 100, y: 2.63, z: 41.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -579610,6 +579671,8 @@ PlayableDirector:
     value: {fileID: 271489227}
   - key: {fileID: -1916392730412969973, guid: ed999518dc377794582c69f458575681, type: 2}
     value: {fileID: 271489230}
+  - key: {fileID: 6023383312696249886, guid: ed999518dc377794582c69f458575681, type: 2}
+    value: {fileID: 8168703447430185014}
   m_ExposedReferences:
     m_References:
     - f64e4539398ac7146af44f9bf5ce8dbd: {fileID: 0}
@@ -579627,8 +579690,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3628162253786817490}
+  - component: {fileID: 8168703447430185014}
   - component: {fileID: 8168703447430185012}
   - component: {fileID: 4780763809784958001}
+  - component: {fileID: 8168703447430185013}
   m_Layer: 0
   m_Name: Director
   m_TagString: Untagged
@@ -579654,6 +579719,33 @@ MonoBehaviour:
     OffsetY: 0
     Param1: 10
     Param2: 10
+--- !u!114 &8168703447430185013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829654056754181626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e71a1d794805a488a5d11291994853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8168703447430185014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829654056754181626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9672f3183a42d46aac47f366db31fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _director: {fileID: 4780763809784958001}
+  _cameraBrain: {fileID: 2007928997}
+  _markerReceiver: {fileID: 8168703447430185013}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

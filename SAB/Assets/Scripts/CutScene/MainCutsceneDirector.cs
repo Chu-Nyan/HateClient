@@ -19,6 +19,8 @@ namespace SAB.Cutscene
         private PlayableDirector _director;
         [SerializeField]
         private CinemachineBrain _cameraBrain;
+        [SerializeField]
+        private MarkerReceiver _markerReceiver;
 
         private readonly CutscenePool _pool = new();
         // Map
@@ -31,13 +33,10 @@ namespace SAB.Cutscene
 
         private void Awake()
         {
-            if (_cameraBrain == null)
-            {
-                if (Camera.main.TryGetComponent<CinemachineBrain>(out var brain) == true)
-                {
-                    _cameraBrain = brain;
-                }
-            }
+            if (_cameraBrain == null && Camera.main.TryGetComponent<CinemachineBrain>(out var brain) == true)
+                _cameraBrain = brain;
+
+            _markerReceiver.Init(_objectByID);
         }
 
         public void InitCinemachineBrain(CinemachineBrain brain)
@@ -133,7 +132,11 @@ namespace SAB.Cutscene
             {
                 var track = item.Value;
 
-                if (track is CinemachineTrack)
+                if (track is MarkerTrack)
+                {
+                    _director.SetGenericBinding(track, this);
+                }
+                else if (track is CinemachineTrack)
                 {
                     _director.SetGenericBinding(track, _cameraBrain);
 
