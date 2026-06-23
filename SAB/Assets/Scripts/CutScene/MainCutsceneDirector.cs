@@ -37,6 +37,7 @@ namespace SAB.Cutscene
                 _cameraBrain = brain;
 
             _markerReceiver.Init(_objectByID);
+            _director.stopped += OnTimelineStopped;
         }
 
         public void InitCinemachineBrain(CinemachineBrain brain)
@@ -193,6 +194,11 @@ namespace SAB.Cutscene
                 _pool.EnqueueTrigger(_mapTriggers[i]);
             }
             _mapTriggers.Clear();
+        }
+
+        private void OnTimelineStopped(PlayableDirector director)
+        {
+            ClearPlayingCutscene();
         }
 
 #if (UNITY_EDITOR)

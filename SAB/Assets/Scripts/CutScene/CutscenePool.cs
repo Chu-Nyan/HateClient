@@ -19,19 +19,19 @@ namespace SAB.Cutscene
             _triggerPool = new(() => new CollisionTrigger());
             _objPool = new()
             {
-                { typeof(VCamStaticData), new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(Const.Asset_VCamStatic), a => a.SetActive(true))},
-                { typeof(VCamFollowData), new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(Const.Asset_VCamFollow), a => a.SetActive(true))},
-                { typeof(SingleMeshData), new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(Const.Asset_SingleMesh), a => a.SetActive(true))},
+                { typeof(VCamStatic), new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(Const.Asset_VCamStatic), a => a.SetActive(true))},
+                { typeof(VCamFollow), new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(Const.Asset_VCamFollow), a => a.SetActive(true))},
+                { typeof(SingleMesh), new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(Const.Asset_SingleMesh), a => a.SetActive(true))},
             };
 
             _dequeue = new()
             {
-                { typeof(SpawnRequest), GetCharacter }
+                { typeof(Character), GetCharacter }
             };
 
             _enqueue = new()
             {
-                { typeof(SpawnRequest), (a) => CharacterGenerator.Instance.Enqueue((Character)a) }
+                { typeof(Character), (a) => CharacterGenerator.Instance.Enqueue((Character)a) }
             };
 
             _dataTypeByObjectType = new()
@@ -55,7 +55,7 @@ namespace SAB.Cutscene
 
         public ICutsceneObject DequeueObject(IObjectConfig config)
         {
-            Type type = config.GetType();
+            Type type = _dataTypeByObjectType[config.GetType()];
 
             if (_objPool.TryGetValue(type, out var pool) == true)
                 return pool.Dequeue();
@@ -77,15 +77,14 @@ namespace SAB.Cutscene
 
         public void EnqueueObject(ICutsceneObject config)
         {
-            Type type = _dataTypeByObjectType[config.GetType()];
+            Type type = config.GetType();
 
             if (_objPool.TryGetValue(type, out var pool) == true)
                 pool.Enqueue(config);
-
-            if (_enqueue.TryGetValue(type, out var action) == true)
+            else if (_enqueue.TryGetValue(type, out var action) == true)
                 action(config);
-
-            throw new Exception();
+            else
+                throw new Exception(type.ToString());
         }
     }
 }
