@@ -194,5 +194,25 @@ namespace SAB.Cutscene
             }
             _mapTriggers.Clear();
         }
+
+#if (UNITY_EDITOR)
+        [ContextMenu("Play")]
+        private void PlayCutsceneOnEditMode()
+        {
+            if (_objectByID.Count == 0)
+            {
+                var arr = transform.parent.GetComponentsInChildren<CutsceneObject>();
+                foreach (var item in arr)
+                {
+                    _objectByID.Add(item.ObjectID, item.GetComponent<ICutsceneObject>());
+                }
+            }
+
+            _director.RebuildGraph();
+            _director.time = 0;
+            _director.Evaluate();
+            _director.Play();
+        }
+#endif
     }
 }

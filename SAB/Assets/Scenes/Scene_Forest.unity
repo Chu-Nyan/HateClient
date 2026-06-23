@@ -72923,6 +72923,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7881329875821641783, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: _speechAnchor
+      value: 
+      objectReference: {fileID: 271489224}
     - target: {fileID: 8432482513911065431, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

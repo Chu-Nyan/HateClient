@@ -74,25 +74,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -119,25 +101,7 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -206,6 +170,7 @@ MonoBehaviour:
   m_Time: 1.1166666666666667
   DialogID: 5
   SpeakerID: 1
+  Time: 0
 --- !u!114 &-5623668003949067633
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +186,7 @@ MonoBehaviour:
   m_Time: 3
   DialogID: 0
   SpeakerID: 0
+  Time: 0
 --- !u!114 &-2214666426506006669
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -431,9 +397,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de00bfc6b770cd4d8a17e0543a8d7de, type: 3}
   m_Name: Dialog Marker
   m_EditorClassIdentifier: 
-  m_Time: 2.4
-  DialogID: 0
-  SpeakerID: 0
+  m_Time: 0.5833333333333334
+  DialogID: UI_Ok
+  SpeakerID: 1
+  Time: 2
 --- !u!114 &1989760369985400451
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -618,6 +585,7 @@ MonoBehaviour:
   m_Time: 2.4
   DialogID: 0
   SpeakerID: 0
+  Time: 0
 --- !u!74 &4928891425872681038
 AnimationClip:
   m_ObjectHideFlags: 0

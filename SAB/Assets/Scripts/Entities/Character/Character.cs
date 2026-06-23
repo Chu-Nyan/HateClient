@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ICutsceneObject
+public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ICutsceneObject, ISpeachable
 {
     [SerializeField]
     private Transform _attackOrigin;
@@ -29,13 +29,16 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private NavMeshAgent _nav;
     [SerializeField]
     private MeshSlotHub _meshHub;
+    [SerializeField]
+    private Transform _speechAnchor;
     private CharacterAnimator _animator;
 
     private CharacterBody _body;
     private OffenseSystem _combatSystem;
     private DefenseSystem _defenseSystem;
-
     private EquipmentSystem _equipmentSys;
+
+    private SpeechBubbleUI _speechBubbleUI;
 
     private event Action<Character> Deactivated;
 
@@ -79,7 +82,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         SetPositionWithNavMash(transform.position);
     }
 
-
     private void Update()
     {
         StateUpdate();
@@ -94,6 +96,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
         _animator.Tick(_stateContext, 1); // 1 << 이동속도 퍼센트로 넣기
+    }
+
+    public void InitComponent(SpeechBubbleUI speechBubbleUI)
+    {
+        _speechBubbleUI = speechBubbleUI;
     }
 
     private void StateUpdate()
@@ -237,5 +244,17 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void PlayEmote(AnimationClip clip)
     {
         _animator.SetPlayEmote(clip);
+    }
+
+    public void Speech(string id, float time)
+    {
+        if (_speechBubbleUI == null)
+        {
+            Debug.Log($"Name : {gameObject.name} Text ID : {id}, Play Time : {time}");
+        }
+        else
+        {
+            _speechBubbleUI.ShowDialogue(_speechAnchor, DialogueData.Sample);
+        }
     }
 }

@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6976352407453832290, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Human_CutScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

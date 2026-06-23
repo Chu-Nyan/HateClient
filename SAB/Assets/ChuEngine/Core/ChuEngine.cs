@@ -21,6 +21,11 @@ namespace Chu.Core
             get => _hub;
         }
 
+        public TextResource<string> TextResource
+        {
+            get => _textResource;
+        }
+
         public ChuEngine(GameObject root, string language) : base()
         {
             _root = root;

@@ -11,7 +11,7 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
     private readonly Dictionary<int, BaseStats> _unitDatas;
     private readonly Dictionary<int, CustomizingData> _customizingData;
 
-    private readonly ObjectPooling<Character> _pool;
+    private ObjectPooling<Character> _pool;
 
     private Character _new;
     private bool _canRelease;
@@ -20,7 +20,12 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
     {
         _unitDatas = db.CharacterRepo.CharacterBaseData;
         _customizingData = db.CharacterRepo.CustomizingData;
-        _pool = new(() => AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character));
+        _pool = new(() =>
+        {
+            var a = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+            a.InitComponent(UIManager.Instance.GetUI<SpeechBubbleUI>());
+            return a;
+        });
     }
 
     public CharacterGenerator Ready(Vector3 respawn)

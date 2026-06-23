@@ -16,7 +16,10 @@ public class MarkerReceiver : MonoBehaviour, INotificationReceiver
     {
         if (notification is DialogMarker marker)
         {
-            Debug.Log($"{marker.SpeakerID}, {marker.DialogID}");
+            if (_objects[marker.SpeakerID] is not ISpeachable able)
+                return;
+
+            able.Speech(marker.DialogID, marker.Time);
         }
     }
 }
