@@ -13,23 +13,15 @@ namespace SAB.Cutscene
         public float CenterY;
         public ShapeParam[] TriggerZones;
         public Dictionary<string, int> BindingIDByTrack;
+        public Dictionary<int, BindingSource> BindingSourceByID;
+        public Dictionary<int, UniqueEntityType> BindingSlots;
+        public Dictionary<int, int> SceneObjectBindingIDs;
         public ObjectDataContainer ObjectDataContainer;
 
         [JsonIgnore]
         public Vector2 Center
         {
             get => new Vector2(CenterX, CenterY);
-        }
-
-        public CutsceneData(string name, string assetPath, Vector2 center, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack, ObjectDataContainer objData)
-        {
-            Name = name;
-            AssetPath = assetPath;
-            CenterX = center.x;
-            CenterY = center.y;
-            TriggerZones = triggerZones;
-            BindingIDByTrack = idByTrack;
-            ObjectDataContainer = objData;
         }
     }
 }

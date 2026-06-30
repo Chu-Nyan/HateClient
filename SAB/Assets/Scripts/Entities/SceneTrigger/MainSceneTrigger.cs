@@ -5,6 +5,7 @@ using SAB.EntityAgent.AI;
 using SAB.Item;
 using SAB.Unit.Combat;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,8 @@ public class GameSceneTrigger : MonoBehaviour
     private MainCutsceneDirector _cutsceneDirector;
 
     private MapReferenceHub _currentMapReference;
+    private UniqueEntityContainer _uniqueEntity;
+
     private void Awake()
     {
         StartChuEngine();
@@ -55,6 +58,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void GenerateInstance()
     {
         _topViewCam = new TopViewCamera();
+        _uniqueEntity = new();
         _unitController = new(transform);
 
     }
@@ -62,6 +66,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void InitStatic()
     {
         InputManager.Instance.SetActive(true);
+        _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>(), _uniqueEntity);
     }
 
     private void InitInstance()
@@ -77,6 +82,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void SetPracticeScene()
     {
         _player = _unitController.GenerateCharacter(1, new Vector3(100, 0, 100), new CustomizingData(Gender.Male, 1, 1, 1, 1));
+        _uniqueEntity.SetUniqueEntity(UniqueEntityType.Player, _player);
         _unitController.BindRecevier(_player, UnitController.Oner.Player, true);
 
         var weapon = ItemFactory.Instance.GenerateItem(1);
@@ -98,10 +104,10 @@ public class GameSceneTrigger : MonoBehaviour
         string sceneName = $"Scene_{type}";
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         yield return op.isDone;
-        _cutsceneDirector.ChangeMap(type);
 
         Scene loadedScene = SceneManager.GetSceneByName(sceneName);
         _currentMapReference = SetLoadMapReference(loadedScene);
+        _cutsceneDirector.ChangeMap(type, _currentMapReference);
         GameStart();
     }
 

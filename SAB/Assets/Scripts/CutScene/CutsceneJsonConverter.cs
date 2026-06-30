@@ -1,9 +1,7 @@
-﻿using Chu.Utility;
-using Chu.Utility.Json;
+﻿using Chu.Utility.Json;
 using Chu.Utility.Unity;
 using Newtonsoft.Json;
 using SAB.DataManger;
-using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
@@ -26,9 +24,15 @@ namespace SAB.Cutscene
         [SerializeField]
         private DefaultAsset _path;
 
+        private int _idCount;
+        private Dictionary<GameObject, int> _idBySceneObject;
+
         public void ExportJson()
         {
             List<CutsceneDataDto> cutSceneDatas = new();
+            _idCount = 0;
+            _idBySceneObject = new();
+
             List<CutsceneDirector> directors = Utility.GetComponentsWithDepth<CutsceneDirector>(_root, _searchDepth);
             var settings = AddressableAssetSettingsDefaultObject.Settings;
 
@@ -53,24 +57,19 @@ namespace SAB.Cutscene
 
                 foreach (var track in tracks)
                 {
-                    if (track is CinemachineTrack camTrack)
-                    {
-                        ExtractCameraTrackData(objIDByTrackName, cutsceneData, director.PlayableDirector, camTrack);
-                        continue;
-                    }
                     if (track is MarkerTrack)
                         continue;
 
-                    var bindingTrack = director.PlayableDirector.GetGenericBinding(track);
-                    if (bindingTrack == null)
-                        continue;
+                    if (track is CinemachineTrack camTrack)
+                        ExtractCameraTrackData(cutsceneData, director.PlayableDirector, camTrack);
+                    else
+                    {
+                        var bindingTrack = director.PlayableDirector.GetGenericBinding(track);
+                        if (bindingTrack == null)
+                            continue;
 
-                    var cutsceneObj = bindingTrack.GetComponent<CutsceneObject>();
-                    if (cutsceneObj == null)
-                        continue;
-
-                    cutsceneData.AddObjectData(cutsceneObj.ObjectID, cutsceneObj.GetCutsceneObjectData());
-                    TryAddDictionary(objIDByTrackName, track.name, cutsceneObj.ObjectID);
+                        AddSceneObject(cutsceneData, bindingTrack.GameObject(), track.name);
+                    }
                 }
 
                 cutSceneDatas.Add(cutsceneData);
@@ -83,28 +82,36 @@ namespace SAB.Cutscene
             Debug.Log("Cutscene Data Exported");
         }
 
-        private void ExtractCameraTrackData(Dictionary<string, int> objIdByTrackName, CutsceneDataDto dto, PlayableDirector director, CinemachineTrack track)
+        private void ExtractCameraTrackData(CutsceneDataDto dto, PlayableDirector director, CinemachineTrack track)
         {
             foreach (var clip in track.GetClips())
             {
                 var shot = clip.asset as CinemachineShot;
                 if (shot == null)
                     continue;
-                if (shot.VirtualCamera.Resolve(director).TryGetComponent<CutsceneObject>(out var cutsceneObj) == false)
+                if (shot.VirtualCamera.Resolve(director).gameObject == null)
                     continue;
 
-                dto.AddObjectData(cutsceneObj.ObjectID, cutsceneObj.GetCutsceneObjectData());
-                TryAddDictionary(objIdByTrackName, clip.displayName, cutsceneObj.ObjectID);
+                AddSceneObject(dto, shot.VirtualCamera.Resolve(director).gameObject, clip.displayName);
             }
         }
 
-        private void TryAddDictionary(Dictionary<string, int> dic, string key, int objID)
+        private void AddSceneObject(CutsceneDataDto dto, GameObject obj, string clipName)
         {
-            if (dic.TryAdd(key, objID) == false
-             && dic[key] != objID)
+            int id = GetOrRegisterID(obj);
+            dto.AddObject(id, obj, this);
+            dto.AddTrackData(clipName, id);
+        }
+
+        public int GetOrRegisterID(GameObject obj)
+        {
+            if (_idBySceneObject.TryGetValue(obj, out int id) == false)
             {
-                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, key, dic[key], objID));
+                id = ++_idCount;
+                _idBySceneObject[obj] = id;
             }
+
+            return id;
         }
     }
 }

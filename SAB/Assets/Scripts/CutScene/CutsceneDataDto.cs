@@ -1,4 +1,5 @@
 ﻿using Chu.Collision;
+using Chu.Utility;
 using SAB.Unit;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace SAB.Cutscene
         public ShapeParam[] TriggerZones;
         public Dictionary<string, int> BindingIDByTrack;
 
+        public Dictionary<int, BindingSource> BindingSourceByID;
+        public Dictionary<int, UniqueEntityType> BindingSlots;
+        public Dictionary<int, int> SceneObjectBindingIDs;
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;
         public Dictionary<int, SpawnRequest> CharacterData;
@@ -22,6 +26,9 @@ namespace SAB.Cutscene
 
         public CutsceneDataDto(string name, string assetPath, Vector2 center, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack)
         {
+            BindingSourceByID = new();
+            BindingSlots = new();
+            SceneObjectBindingIDs = new();
             StaticData = new();
             FollowData = new();
             CharacterData = new();
@@ -37,7 +44,21 @@ namespace SAB.Cutscene
 
         public CutsceneData GetContainer()
         {
-            return new CutsceneData(Name, AssetPath, new(CenterX, CenterY), TriggerZones, BindingIDByTrack, GetObjectDataContainer());
+            var data = new CutsceneData()
+            {
+                Name = Name,
+                AssetPath = AssetPath,
+                CenterX = CenterX,
+                CenterY = CenterY,
+                TriggerZones = TriggerZones,
+                BindingIDByTrack = BindingIDByTrack,
+                BindingSourceByID = BindingSourceByID,
+                BindingSlots = BindingSlots,
+                SceneObjectBindingIDs = SceneObjectBindingIDs,
+                ObjectDataContainer = GetObjectDataContainer()
+            };
+
+            return data;
         }
 
         private ObjectDataContainer GetObjectDataContainer()
@@ -63,9 +84,27 @@ namespace SAB.Cutscene
             return container;
         }
 
-        public void AddObjectData(int id, IObjectConfig data)
+        public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler)
         {
-            switch (data)
+            if (obj.TryGetComponent<CutsceneObject>(out var cutsceneObj) == true)
+            {
+                BindingSourceByID.Add(id, cutsceneObj.BindingSource);
+
+                if (cutsceneObj.BindingSource == BindingSource.Slot)
+                    BindingSlots.Add(id, cutsceneObj.BindingSlot);
+                else if (cutsceneObj.BindingSource == BindingSource.Spawn)
+                    AddObjectData(id, cutsceneObj, idHandler);
+            }
+            else // 씬 오브젝트
+            {
+                BindingSourceByID.Add(id, BindingSource.SceneObject);
+                SceneObjectBindingIDs.Add(id, obj.name.GetHashCode());
+            }
+        }
+
+        private void AddObjectData(int id, CutsceneObject obj, CutsceneJsonConverter idHandler)
+        {
+            switch (obj.GetCutsceneObjectData(idHandler))
             {
                 case VCamStaticData staticData:
                     AddDataArray(StaticData, id, staticData);
@@ -79,6 +118,15 @@ namespace SAB.Cutscene
                 case SingleMeshData mesh:
                     AddDataArray(SingleMeshData, id, mesh);
                     break;
+            }
+        }
+
+        public void AddTrackData(string trackName, int objID)
+        {
+            if (BindingIDByTrack.TryAdd(trackName, objID) == false
+                && BindingIDByTrack[trackName] != objID)
+            {
+                throw new Exception(string.Format(ErrorMessages.DuplicateKeyMismatched, trackName, BindingIDByTrack[trackName], objID));
             }
         }
 

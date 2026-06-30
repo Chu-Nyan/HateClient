@@ -77,45 +77,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0cea9220de7c7045bd1ac36e090e4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 1
+  Type: 1
   _prevType: 1
+  BindingSource: 0
+  BindingObject: {fileID: 0}
+  BindingSlot: 0
+  ObjectID: 0
   _variantParam:
   - Key: VCam
     Param:
-      rid: 8498091935808094332
+      rid: 1460415973737889793
   - Key: VCamFollow
     Param:
-      rid: 8498091935808094333
+      rid: 1460415973737889794
   references:
     version: 2
     RefIds:
-    - rid: 8498091935808094332
+    - rid: 1460415973737889793
       type: {class: 'VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
       data:
-        value: {fileID: 8735777569006073803}
-    - rid: 8498091935808094333
+        value: {fileID: 0}
+    - rid: 1460415973737889794
       type: {class: 'VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
       data:
-        value: {fileID: 4127707896029979198}
---- !u!114 &4127707896029979198 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7905305508731602905, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
-  m_PrefabInstance: {fileID: 6124289730492491239}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253487743259021379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8735777569006073803 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3298445161108689452, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
-  m_PrefabInstance: {fileID: 6124289730492491239}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253487743259021379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+        value: {fileID: 0}

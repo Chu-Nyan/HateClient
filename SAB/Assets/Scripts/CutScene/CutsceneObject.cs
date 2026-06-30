@@ -14,11 +14,21 @@ namespace SAB.Cutscene
         public const string _npcID = "NPCID";
 
         public CutsceneObjectType Type;
-        [SerializeField, HideInInspector]
-        private CutsceneObjectType _prevType = CutsceneObjectType.SingleMesh;
-        public int ObjectID;
+        private int _objectID;
+        public BindingSource BindingSource;
+        public GameObject BindingObject;
+        public UniqueEntityType BindingSlot;
         [SerializeField]
         private List<VariantParamPair> _variantParam;
+
+        [SerializeField, HideInInspector]
+        private CutsceneObjectType _prevType = CutsceneObjectType.SingleMesh;
+
+        public int ObjectID
+        {
+            get => _objectID;
+            set => _objectID = value;
+        }
 
         public Vector3 Position
         {
@@ -61,7 +71,7 @@ namespace SAB.Cutscene
             }
         }
 
-        public IObjectConfig GetCutsceneObjectData()
+        public IObjectConfig GetCutsceneObjectData(CutsceneJsonConverter idHandler)
         {
             if (Type == CutsceneObjectType.SingleMesh)
             {
@@ -73,7 +83,7 @@ namespace SAB.Cutscene
             {
                 var vcam = GetComponent<VCamFollow>();
                 var pov = vcam.CinemachineCamera.Lens.FieldOfView;
-                var targetID = vcam.CinemachineFollow.FollowTarget.GetComponent<CutsceneObject>().ObjectID;
+                var targetID = idHandler.GetOrRegisterID(vcam.CinemachineFollow.FollowTarget.gameObject);
                 return new VCamFollowData(transform.rotation, pov, targetID, vcam.CinemachineFollow.FollowOffset);
             }
             else if (Type == CutsceneObjectType.VCamStatic)
@@ -117,7 +127,7 @@ namespace SAB.Cutscene
                 log += $"{item.Key} : {item.Param}";
             }
 
-            Debug.Log($"{log}\n{GetCutsceneObjectData()}");
+            Debug.Log($"{log}\n{GetCutsceneObjectData(new())}");
         }
     }
 }

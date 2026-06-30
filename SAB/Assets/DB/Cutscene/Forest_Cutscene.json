@@ -2,30 +2,46 @@
   {
     "Name": "CH01_01_EnterTheForestBattle",
     "AssetPath": "CH01_01_EnterTheForestBattle",
-    "CenterX": 100.0,
-    "CenterY": 58.0,
+    "CenterX": 110.0,
+    "CenterY": 130.0,
     "TriggerZones": [
       {
         "Type": 0,
         "OffsetX": 0.0,
         "OffsetY": 0.0,
-        "Param1": 10.0,
-        "Param2": 10.0
+        "Param1": 42.39,
+        "Param2": 13.25
       }
     ],
     "BindingIDByTrack": {
-      "Cam_SwordStatic": 3,
+      "Cam_SwordStatic": 1,
       "Cam_SwordFollow": 2,
       "Animation Track22": 4,
-      "Activation Track": 1,
-      "Acter_1_Movement": 1
+      "Activation Track": 5,
+      "Acter_1_Movement": 6,
+      "Activation Track (1)": 3
+    },
+    "BindingSourceByID": {
+      "1": 0,
+      "2": 0,
+      "4": 0,
+      "5": 1,
+      "6": 1,
+      "3": 2
+    },
+    "BindingSlots": {
+      "3": 0
+    },
+    "SceneObjectBindingIDs": {
+      "5": 159138813,
+      "6": -552835127
     },
     "StaticData": {
-      "3": {
+      "1": {
         "Position": {
-          "x": 100.0,
-          "y": 2.15,
-          "z": 50.58
+          "x": 110.0,
+          "y": 1.18,
+          "z": 130.0
         },
         "Rotation": {
           "x": 0.0,
@@ -45,7 +61,7 @@
           "w": 0.9925574
         },
         "POV": 40.0,
-        "TargetID": 4,
+        "TargetID": 3,
         "FollowOffset": {
           "x": 0.0,
           "y": 2.13,
@@ -53,29 +69,14 @@
         }
       }
     },
-    "CharacterData": {
-      "1": {
-        "ID": 2,
-        "Position": {
-          "x": 100.0,
-          "y": 0.0,
-          "z": 70.0
-        },
-        "Rotation": {
-          "x": 0.0,
-          "y": 2.98023366E-08,
-          "z": 0.0,
-          "w": 1.0
-        }
-      }
-    },
+    "CharacterData": {},
     "SingleMeshData": {
       "4": {
-        "MeshPath": "Mesh_Weapon_KnightSword",
+        "MeshPath": "Mesh_Weapon_HeroSword",
         "Position": {
-          "x": 100.0,
-          "y": 0.5,
-          "z": 54.84
+          "x": 110.0,
+          "y": 0.0,
+          "z": 130.0
         },
         "Rotation": {
           "x": 0.0,

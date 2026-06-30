@@ -26,6 +26,8 @@ namespace SAB.Cutscene
         // Map
         private readonly List<CollisionTrigger> _mapTriggers = new(16);
         private readonly Dictionary<int, CutsceneData> _dataByTriggerID = new();
+        private readonly Dictionary<int, ICutsceneObject> _sceneObject = new();
+        private UniqueEntityContainer _uniqueEntity;
 
         // Cutscene in progress
         private readonly Dictionary<string, TrackAsset> _trackByName = new();
@@ -40,12 +42,13 @@ namespace SAB.Cutscene
             _director.stopped += OnTimelineStopped;
         }
 
-        public void InitCinemachineBrain(CinemachineBrain brain)
+        public void Init(CinemachineBrain brain, UniqueEntityContainer uniqueEntity)
         {
             _cameraBrain = brain;
+            _uniqueEntity = uniqueEntity;
         }
 
-        public void ChangeMap(MapType type)
+        public void ChangeMap(MapType type, MapReferenceHub hub)
         {
             if (DataBase.Instance.CutSceneRepo.DataByMapType.TryGetValue(type, out CutsceneData[] datas) == false)
             {
@@ -54,6 +57,10 @@ namespace SAB.Cutscene
             else
             {
                 SetupMap(datas);
+                foreach (var item in hub.Characters)
+                {
+                    _sceneObject.Add(item.Key, item.Value);
+                }
             }
         }
 
@@ -85,7 +92,7 @@ namespace SAB.Cutscene
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
 
             CacheTracks(playableAsset);
-            PrepareCutsceneObject(data.ObjectDataContainer);
+            PrepareCutsceneObject(data);
             BindingTrack(data);
             _director.playableAsset = playableAsset;
             _director.RebuildGraph();
@@ -108,10 +115,10 @@ namespace SAB.Cutscene
             }
         }
 
-        // 직렬화된 키값으로 오브젝트 생성 후 바인딩
-        private void PrepareCutsceneObject(ObjectDataContainer container)
+        private void PrepareCutsceneObject(CutsceneData data)
         {
             // Generate
+            var container = data.ObjectDataContainer;
             foreach (var config in container)
             {
                 var obj = _pool.DequeueObject(config.Value);
@@ -123,7 +130,7 @@ namespace SAB.Cutscene
             foreach (var item in container.GetTable<VCamFollowData>())
             {
                 VCamFollow cam = (VCamFollow)_objectByID[item.Key];
-                cam.SetFollow(_objectByID[item.Value.TargetID].transform);
+                cam.SetFollow(GetObject(data, item.Value.TargetID).transform);
             }
         }
 
@@ -146,7 +153,7 @@ namespace SAB.Cutscene
                         var id = cutsceneData.BindingIDByTrack[clip.displayName];
 
                         var shot = clip.asset as CinemachineShot;
-                        IVCam vcam = (IVCam)_objectByID[id];
+                        IVCam vcam = (IVCam)GetObject(cutsceneData, id);
                         _director.SetReferenceValue(shot.VirtualCamera.exposedName, vcam.CinemachineCamera);
 
                     }
@@ -154,17 +161,17 @@ namespace SAB.Cutscene
                 else if (track is AnimationTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, ((SingleMesh)_objectByID[id]).Animator);
+                    _director.SetGenericBinding(track, ((SingleMesh)GetObject(cutsceneData, id)).Animator);
                 }
                 else if (track is ActivationTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, _objectByID[id].transform.gameObject);
+                    _director.SetGenericBinding(track, GetObject(cutsceneData, id).transform.gameObject);
                 }
                 else if (track is InGameTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, (MonoBehaviour)_objectByID[id]);
+                    _director.SetGenericBinding(track, (MonoBehaviour)GetObject(cutsceneData, id));
                 }
             }
         }
@@ -199,6 +206,17 @@ namespace SAB.Cutscene
         private void OnTimelineStopped(PlayableDirector director)
         {
             ClearPlayingCutscene();
+        }
+
+        private ICutsceneObject GetObject(CutsceneData data, int id)
+        {
+            return data.BindingSourceByID[id] switch
+            {
+                BindingSource.Spawn => _objectByID[id],
+                BindingSource.SceneObject => _sceneObject[data.SceneObjectBindingIDs[id]],
+                BindingSource.Slot => (ICutsceneObject)_uniqueEntity.GetEntity(data.BindingSlots[id]),
+                _ => throw new System.Exception(),
+            };
         }
 
 #if (UNITY_EDITOR)
