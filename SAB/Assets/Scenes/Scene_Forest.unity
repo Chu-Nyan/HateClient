@@ -578683,6 +578683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537e5e0f9b31bb747b9a7ace04431a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LockPlayer: 1
   _triggerZones:
   - Type: 0
     OffsetX: 0

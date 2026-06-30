@@ -13,6 +13,7 @@ namespace SAB.Cutscene
         public string AssetPath;
         public float CenterX;
         public float CenterY;
+        public bool LockPlayer;
         public ShapeParam[] TriggerZones;
         public Dictionary<string, int> BindingIDByTrack;
 
@@ -24,7 +25,7 @@ namespace SAB.Cutscene
         public Dictionary<int, SpawnRequest> CharacterData;
         public Dictionary<int, SingleMeshData> SingleMeshData;
 
-        public CutsceneDataDto(string name, string assetPath, Vector2 center, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack)
+        public CutsceneDataDto(string name, string assetPath, Vector2 center, bool lockPlayer, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack)
         {
             BindingSourceByID = new();
             BindingSlots = new();
@@ -38,6 +39,7 @@ namespace SAB.Cutscene
             AssetPath = assetPath;
             CenterX = center.x;
             CenterY = center.y;
+            LockPlayer = lockPlayer;
             TriggerZones = triggerZones;
             BindingIDByTrack = idByTrack;
         }
@@ -50,6 +52,7 @@ namespace SAB.Cutscene
                 AssetPath = AssetPath,
                 CenterX = CenterX,
                 CenterY = CenterY,
+                LockPlayer = LockPlayer,
                 TriggerZones = TriggerZones,
                 BindingIDByTrack = BindingIDByTrack,
                 BindingSourceByID = BindingSourceByID,

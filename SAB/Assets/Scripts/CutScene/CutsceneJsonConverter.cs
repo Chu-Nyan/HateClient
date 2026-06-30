@@ -48,6 +48,7 @@ namespace SAB.Cutscene
                     name: director.PlayableDirector.playableAsset.name,
                     assetPath: entry.address,
                     center: director.Center,
+                    lockPlayer: director.LockPlayer,
                     triggerZones: director.TriggerZone,
                     idByTrack: objIDByTrackName
                     );

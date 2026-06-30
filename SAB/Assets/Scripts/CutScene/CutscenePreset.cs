@@ -6,6 +6,7 @@ namespace SAB.Cutscene
 {
     public class CutscenePreset : MonoBehaviour
     {
+        public bool LockPlayer;
         public ShapeParam[] _triggerZones;
 
         public PlayableDirector PlayableDirector

@@ -11,6 +11,7 @@ namespace SAB.Cutscene
         public string AssetPath;
         public float CenterX;
         public float CenterY;
+        public bool LockPlayer;
         public ShapeParam[] TriggerZones;
         public Dictionary<string, int> BindingIDByTrack;
         public Dictionary<int, BindingSource> BindingSourceByID;
