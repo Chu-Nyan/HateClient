@@ -2,7 +2,7 @@
 
 namespace SAB.Cutscene
 {
-    public class SingleMeshData : IObjectConfig
+    public class SingleMeshData : ICutscenePreset
     {
         public string MeshPath;
 

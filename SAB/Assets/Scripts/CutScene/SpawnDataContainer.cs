@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 namespace SAB.Cutscene
 {
-    public class ObjectDataContainer
+    public class SpawnDataContainer
     {
         public Dictionary<Type, IDictionary> _datasByType;
 
-        public ObjectDataContainer()
+        public SpawnDataContainer()
         {
             _datasByType = new();
         }
 
-        public Dictionary<int, T> GetTable<T>() where T : IObjectConfig
+        public Dictionary<int, T> GetTable<T>() where T : ICutscenePreset
         {
             var type = typeof(T);
 
@@ -26,21 +26,21 @@ namespace SAB.Cutscene
             return (Dictionary<int, T>)table;
         }
 
-        public void Add<T>(int id, T data) where T : IObjectConfig
+        public void Add<T>(int id, T data) where T : ICutscenePreset
         {
             var table = GetTable<T>();
             table[id] = data;
         }
 
-        public IEnumerator<KeyValuePair<int, IObjectConfig>> GetEnumerator()
+        public IEnumerator<KeyValuePair<int, ICutscenePreset>> GetEnumerator()
         {
             foreach (var table in _datasByType.Values)
             {
                 foreach (DictionaryEntry entry in table)
                 {
-                    yield return new KeyValuePair<int, IObjectConfig>(
+                    yield return new KeyValuePair<int, ICutscenePreset>(
                         (int)entry.Key,
-                        (IObjectConfig)entry.Value);
+                        (ICutscenePreset)entry.Value);
                 }
             }
         }

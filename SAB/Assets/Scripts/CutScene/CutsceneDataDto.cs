@@ -55,15 +55,15 @@ namespace SAB.Cutscene
                 BindingSourceByID = BindingSourceByID,
                 BindingSlots = BindingSlots,
                 SceneObjectBindingIDs = SceneObjectBindingIDs,
-                ObjectDataContainer = GetObjectDataContainer()
+                SpawnContainer = GetObjectDataContainer()
             };
 
             return data;
         }
 
-        private ObjectDataContainer GetObjectDataContainer()
+        private SpawnDataContainer GetObjectDataContainer()
         {
-            var container = new ObjectDataContainer();
+            var container = new SpawnDataContainer();
             foreach (var item in StaticData)
             {
                 container.Add(item.Key, item.Value);
@@ -86,7 +86,7 @@ namespace SAB.Cutscene
 
         public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler)
         {
-            if (obj.TryGetComponent<CutsceneObject>(out var cutsceneObj) == true)
+            if (obj.TryGetComponent<CutsceneObjectPreset>(out var cutsceneObj) == true)
             {
                 BindingSourceByID.Add(id, cutsceneObj.BindingSource);
 
@@ -102,7 +102,7 @@ namespace SAB.Cutscene
             }
         }
 
-        private void AddObjectData(int id, CutsceneObject obj, CutsceneJsonConverter idHandler)
+        private void AddObjectData(int id, CutsceneObjectPreset obj, CutsceneJsonConverter idHandler)
         {
             switch (obj.GetCutsceneObjectData(idHandler))
             {
@@ -130,7 +130,7 @@ namespace SAB.Cutscene
             }
         }
 
-        private void AddDataArray<T, K>(T arr, int id, K value) where T : IDictionary<int, K> where K : IObjectConfig
+        private void AddDataArray<T, K>(T arr, int id, K value) where T : IDictionary<int, K> where K : ICutscenePreset
         {
             if (arr.TryAdd(id, value) == true)
             {

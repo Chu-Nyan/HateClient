@@ -1,6 +1,6 @@
 ﻿namespace SAB.Cutscene
 {
-    public interface IObjectConfig
+    public interface ICutscenePreset
     {
     }
 }

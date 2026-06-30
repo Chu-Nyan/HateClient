@@ -36,7 +36,7 @@ namespace SAB
             SetMesh(mesh);
         }
 
-        public void SetCutsceneData(IObjectConfig data)
+        public void SetCutscenePreset(ICutscenePreset data)
         {
             if (data is not SingleMeshData singleMeshData)
                 throw new System.Exception(data.GetType().ToString());

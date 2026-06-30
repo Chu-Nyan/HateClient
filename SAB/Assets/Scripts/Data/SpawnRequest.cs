@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SAB.Unit
 {
-    public class SpawnRequest : IObjectConfig
+    public class SpawnRequest : ICutscenePreset
     {
         public int ID;
         public Vector3 Position;

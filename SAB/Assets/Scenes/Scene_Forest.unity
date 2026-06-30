@@ -578680,7 +578680,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6829654056754181626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be07f3d8c6c5c4e4da621242ffed340f, type: 3}
+  m_Script: {fileID: 11500000, guid: 537e5e0f9b31bb747b9a7ace04431a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _triggerZones:
@@ -578710,7 +578710,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6829654056754181626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a9672f3183a42d46aac47f366db31fc, type: 3}
+  m_Script: {fileID: 11500000, guid: c1c9fb35fcd3bd544b7483813470c2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 4780763809784958001}

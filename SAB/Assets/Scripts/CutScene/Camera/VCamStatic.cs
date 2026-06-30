@@ -19,7 +19,7 @@ namespace SAB.Cutscene
             _vcam.Lens.FieldOfView = data.POV;
         }
 
-        public void SetCutsceneData(IObjectConfig data)
+        public void SetCutscenePreset(ICutscenePreset data)
         {
             if (data is not VCamStaticData staticData)
                 throw new System.Exception(data.GetType().ToString());

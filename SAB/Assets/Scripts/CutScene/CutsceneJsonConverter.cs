@@ -33,7 +33,7 @@ namespace SAB.Cutscene
             _idCount = 0;
             _idBySceneObject = new();
 
-            List<CutsceneDirector> directors = Utility.GetComponentsWithDepth<CutsceneDirector>(_root, _searchDepth);
+            List<CutscenePreset> directors = Utility.GetComponentsWithDepth<CutscenePreset>(_root, _searchDepth);
             var settings = AddressableAssetSettingsDefaultObject.Settings;
 
             foreach (var director in directors)

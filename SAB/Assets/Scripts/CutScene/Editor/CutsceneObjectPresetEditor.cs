@@ -2,8 +2,8 @@
 
 namespace SAB.Cutscene
 {
-    [CustomEditor(typeof(CutsceneObject))]
-    public class CutsceneObjectEditor : Editor
+    [CustomEditor(typeof(CutsceneObjectPreset))]
+    public class CutsceneObjectPresetEditor : Editor
     {
         SerializedProperty _type;
         SerializedProperty _bindingSource;
@@ -13,10 +13,10 @@ namespace SAB.Cutscene
 
         private void OnEnable()
         {
-            _type = serializedObject.FindProperty(nameof(CutsceneObject.Type));
-            _bindingSource = serializedObject.FindProperty(nameof(CutsceneObject.BindingSource));
-            _bindingObject = serializedObject.FindProperty(nameof(CutsceneObject.BindingObject));
-            _bindingSlot = serializedObject.FindProperty(nameof(CutsceneObject.BindingSlot));
+            _type = serializedObject.FindProperty(nameof(CutsceneObjectPreset.Type));
+            _bindingSource = serializedObject.FindProperty(nameof(CutsceneObjectPreset.BindingSource));
+            _bindingObject = serializedObject.FindProperty(nameof(CutsceneObjectPreset.BindingObject));
+            _bindingSlot = serializedObject.FindProperty(nameof(CutsceneObjectPreset.BindingSlot));
             _variantParam = serializedObject.FindProperty("_variantParam");
         }
 

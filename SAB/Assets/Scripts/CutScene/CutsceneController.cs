@@ -10,7 +10,7 @@ using UnityEngine.Timeline;
 
 namespace SAB.Cutscene
 {
-    public class MainCutsceneDirector : MonoBehaviour
+    public class CutsceneController : MonoBehaviour
     {
         private readonly static NyanLayer _layer = NyanLayer.TriggerZone;
         private readonly static NyanLayerMask _mask = new(NyanLayer.PlayerUnit);
@@ -118,11 +118,11 @@ namespace SAB.Cutscene
         private void PrepareCutsceneObject(CutsceneData data)
         {
             // Generate
-            var container = data.ObjectDataContainer;
+            var container = data.SpawnContainer;
             foreach (var config in container)
             {
                 var obj = _pool.DequeueObject(config.Value);
-                obj.SetCutsceneData(config.Value);
+                obj.SetCutscenePreset(config.Value);
                 _objectByID[config.Key] = obj;
             }
 
@@ -225,7 +225,7 @@ namespace SAB.Cutscene
         {
             if (_objectByID.Count == 0)
             {
-                var arr = transform.parent.GetComponentsInChildren<CutsceneObject>();
+                var arr = transform.parent.GetComponentsInChildren<CutsceneObjectPreset>();
                 foreach (var item in arr)
                 {
                     _objectByID.Add(item.ObjectID, item.GetComponent<ICutsceneObject>());

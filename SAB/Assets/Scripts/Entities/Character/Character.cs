@@ -232,7 +232,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _body.OnOwnerChanged(type == BrainType.Player);
     }
 
-    public void SetCutsceneData(IObjectConfig data)
+    public void SetCutscenePreset(ICutscenePreset data)
     {
         if (data is not SpawnRequest request)
             throw new Exception(data.GetType().ToString());

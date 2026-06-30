@@ -16,7 +16,7 @@ public class GameSceneTrigger : MonoBehaviour
     private TopViewCamera _topViewCam;
     private Character _player;
     private UnitController _unitController;
-    private MainCutsceneDirector _cutsceneDirector;
+    private CutsceneController _cutsceneDirector;
 
     private MapReferenceHub _currentMapReference;
     private UniqueEntityContainer _uniqueEntity;
@@ -52,7 +52,7 @@ public class GameSceneTrigger : MonoBehaviour
         new ItemFactory(DataBase.Instance);
         new UIManager();
 
-        _cutsceneDirector = AssetManager.GenerateLoadAssetSync<MainCutsceneDirector>(Const.Asset_CutsceneManger, "CutsceneManager", transform);
+        _cutsceneDirector = AssetManager.GenerateLoadAssetSync<CutsceneController>(Const.Asset_CutsceneManger, "CutsceneManager", transform);
     }
 
     private void GenerateInstance()

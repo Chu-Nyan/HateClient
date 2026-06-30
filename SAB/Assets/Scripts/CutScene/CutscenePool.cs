@@ -10,7 +10,7 @@ namespace SAB.Cutscene
     {
         private readonly ObjectPooling<CollisionTrigger> _triggerPool;
         private readonly Dictionary<Type, ObjectPooling<ICutsceneObject>> _objPool;
-        private readonly Dictionary<Type, Func<IObjectConfig, ICutsceneObject>> _dequeue;
+        private readonly Dictionary<Type, Func<ICutscenePreset, ICutsceneObject>> _dequeue;
         private readonly Dictionary<Type, Action<ICutsceneObject>> _enqueue;
         private readonly Dictionary<Type, Type> _dataTypeByObjectType;
 
@@ -53,7 +53,7 @@ namespace SAB.Cutscene
             _triggerPool.Enqueue(trigger);
         }
 
-        public ICutsceneObject DequeueObject(IObjectConfig config)
+        public ICutsceneObject DequeueObject(ICutscenePreset config)
         {
             Type type = _dataTypeByObjectType[config.GetType()];
 
@@ -66,7 +66,7 @@ namespace SAB.Cutscene
             throw new Exception();
         }
 
-        private ICutsceneObject GetCharacter(IObjectConfig data)
+        private ICutsceneObject GetCharacter(ICutscenePreset data)
         {
             SpawnRequest request = (SpawnRequest)data;
             return CharacterGenerator.Instance.Ready(request.Position)

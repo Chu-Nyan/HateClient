@@ -2,7 +2,7 @@
 
 namespace SAB.Cutscene
 {
-    public class VCamFollowData : IObjectConfig
+    public class VCamFollowData : ICutscenePreset
     {
         // VCam
         public Quaternion Rotation;

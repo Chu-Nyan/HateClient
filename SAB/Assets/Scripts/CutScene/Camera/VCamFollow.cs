@@ -27,7 +27,7 @@ namespace SAB.Cutscene
             _follow.FollowOffset = data.FollowOffset;
         }
 
-        public void SetCutsceneData(IObjectConfig data)
+        public void SetCutscenePreset(ICutscenePreset data)
         {
             if (data is not VCamFollowData followData)
                 throw new System.Exception(data.GetType().ToString());

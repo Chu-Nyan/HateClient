@@ -4,14 +4,14 @@ using UnityEngine.Playables;
 
 namespace SAB.Cutscene
 {
-    [CustomEditor(typeof(CutsceneDirector))]
-    public class CutsceneAuthoringEditor : Editor
+    [CustomEditor(typeof(CutscenePreset))]
+    public class CutscenePresetEditor : Editor
     {
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
-            var authoring = (CutsceneDirector)target;
+            var authoring = (CutscenePreset)target;
 
             if (authoring.PlayableDirector == null)
             {

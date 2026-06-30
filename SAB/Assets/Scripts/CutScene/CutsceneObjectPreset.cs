@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SAB.Cutscene
 {
-    public class CutsceneObject : MonoBehaviour
+    public class CutsceneObjectPreset : MonoBehaviour
     {
         public const string _meshFilter = "MeshFilter";
         public const string _vcam = "VCam";
@@ -71,7 +71,7 @@ namespace SAB.Cutscene
             }
         }
 
-        public IObjectConfig GetCutsceneObjectData(CutsceneJsonConverter idHandler)
+        public ICutscenePreset GetCutsceneObjectData(CutsceneJsonConverter idHandler)
         {
             if (Type == CutsceneObjectType.SingleMesh)
             {

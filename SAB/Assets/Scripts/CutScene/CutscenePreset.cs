@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 
 namespace SAB.Cutscene
 {
-    public class CutsceneDirector : MonoBehaviour
+    public class CutscenePreset : MonoBehaviour
     {
         public ShapeParam[] _triggerZones;
 

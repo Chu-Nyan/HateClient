@@ -6,6 +6,6 @@ namespace SAB.Cutscene
     {
         public Transform transform { get; }
         public void SetActive(bool value);
-        public void SetCutsceneData(IObjectConfig data);
+        public void SetCutscenePreset(ICutscenePreset data);
     }
 }

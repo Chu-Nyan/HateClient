@@ -2,7 +2,7 @@
 
 namespace SAB.Cutscene
 {
-    public class VCamStaticData : IObjectConfig
+    public class VCamStaticData : ICutscenePreset
     {
         public Vector3 Position;
         public Quaternion Rotation;
