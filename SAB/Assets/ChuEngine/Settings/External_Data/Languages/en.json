@@ -54,5 +54,11 @@
   "Shield_DemonLord": "",
   "Cloak_Knight": "",
   "Cloak_Hero": "",
-  "Cloak_DemonLord": ""
+  "Cloak_DemonLord": "",
+  "Cutscene_CH01_010_001": "\"Your Majesty! You mustn't! That front has already collapsed! You need to retreat to the rear while there's still time!\"",
+  "Cutscene_CH01_010_002": "\"If I retreat, who will protect the people beyond that line?\"",
+  "Cutscene_CH01_010_003": "\"But that monster is too dangerous! Thousands have fought it, and none could bring it down!\"",
+  "Cutscene_CH01_010_004": "\"That is precisely why I must go. Someone has to stand before it.\"",
+  "Cutscene_CH01_010_005": "\"...You may die.\"",
+  "Cutscene_CH01_010_006": "\"A crown is not worn to protect one's own life.\""
 }
