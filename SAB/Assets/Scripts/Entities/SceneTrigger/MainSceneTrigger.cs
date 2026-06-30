@@ -17,6 +17,7 @@ public class GameSceneTrigger : MonoBehaviour
     private UnitController _unitController;
     private MainCutsceneDirector _cutsceneDirector;
 
+    private MapReferenceHub _currentMapReference;
     private void Awake()
     {
         StartChuEngine();
@@ -94,9 +95,26 @@ public class GameSceneTrigger : MonoBehaviour
 
     private IEnumerator ChangeMap(MapType type)
     {
-        AsyncOperation op = SceneManager.LoadSceneAsync($"Scene_{type}", LoadSceneMode.Additive);
+        string sceneName = $"Scene_{type}";
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         yield return op.isDone;
         _cutsceneDirector.ChangeMap(type);
+
+        Scene loadedScene = SceneManager.GetSceneByName(sceneName);
+        _currentMapReference = SetLoadMapReference(loadedScene);
         GameStart();
+    }
+
+    private MapReferenceHub SetLoadMapReference(Scene scene)
+    {
+        foreach (GameObject rootObj in scene.GetRootGameObjects())
+        {
+            if (rootObj.CompareTag(Const.Tag_MapReferenceHub) == false)
+                continue;
+
+            return rootObj.GetComponent<MapReferenceHub>();
+        }
+
+        throw new System.Exception("Map scene is missing a hub.");
     }
 }
