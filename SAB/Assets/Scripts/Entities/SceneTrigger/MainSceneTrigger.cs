@@ -2,6 +2,7 @@ using Chu.Core;
 using SAB.Cutscene;
 using SAB.DataManger;
 using SAB.EntityAgent.AI;
+using SAB.Facade;
 using SAB.Item;
 using SAB.Unit.Combat;
 using System.Collections;
@@ -21,6 +22,9 @@ public class GameSceneTrigger : MonoBehaviour
     private MapReferenceHub _currentMapReference;
     private UniqueEntityContainer _uniqueEntity;
 
+    // Facade
+    private GamePlayFacade _gamePlayFacade;
+
     private void Awake()
     {
         StartChuEngine();
@@ -30,6 +34,8 @@ public class GameSceneTrigger : MonoBehaviour
 
         InitStatic();
         InitInstance();
+
+        InitFacade();
 
         StartCoroutine(ChangeMap(MapType.Forest));
     }
@@ -60,7 +66,6 @@ public class GameSceneTrigger : MonoBehaviour
         _topViewCam = new TopViewCamera();
         _uniqueEntity = new();
         _unitController = new(transform);
-
     }
 
     private void InitStatic()
@@ -72,6 +77,11 @@ public class GameSceneTrigger : MonoBehaviour
     private void InitInstance()
     {
         _topViewCam.InitCamera(_topviewCam);
+    }
+
+    private void InitFacade()
+    {
+        _gamePlayFacade = new(_cutsceneDirector, _unitController.AgentController);
     }
 
     private void GameStart()

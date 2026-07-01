@@ -15,6 +15,11 @@ namespace SAB.EntityAgent
         private Dictionary<int, Agent> _activeAgentByReceiverId;
         private Queue<Agent> _idleNPCAgent;
 
+        public Agent Player
+        {
+            get => _agents[_playerAgentID];
+        }
+
         private void Awake()
         {
             _agents = new Agent[200];

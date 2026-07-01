@@ -2,6 +2,7 @@
 using Chu.Core;
 using Chu.Data;
 using SAB.DataManger;
+using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -30,8 +31,17 @@ namespace SAB.Cutscene
         private UniqueEntityContainer _uniqueEntity;
 
         // Cutscene in progress
+        private int _playID;
         private readonly Dictionary<string, TrackAsset> _trackByName = new();
         private readonly Dictionary<int, ICutsceneObject> _objectByID = new();
+
+        public event Action<int> CutsceneStarted;
+        public event Action<int> CutsceneStopped;
+
+        public int PlayID
+        {
+            get => _playID;
+        }
 
         private void Awake()
         {
@@ -79,16 +89,18 @@ namespace SAB.Cutscene
             CollisionTrigger trigger = _pool.DequeueTrigger();
             IShape shape = ShapeFactory.GenerateShape(data.TriggerZones);
             trigger.Setup(shape, new Pose2D(data.Center, 0), _layer, _mask, true); // TODO : 컷씬 활성화 여부
-            trigger.RegisterOnEntered(OnCutsceneTriggerEnter);
+            trigger.RegisterOnEntered(OnStarted);
 
             _mapTriggers.Add(trigger);
             _dataByTriggerID.Add(trigger.ID, data);
         }
 
-        private void OnCutsceneTriggerEnter(int id)
+        public void Play(int cutsceneID)
         {
+            _playID = cutsceneID;
             ClearPlayingCutscene();
-            CutsceneData data = _dataByTriggerID[id];
+
+            CutsceneData data = _dataByTriggerID[cutsceneID];
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
 
             CacheTracks(playableAsset);
@@ -98,6 +110,7 @@ namespace SAB.Cutscene
             _director.RebuildGraph();
             _director.time = 0;
             _director.Evaluate();
+
             _director.Play();
             Debug.Log("Play");
         }
@@ -203,9 +216,16 @@ namespace SAB.Cutscene
             _mapTriggers.Clear();
         }
 
+        private void OnStarted(int id)
+        {
+            CutsceneStarted?.Invoke(id);
+            Play(id);
+        }
+
         private void OnTimelineStopped(PlayableDirector director)
         {
             ClearPlayingCutscene();
+            CutsceneStopped?.Invoke(_playID);
         }
 
         private ICutsceneObject GetObject(CutsceneData data, int id)
@@ -217,6 +237,11 @@ namespace SAB.Cutscene
                 BindingSource.Slot => (ICutsceneObject)_uniqueEntity.GetEntity(data.BindingSlots[id]),
                 _ => throw new System.Exception(),
             };
+        }
+
+        public CutsceneData GetCutsceneData(int id)
+        {
+            return _dataByTriggerID[id];
         }
 
 #if (UNITY_EDITOR)

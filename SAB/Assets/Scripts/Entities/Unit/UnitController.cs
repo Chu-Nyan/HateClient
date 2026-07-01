@@ -11,6 +11,11 @@ public class UnitController
 
     private AgentController _controller;
 
+    public AgentController AgentController
+    {
+        get => _controller;
+    }
+
     public UnitController(Transform gameObj)
     {
         _controller = gameObj.AddComponent<AgentController>();
