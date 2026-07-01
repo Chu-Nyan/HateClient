@@ -3,96 +3,70 @@ using UnityEngine;
 
 public partial class SpeechBubbleUIModel
 {
-    private readonly Dictionary<int, Transform> _anchorByID;
-    private readonly Dictionary<int, DialogueData[]> _textByID;
-    private readonly Dictionary<int, DialogueProgress> _progressByID;
+    public readonly Dictionary<int, Transform> AnchorByID;
+    public readonly Dictionary<int, Queue<DialogueData>> QueueByID;
+    public readonly Dictionary<int, float> PlayTimeByID;
 
-    private readonly HashSet<int> _finishedIDThisFrame;
-    private readonly HashSet<int> _stepChangedIDThisFrame;
-
-    public Dictionary<int, Transform> AnchorByID
-    {
-        get => _anchorByID;
-    }
-
-    public HashSet<int> FinishedIDThisFrame
-    {
-        get => _finishedIDThisFrame;
-    }
-
-    public HashSet<int> StepChangedIDThisFrame
-    {
-        get => _stepChangedIDThisFrame;
-    }
+    public readonly HashSet<int> StepChanged;
+    public readonly HashSet<int> QueueFinished;
 
     public SpeechBubbleUIModel()
     {
-        _anchorByID = new();
-        _progressByID = new();
-        _textByID = new();
-        _finishedIDThisFrame = new();
-        _stepChangedIDThisFrame = new();
+        AnchorByID = new();
+        QueueByID = new();
+        PlayTimeByID = new();
+
+        StepChanged = new();
+        QueueFinished = new();
     }
 
     public void Tick(float time)
     {
-        foreach (var item in _progressByID)
+        foreach (var item in AnchorByID)
         {
-            var p = item.Value;
-            p.RemainTime -= time;
+            PlayTimeByID[item.Key] += time;
 
-            if (p.RemainTime <= 0)
+            var queue = QueueByID[item.Key];
+
+            if (PlayTimeByID[item.Key] >= queue.Peek().Time)
             {
-                p.ProgressStep++;
-                if (p.ProgressStep < _textByID[p.ID].Length)
-                {
-                    p.RemainTime = _textByID[p.ID][p.ProgressStep].Time;
-                    _stepChangedIDThisFrame.Add(p.ID);
-                }
+                queue.Dequeue();
+                if (queue.Count == 0)
+                    QueueFinished.Add(item.Key);
                 else
-                {
-                    _finishedIDThisFrame.Add(p.ID);
-                }
+                    StepChanged.Add(item.Key);
             }
         }
     }
 
-    public bool AddDialogue(int id, Transform anchor, DialogueData[] text)
+    public void AddDialogue(Transform anchor, DialogueData text, bool isOverwrite)
     {
-        var result = _anchorByID.ContainsKey(id) == false;
-        if (result == true)
+        int id = anchor.GetInstanceID();
+        if (AnchorByID.TryAdd(id, anchor) == true)
         {
-            _anchorByID[id] = anchor;
-            _anchorByID[id] = anchor;
-            _textByID[id] = text; // TODO 재활용
-            _progressByID[id] = new DialogueProgress(id, 0, text[0].Time);
+            QueueByID[id] = new();
+            PlayTimeByID[id] = 0;
+        }
+        else if (isOverwrite == true && QueueByID[id].Peek().SequenceID != text.SequenceID)
+        {
+            QueueByID[id].Clear();
+            QueueByID[id].Enqueue(text);
+            PlayTimeByID[id] = 0;
         }
 
-        return result;
+        QueueByID[id].Enqueue(text);
+        StepChanged.Add(id);
     }
 
-    public void PostTick()
+    public void Remove(int id)
     {
-        foreach (var id in _finishedIDThisFrame)
-        {
-            _anchorByID.Remove(id);
-            _textByID.Remove(id);
-            _progressByID.Remove(id);
-        }
-
-        _finishedIDThisFrame.Clear();
-        _stepChangedIDThisFrame.Clear();
+        AnchorByID.Remove(id);
+        QueueByID.Remove(id);
+        PlayTimeByID.Remove(id);
     }
 
-    public DialogueData GetCurrentStepDialogue(int id)
+    public string GetCurrentStepTextID(int objID)
     {
-        int step = _progressByID[id].ProgressStep;
-        if (step >= _textByID[id].Length)
-        {
-            step = _textByID[id].Length - 1;
-            Debug.Log("스텝 계산 오류");
-        }
-
-        return _textByID[id][step];
+        return QueueByID[objID].Peek().TextID;
     }
 }

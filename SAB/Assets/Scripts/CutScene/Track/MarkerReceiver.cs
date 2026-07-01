@@ -31,6 +31,7 @@ public class MarkerReceiver : MonoBehaviour, INotificationReceiver
                 return;
             }
 
+            able.Speech(new(0, marker.TextID, marker.Time), true);
         }
     }
 }

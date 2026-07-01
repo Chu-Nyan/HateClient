@@ -38,8 +38,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private DefenseSystem _defenseSystem;
     private EquipmentSystem _equipmentSys;
 
-    private SpeechBubbleUI _speechBubbleUI;
-
     private event Action<Character> Deactivated;
 
     public int InstanceID
@@ -96,11 +94,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _combatSystem.Tick();
         _defenseSystem.Tick(_stats);
         _animator.Tick(_stateContext, 1); // 1 << 이동속도 퍼센트로 넣기
-    }
-
-    public void InitComponent(SpeechBubbleUI speechBubbleUI)
-    {
-        _speechBubbleUI = speechBubbleUI;
     }
 
     private void StateUpdate()
@@ -246,15 +239,12 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _animator.SetPlayEmote(clip);
     }
 
-    public void Speech(string id, float time)
+    public void Speech(DialogueData data, bool isOverwrite)
     {
-        if (_speechBubbleUI == null)
-        {
-            Debug.Log($"Name : {gameObject.name} Text ID : {id}, Play Time : {time}");
-        }
+        var ui = UIManager.Instance.GetUI<SpeechBubbleUI>();
+        if (ui == null)
+            Debug.Log($"Name : {gameObject.name} Sequence ID : {data.SequenceID}, Text ID : {data.TextID}");
         else
-        {
-            _speechBubbleUI.ShowDialogue(_speechAnchor, DialogueData.Sample);
-        }
+            ui.ShowDialogue(_speechAnchor, data, isOverwrite);
     }
 }

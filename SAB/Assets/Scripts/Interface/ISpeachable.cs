@@ -1,4 +1,4 @@
 ﻿public interface ISpeachable
 {
-    public void Speech(string id, float time);
+    public void Speech(DialogueData data, bool isOverwrite);
 }

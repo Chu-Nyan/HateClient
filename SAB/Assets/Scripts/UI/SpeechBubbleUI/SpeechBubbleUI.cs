@@ -1,3 +1,4 @@
+using Chu.Core;
 using UnityEngine;
 
 public class SpeechBubbleUI : BaseUI
@@ -14,31 +15,32 @@ public class SpeechBubbleUI : BaseUI
     private void Update()
     {
         _model.Tick(Time.deltaTime);
-        foreach (var id in _model.StepChangedIDThisFrame)
+
+        foreach (var id in _model.StepChanged)
         {
-            var dialogue = _model.GetCurrentStepDialogue(id);
-            _view.ShowBubble(id, dialogue.Text);
+            string text = ChuEngine.Instance.TextResource[_model.GetCurrentStepTextID(id)];
+            _view.ShowBubble(id, text);
         }
-        foreach (var id in _model.FinishedIDThisFrame)
+
+        foreach (var id in _model.QueueFinished)
         {
+            _model.Remove(id);
             _view.HideBubble(id);
         }
-        _model.PostTick();
 
         foreach (var item in _model.AnchorByID)
         {
             var pos = RectTransformUtility.WorldToScreenPoint(Camera.main, item.Value.position);
             _view.SetBubblePosition(item.Key, pos);
         }
+
+        _model.StepChanged.Clear();
+        _model.QueueFinished.Clear();
     }
 
-    public void ShowDialogue(Transform anchor, DialogueData[] text)
+    public void ShowDialogue(Transform anchor, DialogueData text, bool isOverwrite)
     {
-        var id = anchor.GetInstanceID();
-        if (_model.AddDialogue(id, anchor, text) == true)
-        {
-            _view.ShowBubble(id, text[0].Text);
-        }
+        _model.AddDialogue(anchor, text, isOverwrite);
     }
 
     public override void Show()

@@ -22,9 +22,7 @@ public class CharacterGenerator : Singleton<CharacterGenerator>
         _customizingData = db.CharacterRepo.CustomizingData;
         _pool = new(() =>
         {
-            var a = AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
-            a.InitComponent(UIManager.Instance.GetUI<SpeechBubbleUI>());
-            return a;
+            return AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
         });
     }
 

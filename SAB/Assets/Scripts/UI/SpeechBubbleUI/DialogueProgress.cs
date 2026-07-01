@@ -1,13 +1,16 @@
 public class DialogueProgress
 {
     public int ID;
-    public int ProgressStep;
-    public float RemainTime;
+    public float PlayTime;
 
-    public DialogueProgress(int id, int progressStep, float time)
+    public DialogueProgress(int id, float playTime)
     {
         ID = id;
-        ProgressStep = progressStep;
-        RemainTime = time;
+        PlayTime = playTime;
+    }
+
+    public void Reset()
+    {
+        PlayTime = 0;
     }
 }

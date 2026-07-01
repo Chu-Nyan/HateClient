@@ -1,13 +1,16 @@
-public class DialogueData
+public readonly struct DialogueData
 {
-    public readonly static DialogueData[] Sample = new DialogueData[] { new("1", 1), new("2", 2), new("3", 3) };
-
-    public readonly string Text;
+    public readonly int SequenceID;
+    public readonly string TextID;
     public readonly float Time;
 
-    public DialogueData(string text, float time)
+    public DialogueData(int sequenceID, string textID, float time = 0)
     {
-        Text = text;
+        SequenceID = sequenceID;
+        TextID = textID;
+        if (time == 0)
+            time = 2;
+
         Time = time;
     }
 }
