@@ -48,7 +48,6 @@ namespace SAB.Cutscene
             if (_cameraBrain == null && Camera.main.TryGetComponent<CinemachineBrain>(out var brain) == true)
                 _cameraBrain = brain;
 
-            _markerReceiver.Init(_objectByID);
             _director.stopped += OnTimelineStopped;
         }
 
@@ -102,10 +101,11 @@ namespace SAB.Cutscene
 
             CutsceneData data = _dataByTriggerID[cutsceneID];
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
-
             CacheTracks(playableAsset);
             PrepareCutsceneObject(data);
             BindingTrack(data);
+            _markerReceiver.Setup(data.BindingIDByTrack, GetObjectWithLastPlay);
+
             _director.playableAsset = playableAsset;
             _director.RebuildGraph();
             _director.time = 0;
@@ -237,6 +237,11 @@ namespace SAB.Cutscene
                 BindingSource.Slot => (ICutsceneObject)_uniqueEntity.GetEntity(data.BindingSlots[id]),
                 _ => throw new System.Exception(),
             };
+        }
+
+        private ICutsceneObject GetObjectWithLastPlay(int id)
+        {
+            return GetObject(_dataByTriggerID[_playID], id);
         }
 
         public CutsceneData GetCutsceneData(int id)

@@ -74,28 +74,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 2345496827475861688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0cea9220de7c7045bd1ac36e090e4c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a5eca32368a0434c8d2cb39dc141a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
-  _prevType: 2
   BindingSource: 0
   BindingObject: {fileID: 0}
   BindingSlot: 0
-  ObjectID: 0
   _variantParam:
   - Key: MeshFilter
     Param:
-      rid: 1460415973737889792
+      rid: 1460416025904545877
+  _prevType: 2
   references:
     version: 2
     RefIds:
-    - rid: 1460415973737889792
+    - rid: 1460416025904545877
       type: {class: 'VariantParam`1[[UnityEngine.MeshFilter, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
       data:
-        value: {fileID: 3118640211014711066}
---- !u!33 &3118640211014711066 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 2929857703035000469, guid: d5920388d2841eb48b562b824f9d526d, type: 3}
-  m_PrefabInstance: {fileID: 283534024432951695}
-  m_PrefabAsset: {fileID: 0}
+        value: {fileID: 0}

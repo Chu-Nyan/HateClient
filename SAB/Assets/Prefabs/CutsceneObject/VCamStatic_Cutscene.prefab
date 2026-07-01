@@ -74,30 +74,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 649215523997863159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0cea9220de7c7045bd1ac36e090e4c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a5eca32368a0434c8d2cb39dc141a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 0
-  _prevType: 0
+  Type: 0
+  BindingSource: 0
+  BindingObject: {fileID: 0}
+  BindingSlot: 0
   _variantParam:
   - Key: VCam
-    Value:
-      rid: 8498091935808094311
+    Param:
+      rid: 1460416025904545881
+  _prevType: 0
   references:
     version: 2
     RefIds:
-    - rid: 8498091935808094311
+    - rid: 1460416025904545881
       type: {class: 'VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
       data:
-        value: {fileID: 1153867165064847118}
---- !u!114 &1153867165064847118 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3405213857446780124, guid: f93dc76a3f8d33d4c9d51c0df834ab45, type: 3}
-  m_PrefabInstance: {fileID: 4558456343642964946}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 649215523997863159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+        value: {fileID: 0}

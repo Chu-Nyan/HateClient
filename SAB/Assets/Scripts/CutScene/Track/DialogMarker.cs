@@ -4,8 +4,8 @@ using UnityEngine.Timeline;
 
 public class DialogMarker : Marker, INotification, INotificationOptionProvider
 {
-    public string DialogID;
-    public int SpeakerID;
+    public string TextID;
+    public string SpeakerTrack;
     public float Time;
 
     public PropertyName id => new("Dialog");

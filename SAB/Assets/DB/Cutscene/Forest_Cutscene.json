@@ -4,6 +4,7 @@
     "AssetPath": "CH01_01_EnterTheForestBattle",
     "CenterX": 110.0,
     "CenterY": 130.0,
+    "LockPlayer": true,
     "TriggerZones": [
       {
         "Type": 0,
@@ -16,25 +17,23 @@
     "BindingIDByTrack": {
       "Cam_SwordStatic": 1,
       "Cam_SwordFollow": 2,
-      "Animation Track22": 4,
-      "Activation Track": 5,
-      "Acter_1_Movement": 6,
-      "Activation Track (1)": 3
+      "InGame_Guard1_Movement": 4,
+      "InGame_Guard2_Movement": 5,
+      "InGame_Player_Movement": 3
     },
     "BindingSourceByID": {
       "1": 0,
       "2": 0,
-      "4": 0,
+      "4": 1,
       "5": 1,
-      "6": 1,
       "3": 2
     },
     "BindingSlots": {
       "3": 0
     },
     "SceneObjectBindingIDs": {
-      "5": 159138813,
-      "6": -552835127
+      "4": 313372166,
+      "5": -89912361
     },
     "StaticData": {
       "1": {
@@ -70,21 +69,6 @@
       }
     },
     "CharacterData": {},
-    "SingleMeshData": {
-      "4": {
-        "MeshPath": "Mesh_Weapon_HeroSword",
-        "Position": {
-          "x": 110.0,
-          "y": 0.0,
-          "z": 130.0
-        },
-        "Rotation": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0,
-          "w": 1.0
-        }
-      }
-    }
+    "SingleMeshData": {}
   }
 ]
