@@ -36,11 +36,16 @@ namespace SAB.Cutscene
         private readonly Dictionary<int, ICutsceneObject> _objectByID = new();
 
         public event Action<int> CutsceneStarted;
-        public event Action<int> CutsceneStopped;
+        public event Action<CutsceneData> CutsceneStopped;
 
         public int PlayID
         {
             get => _playID;
+        }
+
+        public CutsceneData PlayCutsceneData
+        {
+            get => _dataByTriggerID[_playID];
         }
 
         private void Awake()
@@ -49,6 +54,7 @@ namespace SAB.Cutscene
                 _cameraBrain = brain;
 
             _director.stopped += OnTimelineStopped;
+            _markerReceiver.Init(ShowDialog);
         }
 
         public void Init(CinemachineBrain brain, UniqueEntityContainer uniqueEntity)
@@ -94,23 +100,24 @@ namespace SAB.Cutscene
             _dataByTriggerID.Add(trigger.ID, data);
         }
 
-        public void Play(int cutsceneID)
+        public void Ready(int cutsceneID)
         {
             _playID = cutsceneID;
             ClearPlayingCutscene();
 
             CutsceneData data = _dataByTriggerID[cutsceneID];
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
+            _director.playableAsset = playableAsset;
             CacheTracks(playableAsset);
             PrepareCutsceneObject(data);
             BindingTrack(data);
-            _markerReceiver.Setup(data.BindingIDByTrack, GetObjectWithLastPlay);
+        }
 
-            _director.playableAsset = playableAsset;
+        public void Play()
+        {
             _director.RebuildGraph();
             _director.time = 0;
             _director.Evaluate();
-
             _director.Play();
             Debug.Log("Play");
         }
@@ -218,14 +225,15 @@ namespace SAB.Cutscene
 
         private void OnStarted(int id)
         {
+            Ready(id);
             CutsceneStarted?.Invoke(id);
-            Play(id);
+            Play();
         }
 
         private void OnTimelineStopped(PlayableDirector director)
         {
             ClearPlayingCutscene();
-            CutsceneStopped?.Invoke(_playID);
+            CutsceneStopped?.Invoke(PlayCutsceneData);
         }
 
         private ICutsceneObject GetObject(CutsceneData data, int id)
@@ -239,34 +247,26 @@ namespace SAB.Cutscene
             };
         }
 
-        private ICutsceneObject GetObjectWithLastPlay(int id)
+        private bool TryGetPlayObject(CutsceneData data, int id, out ICutsceneObject obj)
         {
-            return GetObject(_dataByTriggerID[_playID], id);
+            obj = null;
+            if (data.BindingSourceByID.ContainsKey(id) == false)
+                return false;
+
+            obj = GetObject(data, id);
+            return true;
         }
 
-        public CutsceneData GetCutsceneData(int id)
+        private void ShowDialog(DialogMarker marker)
         {
-            return _dataByTriggerID[id];
-        }
-
-#if (UNITY_EDITOR)
-        [ContextMenu("Play")]
-        private void PlayCutsceneOnEditMode()
-        {
-            if (_objectByID.Count == 0)
+            var id = PlayCutsceneData.BindingIDByTrack[marker.SpeakerTrack];
+            if (TryGetPlayObject(PlayCutsceneData, id, out var obj) == true)
             {
-                var arr = transform.parent.GetComponentsInChildren<CutsceneObjectPreset>();
-                foreach (var item in arr)
+                if (obj is ISpeachable able)
                 {
-                    _objectByID.Add(item.ObjectID, item.GetComponent<ICutsceneObject>());
+                    able.Speech(new(0, marker.TextID, marker.Time), true);
                 }
             }
-
-            _director.RebuildGraph();
-            _director.time = 0;
-            _director.Evaluate();
-            _director.Play();
         }
-#endif
     }
 }
