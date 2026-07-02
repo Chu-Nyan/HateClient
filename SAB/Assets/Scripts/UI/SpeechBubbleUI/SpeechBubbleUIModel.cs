@@ -41,7 +41,7 @@ public partial class SpeechBubbleUIModel
 
     public void AddDialogue(Transform anchor, DialogueData text, bool isOverwrite)
     {
-        int id = anchor.GetInstanceID();
+        int id = anchor.name.GetHashCode();
         if (AnchorByID.TryAdd(id, anchor) == true)
         {
             QueueByID[id] = new();
