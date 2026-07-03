@@ -1,15 +1,29 @@
 public enum ItemType
 {
-	Phone = 10000,
-	Card = 20000,
-	HealingPotion = 10000,
-	ManaPotion = 10001,
-	Elixir = 10002,
-	IronSword = 20000,
-	SteelShield = 20001,
+    Phone = 10000,
+    Card = 20000,
+    HealingPotion = 10000,
+    ManaPotion = 10001,
+    Elixir = 10002,
+    IronSword = 20000,
+    SteelShield = 20001,
 }
 
 public enum MapType
 {
     Forest,
+}
+
+public enum FactionType
+{
+    Player = 0,
+    Kingdom,
+    Underworld,
+}
+
+public enum FactionRelation
+{
+    Hostile = -1,
+    Neutral = 0,
+    Friendly = 1
 }
