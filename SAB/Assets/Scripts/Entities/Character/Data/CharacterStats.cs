@@ -21,9 +21,9 @@
             get => _finalStats[(int)StatType.HP] <= 0;
         }
 
-        public float this[StatType type] 
-        { 
-            get => _finalStats[(int)type]; 
+        public float this[StatType type]
+        {
+            get => _finalStats[(int)type];
         }
 
         public CharacterStats()

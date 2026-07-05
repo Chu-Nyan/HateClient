@@ -2,11 +2,11 @@
   {
     "ID": 1,
     "ShapeType": 0,
-    "Rotation": 45.0,
-    "Param1": 1.0,
-    "Param2": 0.3,
+    "Rotation": 0.0,
+    "Param1": 2.0,
+    "Param2": 2.0,
     "OffsetX": 0.0,
-    "OffsetY": 0.1
+    "OffsetY": 0.5
   },
   {
     "ID": 2,

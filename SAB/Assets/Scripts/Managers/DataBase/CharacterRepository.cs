@@ -19,7 +19,7 @@ namespace SAB.DataManger
             CharacterBaseData = DataBase.DeserializeObjectByKey(
                 dtos: DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(_characterBaseJson)),
                 keySelector: a => a.ID,
-                converter: a => new BaseStats(a.ID, a.Name, a.Desc, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
+                converter: a => new BaseStats(a.ID, a.Faction, a.Name, a.Desc, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
             );
 
             CustomizingData = DataBase.DeserializeObjectByKey(
