@@ -216,7 +216,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
         WeaponStance stance = _equipmentSys.Stance;
         _animator.ChangeStance(stance);
-        float BasicAttackTimeing = 0.5f;// 무기 데이터에서 추출할 것
+        //float BasicAttackTimeing = 0.5f;// 무기 데이터에서 추출할 것
 
     }
 

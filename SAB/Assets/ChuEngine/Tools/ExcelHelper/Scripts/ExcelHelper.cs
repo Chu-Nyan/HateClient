@@ -168,7 +168,7 @@ namespace Chu.Tools
 
         private bool TryConvertExcelToJson(SheetData sheet, out string text)
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
             var table = sheet.Table;
             Type type = assemblies
                 .Select(a => a.GetType($"{sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}"))

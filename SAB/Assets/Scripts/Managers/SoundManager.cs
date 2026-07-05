@@ -1,5 +1,6 @@
 ﻿using Chu.Core;
 using Chu.Utility.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     private SoundType _currentBGM;
 
+    [NonSerialized]
     public Coroutine coroutine;
 
     public SoundOptionData SoundOptionData
@@ -105,7 +107,7 @@ public class SoundManager : MonoBehaviourSingleton<SoundManager>
     {
         speaker.clip = clip;
         speaker.volume = _optionData.FinalySEVolume;
-        speaker.pitch = 1f + Random.Range(-SoundOptionData.DefaultPitch, SoundOptionData.DefaultPitch);
+        speaker.pitch = 1f + UnityEngine.Random.Range(-SoundOptionData.DefaultPitch, SoundOptionData.DefaultPitch);
         speaker.Play();
     }
 
