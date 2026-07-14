@@ -92,7 +92,7 @@ namespace SAB.Cutscene
         private void GenerateCutsceneTrigger(CutsceneData data)
         {
             CollisionTrigger trigger = _pool.DequeueTrigger();
-            IShape shape = ShapeFactory.GenerateShape(data.TriggerZones);
+            IShape shape = ShapeParam.ConvertShape(data.TriggerZones);
             trigger.Setup(shape, new Pose2D(data.Center, 0), _layer, _mask, true); // TODO : 컷씬 활성화 여부
             trigger.RegisterOnEntered(OnStarted);
 

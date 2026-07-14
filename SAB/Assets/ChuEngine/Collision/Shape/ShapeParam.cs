@@ -60,6 +60,45 @@ namespace Chu.Collision
             return new CircleRangeData(new Vector2(OffsetX, OffsetY), Radius);
         }
 
+        public static IShape ConvertShape(ShapeParam[] param)
+        {
+            if (param.Length == 1)
+                return param[0].ConvertShape();
+            else
+            {
+                var composite = new CompositeShape();
+                composite.Setup(param);
+                return composite;
+            }
+        }
+
+        public readonly IShape ConvertShape()
+        {
+            if (Type == ShapeType.Rectangle)
+                return ConvertRectShape(this);
+            if (Type == ShapeType.Circle)
+                return ConvertCircleShape(this);
+
+            throw new Exception("잘못된 타입 입력됨");
+        }
+
+        private static RectShape ConvertRectShape(ShapeParam param)
+        {
+            var rectShape = new RectShape();
+            var data = param.GetRectData();
+            rectShape.Setup(data);
+            return rectShape;
+        }
+
+        private static CircleShape ConvertCircleShape(ShapeParam param)
+        {
+            var circleShape = new CircleShape();
+            var data = param.GetCircleData();
+            circleShape.Setup(data);
+            return circleShape;
+        }
+
+        #region Editor
         public readonly void DrawGizmo(Vector3 anchor, Quaternion quaternion)
         {
             Vector3 center = new(anchor.x + OffsetX, anchor.y, anchor.z + OffsetY);
@@ -74,30 +113,6 @@ namespace Chu.Collision
                 GizmoDrawer.DrawCircle(center, Radius);
             }
         }
-
-        public static IShape GetShape(ShapeParam[] data)
-        {
-            if (data.Length > 1)
-            {
-                var shape = ShapeFactory.Instance.Generate<CompositeShape>();
-                shape.Setup(data);
-                return shape;
-            }
-            else if (data[0].Type == ShapeType.Rectangle)
-            {
-                var shape = ShapeFactory.Instance.Generate<RectShape>();
-                shape.Setup(data[0].GetRectData());
-                return shape;
-
-            }
-            else if (data[0].Type == ShapeType.Circle)
-            {
-                var shape = ShapeFactory.Instance.Generate<CircleShape>();
-                shape.Setup(data[0].GetCircleData());
-                return shape;
-            }
-
-            throw new Exception();
-        }
+        #endregion
     }
 }

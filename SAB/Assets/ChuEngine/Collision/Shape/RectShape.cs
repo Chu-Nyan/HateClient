@@ -36,6 +36,13 @@ namespace Chu.Collision
             get => _aabb;
         }
 
+        public RectShape() : this(RectRangeData.Default) { }
+
+        public RectShape(RectRangeData data)
+        {
+            Setup(data);
+        }
+
         public void Setup(RectRangeData data)
         {
             _rectData = data;

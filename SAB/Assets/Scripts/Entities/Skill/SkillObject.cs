@@ -92,7 +92,7 @@ namespace SAB.Unit.Combat
         private void ChangeShape(int step)
         {
             var logic = Context.SkillData.CollisionLogics[step];
-            var shape = ShapeFactory.GenerateShape(logic.Hitboxes);
+            var shape = ShapeParam.ConvertShape(logic.Hitboxes);
             _nyanCollider.SetShape(shape);
             _timer = 0;
         }

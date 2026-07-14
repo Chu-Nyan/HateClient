@@ -23,6 +23,13 @@ namespace Chu.Collision
             get => _aabb;
         }
 
+        public CircleShape() : this(CircleRangeData.Default) { }
+
+        public CircleShape(CircleRangeData data)
+        {
+            Setup(data);
+        }
+
         public void Setup(CircleRangeData data)
         {
             _data = data;

@@ -80,6 +80,7 @@ namespace Chu.Collision
 
         public NyanCollider(INyanCollisionProvider provider, int id, string comment = null)
         {
+            _shape = new CircleShape();
             InstanceID = id;
             _provider = provider;
             _insertedNodes = new(4);
@@ -100,10 +101,13 @@ namespace Chu.Collision
 
         public void SetShape(IShape shape)
         {
-            if (_shape != null)
-                ShapeFactory.Instance.Release(_shape);
             if (shape == null)
-                SetActive(false);
+            {
+                Debug.LogWarning($"{_comment}, Null shape provided");
+                var temp = new CircleShape();
+                temp.Setup(new(Vector3.zero, 1));
+                shape = temp;
+            }
 
             _shape = shape;
         }

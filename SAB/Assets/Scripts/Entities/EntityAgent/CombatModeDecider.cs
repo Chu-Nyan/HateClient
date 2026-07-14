@@ -29,7 +29,7 @@ namespace SAB.EntityAgent
         {
             if (_collider == null)
             {
-                var shape = ShapeFactory.Instance.Generate<CircleShape>();
+                var shape = new CircleShape();
                 shape.Setup(new CircleRangeData(Vector2.zero, 1));
                 var mask = new NyanLayerMask(NyanLayer.PlayerUnit, NyanLayer.NPCUnit);
                 _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator

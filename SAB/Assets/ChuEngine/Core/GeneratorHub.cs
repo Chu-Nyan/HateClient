@@ -6,12 +6,10 @@ namespace Chu.Core
     public class GeneratorHub : Singleton<GeneratorHub>
     {
         public readonly NyanColliderGenerator NyanColliderGenerator;
-        public readonly ShapeFactory ShapeFactory;
 
         public GeneratorHub()
         {
             NyanColliderGenerator = new();
-            ShapeFactory = new();
         }
 
         public void InitNyanColliderGenerator(NyanCollisonSystem system)
