@@ -1,4 +1,5 @@
 ﻿using Chu.Utility;
+using SAB.DataManger;
 using UnityEngine;
 
 public class MapReferenceHub : MonoBehaviour
@@ -7,6 +8,18 @@ public class MapReferenceHub : MonoBehaviour
     private GameObject _linkedObjectRoot;
 
     public SerializablePair<int, Character>[] Characters;
+
+    private void Awake()
+    {
+        if (DataBase.Instance == null)
+            new DataBase();
+
+        var repo = DataBase.Instance.CharacterRepo;
+        foreach (var item in Characters)
+        {
+            item.Value.SetupStats(repo.CharacterBaseData[item.Value.Stats.CharacterID]);
+        }
+    }
 
 #if UNITY_EDITOR
     [ContextMenu("Auto Binding From Root")]

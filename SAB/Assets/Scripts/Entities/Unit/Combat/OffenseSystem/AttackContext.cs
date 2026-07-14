@@ -7,13 +7,15 @@ using SAB.Unit.Combat;
 public struct AttackContext
 {
     public SkillData SkillData;
+    public FactionType Faction;
     public NyanLayerMask Mask;
 
     public float Damage;
 
-    public AttackContext(SkillData data, NyanLayerMask mask, float damage)
+    public AttackContext(SkillData data, FactionType faction, NyanLayerMask mask, float damage)
     {
         SkillData = data;
+        Faction = faction;
 
         Mask = mask;
         Damage = damage;

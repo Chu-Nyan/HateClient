@@ -50,7 +50,7 @@ public class FactionTableDrawer : PropertyDrawer
                 new Rect(position.x + 15, position.y, leftWidth, EditorGUIUtility.singleLineHeight),
                 to.ToString());
 
-            var oldValue = table.Factions[from].FactionRelations[(int)to];
+            var oldValue = table[from][(int)to];
 
             var newValue = (FactionRelation)EditorGUI.EnumPopup(
                 new Rect(position.x + 15 + leftWidth, position.y,

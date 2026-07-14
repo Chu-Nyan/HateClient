@@ -13,6 +13,7 @@ namespace SAB.Unit.Combat
         private readonly Transform _origin;
         private readonly List<Skill> _skillList;
         private readonly List<int> _used;
+        private FactionType _faction;
 
         public List<Skill> SkillList
         {
@@ -25,6 +26,11 @@ namespace SAB.Unit.Combat
             _skillList = new List<Skill>();
             _used = new List<int>();
             _origin = origin;
+        }
+
+        public void SetFaction(FactionType faction)
+        {
+            _faction = faction;
         }
 
         public void Tick()
@@ -49,7 +55,7 @@ namespace SAB.Unit.Combat
 
         private void Attack(float damage, int index, Vector3 targetPoint)
         {
-            var context = new AttackContext(SkillList[index].Data, new NyanLayerMask(Const.Layer_Unit), damage);
+            var context = new AttackContext(SkillList[index].Data, _faction, new NyanLayerMask(Const.Layer_Unit), damage);
             var dir = targetPoint - _origin.position;
             dir.y = 0f;
             dir.Normalize();

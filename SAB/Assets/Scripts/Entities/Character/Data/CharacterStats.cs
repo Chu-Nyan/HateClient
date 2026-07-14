@@ -1,15 +1,26 @@
-﻿namespace SAB.Unit
+﻿using System;
+using UnityEngine;
+
+namespace SAB.Unit
 {
     public enum StatType
     {
         HP, ATK, PDEF, MDEF, SPD
     }
 
+    [Serializable]
     public class CharacterStats : IHasStats
     {
+        [SerializeField]
+        private int _chacterID;
         private BaseStats _baseStats;
         private readonly ModifierStat[] _currentStats;
         private readonly float[] _finalStats;
+
+        public int CharacterID
+        {
+            get => _chacterID;
+        }
 
         public BaseStats BaseStats
         {
@@ -34,6 +45,7 @@
 
         public void SetBaseData(BaseStats baseStats)
         {
+            _chacterID = baseStats.ID;
             _baseStats = baseStats;
             for (int i = 0; i < _baseStats.Stats.Length; i++)
             {

@@ -1,5 +1,6 @@
 ﻿using Chu.Collision;
 using Chu.Core;
+using Chu.Utility.Unity;
 using UnityEngine;
 
 namespace SAB.Unit.Combat
@@ -14,6 +15,7 @@ namespace SAB.Unit.Combat
 
         private NyanCollider _nyanCollider;
         private AttackContext _context;
+        private int _hostilityMask;
         private Vector3 _dir;
         private int _logicStep;
         private float _timer;
@@ -52,7 +54,7 @@ namespace SAB.Unit.Combat
 
             _timer += Time.deltaTime;
             transform.position += logics[_logicStep].Speed * Time.deltaTime * transform.forward;
-            _nyanCollider.SetTransform(transform.position, transform.eulerAngles.y);
+            _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,9 +72,10 @@ namespace SAB.Unit.Combat
             _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
         }
 
-        public void Setup(int instigator, AttackContext context)
+        public void Setup(int instigator, AttackContext context, int hostilityMask)
         {
             _context = context;
+            _hostilityMask = hostilityMask;
             _logicStep = 0;
             _nyanCollider.SetInstigatorID(instigator);
             _nyanCollider.SetLayer(_layer, _context.Mask);
@@ -100,18 +103,18 @@ namespace SAB.Unit.Combat
             _dir = dir;
             _timer = 0f;
             transform.rotation = Quaternion.LookRotation(_dir);
-            _nyanCollider.SetTransform(start, transform.eulerAngles.y);
+            _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
         }
 
         public void OnNyanCollisionEnter(INyanCollisionProvider provider)
         {
             if (((int)provider.Collider.Layer & Const.Layer_Unit) != 0)
             {
-                var acter = provider as IDefendable;
-                acter.Defend(_context, new HitResult(_logicStep));
+                if (provider is IDefendable acter == true && (_hostilityMask & (1 << (int)acter.FactionType)) != 0)
+                {
+                    acter.Defend(_context, new HitResult(_logicStep));
+                }
             }
-
-            Debug.Log(provider.Collider.Comment + " 충돌");
         }
 
         public void OnNyanCollisionExit(INyanCollisionProvider collider)

@@ -24,6 +24,8 @@ public class GameSceneTrigger : MonoBehaviour
 
     // Facade
     private GamePlayFacade _gamePlayFacade;
+    [SerializeField]
+    private WorldProfile _worldProfile;
 
     private void Awake()
     {
@@ -72,6 +74,7 @@ public class GameSceneTrigger : MonoBehaviour
     {
         InputManager.Instance.SetActive(true);
         _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>(), _uniqueEntity);
+        SkillObjectFactory.Instance.Init(_worldProfile.FactionTable);
     }
 
     private void InitInstance()
@@ -103,7 +106,7 @@ public class GameSceneTrigger : MonoBehaviour
         _player.Equip(armor as IHasEquipmentData);
         _player.Equip(shield as IHasEquipmentData);
 
-        var _npc = _unitController.GenerateCharacter(2, new Vector3(101, 0, 101), new CustomizingData(Gender.Male, 2, 1, 1, 1));
+        var _npc = _unitController.GenerateCharacter(10, new Vector3(101, 0, 101), new CustomizingData(Gender.Male, 2, 1, 1, 1));
         _unitController.BindRecevier(_npc, UnitController.Oner.AI, true);
 
         _topViewCam.StickCameraArm(_player.transform);

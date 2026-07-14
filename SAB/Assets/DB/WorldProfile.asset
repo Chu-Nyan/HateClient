@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: WorldProfile
   m_EditorClassIdentifier: Assembly-CSharp::WorldProfile
   FactionTable:
-    Factions:
+    _factions:
     - key: 0
       value:
-        FactionRelations: 0100000001000000ffffffffi
+        _factionRelations: 0000000001000000ffffffffi
     - key: 1
       value:
-        FactionRelations: 0100000001000000ffffffffi
+        _factionRelations: 0100000001000000ffffffffi
     - key: 2
       value:
-        FactionRelations: ffffffffffffffff00000000i
+        _factionRelations: ffffffffffffffff00000000i

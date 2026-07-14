@@ -10,11 +10,18 @@ namespace SAB.Unit.Combat
     public class SkillObjectFactory : Singleton<SkillObjectFactory>
     {
         private SkillObject _new;
+        private FactionTable _factionTable;
+
+        public void Init(FactionTable faction)
+        {
+            _factionTable = faction;
+        }
 
         public SkillObjectFactory Set(int instigator, AttackContext context, Vector3 start, Vector3 dir)
         {
             _new = AssetManager.GenerateLoadAssetSync<SkillObject>("Projectile");
-            _new.Setup(instigator, context);
+            _new.Setup(instigator, context, _factionTable[context.Faction].HostilityMask);
+
             _new.SetTarget(start, dir);
             _new.SetActive(true);
             return this;

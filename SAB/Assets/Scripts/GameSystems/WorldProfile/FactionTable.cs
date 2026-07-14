@@ -6,11 +6,16 @@ using UnityEngine;
 public class FactionTable
 {
     [SerializeField]
-    public Dictionary<FactionType, Faction> Factions;
+    private Dictionary<FactionType, Faction> _factions;
+
+    public Faction this[FactionType type]
+    {
+        get => _factions[type];
+    }
 
     public FactionTable()
     {
-        Factions = new();
+        _factions = new();
         UpdateFaction();
     }
 
@@ -20,23 +25,29 @@ public class FactionTable
 
         foreach (var type in factionList)
         {
-            if (Factions.TryGetValue(type, out var faction) == false)
+            if (_factions.TryGetValue(type, out var faction) == false)
             {
-                faction = new();
-                Factions.Add(type, faction);
+                faction = new(factionList.Length);
+                _factions.Add(type, faction);
             }
 
-            var old = faction.FactionRelations;
-            faction.FactionRelations = new FactionRelation[factionList.Length];
+            var old = faction;
+            faction = new(factionList.Length);
 
             if (old != null)
-                Array.Copy(old, faction.FactionRelations, Math.Min(old.Length, faction.FactionRelations.Length));
+            {
+                int index = Math.Min(old.Count, faction.Count);
+                for (int i = 0; i < index; i++)
+                {
+                    faction.SetRelation((FactionType)i, old[i]);
+                }
+            }
         }
     }
 
     public void SetRelation(FactionType a, FactionType b, FactionRelation state)
     {
-        Factions[a].FactionRelations[(int)b] = state;
-        Factions[b].FactionRelations[(int)a] = state;
+        _factions[a].SetRelation(b, state);
+        _factions[b].SetRelation(a, state);
     }
 }

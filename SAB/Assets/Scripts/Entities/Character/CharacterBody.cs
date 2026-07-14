@@ -14,6 +14,11 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
         get => _collider;
     }
 
+    public FactionType FactionType
+    {
+        get => _hitReceiver.FactionType;
+    }
+
     public CharacterBody(int instigatorID, Vector2 pos, float euler, IDefendable hitReceiver)
     {
         _hitReceiver = hitReceiver;

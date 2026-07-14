@@ -20,7 +20,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private Transform _attackOrigin;
 
     private int _instanceID;
-
+    [SerializeField]
     private CharacterStats _stats;
     private StateContext _stateContext;
     private FSM<CharacterState, StateContext> _stateMachine;
@@ -60,15 +60,19 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         get => _combatSystem.SkillList;
     }
 
+    public FactionType FactionType
+    {
+        get => _stats.BaseStats.Faction;
+    }
+
     private void Awake()
     {
         _instanceID = UniqueIDProvider.Next();
 
-        _stats = new CharacterStats();
         _stateContext = new StateContext();
         _defenseSystem = new DefenseSystem();
         _combatSystem = new OffenseSystem(_instanceID, _attackOrigin);
-        _body = new(_instanceID, transform.position, transform.eulerAngles.y, this);
+        _body = new(_instanceID, transform.position.ToVector2XZ(), transform.eulerAngles.y, this);
         _equipmentSys = new();
         _animator = new CharacterAnimator(GetComponent<Animator>());
         _stateMachine = GenerateStateMachine();
@@ -114,6 +118,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _stats.SetBaseData(baseStats);
         var skill = SkillGenerator.Instance.GetSkill(1);
         _combatSystem.AddSkill(skill);
+        _combatSystem.SetFaction(baseStats.Faction);
     }
 
     public void SetDestination(Vector3 destination)
