@@ -13,9 +13,6 @@ namespace SAB.Cutscene
 {
     public class CutsceneController : MonoBehaviour
     {
-        private readonly static NyanLayer _layer = NyanLayer.TriggerZone;
-        private readonly static NyanLayerMask _mask = new(NyanLayer.PlayerUnit);
-
         [SerializeField]
         private PlayableDirector _director;
         [SerializeField]
@@ -93,7 +90,7 @@ namespace SAB.Cutscene
         {
             CollisionTrigger trigger = _pool.DequeueTrigger();
             IShape shape = ShapeParam.ConvertShape(data.TriggerZones);
-            trigger.Setup(shape, new Pose2D(data.Center, 0), _layer, _mask, true); // TODO : 컷씬 활성화 여부
+            trigger.Setup(shape, new Pose2D(data.Center, 0), true); // TODO : 컷씬 활성화 여부
             trigger.RegisterOnEntered(OnStarted);
 
             _mapTriggers.Add(trigger);

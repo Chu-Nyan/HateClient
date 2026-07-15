@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Chu.Data;
+﻿using Chu.Data;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -25,7 +25,7 @@ namespace Chu.Collision
         public void InitArray(int capacity)
         {
             // todo: 생성자로 빼기
-            _dirtyObjects = new (capacity);
+            _dirtyObjects = new(capacity);
             _candidateChecked = new(capacity);
             _collisionInfoQueue = new(capacity);
             _frameChecked = new(capacity);
@@ -92,6 +92,7 @@ namespace Chu.Collision
                 throw new System.Exception("콜라이더 중복 등록");
 
             collider.RegisterEnabled(OnShapeActivationChanged);
+            OnShapeActivationChanged(collider);
         }
 
         private void OnShapeActivationChanged(NyanCollider collider)

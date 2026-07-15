@@ -78,25 +78,16 @@ namespace Chu.Collision
             get => _comment;
         }
 
-        public NyanCollider(INyanCollisionProvider provider, int id, string comment = null)
+        public NyanCollider(int instanceID, INyanCollisionProvider provider, IShape shape, bool isActive, string comment)
         {
-            _shape = new CircleShape();
-            InstanceID = id;
-            _provider = provider;
             _insertedNodes = new(4);
             _contactIDs = new();
+
+            InstanceID = instanceID;
+            _provider = provider;
+            SetShape(shape);
+            SetActive(isActive);
             _comment = comment;
-        }
-
-        public void SetLayer(NyanLayer layer, NyanLayerMask mask)
-        {
-            _layer = layer;
-            _mask = mask;
-        }
-
-        public void SetInstigatorID(int id)
-        {
-            _instigatorID = id;
         }
 
         public void SetShape(IShape shape)
@@ -112,12 +103,21 @@ namespace Chu.Collision
             _shape = shape;
         }
 
+        public void SetLayer(NyanLayer layer, NyanLayerMask mask)
+        {
+            _layer = layer;
+            _mask = mask;
+        }
+
+        public void SetInstigatorID(int id)
+        {
+            _instigatorID = id;
+        }
+
         public void SetActive(bool value)
         {
             if (_isActive == value)
                 return;
-            if (_shape == null)
-                value = false;
 
             _isActive = value;
             EnabledChanged?.Invoke(this);

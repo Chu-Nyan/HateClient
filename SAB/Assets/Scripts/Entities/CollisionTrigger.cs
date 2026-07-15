@@ -1,14 +1,12 @@
 ﻿using Chu.Collision;
-using Chu.Core;
 using Chu.Data;
+using Chu.Utility;
 using System;
 
 namespace SAB.Cutscene
 {
     public class CollisionTrigger : INyanCollisionProvider
     {
-        private static int _idCount = 1;
-
         public readonly int ID;
         private readonly NyanCollider _collider;
         private bool _isActive = false;
@@ -22,19 +20,13 @@ namespace SAB.Cutscene
 
         public CollisionTrigger()
         {
-            ID = _idCount;
-            _idCount++;
-
-            _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                 .GenerateCollider(this, $"ColliderTrigger {ID}")
-                 .SetInstigatorID(GetHashCode())
-                 .GetCollider(_isActive);
+            ID = UniqueIDProvider.Next();
+            _collider = GameColliderFactory.CreateCutsceneTrigger(this, ID);
         }
 
-        public void Setup(IShape shape, Pose2D pose2D, NyanLayer layer, NyanLayerMask mask, bool isActive)
+        public void Setup(IShape shape, Pose2D pose2D, bool isActive)
         {
             _collider.SetShape(shape);
-            _collider.SetLayer(layer, mask);
             _collider.SetTransform(pose2D);
             SetActive(isActive);
         }

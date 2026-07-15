@@ -1,5 +1,4 @@
 ﻿using Chu.Collision;
-using Chu.Core;
 using UnityEngine;
 
 namespace SAB.EntityAgent
@@ -32,13 +31,7 @@ namespace SAB.EntityAgent
                 var shape = new CircleShape();
                 shape.Setup(new CircleRangeData(Vector2.zero, 1));
                 var mask = new NyanLayerMask(NyanLayer.PlayerUnit, NyanLayer.NPCUnit);
-                _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                    .GenerateCollider(this, "전투 판정")
-                    .SetShape(shape)
-                    .SetLayer(NyanLayer.UnitSensor, mask)
-                    .SetInstigatorID(instigatorID)
-                    .GetCollider(true);
-
+                _collider = GameColliderFactory.CreateCombatModeArea(this, instigatorID);
                 _collider.SetActive(false);
             }
         }

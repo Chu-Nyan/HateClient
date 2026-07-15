@@ -1,11 +1,8 @@
 ﻿using Chu.Collision;
-using Chu.Core;
 using UnityEngine;
 
 public class CharacterBody : INyanCollisionProvider, IDefendable
 {
-    private const NyanLayer _npcLayer = NyanLayer.NPCUnit;
-
     private IDefendable _hitReceiver;
     private NyanCollider _collider;
 
@@ -19,18 +16,10 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
         get => _hitReceiver.FactionType;
     }
 
-    public CharacterBody(int instigatorID, Vector2 pos, float euler, IDefendable hitReceiver)
+    public CharacterBody(int instigatorID, Vector2 posXZ, float eulerY, IDefendable hitReceiver)
     {
         _hitReceiver = hitReceiver;
-        var mask = new NyanLayerMask(NyanLayer.Projectile, NyanLayer.UnitSensor);
-
-        _collider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-            .GenerateCollider(this, "캐릭터 바디")
-            .SetShape(new CircleShape(CircleRangeData.Default))
-            .SetTransform(pos, euler)
-            .SetLayer(_npcLayer, mask)
-            .SetInstigatorID(instigatorID)
-            .GetCollider(true);
+        _collider = GameColliderFactory.CreateCharacterBody(this, instigatorID.ToString(), new(posXZ, eulerY), instigatorID);
     }
 
     public void OnPositionChanged(Vector2 pos, float euler)
@@ -57,7 +46,7 @@ public class CharacterBody : INyanCollisionProvider, IDefendable
         if (isPlayer == true)
             maskNumber |= Const.Layer_AdditionalPlayerUnit;
 
-        NyanLayer layer = isPlayer == true ? NyanLayer.PlayerUnit : _npcLayer;
+        NyanLayer layer = isPlayer == true ? NyanLayer.PlayerUnit : NyanLayer.NPCUnit;
         _collider.SetLayer(layer, new NyanLayerMask(maskNumber));
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Chu.Collision;
-using Chu.Core;
 using Chu.Utility.Unity;
 using UnityEngine;
 
@@ -32,9 +31,7 @@ namespace SAB.Unit.Combat
 
         public void Awake()
         {
-            _nyanCollider = ChuEngine.Instance.GeneratorHub.NyanColliderGenerator
-                .GenerateCollider(this, $"스킬 투사체")
-                .GetCollider(true);
+            _nyanCollider = GameColliderFactory.CreateSkillProjectile(this, 0);
         }
 
         private void Update()
@@ -76,11 +73,12 @@ namespace SAB.Unit.Combat
         {
             _context = context;
             _hostilityMask = hostilityMask;
-            _logicStep = 0;
             _nyanCollider.SetInstigatorID(instigator);
             _nyanCollider.SetLayer(_layer, _context.Mask);
-
+            _logicStep = 0;
             ChangeShape(_logicStep);
+            _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
+            _nyanCollider.SetActive(true);
         }
 
         public void SetActive(bool value)

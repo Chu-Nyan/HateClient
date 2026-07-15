@@ -5,16 +5,16 @@ namespace Chu.Core
 {
     public class GeneratorHub : Singleton<GeneratorHub>
     {
-        public readonly NyanColliderGenerator NyanColliderGenerator;
+        private readonly NyanColliderFactory _nyanColliderGenerator;
 
         public GeneratorHub()
         {
-            NyanColliderGenerator = new();
+            _nyanColliderGenerator = new();
         }
 
         public void InitNyanColliderGenerator(NyanCollisonSystem system)
         {
-            NyanColliderGenerator.Init(system);
+            _nyanColliderGenerator.Init(system);
         }
     }
 }
