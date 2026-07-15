@@ -38,8 +38,8 @@ namespace Chu.Collision
             if (_instance == null)
                 throw new NullReferenceException();
 
-            NyanCollider collider = new(_instance._iDNumbering.GetID(), provider, shape, isActive, comment);
-            _instance._system.RegisterEntity(collider);
+            NyanCollider collider = new(_instance._iDNumbering.GetID(), shape, isActive, comment);
+            _instance._system.RegisterEntity(collider, provider);
 #if UNITY_EDITOR
             VerifyCollider(collider);
 #endif

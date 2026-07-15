@@ -11,7 +11,6 @@ namespace Chu.Collision
     public class NyanCollider : IQuadTreeEntity
     {
         public readonly int InstanceID;
-        private readonly INyanCollisionProvider _provider;
         private readonly HashSet<int> _insertedNodes;
         private readonly HashSet<int> _contactIDs;
 
@@ -27,11 +26,6 @@ namespace Chu.Collision
 
         private event Action<NyanCollider> PositionChanged;
         private event Action<NyanCollider> EnabledChanged;
-
-        public INyanCollisionProvider Provider
-        {
-            get => _provider;
-        }
 
         public int InstigatorID
         {
@@ -78,13 +72,12 @@ namespace Chu.Collision
             get => _comment;
         }
 
-        public NyanCollider(int instanceID, INyanCollisionProvider provider, IShape shape, bool isActive, string comment)
+        public NyanCollider(int instanceID, IShape shape, bool isActive, string comment)
         {
             _insertedNodes = new(4);
             _contactIDs = new();
 
             InstanceID = instanceID;
-            _provider = provider;
             SetShape(shape);
             SetActive(isActive);
             _comment = comment;
@@ -205,10 +198,6 @@ namespace Chu.Collision
         public bool IsValid(out string log)
         {
             var sb = new System.Text.StringBuilder();
-
-            if (_provider == null)
-                sb.AppendLine("Provider is null");
-
             log = sb.ToString();
             return sb.Length == 0;
         }

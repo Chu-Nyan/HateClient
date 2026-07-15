@@ -18,6 +18,7 @@ namespace Chu.Collision
         private HashSet<int> _candidateChecked;
         private Queue<CollisionInfo> _collisionInfoQueue;
         private Dictionary<int, NyanCollider> _collidersByID;
+        private Dictionary<int, INyanCollisionProvider> _providerByID;
 
         /// <summary>
         /// 배열의 초기 크기 지정
@@ -30,6 +31,7 @@ namespace Chu.Collision
             _collisionInfoQueue = new(capacity);
             _frameChecked = new(capacity);
             _collidersByID = new(capacity);
+            _providerByID = new(capacity);
         }
 
         /// <summary>
@@ -60,9 +62,9 @@ namespace Chu.Collision
             foreach (var info in _collisionInfoQueue)
             {
                 var primaryColider = _collidersByID[info.PrimaryID];
-                var primaryProvider = _collidersByID[info.PrimaryID].Provider;
+                var primaryProvider = _providerByID[info.PrimaryID];
                 var targetColider = _collidersByID[info.TargetID];
-                var targetProvider = _collidersByID[info.TargetID].Provider;
+                var targetProvider = _providerByID[info.TargetID];
 
                 if (info.State == CollisionState.Enter)
                 {
@@ -86,11 +88,12 @@ namespace Chu.Collision
         /// <summary>
         /// 물리 시스템에 객체 등록, 해제 불가
         /// </summary>
-        public void RegisterEntity(NyanCollider collider)
+        public void RegisterEntity(NyanCollider collider, INyanCollisionProvider provider)
         {
             if (_collidersByID.TryAdd(collider.InstanceID, collider) == false)
                 throw new System.Exception("콜라이더 중복 등록");
 
+            _providerByID.Add(collider.InstanceID, provider);
             collider.RegisterEnabled(OnShapeActivationChanged);
             OnShapeActivationChanged(collider);
         }
