@@ -24,6 +24,7 @@ public class TopViewCamera
     {
         _cameraArm.parent = transform;
         _cameraArm.transform.localPosition = Vector3.zero;
+        _camera.PreviousStateIsValid = false;
     }
 
     public void SetFollowTarget(Transform transform)
