@@ -1,4 +1,5 @@
 ﻿using SAB.Cutscene;
+using SAB.DataManger;
 using SAB.EntityAgent;
 
 public class CutsceneFacade
@@ -13,17 +14,15 @@ public class CutsceneFacade
         _agent = agent;
         _input = input;
 
-        cutscene.CutsceneStarted += Play;
         cutscene.CutsceneStopped += Stop;
     }
 
-    public void Play(int id)
+    public void Play(string name)
     {
+        var data = DataBase.Instance.CutSceneRepo.DataByName[name];
         _input.SetActive(false);
-        if (_cutscene.PlayCutsceneData.LockPlayer == true)
-        {
-            _agent.Player.SetActive(false);
-        }
+        _agent.Player.SetActive(!data.LockPlayer);
+        _cutscene.Play(data);
     }
 
     public void Stop(CutsceneData data)

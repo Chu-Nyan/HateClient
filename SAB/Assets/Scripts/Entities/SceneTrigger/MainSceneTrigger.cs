@@ -17,10 +17,12 @@ public class GameSceneTrigger : MonoBehaviour
     private TopViewCamera _topViewCam;
     private Character _player;
     private UnitController _unitController;
-    private CutsceneController _cutsceneDirector;
 
     private MapReferenceHub _currentMapReference;
     private UniqueEntityContainer _uniqueEntity;
+
+    private CutsceneMapTrigger _cutscenePlayer;
+    private CutsceneController _cutsceneDirector;
 
     // Facade
     private GamePlayFacade _gamePlayFacade;
@@ -33,11 +35,11 @@ public class GameSceneTrigger : MonoBehaviour
 
         GenerateStatic();
         GenerateInstance();
+        GenerateFacade();
 
         InitStatic();
         InitInstance();
 
-        InitFacade();
 
         StartCoroutine(ChangeMap(MapType.Forest));
     }
@@ -68,6 +70,7 @@ public class GameSceneTrigger : MonoBehaviour
         _topViewCam = new TopViewCamera();
         _uniqueEntity = new();
         _unitController = new(transform);
+        _cutscenePlayer = new();
     }
 
     private void InitStatic()
@@ -80,9 +83,10 @@ public class GameSceneTrigger : MonoBehaviour
     private void InitInstance()
     {
         _topViewCam.InitCamera(_topviewCam);
+        _cutscenePlayer.Init(_gamePlayFacade.Cutscene.Play);
     }
 
-    private void InitFacade()
+    private void GenerateFacade()
     {
         _gamePlayFacade = new(_cutsceneDirector, _unitController.AgentController);
     }
@@ -120,7 +124,10 @@ public class GameSceneTrigger : MonoBehaviour
 
         Scene loadedScene = SceneManager.GetSceneByName(sceneName);
         _currentMapReference = SetLoadMapReference(loadedScene);
-        _cutsceneDirector.ChangeMap(type, _currentMapReference);
+
+        var cutsceneData = DataBase.Instance.CutSceneRepo.DataByName;
+        _cutscenePlayer.SetupMap(type);
+        _cutsceneDirector.SetupMap(_currentMapReference);
         GameStart();
     }
 

@@ -7,12 +7,14 @@ namespace SAB.DataManger
 {
     public class CutSceneRepository
     {
-        public readonly Dictionary<MapType, CutsceneData[]> DataByMapType;
+        public readonly Dictionary<string, CutsceneData> DataByName;
+        public readonly Dictionary<MapType, string[]> CutsceneNameByMapType;
         public const string FileNameFormat = "{0}_Cutscene";
 
         public CutSceneRepository()
         {
-            DataByMapType = new();
+            CutsceneNameByMapType = new();
+            DataByName = new();
             foreach (MapType type in Enum.GetValues(typeof(MapType)))
             {
                 string json = AssetManager.LoadJson(string.Format(FileNameFormat, type.ToString()));
@@ -20,13 +22,13 @@ namespace SAB.DataManger
                 if (dataDtos == null)
                     throw new Exception($"{type} CutScene Data can't find");
 
-                var datas = new CutsceneData[dataDtos.Length];
+                CutsceneNameByMapType.Add(type, new string[dataDtos.Length]);
                 for (int i = 0; i < dataDtos.Length; i++)
                 {
-                    datas[i] = dataDtos[i].GetContainer();
+                    var data = dataDtos[i].GetContainer();
+                    DataByName.Add(data.Name, data);
+                    CutsceneNameByMapType[type][i] = data.Name;
                 }
-
-                DataByMapType.Add(type, datas);
             }
         }
     }

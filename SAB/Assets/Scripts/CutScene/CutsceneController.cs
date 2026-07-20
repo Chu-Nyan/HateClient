@@ -1,7 +1,4 @@
-﻿using Chu.Collision;
-using Chu.Core;
-using Chu.Data;
-using SAB.DataManger;
+﻿using Chu.Core;
 using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -22,28 +19,15 @@ namespace SAB.Cutscene
 
         private readonly CutscenePool _pool = new();
         // Map
-        private readonly List<CollisionTrigger> _mapTriggers = new(16);
-        private readonly Dictionary<int, CutsceneData> _dataByTriggerID = new();
-        private readonly Dictionary<int, ICutsceneObject> _sceneObject = new();
+        private readonly Dictionary<int, ICutsceneObject> _sceneObjectByID = new();
         private UniqueEntityContainer _uniqueEntity;
 
         // Cutscene in progress
-        private int _playID;
+        private CutsceneData _cutsceneData;
         private readonly Dictionary<string, TrackAsset> _trackByName = new();
         private readonly Dictionary<int, ICutsceneObject> _objectByID = new();
 
-        public event Action<int> CutsceneStarted;
         public event Action<CutsceneData> CutsceneStopped;
-
-        public int PlayID
-        {
-            get => _playID;
-        }
-
-        public CutsceneData PlayCutsceneData
-        {
-            get => _dataByTriggerID[_playID];
-        }
 
         private void Awake()
         {
@@ -60,63 +44,29 @@ namespace SAB.Cutscene
             _uniqueEntity = uniqueEntity;
         }
 
-        public void ChangeMap(MapType type, MapReferenceHub hub)
+        public void SetupMap(MapReferenceHub hub)
         {
-            if (DataBase.Instance.CutSceneRepo.DataByMapType.TryGetValue(type, out CutsceneData[] datas) == false)
+            _sceneObjectByID.Clear();
+            foreach (var item in hub.Characters)
             {
-                Debug.LogError($"{type} cutscene data is null");
-            }
-            else
-            {
-                SetupMap(datas);
-                foreach (var item in hub.Characters)
-                {
-                    _sceneObject.Add(item.Key, item.Value);
-                }
+                _sceneObjectByID.Add(item.Key, item.Value);
             }
         }
 
-        private void SetupMap(CutsceneData[] datas)
+        public void Play(CutsceneData data)
         {
-            MapClear();
-            for (int i = 0; i < datas.Length; i++)
-            {
-                var data = datas[i];
-                GenerateCutsceneTrigger(data);
-            }
-        }
-
-        private void GenerateCutsceneTrigger(CutsceneData data)
-        {
-            CollisionTrigger trigger = _pool.DequeueTrigger();
-            IShape shape = ShapeParam.ConvertShape(data.TriggerZones);
-            trigger.Setup(shape, new Pose2D(data.Center, 0), true); // TODO : 컷씬 활성화 여부
-            trigger.RegisterOnEntered(OnStarted);
-
-            _mapTriggers.Add(trigger);
-            _dataByTriggerID.Add(trigger.ID, data);
-        }
-
-        public void Ready(int cutsceneID)
-        {
-            _playID = cutsceneID;
+            _cutsceneData = data;
             ClearPlayingCutscene();
-
-            CutsceneData data = _dataByTriggerID[cutsceneID];
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
             _director.playableAsset = playableAsset;
             CacheTracks(playableAsset);
             PrepareCutsceneObject(data);
             BindingTrack(data);
-        }
 
-        public void Play()
-        {
             _director.RebuildGraph();
             _director.time = 0;
             _director.Evaluate();
             _director.Play();
-            Debug.Log("Play");
         }
 
         private void CacheTracks(PlayableAsset playable)
@@ -193,7 +143,7 @@ namespace SAB.Cutscene
             }
         }
 
-        private void ClearPlayingCutscene()
+        public void ClearPlayingCutscene()
         {
             if (_trackByName.Count == 0)
                 return;
@@ -208,29 +158,10 @@ namespace SAB.Cutscene
             _trackByName.Clear();
         }
 
-        private void MapClear()
-        {
-            _dataByTriggerID.Clear();
-
-            for (int i = 0; i < _mapTriggers.Count; i++)
-            {
-                _mapTriggers[i].SetActive(false);
-                _pool.EnqueueTrigger(_mapTriggers[i]);
-            }
-            _mapTriggers.Clear();
-        }
-
-        private void OnStarted(int id)
-        {
-            Ready(id);
-            CutsceneStarted?.Invoke(id);
-            Play();
-        }
-
         private void OnTimelineStopped(PlayableDirector director)
         {
             ClearPlayingCutscene();
-            CutsceneStopped?.Invoke(PlayCutsceneData);
+            CutsceneStopped?.Invoke(_cutsceneData);
         }
 
         private ICutsceneObject GetObject(CutsceneData data, int id)
@@ -238,7 +169,7 @@ namespace SAB.Cutscene
             return data.BindingSourceByID[id] switch
             {
                 BindingSource.Spawn => _objectByID[id],
-                BindingSource.SceneObject => _sceneObject[data.SceneObjectBindingIDs[id]],
+                BindingSource.SceneObject => _sceneObjectByID[data.SceneObjectBindingIDs[id]],
                 BindingSource.Slot => (ICutsceneObject)_uniqueEntity.GetEntity(data.BindingSlots[id]),
                 _ => throw new System.Exception(),
             };
@@ -256,8 +187,8 @@ namespace SAB.Cutscene
 
         private void ShowDialog(DialogMarker marker)
         {
-            var id = PlayCutsceneData.BindingIDByTrack[marker.SpeakerTrack];
-            if (TryGetPlayObject(PlayCutsceneData, id, out var obj) == true)
+            var id = _cutsceneData.BindingIDByTrack[marker.SpeakerTrack];
+            if (TryGetPlayObject(_cutsceneData, id, out var obj) == true)
             {
                 if (obj is ISpeachable able)
                 {

@@ -8,7 +8,6 @@ namespace SAB.Cutscene
 {
     public class CutscenePool
     {
-        private readonly ObjectPooling<CollisionTrigger> _triggerPool;
         private readonly Dictionary<Type, ObjectPooling<ICutsceneObject>> _objPool;
         private readonly Dictionary<Type, Func<ICutscenePreset, ICutsceneObject>> _dequeue;
         private readonly Dictionary<Type, Action<ICutsceneObject>> _enqueue;
@@ -16,7 +15,6 @@ namespace SAB.Cutscene
 
         public CutscenePool()
         {
-            _triggerPool = new(() => new CollisionTrigger());
             _objPool = new()
             {
                 { typeof(VCamStatic), new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(Const.Asset_VCamStatic), a => a.SetActive(true))},
@@ -41,16 +39,6 @@ namespace SAB.Cutscene
                 { typeof(SingleMeshData), typeof(SingleMesh) },
                 { typeof(SpawnRequest), typeof(Character) },
             };
-        }
-
-        public CollisionTrigger DequeueTrigger()
-        {
-            return _triggerPool.Dequeue();
-        }
-
-        public void EnqueueTrigger(CollisionTrigger trigger)
-        {
-            _triggerPool.Enqueue(trigger);
         }
 
         public ICutsceneObject DequeueObject(ICutscenePreset config)
