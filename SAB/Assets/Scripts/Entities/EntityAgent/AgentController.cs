@@ -36,11 +36,14 @@ namespace SAB.EntityAgent
             }
         }
 
-        public void BindReceiver(IInputReceiver receiver, UnitController.Oner oner)
+        public void BindReceiver(IInputReceiver receiver, BrainType type)
         {
+            if (type == BrainType.None)
+                return;
+
             Agent handler;
 
-            if (oner == UnitController.Oner.Player)
+            if (type == BrainType.Player)
             {
                 handler = _agents[_playerAgentID];
             }

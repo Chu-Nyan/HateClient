@@ -1,7 +1,7 @@
 ﻿namespace SAB.EntityAgent
 {
-    public enum BrainType 
+    public enum BrainType
     {
-        Player, AI
+        None, Player, AI
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Chu.Core;
 using Chu.Utility;
+using SAB.EntityAgent;
 using SAB.Unit;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace SAB.Cutscene
 
             _enqueue = new()
             {
-                { typeof(Character), (a) => CharacterGenerator.Instance.Enqueue((Character)a) }
+                { typeof(Character), (a) => CharacterFactory.Instance.Enqueue((Character)a) }
             };
 
             _dataTypeByObjectType = new()
@@ -57,10 +58,7 @@ namespace SAB.Cutscene
         private ICutsceneObject GetCharacter(ICutscenePreset data)
         {
             SpawnRequest request = (SpawnRequest)data;
-            return CharacterGenerator.Instance.Ready(request.Position)
-                .SetData(request.ID)
-                .SetCustomizing(request.ID)
-                .Release();
+            return CharacterFactory.Instance.Create(BrainType.None, request.ID, request.Position);
         }
 
         public void EnqueueObject(ICutsceneObject config)

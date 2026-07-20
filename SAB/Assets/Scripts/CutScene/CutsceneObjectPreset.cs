@@ -13,6 +13,8 @@ namespace SAB.Cutscene
         public const string _vcam = "VCam";
         public const string _vcamFollow = "VCamFollow";
         public const string _npcID = "NPCID";
+        public const string _isRemain = "IsRemain";
+        public const string _aiType = "AIType";
         public const string _bindingObject = "Binding Object";
         public const string _bindingSlot = "Binding Slot";
 
@@ -60,6 +62,8 @@ namespace SAB.Cutscene
             else if (Type == CutsceneObjectType.Character)
             {
                 TryAddParam(_npcID, 0);
+                TryAddParam(_isRemain, false);
+                TryAddParam(_aiType, 1);
             }
 
             if (BindingSource == BindingSource.SceneObject)

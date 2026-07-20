@@ -1,6 +1,7 @@
 using Chu.Core;
 using SAB.Cutscene;
 using SAB.DataManger;
+using SAB.EntityAgent;
 using SAB.EntityAgent.AI;
 using SAB.Facade;
 using SAB.Item;
@@ -15,13 +16,12 @@ public class GameSceneTrigger : MonoBehaviour
     [SerializeField]
     private GameObject _topviewCam;
     private TopViewCamera _topViewCam;
-    private Character _player;
-    private UnitController _unitController;
 
     private MapReferenceHub _currentMapReference;
     private UniqueEntityContainer _uniqueEntity;
 
     private CutsceneMapTrigger _cutscenePlayer;
+    private AgentController _agentController;
     private CutsceneController _cutsceneDirector;
 
     // Facade
@@ -57,7 +57,7 @@ public class GameSceneTrigger : MonoBehaviour
 
         new AIGenerator();
         new SkillObjectFactory();
-        new CharacterGenerator(DataBase.Instance);
+        new CharacterFactory(DataBase.Instance);
         new SkillGenerator(DataBase.Instance);
         new ItemFactory(DataBase.Instance);
         new UIManager();
@@ -69,8 +69,8 @@ public class GameSceneTrigger : MonoBehaviour
     {
         _topViewCam = new TopViewCamera();
         _uniqueEntity = new();
-        _unitController = new(transform);
         _cutscenePlayer = new();
+        _agentController = gameObject.AddComponent<AgentController>();
     }
 
     private void InitStatic()
@@ -78,6 +78,7 @@ public class GameSceneTrigger : MonoBehaviour
         InputManager.Instance.SetActive(true);
         _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>(), _uniqueEntity);
         SkillObjectFactory.Instance.Init(_worldProfile.FactionTable);
+        CharacterFactory.Instance.Init(_agentController, _uniqueEntity);
     }
 
     private void InitInstance()
@@ -88,7 +89,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void GenerateFacade()
     {
-        _gamePlayFacade = new(_cutsceneDirector, _unitController.AgentController);
+        _gamePlayFacade = new(_cutsceneDirector, _agentController);
     }
 
     private void GameStart()
@@ -98,22 +99,18 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void SetPracticeScene()
     {
-        _player = _unitController.GenerateCharacter(1, new Vector3(100, 0, 100), new CustomizingData(Gender.Male, 1, 1, 1, 1));
-        _uniqueEntity.SetUniqueEntity(UniqueEntityType.Player, _player);
-        _unitController.BindRecevier(_player, UnitController.Oner.Player, true);
+        var player = CharacterFactory.Instance.Create(BrainType.Player, 1, new Vector3(100, 0, 100), UniqueEntityType.Player);
 
         var weapon = ItemFactory.Instance.GenerateItem(1);
         var armor = ItemFactory.Instance.GenerateItem(7);
         var shield = ItemFactory.Instance.GenerateItem(16);
 
-        _player.Equip(weapon as IHasEquipmentData);
-        _player.Equip(armor as IHasEquipmentData);
-        _player.Equip(shield as IHasEquipmentData);
+        player.Equip(weapon as IHasEquipmentData);
+        player.Equip(armor as IHasEquipmentData);
+        player.Equip(shield as IHasEquipmentData);
 
-        var _npc = _unitController.GenerateCharacter(10, new Vector3(101, 0, 101), new CustomizingData(Gender.Male, 2, 1, 1, 1));
-        _unitController.BindRecevier(_npc, UnitController.Oner.AI, true);
-
-        _topViewCam.StickCameraArm(_player.transform);
+        var _npc = CharacterFactory.Instance.Create(BrainType.AI, 10, new Vector3(101, 0, 101));
+        _topViewCam.StickCameraArm(player.transform);
     }
 
     private IEnumerator ChangeMap(MapType type)
