@@ -1,5 +1,6 @@
 ﻿using Chu.Collision;
 using Chu.Data;
+using Chu.Tools;
 using Chu.Utility;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Chu.Core
             _hub = new GeneratorHub();
             _objectPool = new GlobalObjectPool();
 
-            var json = AssetManager.ExternalFolder.GetLanguagesTextFile(language);
+            var json = ExternalFolderHandler.GetLanguagesTextFile(language);
             _textResource.LoadTexts(JsonConvert.DeserializeObject<Dictionary<string, string>>(json));
         }
 

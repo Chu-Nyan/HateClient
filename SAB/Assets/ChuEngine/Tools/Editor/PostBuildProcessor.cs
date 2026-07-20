@@ -1,5 +1,4 @@
-﻿using Chu.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -19,7 +18,7 @@ namespace Chu.Tools
         {
             var outputPath = Path.GetDirectoryName(report.summary.outputPath);
             outputPath = Path.Combine(outputPath, "External_Data");
-            var sourcePath = AssetManager.ExternalFolder.ExternalFolder;
+            var sourcePath = ExternalFolderHandler.ExternalFolder;
 
             CopyFolder(outputPath, sourcePath);
         }

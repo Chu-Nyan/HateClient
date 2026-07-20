@@ -1,5 +1,4 @@
-﻿using Chu.Tools;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.U2D;
@@ -8,8 +7,6 @@ namespace Chu.Core
 {
     public static class AssetManager
     {
-        public static readonly ExternalFolderHandler ExternalFolder = new();
-
         // 비동기 로드
         public static void LoadGameObject(string path)
         {
