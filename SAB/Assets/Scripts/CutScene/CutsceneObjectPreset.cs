@@ -2,6 +2,7 @@
 using Chu.Utility.Unity;
 using SAB.Unit;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace SAB.Cutscene
@@ -12,23 +13,17 @@ namespace SAB.Cutscene
         public const string _vcam = "VCam";
         public const string _vcamFollow = "VCamFollow";
         public const string _npcID = "NPCID";
+        public const string _bindingObject = "Binding Object";
+        public const string _bindingSlot = "Binding Slot";
 
         public CutsceneObjectType Type;
-        private int _objectID;
         public BindingSource BindingSource;
-        public GameObject BindingObject;
-        public UniqueEntityType BindingSlot;
-        [SerializeField]
-        private List<VariantParamPair> _variantParam;
+        public List<VariantParamPair> VariantParam;
 
         [SerializeField, HideInInspector]
         private CutsceneObjectType _prevType = CutsceneObjectType.SingleMesh;
-
-        public int ObjectID
-        {
-            get => _objectID;
-            set => _objectID = value;
-        }
+        [SerializeField, HideInInspector]
+        private BindingSource _prevSource = BindingSource.SceneObject;
 
         public Vector3 Position
         {
@@ -42,33 +37,42 @@ namespace SAB.Cutscene
 
         private void OnValidate()
         {
-            if (Type == _prevType)
+            if (_prevSource == BindingSource && _prevType == Type)
                 return;
+            if (VariantParam == null)
+                VariantParam = new();
 
-            _prevType = Type;
-
-            if (_variantParam == null)
-                _variantParam = new();
-            else
-                _variantParam.Clear();
+            VariantParam.Clear();
 
             if (Type == CutsceneObjectType.SingleMesh)
             {
-                _variantParam.Add(new VariantParamPair(_meshFilter, new VariantParam<MeshFilter>()));
+                TryAddParam(_meshFilter, GetComponent<MeshFilter>());
             }
             else if (Type == CutsceneObjectType.VCamFollow)
             {
-                _variantParam.Add(new VariantParamPair(_vcam, new VariantParam<Component>()));
-                _variantParam.Add(new VariantParamPair(_vcamFollow, new VariantParam<Component>()));
+                TryAddParam(_vcam, GetComponent<CinemachineCamera>());
+                TryAddParam(_vcamFollow, GetComponent<CinemachineFollow>());
             }
             else if (Type == CutsceneObjectType.VCamStatic)
             {
-                _variantParam.Add(new VariantParamPair(_vcam, new VariantParam<Component>()));
+                TryAddParam(_vcam, GetComponent<CinemachineCamera>());
             }
             else if (Type == CutsceneObjectType.Character)
             {
-                _variantParam.Add(new VariantParamPair(_npcID, new VariantParam<int>()));
+                TryAddParam(_npcID, 0);
             }
+
+            if (BindingSource == BindingSource.SceneObject)
+            {
+                TryAddParam<GameObject>(_bindingObject, null);
+            }
+            else if (BindingSource == BindingSource.Slot)
+            {
+                TryAddParam(_bindingSlot, UniqueEntityType.Player);
+            }
+
+            _prevType = Type;
+            _prevSource = BindingSource;
         }
 
         public ICutscenePreset GetCutsceneObjectData(CutsceneJsonConverter idHandler)
@@ -102,9 +106,9 @@ namespace SAB.Cutscene
             throw new System.Exception($"{gameObject.name}: is not {Type}");
         }
 
-        private T GetVariantParam<T>(string key)
+        public T GetVariantParam<T>(string key)
         {
-            foreach (var item in _variantParam)
+            foreach (var item in VariantParam)
             {
                 if (item.Key != key)
                     continue;
@@ -118,11 +122,32 @@ namespace SAB.Cutscene
             throw new System.Exception($"{gameObject.name}: {key} not found");
         }
 
+        private void TryAddParam<T>(string key, T value)
+        {
+            if (Contains(key) == true)
+                return;
+
+            VariantParam.Add(new VariantParamPair(key, new VariantParam<T>(value)));
+        }
+
+        private bool Contains(string key)
+        {
+            foreach (var item in VariantParam)
+            {
+                if (item.Key == key)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         [ContextMenu("Print Data Log")]
         public void PrintDebugLog()
         {
             string log = "";
-            foreach (var item in _variantParam)
+            foreach (var item in VariantParam)
             {
                 log += $"{item.Key} : {item.Param}";
             }

@@ -97,7 +97,7 @@ namespace SAB.Cutscene
                 BindingSourceByID.Add(id, cutsceneObj.BindingSource);
 
                 if (cutsceneObj.BindingSource == BindingSource.Slot)
-                    BindingSlots.Add(id, cutsceneObj.BindingSlot);
+                    BindingSlots.Add(id, cutsceneObj.GetVariantParam<UniqueEntityType>(CutsceneObjectPreset._bindingSlot));
                 else if (cutsceneObj.BindingSource == BindingSource.Spawn)
                     AddObjectData(id, cutsceneObj, idHandler);
             }

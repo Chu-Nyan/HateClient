@@ -5,11 +5,18 @@ namespace Chu.Data
     [Serializable]
     public class VariantParam<T> : IVariantParam
     {
-        public T value;
+        public T Value;
+
+        public VariantParam() { }
+
+        public VariantParam(T value)
+        {
+            Value = value;
+        }
 
         public object GetValue()
         {
-            return value;
+            return Value;
         }
     }
 }
