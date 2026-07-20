@@ -3,24 +3,19 @@ using UnityEngine;
 
 namespace Chu.Tools
 {
-    public class ExternalFolderHandler
+    public static class ExternalFolderHandler
     {
 #if UNITY_EDITOR
-        public readonly string ExternalFolder = Path.Combine(Application.dataPath, "ChuEngine/Settings", ExternalFolderName);
+        public static readonly string ExternalFolder = Path.Combine(Application.dataPath, "ChuEngine/Settings", ExternalFolderName);
 #elif UNITY_IOS || UNITY_ANDROID
-    public readonly string ExternalFolder = Application.persistentDataPath;
+    public static readonly string ExternalFolder = Application.persistentDataPath;
 #else
-    public readonly string ExternalFolder = Path.Combine(Directory.GetParent(Application.dataPath)?.FullName, ExternalFolderName);
+    public static readonly string ExternalFolder = Path.Combine(Directory.GetParent(Application.dataPath)?.FullName, ExternalFolderName);
 #endif
-        private const string ExternalFolderName = "External_Data";
-        private const string LanguagesFolder = "Languages";
+        public const string ExternalFolderName = "External_Data";
+        public const string LanguagesFolder = "Languages";
 
-        public void ChangeFont()
-        {
-            //TODO
-        }
-
-        public string GetLanguagesTextFile(string name)
+        public static string GetLanguagesTextFile(string name)
         {
             name = Path.Combine(ExternalFolder, LanguagesFolder, $"{name}.json");
             return File.ReadAllText(name);
