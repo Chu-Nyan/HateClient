@@ -206,6 +206,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         gameObject.SetActive(value);
     }
 
+    public void SetActiveAnimator(bool value)
+    {
+
+    }
+
     public void RegisterDeactivated(Action<Character> callback)
     {
         Deactivated += callback;

@@ -70,5 +70,116 @@
     },
     "CharacterData": {},
     "SingleMeshData": {}
+  },
+  {
+    "Name": "CH01_02_Boss",
+    "AssetPath": "CH01_02_Boss",
+    "CenterX": 108.8,
+    "CenterY": 162.7,
+    "LockPlayer": true,
+    "TriggerZones": [
+      {
+        "Type": 0,
+        "OffsetX": 0.0,
+        "OffsetY": 0.0,
+        "Param1": 30.21,
+        "Param2": 10.0
+      }
+    ],
+    "BindingIDByTrack": {
+      "VCamFollow_Cutscene": 6,
+      "VCamStatic_Cutscene (1)": 8,
+      "VCamStatic_Cutscene": 9,
+      "Animation Track (1)": 7,
+      "Animation Track (2)": 10,
+      "Activation Track": 10
+    },
+    "BindingSourceByID": {
+      "6": 0,
+      "8": 0,
+      "9": 0,
+      "7": 0,
+      "10": 0
+    },
+    "BindingSlots": {},
+    "SceneObjectBindingIDs": {},
+    "StaticData": {
+      "8": {
+        "Position": {
+          "x": 106.498993,
+          "y": 3.33372879,
+          "z": 179.389084
+        },
+        "Rotation": {
+          "x": -0.307866931,
+          "y": -0.06872021,
+          "z": 0.0224173125,
+          "w": -0.948679566
+        },
+        "POV": 40.0
+      },
+      "9": {
+        "Position": {
+          "x": 107.0158,
+          "y": 0.91,
+          "z": 180.042664
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "POV": 40.0
+      }
+    },
+    "FollowData": {
+      "6": {
+        "Rotation": {
+          "x": 0.04936699,
+          "y": -0.665715933,
+          "z": 0.0442167632,
+          "w": 0.7432565
+        },
+        "POV": 40.0,
+        "TargetID": 7,
+        "FollowOffset": {
+          "x": 1.48,
+          "y": 0.35,
+          "z": -0.17
+        }
+      }
+    },
+    "CharacterData": {
+      "7": {
+        "ID": 10,
+        "Position": {
+          "x": 107.060005,
+          "y": 0.0,
+          "z": 185.28
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.99963063,
+          "z": 0.0,
+          "w": -0.0271781459
+        }
+      },
+      "10": {
+        "ID": 3,
+        "Position": {
+          "x": 107.0158,
+          "y": 0.0,
+          "z": 182.032654
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      }
+    },
+    "SingleMeshData": {}
   }
 ]

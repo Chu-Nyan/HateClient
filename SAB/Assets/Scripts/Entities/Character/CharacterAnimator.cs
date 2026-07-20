@@ -10,6 +10,8 @@ public class CharacterAnimator
     private readonly AnimatorHelper<AniParamator, AniState> _animator;
     private readonly Dictionary<WeaponStance, RuntimeAnimatorController> _animatorByWeaponType;
 
+    private bool _isActive = true;
+
     public CharacterAnimator(Animator animator)
     {
         var clipData = new Dictionary<AniParamator, string>()
@@ -39,6 +41,9 @@ public class CharacterAnimator
 
     public void Tick(StateContext data, float moveSpd)
     {
+        if (_isActive == false)
+            return;
+
         AnimatorStateInfo info = _animator.GetCurrentStateInfo();
         AniState currentState = _animator.GetStateHash(info.shortNameHash);
 
@@ -49,6 +54,11 @@ public class CharacterAnimator
         }
 
         _animator.Tick();
+    }
+
+    public void SetActive(bool value)
+    {
+        _isActive = value;
     }
 
     public void RegisterAnimationEvent(AniState state, string id, AniEventData data, float timeing, Action<AniEventData> action)

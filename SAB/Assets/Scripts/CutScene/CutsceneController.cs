@@ -178,7 +178,7 @@ namespace SAB.Cutscene
                 else if (track is AnimationTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, ((SingleMesh)GetObject(cutsceneData, id)).Animator);
+                    _director.SetGenericBinding(track, (GetObject(cutsceneData, id).transform.GetComponent<Animator>()));
                 }
                 else if (track is ActivationTrack)
                 {

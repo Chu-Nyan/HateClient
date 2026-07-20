@@ -89,6 +89,9 @@ namespace SAB.Cutscene
 
         public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler)
         {
+            if (BindingSourceByID.ContainsKey(id) == true)
+                return;
+
             if (obj.TryGetComponent<CutsceneObjectPreset>(out var cutsceneObj) == true)
             {
                 BindingSourceByID.Add(id, cutsceneObj.BindingSource);
