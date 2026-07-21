@@ -18,7 +18,7 @@ public class GameSceneTrigger : MonoBehaviour
     private TopViewCamera _topViewCam;
 
     private MapReferenceHub _currentMapReference;
-    private UniqueEntityContainer _uniqueEntity;
+    private EntityContainer _entityContainer;
 
     private CutsceneMapTrigger _cutscenePlayer;
     private AgentController _agentController;
@@ -68,7 +68,7 @@ public class GameSceneTrigger : MonoBehaviour
     private void GenerateInstance()
     {
         _topViewCam = new TopViewCamera();
-        _uniqueEntity = new();
+        _entityContainer = new();
         _cutscenePlayer = new();
         _agentController = gameObject.AddComponent<AgentController>();
     }
@@ -76,9 +76,9 @@ public class GameSceneTrigger : MonoBehaviour
     private void InitStatic()
     {
         InputManager.Instance.SetActive(true);
-        _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>(), _uniqueEntity);
+        _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>());
         SkillObjectFactory.Instance.Init(_worldProfile.FactionTable);
-        CharacterFactory.Instance.Init(_agentController, _uniqueEntity);
+        CharacterFactory.Instance.Init(_agentController, _entityContainer);
     }
 
     private void InitInstance()
@@ -89,7 +89,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void GenerateFacade()
     {
-        _gamePlayFacade = new(_cutsceneDirector, _agentController);
+        _gamePlayFacade = new(_cutsceneDirector, _agentController, _entityContainer);
     }
 
     private void GameStart()
@@ -121,10 +121,8 @@ public class GameSceneTrigger : MonoBehaviour
 
         Scene loadedScene = SceneManager.GetSceneByName(sceneName);
         _currentMapReference = SetLoadMapReference(loadedScene);
-
-        var cutsceneData = DataBase.Instance.CutSceneRepo.DataByName;
+        _currentMapReference.InitObject();
         _cutscenePlayer.SetupMap(type);
-        _cutsceneDirector.SetupMap(_currentMapReference);
         GameStart();
     }
 

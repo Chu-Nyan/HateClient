@@ -2,13 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UniqueEntityContainer
+public class EntityContainer
 {
     private readonly Dictionary<UniqueEntityType, MonoBehaviour> _objectByUniqueType;
+    private readonly Dictionary<int, Character> _character;
+    public readonly Dictionary<string, MonoBehaviour> ObjectByFavorite;
 
-    public UniqueEntityContainer()
+    public Dictionary<int, Character> Character
     {
+        get => _character;
+    }
+
+    public EntityContainer()
+    {
+        _character = new();
         _objectByUniqueType = new();
+        ObjectByFavorite = new(0);
     }
 
     public void SetUniqueEntity(UniqueEntityType type, MonoBehaviour obj, bool isOverwrite = true)
@@ -19,7 +28,7 @@ public class UniqueEntityContainer
             _objectByUniqueType.TryAdd(type, obj);
     }
 
-    public MonoBehaviour GetEntity(UniqueEntityType type)
+    public MonoBehaviour GetUniqueEntity(UniqueEntityType type)
     {
         return _objectByUniqueType[type];
     }

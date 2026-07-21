@@ -13,13 +13,13 @@ namespace SAB.Cutscene
         public const string _vcam = "VCam";
         public const string _vcamFollow = "VCamFollow";
         public const string _npcID = "NPCID";
-        public const string _isRemain = "IsRemain";
         public const string _aiType = "AIType";
         public const string _bindingObject = "Binding Object";
         public const string _bindingSlot = "Binding Slot";
 
         public CutsceneObjectType Type;
         public BindingSource BindingSource;
+        public bool IsPersistent;
         public List<VariantParamPair> VariantParam;
 
         [SerializeField, HideInInspector]
@@ -62,7 +62,6 @@ namespace SAB.Cutscene
             else if (Type == CutsceneObjectType.Character)
             {
                 TryAddParam(_npcID, 0);
-                TryAddParam(_isRemain, false);
                 TryAddParam(_aiType, 1);
             }
 
@@ -124,6 +123,20 @@ namespace SAB.Cutscene
             }
 
             throw new System.Exception($"{gameObject.name}: {key} not found");
+        }
+
+        public bool TryGetVariantParam<T>(string key, out T param)
+        {
+            param = default;
+            foreach (var item in VariantParam)
+            {
+                if (item.Key == key)
+                {
+                    param = (T)item.Param;
+                }
+            }
+
+            return param.Equals(default) == false;
         }
 
         private void TryAddParam<T>(string key, T value)

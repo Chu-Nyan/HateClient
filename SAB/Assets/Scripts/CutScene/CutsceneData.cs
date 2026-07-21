@@ -18,6 +18,7 @@ namespace SAB.Cutscene
         public Dictionary<int, UniqueEntityType> BindingSlots;
         public Dictionary<int, int> SceneObjectBindingIDs;
         public SpawnDataContainer SpawnContainer;
+        public HashSet<int> PersistentObjects;
 
         [JsonIgnore]
         public Vector2 Center

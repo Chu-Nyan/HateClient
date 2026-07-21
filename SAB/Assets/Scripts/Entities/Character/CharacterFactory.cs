@@ -14,7 +14,7 @@ public class CharacterFactory : Singleton<CharacterFactory>
 
     private readonly ObjectPooling<Character> _pool;
     private AgentController _agentController;
-    private UniqueEntityContainer _entityContainer;
+    private EntityContainer _entityContainer;
 
     public CharacterFactory(DataBase db)
     {
@@ -26,7 +26,7 @@ public class CharacterFactory : Singleton<CharacterFactory>
         });
     }
 
-    public void Init(AgentController agent, UniqueEntityContainer container)
+    public void Init(AgentController agent, EntityContainer container)
     {
         _agentController = agent;
         _entityContainer = container;
@@ -35,11 +35,15 @@ public class CharacterFactory : Singleton<CharacterFactory>
     public Character Create(BrainType type, int unitID, Vector3 respawn)
     {
         var acter = _pool.Dequeue();
-        acter.SetPositionWithNavMash(respawn);
-        acter.SetupStats(_unitDatas[unitID]);
-        SetCustomizing(acter, unitID);
+        InitCharacter(acter, type, unitID, respawn);
+        return acter;
+    }
 
-        _agentController.BindReceiver(acter, type);
+    public Character Create(BrainType type, int unitID, Vector3 respawn, int favoriteID)
+    {
+        var acter = _pool.Dequeue();
+        InitCharacter(acter, type, unitID, respawn);
+        _entityContainer.ObjectByFavorite.Add(favoriteID.ToString(), acter);
         return acter;
     }
 
@@ -48,6 +52,22 @@ public class CharacterFactory : Singleton<CharacterFactory>
         var acter = Create(type, unitID, respawn);
         _entityContainer.SetUniqueEntity(uniqueType, acter);
         return acter;
+    }
+
+    private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 respawn)
+    {
+        acter.SetPositionWithNavMash(respawn);
+        acter.SetupStats(_unitDatas[unitID]);
+        SetCustomizing(acter, unitID);
+
+        _agentController.BindReceiver(acter, type);
+        _entityContainer.Character.Add(acter.InstanceID, acter);
+    }
+
+    public void LateInitialize(Character acter, int favoriteID)
+    {
+        InitCharacter(acter, BrainType.None, acter.Stats.CharacterID, acter.transform.position);
+        _entityContainer.ObjectByFavorite.Add(favoriteID.ToString(), acter);
     }
 
     private void SetCustomizing(Character acter, CustomizingData data)
@@ -70,4 +90,9 @@ public class CharacterFactory : Singleton<CharacterFactory>
     {
         _pool.Enqueue(character);
     }
+}
+
+public interface IFactory
+{
+    public ICutsceneObject Create(ICutscenePreset preset);
 }

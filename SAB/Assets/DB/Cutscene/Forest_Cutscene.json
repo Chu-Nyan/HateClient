@@ -21,17 +21,17 @@
       "InGame_Guard2_Movement": 5,
       "InGame_Player_Movement": 3
     },
-    "BindingSourceByID": {
+    "BindingSourceById": {
       "1": 0,
       "2": 0,
       "4": 1,
       "5": 1,
       "3": 2
     },
-    "BindingSlots": {
+    "UniqueSlotById": {
       "3": 0
     },
-    "SceneObjectBindingIDs": {
+    "MarkIdById": {
       "4": 313372166,
       "5": -89912361
     },
@@ -69,7 +69,10 @@
       }
     },
     "CharacterData": {},
-    "SingleMeshData": {}
+    "SingleMeshData": {},
+    "PersistentObjects": [
+      3
+    ]
   },
   {
     "Name": "CH01_02_Boss",
@@ -88,37 +91,23 @@
     ],
     "BindingIDByTrack": {
       "VCamFollow_Cutscene": 6,
-      "VCamStatic_Cutscene (1)": 8,
-      "VCamStatic_Cutscene": 9,
+      "VCamStatic_Cutscene": 8,
+      "VCamStatic_Cutscene (1)": 9,
       "Animation Track (1)": 7,
       "Animation Track (2)": 10,
       "Activation Track": 10
     },
-    "BindingSourceByID": {
+    "BindingSourceById": {
       "6": 0,
       "8": 0,
       "9": 0,
       "7": 0,
       "10": 0
     },
-    "BindingSlots": {},
-    "SceneObjectBindingIDs": {},
+    "UniqueSlotById": {},
+    "MarkIdById": {},
     "StaticData": {
       "8": {
-        "Position": {
-          "x": 106.498993,
-          "y": 3.33372879,
-          "z": 179.389084
-        },
-        "Rotation": {
-          "x": -0.307866931,
-          "y": -0.06872021,
-          "z": 0.0224173125,
-          "w": -0.948679566
-        },
-        "POV": 40.0
-      },
-      "9": {
         "Position": {
           "x": 107.0158,
           "y": 0.91,
@@ -129,6 +118,20 @@
           "y": 0.0,
           "z": 0.0,
           "w": 1.0
+        },
+        "POV": 40.0
+      },
+      "9": {
+        "Position": {
+          "x": 106.498993,
+          "y": 3.33372879,
+          "z": 179.389084
+        },
+        "Rotation": {
+          "x": -0.307866931,
+          "y": -0.06872021,
+          "z": 0.0224173125,
+          "w": -0.948679566
         },
         "POV": 40.0
       }
@@ -166,7 +169,7 @@
         }
       },
       "10": {
-        "ID": 3,
+        "ID": 4,
         "Position": {
           "x": 107.0158,
           "y": 0.0,
@@ -180,6 +183,9 @@
         }
       }
     },
-    "SingleMeshData": {}
+    "SingleMeshData": {},
+    "PersistentObjects": [
+      7
+    ]
   }
 ]

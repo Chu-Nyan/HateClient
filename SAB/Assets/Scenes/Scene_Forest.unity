@@ -167536,6 +167536,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: IsDeactivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: VariantParam.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -215234,16 +215238,100 @@ PrefabInstance:
       value: 0.09219543
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: _prevSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: IsDeactivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: IsPersistent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: BindingSource
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[-2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[1001]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1000].Value
-      value: 4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[1].Key
+      value: AIType
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[2].Key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].Param
+      value: 4187133170853085282
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[1].Param
+      value: 4187133170853085283
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[2].Param
+      value: 4187133170853085281
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085279]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085280]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085281]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085282]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085283]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1460416025904545875].value
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085279].Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085280].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085281].Value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085282].Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085283].Value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 891672145681292730, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_Mesh
@@ -229244,6 +229332,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1062274788}
     m_Modifications:
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: IsDeactivate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 130183300182124914, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.7842026
@@ -237833,12 +237925,96 @@ PrefabInstance:
       value: 0.07251874
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: Keep
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: _prevSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: IsPersistent
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: BindingSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[1001]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1000].Value
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[1].Key
+      value: AIType
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[2].Key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].Param
+      value: 4187133170853085275
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[1].Param
+      value: 4187133170853085276
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[2].Param
+      value: 4187133170853085274
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085272]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085273]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085274]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085275]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133170853085276]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1460416025904545875].value
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085272].Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085273].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085274].Value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085275].Value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133170853085276].Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 891672145681292730, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_Mesh
@@ -242388,6 +242564,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 3628162253786817490}
     m_Modifications:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: Keep
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: Type
       value: 3
       objectReference: {fileID: 0}
@@ -242402,6 +242582,10 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: _prevSource
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: IsPersistent
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: BindingSource
@@ -253590,6 +253774,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1062274788}
     m_Modifications:
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: IsDeactivate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 130183300182124914, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.3010101
@@ -352655,6 +352843,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: IsDeactivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: BindingSource
       value: 0
       objectReference: {fileID: 0}
@@ -422021,6 +422213,10 @@ PrefabInstance:
     - target: {fileID: 4127707896029979198, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: TrackerSettings.PositionDamping.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: IsDeactivate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: managedReferences[1460416025904545879].value

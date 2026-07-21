@@ -1,5 +1,4 @@
 ﻿using Chu.Utility;
-using SAB.DataManger;
 using UnityEngine;
 
 public class MapReferenceHub : MonoBehaviour
@@ -9,15 +8,11 @@ public class MapReferenceHub : MonoBehaviour
 
     public SerializablePair<int, Character>[] Characters;
 
-    private void Awake()
+    public void InitObject()
     {
-        if (DataBase.Instance == null)
-            new DataBase();
-
-        var repo = DataBase.Instance.CharacterRepo;
         foreach (var item in Characters)
         {
-            item.Value.SetupStats(repo.CharacterBaseData[item.Value.Stats.CharacterID]);
+            CharacterFactory.Instance.LateInitialize(item.Value, item.Key);
         }
     }
 

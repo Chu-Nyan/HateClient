@@ -7,9 +7,9 @@ namespace SAB.Facade
     {
         public CutsceneFacade Cutscene;
 
-        public GamePlayFacade(CutsceneController cutscene, AgentController agent)
+        public GamePlayFacade(CutsceneController cutscene, AgentController agent, EntityContainer container)
         {
-            Cutscene = new(cutscene, agent, InputManager.Instance);
+            Cutscene = new(cutscene, agent, InputManager.Instance, container);
         }
     }
 }

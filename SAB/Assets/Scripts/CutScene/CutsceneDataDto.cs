@@ -17,23 +17,25 @@ namespace SAB.Cutscene
         public ShapeParam[] TriggerZones;
         public Dictionary<string, int> BindingIDByTrack;
 
-        public Dictionary<int, BindingSource> BindingSourceByID;
-        public Dictionary<int, UniqueEntityType> BindingSlots;
-        public Dictionary<int, int> SceneObjectBindingIDs;
+        public Dictionary<int, BindingSource> BindingSourceById;
+        public Dictionary<int, UniqueEntityType> UniqueSlotById;
+        public Dictionary<int, int> MarkIdById;
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;
         public Dictionary<int, SpawnRequest> CharacterData;
         public Dictionary<int, SingleMeshData> SingleMeshData;
+        public HashSet<int> PersistentObjects;
 
         public CutsceneDataDto(string name, string assetPath, Vector2 center, bool lockPlayer, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack)
         {
-            BindingSourceByID = new();
-            BindingSlots = new();
-            SceneObjectBindingIDs = new();
+            BindingSourceById = new();
+            UniqueSlotById = new();
+            MarkIdById = new();
             StaticData = new();
             FollowData = new();
             CharacterData = new();
             SingleMeshData = new();
+            PersistentObjects = new();
 
             Name = name;
             AssetPath = assetPath;
@@ -55,9 +57,10 @@ namespace SAB.Cutscene
                 LockPlayer = LockPlayer,
                 TriggerZones = TriggerZones,
                 BindingIDByTrack = BindingIDByTrack,
-                BindingSourceByID = BindingSourceByID,
-                BindingSlots = BindingSlots,
-                SceneObjectBindingIDs = SceneObjectBindingIDs,
+                BindingSourceByID = BindingSourceById,
+                BindingSlots = UniqueSlotById,
+                SceneObjectBindingIDs = MarkIdById,
+                PersistentObjects = PersistentObjects,
                 SpawnContainer = GetObjectDataContainer()
             };
 
@@ -69,19 +72,19 @@ namespace SAB.Cutscene
             var container = new SpawnDataContainer();
             foreach (var item in StaticData)
             {
-                container.Add(item.Key, item.Value);
+                container.Add(item.Key, item.Value, false);
             }
             foreach (var item in FollowData)
             {
-                container.Add(item.Key, item.Value);
+                container.Add(item.Key, item.Value, false);
             }
             foreach (var item in CharacterData)
             {
-                container.Add(item.Key, item.Value);
+                container.Add(item.Key, item.Value, true);
             }
             foreach (var item in SingleMeshData)
             {
-                container.Add(item.Key, item.Value);
+                container.Add(item.Key, item.Value, false);
             }
 
             return container;
@@ -89,23 +92,26 @@ namespace SAB.Cutscene
 
         public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler)
         {
-            if (BindingSourceByID.ContainsKey(id) == true)
+            if (BindingSourceById.ContainsKey(id) == true)
                 return;
 
             if (obj.TryGetComponent<CutsceneObjectPreset>(out var cutsceneObj) == true)
             {
-                BindingSourceByID.Add(id, cutsceneObj.BindingSource);
+                BindingSourceById.Add(id, cutsceneObj.BindingSource);
+                if (cutsceneObj.IsPersistent == true)
+                    PersistentObjects.Add(id);
 
                 if (cutsceneObj.BindingSource == BindingSource.Slot)
-                    BindingSlots.Add(id, cutsceneObj.GetVariantParam<UniqueEntityType>(CutsceneObjectPreset._bindingSlot));
+                    UniqueSlotById.Add(id, cutsceneObj.GetVariantParam<UniqueEntityType>(CutsceneObjectPreset._bindingSlot));
                 else if (cutsceneObj.BindingSource == BindingSource.Spawn)
                     AddObjectData(id, cutsceneObj, idHandler);
             }
             else // 씬 오브젝트
             {
-                BindingSourceByID.Add(id, BindingSource.SceneObject);
-                SceneObjectBindingIDs.Add(id, obj.name.GetHashCode());
+                BindingSourceById.Add(id, BindingSource.SceneObject);
+                MarkIdById.Add(id, obj.name.GetHashCode());
             }
+
         }
 
         private void AddObjectData(int id, CutsceneObjectPreset obj, CutsceneJsonConverter idHandler)

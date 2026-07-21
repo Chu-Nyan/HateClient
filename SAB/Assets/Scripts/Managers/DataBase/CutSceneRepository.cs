@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace SAB.DataManger
 {
-    public class CutSceneRepository
+    public class CutsceneRepository
     {
         public readonly Dictionary<string, CutsceneData> DataByName;
         public readonly Dictionary<MapType, string[]> CutsceneNameByMapType;
         public const string FileNameFormat = "{0}_Cutscene";
 
-        public CutSceneRepository()
+        public CutsceneRepository()
         {
             CutsceneNameByMapType = new();
             DataByName = new();

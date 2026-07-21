@@ -1,7 +1,5 @@
 ﻿using Chu.Core;
 using Chu.Utility;
-using SAB.EntityAgent;
-using SAB.Unit;
 using System;
 using System.Collections.Generic;
 
@@ -10,8 +8,6 @@ namespace SAB.Cutscene
     public class CutscenePool
     {
         private readonly Dictionary<Type, ObjectPooling<ICutsceneObject>> _objPool;
-        private readonly Dictionary<Type, Func<ICutscenePreset, ICutsceneObject>> _dequeue;
-        private readonly Dictionary<Type, Action<ICutsceneObject>> _enqueue;
         private readonly Dictionary<Type, Type> _dataTypeByObjectType;
 
         public CutscenePool()
@@ -23,22 +19,11 @@ namespace SAB.Cutscene
                 { typeof(SingleMesh), new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(Const.Asset_SingleMesh), a => a.SetActive(true))},
             };
 
-            _dequeue = new()
-            {
-                { typeof(Character), GetCharacter }
-            };
-
-            _enqueue = new()
-            {
-                { typeof(Character), (a) => CharacterFactory.Instance.Enqueue((Character)a) }
-            };
-
             _dataTypeByObjectType = new()
             {
                 { typeof(VCamStaticData), typeof(VCamStatic) },
                 { typeof(VCamFollowData), typeof(VCamFollow) },
                 { typeof(SingleMeshData), typeof(SingleMesh) },
-                { typeof(SpawnRequest), typeof(Character) },
             };
         }
 
@@ -49,16 +34,7 @@ namespace SAB.Cutscene
             if (_objPool.TryGetValue(type, out var pool) == true)
                 return pool.Dequeue();
 
-            if (_dequeue.TryGetValue(type, out var func) == true)
-                return func(config);
-
             throw new Exception();
-        }
-
-        private ICutsceneObject GetCharacter(ICutscenePreset data)
-        {
-            SpawnRequest request = (SpawnRequest)data;
-            return CharacterFactory.Instance.Create(BrainType.None, request.ID, request.Position);
         }
 
         public void EnqueueObject(ICutsceneObject config)
@@ -67,10 +43,6 @@ namespace SAB.Cutscene
 
             if (_objPool.TryGetValue(type, out var pool) == true)
                 pool.Enqueue(config);
-            else if (_enqueue.TryGetValue(type, out var action) == true)
-                action(config);
-            else
-                throw new Exception(type.ToString());
         }
     }
 }

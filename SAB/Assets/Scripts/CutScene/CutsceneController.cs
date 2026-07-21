@@ -18,14 +18,11 @@ namespace SAB.Cutscene
         private MarkerReceiver _markerReceiver;
 
         private readonly CutscenePool _pool = new();
-        // Map
-        private readonly Dictionary<int, ICutsceneObject> _sceneObjectByID = new();
-        private UniqueEntityContainer _uniqueEntity;
 
         // Cutscene in progress
         private CutsceneData _cutsceneData;
         private readonly Dictionary<string, TrackAsset> _trackByName = new();
-        private readonly Dictionary<int, ICutsceneObject> _objectByID = new();
+        private readonly Dictionary<int, ICutsceneObject> _objectByBindingID = new();
 
         public event Action<CutsceneData> CutsceneStopped;
 
@@ -38,19 +35,14 @@ namespace SAB.Cutscene
             _markerReceiver.Init(ShowDialog);
         }
 
-        public void Init(CinemachineBrain brain, UniqueEntityContainer uniqueEntity)
+        public void Init(CinemachineBrain brain)
         {
             _cameraBrain = brain;
-            _uniqueEntity = uniqueEntity;
         }
 
-        public void SetupMap(MapReferenceHub hub)
+        public void Ready(EntityContainer container)
         {
-            _sceneObjectByID.Clear();
-            foreach (var item in hub.Characters)
-            {
-                _sceneObjectByID.Add(item.Key, item.Value);
-            }
+
         }
 
         public void Play(CutsceneData data)
@@ -82,22 +74,34 @@ namespace SAB.Cutscene
             }
         }
 
+        public void RegisterExternalObject(int bindingID, ICutsceneObject obj)
+        {
+            if (_objectByBindingID.TryAdd(bindingID, obj) == false)
+            {
+                Debug.LogError($"{bindingID}, {obj}, Duplicate ID detected");
+            }
+        }
+
         private void PrepareCutsceneObject(CutsceneData data)
         {
             // Generate
             var container = data.SpawnContainer;
-            foreach (var config in container)
+
+            foreach (var item in container)
             {
-                var obj = _pool.DequeueObject(config.Value);
-                obj.SetCutscenePreset(config.Value);
-                _objectByID[config.Key] = obj;
+                var obj = _pool.DequeueObject(item.Value);
+                obj.SetCutscenePreset(item.Value);
+                RegisterExternalObject(item.Key, obj);
             }
 
             // Init
-            foreach (var item in container.GetTable<VCamFollowData>())
+            if (container.TryGetTable<VCamFollowData>(out var followDatas) == true)
             {
-                VCamFollow cam = (VCamFollow)_objectByID[item.Key];
-                cam.SetFollow(GetObject(data, item.Value.TargetID).transform);
+                foreach (var item in followDatas)
+                {
+                    VCamFollow cam = (VCamFollow)_objectByBindingID[item.Key];
+                    cam.SetFollow(_objectByBindingID[item.Value.TargetID].transform);
+                }
             }
         }
 
@@ -120,7 +124,7 @@ namespace SAB.Cutscene
                         var id = cutsceneData.BindingIDByTrack[clip.displayName];
 
                         var shot = clip.asset as CinemachineShot;
-                        IVCam vcam = (IVCam)GetObject(cutsceneData, id);
+                        IVCam vcam = (IVCam)_objectByBindingID[id];
                         _director.SetReferenceValue(shot.VirtualCamera.exposedName, vcam.CinemachineCamera);
 
                     }
@@ -128,17 +132,17 @@ namespace SAB.Cutscene
                 else if (track is AnimationTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, (GetObject(cutsceneData, id).transform.GetComponent<Animator>()));
+                    _director.SetGenericBinding(track, (_objectByBindingID[id].transform.GetComponent<Animator>()));
                 }
                 else if (track is ActivationTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, GetObject(cutsceneData, id).transform.gameObject);
+                    _director.SetGenericBinding(track, _objectByBindingID[id].transform.gameObject);
                 }
                 else if (track is InGameTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, (MonoBehaviour)GetObject(cutsceneData, id));
+                    _director.SetGenericBinding(track, (MonoBehaviour)_objectByBindingID[id]);
                 }
             }
         }
@@ -148,13 +152,20 @@ namespace SAB.Cutscene
             if (_trackByName.Count == 0)
                 return;
 
-            foreach (var item in _objectByID)
+            foreach (var item in _objectByBindingID)
             {
+                if (_cutsceneData.BindingSourceByID[item.Key] == BindingSource.SceneObject)
+                    continue;
+                if (_cutsceneData.BindingSourceByID[item.Key] == BindingSource.Slot)
+                    continue;
+                if (_cutsceneData.PersistentObjects.Contains(item.Key) == true)
+                    continue;
+
                 item.Value.SetActive(false);
                 _pool.EnqueueObject(item.Value);
             }
 
-            _objectByID.Clear();
+            _objectByBindingID.Clear();
             _trackByName.Clear();
         }
 
@@ -164,36 +175,13 @@ namespace SAB.Cutscene
             CutsceneStopped?.Invoke(_cutsceneData);
         }
 
-        private ICutsceneObject GetObject(CutsceneData data, int id)
-        {
-            return data.BindingSourceByID[id] switch
-            {
-                BindingSource.Spawn => _objectByID[id],
-                BindingSource.SceneObject => _sceneObjectByID[data.SceneObjectBindingIDs[id]],
-                BindingSource.Slot => (ICutsceneObject)_uniqueEntity.GetEntity(data.BindingSlots[id]),
-                _ => throw new System.Exception(),
-            };
-        }
-
-        private bool TryGetPlayObject(CutsceneData data, int id, out ICutsceneObject obj)
-        {
-            obj = null;
-            if (data.BindingSourceByID.ContainsKey(id) == false)
-                return false;
-
-            obj = GetObject(data, id);
-            return true;
-        }
-
         private void ShowDialog(DialogMarker marker)
         {
             var id = _cutsceneData.BindingIDByTrack[marker.SpeakerTrack];
-            if (TryGetPlayObject(_cutsceneData, id, out var obj) == true)
+
+            if (_objectByBindingID[id] is ISpeachable able)
             {
-                if (obj is ISpeachable able)
-                {
-                    able.Speech(new(0, marker.TextID, marker.Time), true);
-                }
+                able.Speech(new(0, marker.TextID, marker.Time), true);
             }
         }
     }

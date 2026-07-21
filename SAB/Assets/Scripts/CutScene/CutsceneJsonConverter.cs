@@ -78,7 +78,7 @@ namespace SAB.Cutscene
 
             string json = JsonConvert.SerializeObject(cutSceneDatas, Formatting.Indented, new JsonSerializerSettings().WithUnity());
             AssetDatabase.GetAssetPath(_path);
-            string fileName = $"{string.Format(CutSceneRepository.FileNameFormat, _mapType)}";
+            string fileName = $"{string.Format(CutsceneRepository.FileNameFormat, _mapType)}";
             Utility.GenerateFile(AssetDatabase.GetAssetPath(_path), $"{fileName}.json", json);
             Debug.Log("Cutscene Data Exported");
         }

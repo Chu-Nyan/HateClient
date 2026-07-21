@@ -7,29 +7,47 @@ namespace SAB.Cutscene
     public class SpawnDataContainer
     {
         public Dictionary<Type, IDictionary> _datasByType;
+        public Dictionary<Type, IDictionary> _externalObjectByType;
 
         public SpawnDataContainer()
         {
             _datasByType = new();
+            _externalObjectByType = new();
         }
 
-        public Dictionary<int, T> GetTable<T>() where T : ICutscenePreset
+        public bool TryGetTable<T>(out Dictionary<int, T> dic) where T : ICutscenePreset
         {
             var type = typeof(T);
-
-            if (_datasByType.TryGetValue(type, out var table) == false)
+            dic = null;
+            if (_datasByType.ContainsKey(type) == true)
             {
-                table = new Dictionary<int, T>();
-                _datasByType[type] = table;
+                dic = (Dictionary<int, T>)_datasByType[type];
+            }
+            if (_externalObjectByType.ContainsKey(type) == true)
+            {
+                dic = (Dictionary<int, T>)_externalObjectByType[type];
             }
 
-            return (Dictionary<int, T>)table;
+            return dic != null;
         }
 
-        public void Add<T>(int id, T data) where T : ICutscenePreset
+        public void Add<T>(int id, T data, bool isExternal) where T : ICutscenePreset
         {
-            var table = GetTable<T>();
+            var type = typeof(T);
+            var targetDic = isExternal == true ? _externalObjectByType : _datasByType;
+            var table = TryGetValue<T>(targetDic, type);
             table[id] = data;
+        }
+
+        private IDictionary TryGetValue<T>(Dictionary<Type, IDictionary> dic, Type type) where T : ICutscenePreset
+        {
+            if (dic.TryGetValue(type, out var table) == false)
+            {
+                table = new Dictionary<int, T>();
+                dic[type] = table;
+            }
+
+            return table;
         }
 
         public IEnumerator<KeyValuePair<int, ICutscenePreset>> GetEnumerator()
@@ -38,9 +56,7 @@ namespace SAB.Cutscene
             {
                 foreach (DictionaryEntry entry in table)
                 {
-                    yield return new KeyValuePair<int, ICutscenePreset>(
-                        (int)entry.Key,
-                        (ICutscenePreset)entry.Value);
+                    yield return new KeyValuePair<int, ICutscenePreset>((int)entry.Key, (ICutscenePreset)entry.Value);
                 }
             }
         }
