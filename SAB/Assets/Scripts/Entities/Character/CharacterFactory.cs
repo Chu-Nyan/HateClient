@@ -3,6 +3,7 @@ using Chu.Utility;
 using SAB.Cutscene;
 using SAB.DataManger;
 using SAB.EntityAgent;
+using SAB.Item;
 using SAB.Unit;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,9 +60,20 @@ public class CharacterFactory : Singleton<CharacterFactory>
         acter.SetupStats(_unitDatas[unitID]);
         acter.transform.rotation = rot;
         SetCustomizing(acter, unitID);
+        SetEquipment(acter, unitID);
 
         _agentController.BindReceiver(acter, type);
         _entityContainer.Character.Add(acter.InstanceID, acter);
+    }
+
+    private void SetEquipment(Character acter, int unitID)
+    {
+        var equipments = DataBase.Instance.CharacterRepo.DefaultEquipment[unitID];
+        foreach (var id in equipments)
+        {
+            var item = ItemFactory.Instance.GenerateItem((int)id);
+            acter.Equip(item as IHasEquipmentData);
+        }
     }
 
     public void LateInitialize(Character acter, int favoriteID)
