@@ -32,32 +32,32 @@ public class CharacterFactory : Singleton<CharacterFactory>
         _entityContainer = container;
     }
 
-    public Character Create(BrainType type, int unitID, Vector3 respawn)
+    public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot)
     {
         var acter = _pool.Dequeue();
-        InitCharacter(acter, type, unitID, respawn);
+        InitCharacter(acter, type, unitID, pos, rot);
         return acter;
     }
 
-    public Character Create(BrainType type, int unitID, Vector3 respawn, int favoriteID)
+    public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, int favoriteID)
     {
-        var acter = _pool.Dequeue();
-        InitCharacter(acter, type, unitID, respawn);
+        var acter = Create(type, unitID, pos, rot);
         _entityContainer.ObjectByFavorite.Add(favoriteID.ToString(), acter);
         return acter;
     }
 
-    public Character Create(BrainType type, int unitID, Vector3 respawn, UniqueEntityType uniqueType)
+    public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, UniqueEntityType uniqueType)
     {
-        var acter = Create(type, unitID, respawn);
+        var acter = Create(type, unitID, pos, rot);
         _entityContainer.SetUniqueEntity(uniqueType, acter);
         return acter;
     }
 
-    private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 respawn)
+    private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 pos, Quaternion rot)
     {
-        acter.SetPositionWithNavMash(respawn);
+        acter.SetPositionWithNavMash(pos);
         acter.SetupStats(_unitDatas[unitID]);
+        acter.transform.rotation = rot;
         SetCustomizing(acter, unitID);
 
         _agentController.BindReceiver(acter, type);
@@ -66,7 +66,7 @@ public class CharacterFactory : Singleton<CharacterFactory>
 
     public void LateInitialize(Character acter, int favoriteID)
     {
-        InitCharacter(acter, BrainType.None, acter.Stats.CharacterID, acter.transform.position);
+        InitCharacter(acter, BrainType.None, acter.Stats.CharacterID, acter.transform.position, acter.transform.rotation);
         _entityContainer.ObjectByFavorite.Add(favoriteID.ToString(), acter);
     }
 

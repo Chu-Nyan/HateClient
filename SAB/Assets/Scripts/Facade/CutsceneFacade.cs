@@ -36,7 +36,7 @@ public class CutsceneFacade
             foreach (var item in datas)
             {
                 var acterData = item.Value;
-                var acter = CharacterFactory.Instance.Create(BrainType.None, acterData.ID, acterData.Position);
+                var acter = CharacterFactory.Instance.Create(BrainType.None, acterData.ID, acterData.Position, acterData.Rotation);
                 _cutscene.RegisterExternalObject(item.Key, acter);
             }
         }
