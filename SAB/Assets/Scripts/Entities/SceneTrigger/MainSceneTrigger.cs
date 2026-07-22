@@ -61,7 +61,6 @@ public class GameSceneTrigger : MonoBehaviour
         new ItemFactory(DataBase.Instance);
         new UIManager();
 
-        _cutsceneDirector = AssetManager.GenerateLoadAssetSync<CutsceneController>(Const.Asset_CutsceneManger, "CutsceneManager", transform);
     }
 
     private void GenerateInstance()
@@ -70,12 +69,12 @@ public class GameSceneTrigger : MonoBehaviour
         _entityContainer = new();
         _cutscenePlayer = new();
         _agentController = gameObject.AddComponent<AgentController>();
+        _cutsceneDirector = AssetManager.GenerateLoadAssetSync<CutsceneController>(Const.Asset_CutsceneManger, "CutsceneManager", transform);
     }
 
     private void InitStatic()
     {
         InputManager.Instance.SetActive(true);
-        _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>());
         SkillObjectFactory.Instance.Init(_worldProfile.FactionTable);
         CharacterFactory.Instance.Init(_agentController, _entityContainer);
     }
@@ -84,6 +83,7 @@ public class GameSceneTrigger : MonoBehaviour
     {
         _topViewCam.InitCamera(_topviewCam);
         _cutscenePlayer.Init(_gamePlayFacade.Cutscene.Play);
+        _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>());
     }
 
     private void GenerateFacade()

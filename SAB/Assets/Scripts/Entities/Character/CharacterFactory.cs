@@ -43,14 +43,14 @@ public class CharacterFactory : Singleton<CharacterFactory>
     public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, int favoriteID)
     {
         var acter = Create(type, unitID, pos, rot);
-        _entityContainer.ObjectByFavorite.Add(favoriteID.ToString(), acter);
+        _entityContainer.AddFavoriteObject(favoriteID.ToString(), acter);
         return acter;
     }
 
     public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, UniqueEntityType uniqueType)
     {
         var acter = Create(type, unitID, pos, rot);
-        _entityContainer.SetUniqueEntity(uniqueType, acter);
+        _entityContainer.AddUniqueObject(uniqueType, acter);
         return acter;
     }
 
@@ -61,9 +61,10 @@ public class CharacterFactory : Singleton<CharacterFactory>
         acter.transform.rotation = rot;
         SetCustomizing(acter, unitID);
         SetEquipment(acter, unitID);
+        acter.RegisterDeactivated(Release);
 
         _agentController.BindReceiver(acter, type);
-        _entityContainer.Character.Add(acter.InstanceID, acter);
+        _entityContainer.AddCharacter(acter);
     }
 
     private void SetEquipment(Character acter, int unitID)
@@ -79,7 +80,7 @@ public class CharacterFactory : Singleton<CharacterFactory>
     public void LateInitialize(Character acter, int favoriteID)
     {
         InitCharacter(acter, BrainType.None, acter.Stats.CharacterID, acter.transform.position, acter.transform.rotation);
-        _entityContainer.ObjectByFavorite.Add(favoriteID.ToString(), acter);
+        _entityContainer.AddFavoriteObject(favoriteID.ToString(), acter);
     }
 
     private void SetCustomizing(Character acter, CustomizingData data)
@@ -98,13 +99,9 @@ public class CharacterFactory : Singleton<CharacterFactory>
         SetCustomizing(acter, data);
     }
 
-    public void Enqueue(Character character)
+    public void Release(Character character)
     {
         _pool.Enqueue(character);
+        _entityContainer.RemoveCharacter(character);
     }
-}
-
-public interface IFactory
-{
-    public ICutsceneObject Create(ICutscenePreset preset);
 }

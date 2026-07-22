@@ -1,14 +1,25 @@
-﻿using SAB.Cutscene;
+﻿using Chu.Data;
+using SAB.Cutscene;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityContainer
 {
-    private readonly Dictionary<UniqueEntityType, MonoBehaviour> _objectByUniqueType;
+    private readonly BiDictionary<UniqueEntityType, MonoBehaviour> _objectByUniqueType;
+    private readonly BiDictionary<string, MonoBehaviour> _objectByFavorite;
     private readonly Dictionary<int, Character> _character;
-    public readonly Dictionary<string, MonoBehaviour> ObjectByFavorite;
 
-    public Dictionary<int, Character> Character
+    public IReadOnlyDictionary<UniqueEntityType, MonoBehaviour> ObjectByUniqueType
+    {
+        get => _objectByUniqueType;
+    }
+
+    public IReadOnlyDictionary<string, MonoBehaviour> ObjectByFavorite
+    {
+        get => _objectByFavorite;
+    }
+
+    public IReadOnlyDictionary<int, Character> Character
     {
         get => _character;
     }
@@ -17,19 +28,28 @@ public class EntityContainer
     {
         _character = new();
         _objectByUniqueType = new();
-        ObjectByFavorite = new(0);
+        _objectByFavorite = new(0);
     }
 
-    public void SetUniqueEntity(UniqueEntityType type, MonoBehaviour obj, bool isOverwrite = true)
+    public void AddCharacter(Character acter)
     {
-        if (isOverwrite == true)
-            _objectByUniqueType[type] = obj;
-        else
-            _objectByUniqueType.TryAdd(type, obj);
+        _character.Add(acter.InstanceID, acter);
     }
 
-    public MonoBehaviour GetUniqueEntity(UniqueEntityType type)
+    public void AddUniqueObject(UniqueEntityType type, MonoBehaviour obj)
     {
-        return _objectByUniqueType[type];
+        _objectByUniqueType.Add(type, obj);
+    }
+
+    public void AddFavoriteObject(string favoriteKey, MonoBehaviour obj)
+    {
+        _objectByFavorite.Add(favoriteKey, obj);
+    }
+
+    public void RemoveCharacter(Character character)
+    {
+        _character.Remove(character.InstanceID);
+        _objectByFavorite.Remove(character);
+        _objectByUniqueType.Remove(character);
     }
 }

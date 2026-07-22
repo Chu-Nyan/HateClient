@@ -59,7 +59,7 @@ namespace SAB.Cutscene
             {
                 TryAddParam(_vcam, GetComponent<CinemachineCamera>());
             }
-            else if (Type == CutsceneObjectType.Character)
+            else if (Type == CutsceneObjectType.Character && BindingSource == BindingSource.Spawn)
             {
                 TryAddParam(_npcID, 0);
                 TryAddParam(_aiType, 1);

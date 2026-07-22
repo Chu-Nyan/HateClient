@@ -2,6 +2,7 @@
 using SAB.DataManger;
 using SAB.EntityAgent;
 using SAB.Unit;
+using UnityEngine;
 
 public class CutsceneFacade
 {
@@ -40,14 +41,27 @@ public class CutsceneFacade
                 _cutscene.RegisterExternalObject(item.Key, acter);
             }
         }
+
         foreach (var item in cutsceneData.SceneObjectBindingIDs)
         {
             var obj = _entityContainer.ObjectByFavorite[item.Value.ToString()];
             _cutscene.RegisterExternalObject(item.Key, (ICutsceneObject)obj);
         }
+
         foreach (var item in cutsceneData.BindingSlots)
         {
-            _cutscene.RegisterExternalObject(item.Key, (ICutsceneObject)_entityContainer.GetUniqueEntity(item.Value));
+            ICutsceneObject obj;
+            if (_entityContainer.ObjectByUniqueType.TryGetValue(item.Value, out var temp) == false)
+            {
+                Debug.LogError($"{item.Value}, unique type is null");
+                obj = CharacterFactory.Instance.Create(BrainType.None, 1, Vector3.zero, Quaternion.identity);
+            }
+            else
+            {
+                obj = (ICutsceneObject)temp;
+            }
+
+            _cutscene.RegisterExternalObject(item.Key, obj);
         }
     }
 
