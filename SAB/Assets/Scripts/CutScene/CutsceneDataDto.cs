@@ -19,7 +19,7 @@ namespace SAB.Cutscene
 
         public Dictionary<int, BindingSource> BindingSourceById;
         public Dictionary<int, UniqueEntityType> UniqueSlotById;
-        public Dictionary<int, int> MarkIdById;
+        public Dictionary<int, string> FavoritesById;
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;
         public Dictionary<int, SpawnRequest> CharacterData;
@@ -30,7 +30,7 @@ namespace SAB.Cutscene
         {
             BindingSourceById = new();
             UniqueSlotById = new();
-            MarkIdById = new();
+            FavoritesById = new();
             StaticData = new();
             FollowData = new();
             CharacterData = new();
@@ -59,7 +59,7 @@ namespace SAB.Cutscene
                 BindingIDByTrack = BindingIDByTrack,
                 BindingSourceByID = BindingSourceById,
                 BindingSlots = UniqueSlotById,
-                SceneObjectBindingIDs = MarkIdById,
+                SceneObjectBindingIDs = FavoritesById,
                 PersistentObjects = PersistentObjects,
                 SpawnContainer = GetObjectDataContainer()
             };
@@ -90,7 +90,7 @@ namespace SAB.Cutscene
             return container;
         }
 
-        public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler)
+        public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler, MapReferenceHub hub)
         {
             if (BindingSourceById.ContainsKey(id) == true)
                 return;
@@ -108,10 +108,21 @@ namespace SAB.Cutscene
             }
             else // 씬 오브젝트
             {
-                BindingSourceById.Add(id, BindingSource.SceneObject);
-                MarkIdById.Add(id, obj.name.GetHashCode());
-            }
+                var comps = obj.GetComponents<MonoBehaviour>();
+                foreach (var comp in comps)
+                {
+                    foreach (var item in hub.FavoriteObjects)
+                    {
+                        if (item.Key != comp)
+                            continue;
 
+                        BindingSourceById.Add(id, BindingSource.SceneObject);
+                        FavoritesById.Add(id, item.Value);
+                        return;
+                    }
+                }
+                Debug.LogWarning($"{Name}, {id} Scene object not found.");
+            }
         }
 
         private void AddObjectData(int id, CutsceneObjectPreset obj, CutsceneJsonConverter idHandler)

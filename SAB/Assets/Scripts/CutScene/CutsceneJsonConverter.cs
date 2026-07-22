@@ -16,6 +16,8 @@ namespace SAB.Cutscene
     public class CutsceneJsonConverter : MonoBehaviour
     {
         [SerializeField]
+        private MapReferenceHub _referenceHub;
+        [SerializeField]
         private MapType _mapType;
         [SerializeField]
         private Transform _root;
@@ -100,7 +102,7 @@ namespace SAB.Cutscene
         private void AddSceneObject(CutsceneDataDto dto, GameObject obj, string clipName)
         {
             int id = GetOrRegisterID(obj);
-            dto.AddObject(id, obj, this);
+            dto.AddObject(id, obj, this, _referenceHub);
             dto.AddTrackData(clipName, id);
         }
 

@@ -77,6 +77,11 @@ public class CharacterFactory : Singleton<CharacterFactory>
         }
     }
 
+    public void LateInitialize(Character acter)
+    {
+        InitCharacter(acter, BrainType.None, acter.Stats.CharacterID, acter.transform.position, acter.transform.rotation);
+    }
+
     public void LateInitialize(Character acter, int favoriteID)
     {
         InitCharacter(acter, BrainType.None, acter.Stats.CharacterID, acter.transform.position, acter.transform.rotation);

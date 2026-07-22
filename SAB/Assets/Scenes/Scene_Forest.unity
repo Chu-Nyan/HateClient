@@ -284866,6 +284866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da688cefc323efa448f34187002891d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _referenceHub: {fileID: 1651922198}
   _mapType: 0
   _root: {fileID: 1004179265}
   _searchDepth: 1
@@ -461194,11 +461195,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _linkedObjectRoot: {fileID: 584736223}
-  Characters:
-  - Key: 313372166
-    Value: {fileID: 1214020344}
-  - Key: -89912361
-    Value: {fileID: 1340904209}
+  _characters:
+  - {fileID: 1214020344}
+  - {fileID: 1340904209}
+  _favoriteObjects:
+  - Key: {fileID: 1214020344}
+    Value: Guard1
+  - Key: {fileID: 1340904209}
+    Value: Guard2
 --- !u!4 &1651922199
 Transform:
   m_ObjectHideFlags: 0

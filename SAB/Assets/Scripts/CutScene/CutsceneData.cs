@@ -16,7 +16,7 @@ namespace SAB.Cutscene
         public Dictionary<string, int> BindingIDByTrack;
         public Dictionary<int, BindingSource> BindingSourceByID;
         public Dictionary<int, UniqueEntityType> BindingSlots;
-        public Dictionary<int, int> SceneObjectBindingIDs;
+        public Dictionary<int, string> SceneObjectBindingIDs;
         public SpawnDataContainer SpawnContainer;
         public HashSet<int> PersistentObjects;
 

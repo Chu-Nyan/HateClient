@@ -111,7 +111,14 @@ public class GameSceneTrigger : MonoBehaviour
 
         Scene loadedScene = SceneManager.GetSceneByName(sceneName);
         _currentMapReference = SetLoadMapReference(loadedScene);
-        _currentMapReference.InitObject();
+        foreach (var item in _currentMapReference.Characters)
+        {
+            CharacterFactory.Instance.LateInitialize(item);
+        }
+        foreach (var item in _currentMapReference.FavoriteObjects)
+        {
+            _entityContainer.AddFavoriteObject(item.Value, item.Key);
+        }
         _cutscenePlayer.SetupMap(type);
         GameStart();
     }
