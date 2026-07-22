@@ -155,7 +155,8 @@
     },
     "CharacterData": {
       "7": {
-        "ID": 10,
+        "UnitID": 10,
+        "BrainType": 2,
         "Position": {
           "x": 107.060005,
           "y": 0.0,
@@ -169,7 +170,8 @@
         }
       },
       "10": {
-        "ID": 4,
+        "UnitID": 4,
+        "BrainType": 0,
         "Position": {
           "x": 107.0158,
           "y": 0.0,

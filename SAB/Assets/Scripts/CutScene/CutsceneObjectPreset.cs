@@ -2,7 +2,6 @@
 using Chu.Utility.Unity;
 using SAB.Unit;
 using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
 
 namespace SAB.Cutscene
@@ -46,25 +45,6 @@ namespace SAB.Cutscene
 
             VariantParam.Clear();
 
-            if (Type == CutsceneObjectType.SingleMesh)
-            {
-                TryAddParam(_meshFilter, GetComponent<MeshFilter>());
-            }
-            else if (Type == CutsceneObjectType.VCamFollow)
-            {
-                TryAddParam(_vcam, GetComponent<CinemachineCamera>());
-                TryAddParam(_vcamFollow, GetComponent<CinemachineFollow>());
-            }
-            else if (Type == CutsceneObjectType.VCamStatic)
-            {
-                TryAddParam(_vcam, GetComponent<CinemachineCamera>());
-            }
-            else if (Type == CutsceneObjectType.Character && BindingSource == BindingSource.Spawn)
-            {
-                TryAddParam(_npcID, 0);
-                TryAddParam(_aiType, 1);
-            }
-
             if (BindingSource == BindingSource.SceneObject)
             {
                 TryAddParam<GameObject>(_bindingObject, null);
@@ -100,10 +80,8 @@ namespace SAB.Cutscene
             }
             else if (Type == CutsceneObjectType.Character)
             {
-                // id 수정 필요
-                //var acter = GetComponent<Character>();
-                var id = GetVariantParam<int>(_npcID);
-                return new SpawnRequest(id, transform.position, transform.rotation);
+                var acter = GetComponent<Character>();
+                return new SpawnRequest(acter.Stats.CharacterID, acter.BrainType, transform.position, transform.rotation);
             }
 
             throw new System.Exception($"{gameObject.name}: is not {Type}");
@@ -123,20 +101,6 @@ namespace SAB.Cutscene
             }
 
             throw new System.Exception($"{gameObject.name}: {key} not found");
-        }
-
-        public bool TryGetVariantParam<T>(string key, out T param)
-        {
-            param = default;
-            foreach (var item in VariantParam)
-            {
-                if (item.Key == key)
-                {
-                    param = (T)item.Param;
-                }
-            }
-
-            return param.Equals(default) == false;
         }
 
         private void TryAddParam<T>(string key, T value)

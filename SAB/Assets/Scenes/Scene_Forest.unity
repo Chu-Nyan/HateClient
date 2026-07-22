@@ -35962,6 +35962,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131076449}
   m_Mesh: {fileID: -2391616400560951514, guid: f222748f1796b2e49a56a2fbf7563247, type: 3}
+--- !u!1 &131256356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 131256357}
+  m_Layer: 0
+  m_Name: Characters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &131256357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131256356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1214020342}
+  - {fileID: 1340904210}
+  m_Father: {fileID: 584736224}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &131333637
 GameObject:
   m_ObjectHideFlags: 0
@@ -165585,8 +165618,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1214020342}
-  - {fileID: 1340904210}
+  - {fileID: 131256357}
+  - {fileID: 1953827895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &585112439
@@ -167536,12 +167569,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: _prevSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: IsDeactivate
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: BindingSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: 'managedReferences[1000]'
@@ -167550,6 +167591,10 @@ PrefabInstance:
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: _variantParam.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Key
+      value: Binding Object
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: VariantParam.Array.data[1].Key
@@ -167561,7 +167606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: VariantParam.Array.data[0].Param
-      value: 4187133155150921875
+      value: 4187133197356105842
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: VariantParam.Array.data[1].Param
@@ -167588,6 +167633,10 @@ PrefabInstance:
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[Unity.Cinemachine.CinemachineCamera, Unity.Cinemachine]]'
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: 'managedReferences[4187133197356105842]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: 'managedReferences[8498091935808094320]'
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
@@ -167611,6 +167660,10 @@ PrefabInstance:
       propertyPath: managedReferences[4187133155150921875].Value
       value: 
       objectReference: {fileID: 591154639}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: managedReferences[4187133197356105842].Value
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: managedReferences[8498091935808094320].value
       value: 
@@ -215259,7 +215312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: 'managedReferences[1001]'
@@ -215268,6 +215321,10 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1000].Value
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].Key
+      value: Binding Object
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[1].Key
@@ -215279,11 +215336,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[0].Param
-      value: 4187133170853085282
+      value: 4187133197356105839
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[1].Param
-      value: 4187133170853085283
+      value: 4187133197356105835
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[2].Param
@@ -215310,6 +215367,22 @@ PrefabInstance:
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105833]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105834]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105835]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[SAB.EntityAgent.BrainType, Assembly-CSharp]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105839]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1460416025904545875].value
       value: 3
       objectReference: {fileID: 0}
@@ -215332,6 +215405,22 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[4187133170853085283].Value
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105833].Value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105834].Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105835].Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105839].Value
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 891672145681292730, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_Mesh
@@ -229333,8 +229422,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 1062274788}
     m_Modifications:
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: _prevSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: IsDeactivate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: BindingSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Param
+      value: 4187133197356105843
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: 'managedReferences[4187133197356105843]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: managedReferences[4187133197356105843].Value
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 130183300182124914, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: m_LocalPosition.x
@@ -237942,7 +238059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: 'managedReferences[1001]'
@@ -237951,6 +238068,10 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1000].Value
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].Key
+      value: Binding Object
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[1].Key
@@ -237962,11 +238083,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[0].Param
-      value: 4187133170853085275
+      value: 4187133197356105840
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[1].Param
-      value: 4187133170853085276
+      value: 4187133197356105832
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[2].Param
@@ -237993,6 +238114,34 @@ PrefabInstance:
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105827]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105828]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105829]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105830]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105831]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[System.Int32, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105832]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[SAB.EntityAgent.BrainType, Assembly-CSharp]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105840]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1460416025904545875].value
       value: 10
       objectReference: {fileID: 0}
@@ -238015,6 +238164,34 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[4187133170853085276].Value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105827].Value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105828].Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105829].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105830].Value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105831].Value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105832].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105840].Value
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 891672145681292730, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_Mesh
@@ -238148,6 +238325,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: e5950027d03d4d5488bfa6c720fc89dc, type: 2}
+    - target: {fileID: 7881329875821641783, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: _brainType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7881329875821641783, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: _stats._chacterID
       value: 10
@@ -242593,11 +242774,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[0].Key
-      value: NPCID
+      value: Binding Slot
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[1].Key
@@ -242609,7 +242790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[0].Param
-      value: 4187133155150921881
+      value: 4187133197356105838
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[1].Param
@@ -242737,6 +242918,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: 'managedReferences[4187133155150921882]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[SAB.Cutscene.UniqueEntityType, Assembly-CSharp]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105837]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: 'managedReferences[4187133197356105838]'
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[SAB.Cutscene.UniqueEntityType, Assembly-CSharp]]'
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
@@ -242869,6 +243058,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[4187133155150921882].Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105837].Value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: managedReferences[4187133197356105838].Value
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1124869990919818914, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
@@ -253775,8 +253972,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 1062274788}
     m_Modifications:
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: _prevSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: IsDeactivate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: BindingSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Param
+      value: 4187133197356105845
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: 'managedReferences[4187133197356105845]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: managedReferences[4187133197356105845].Value
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 130183300182124914, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: m_LocalPosition.x
@@ -300086,6 +300311,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056174314}
   m_Mesh: {fileID: -65089136688577580, guid: fb0559a36ae9650449b6e3c26d5076a5, type: 3}
+--- !u!1 &1056735459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056735460}
+  m_Layer: 0
+  m_Name: 001
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1056735460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056735459}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1953827895}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056759448
 GameObject:
   m_ObjectHideFlags: 0
@@ -343057,7 +343313,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 584736224}
+    m_TransformParent: {fileID: 131256357}
     m_Modifications:
     - target: {fileID: 4484955559739131829, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -343077,7 +343333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4484955559739131829, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4484955559739131829, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_LocalRotation.y
@@ -352853,7 +353109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _variantParam.Array.size
@@ -375045,7 +375301,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 584736224}
+    m_TransformParent: {fileID: 131256357}
     m_Modifications:
     - target: {fileID: 4484955559739131829, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -375073,7 +375329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4484955559739131829, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4484955559739131829, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -422216,13 +422472,41 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: _prevSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: IsDeactivate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: BindingSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParam.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParam.Array.data[0].Key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParam.Array.data[0].Param
+      value: 4187133197356105844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: 'managedReferences[4187133197356105844]'
+      value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: managedReferences[1460416025904545879].value
       value: 
       objectReference: {fileID: 1508547416}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: managedReferences[4187133197356105844].Value
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8734881339218056248, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.2599945
@@ -547593,6 +547877,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953723735}
   m_Mesh: {fileID: 7895332203970146629, guid: f222748f1796b2e49a56a2fbf7563247, type: 3}
+--- !u!1 &1953827894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1953827895}
+  m_Layer: 0
+  m_Name: Entrance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1953827895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953827894}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1056735460}
+  m_Father: {fileID: 584736224}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1954129117
 GameObject:
   m_ObjectHideFlags: 0

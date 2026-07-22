@@ -18,8 +18,9 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 {
     [SerializeField]
     private Transform _attackOrigin;
-
     private int _instanceID;
+    [SerializeField]
+    private BrainType _brainType;
     [SerializeField]
     private CharacterStats _stats;
     private StateContext _stateContext;
@@ -48,6 +49,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public int ReceiverID
     {
         get => _instanceID;
+    }
+
+    public BrainType BrainType
+    {
+        get => _brainType;
     }
 
     public CharacterStats Stats
@@ -232,6 +238,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public void OnOwnerChanged(BrainType type)
     {
+        _brainType = type;
         _body.OnOwnerChanged(type == BrainType.Player);
     }
 

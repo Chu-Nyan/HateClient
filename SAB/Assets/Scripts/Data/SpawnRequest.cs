@@ -1,17 +1,20 @@
 ﻿using SAB.Cutscene;
+using SAB.EntityAgent;
 using UnityEngine;
 
 namespace SAB.Unit
 {
     public class SpawnRequest : ICutscenePreset
     {
-        public int ID;
+        public int UnitID;
+        public BrainType BrainType;
         public Vector3 Position;
         public Quaternion Rotation;
 
-        public SpawnRequest(int id, Vector3 position, Quaternion rotation)
+        public SpawnRequest(int unitId, BrainType brainType, Vector3 position, Quaternion rotation)
         {
-            ID = id;
+            UnitID = unitId;
+            BrainType = brainType;
             Position = position;
             Rotation = rotation;
         }

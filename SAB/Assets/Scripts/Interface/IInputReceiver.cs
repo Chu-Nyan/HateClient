@@ -6,6 +6,7 @@
 public interface IInputReceiver
 {
     public int ReceiverID { get; }
+    public BrainType BrainType { get; }
 
     public void OnOwnerChanged(BrainType isPlayer);
 }
