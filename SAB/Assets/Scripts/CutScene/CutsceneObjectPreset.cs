@@ -19,7 +19,6 @@ namespace SAB.Cutscene
         public CutsceneObjectType Type;
         public BindingSource BindingSource;
         public bool IsPersistent;
-        public List<VariantParamPair> VariantParam;
 
         [SerializeField, HideInInspector]
         private CutsceneObjectType _prevType = CutsceneObjectType.SingleMesh;
@@ -94,13 +93,13 @@ namespace SAB.Cutscene
                 if (item.Key != key)
                     continue;
 
-                if (item.Param.GetValue() is not T value)
-                    throw new System.Exception($"{gameObject.name}:  {item.Key} is not {typeof(T).Name}");
+                //if (item.Param.GetValue() is not T value)
+                throw new System.Exception($"{gameObject.name}:  {item.Key} is not {typeof(T).Name}");
 
                 return value;
             }
 
-            throw new System.Exception($"{gameObject.name}: {key} not found");
+            throw new Exception($"{gameObject.name}: {key} not found");
         }
 
         private void TryAddParam<T>(string key, T value)
@@ -108,7 +107,6 @@ namespace SAB.Cutscene
             if (Contains(key) == true)
                 return;
 
-            VariantParam.Add(new VariantParamPair(key, new VariantParam<T>(value)));
         }
 
         private bool Contains(string key)
