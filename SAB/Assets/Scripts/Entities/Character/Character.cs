@@ -62,7 +62,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         get => _stats;
     }
 
-    public List<SkillHandler> Skills
+    public List<SkillKernel> Skills
     {
         get => _combatSys.SkillList;
     }
@@ -122,7 +122,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void SetupStats(BaseStats baseStats)
     {
         _stats.SetBaseData(baseStats);
-        var skill = SkillGenerator.Instance.GetSkill(1);
+        var skill = SkillFactory.Instance.CreateKernel(1);
         _combatSys.AddSkill(skill);
         _combatSys.SetFaction(baseStats.Faction);
     }

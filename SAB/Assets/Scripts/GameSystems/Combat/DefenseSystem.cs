@@ -30,7 +30,7 @@ namespace SAB.GameSystem
 
         public void Attack(AttackContext context, HitResult hit)
         {
-            SkillSequence sequence = SkillGenerator.Instance.GenerateSequence(context, hit);
+            SkillSequence sequence = SkillFactory.Instance.CreateSequence(context, hit);
             _sequences.Add(sequence);
         }
 

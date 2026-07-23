@@ -12,11 +12,11 @@ namespace SAB.GameSystem
 
         private readonly int _instigatorID;
         private readonly Transform _origin;
-        private readonly List<SkillHandler> _skillList;
+        private readonly List<SkillKernel> _skillList;
         private readonly List<int> _used;
         private FactionType _faction;
 
-        public List<SkillHandler> SkillList
+        public List<SkillKernel> SkillList
         {
             get => _skillList;
         }
@@ -24,7 +24,7 @@ namespace SAB.GameSystem
         public OffenseSystem(int instigatorID, Transform origin)
         {
             _instigatorID = instigatorID;
-            _skillList = new List<SkillHandler>();
+            _skillList = new List<SkillKernel>();
             _used = new List<int>();
             _origin = origin;
         }
@@ -49,7 +49,7 @@ namespace SAB.GameSystem
             }
         }
 
-        public void AddSkill(SkillHandler skill)
+        public void AddSkill(SkillKernel skill)
         {
             _skillList.Add(skill);
         }
@@ -60,7 +60,7 @@ namespace SAB.GameSystem
             var dir = targetPoint - _origin.position;
             dir.y = 0f;
             dir.Normalize();
-            SkillObjectFactory.Instance.Set(_instigatorID, context, _origin.position, dir);
+            SkillFactory.Instance.CreateObject(_instigatorID, context, _origin.position, dir);
         }
 
         public AniEventData TriggerAttackAndGetAniEventData(float damage, int index, Vector3 targetPoint)

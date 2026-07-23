@@ -1,6 +1,7 @@
 ﻿using Chu.Collision;
 using Chu.Utility.Unity;
 using SAB.GameSystem;
+using System;
 using UnityEngine;
 
 namespace SAB.Skill
@@ -19,6 +20,8 @@ namespace SAB.Skill
         private Vector3 _dir;
         private int _logicStep;
         private float _timer;
+
+        public event Action<SkillObject> Destroyed;
 
         public NyanCollider Collider
         {
@@ -84,8 +87,10 @@ namespace SAB.Skill
 
         public void SetActive(bool value)
         {
-            gameObject.SetActive(value);
+            Destroyed?.Invoke(this);
+            Destroyed = null;
             _nyanCollider.SetActive(value);
+            gameObject.SetActive(value);
         }
 
         private void ChangeShape(int step)

@@ -59,9 +59,8 @@ namespace SAB.GameSystem
             new InputManager();
 
             new AIGenerator();
-            new SkillObjectFactory();
             new CharacterFactory(DataBase.Instance);
-            new SkillGenerator(DataBase.Instance);
+            new SkillFactory(DataBase.Instance.SkillRepo, _worldProfile.FactionTable);
             new ItemFactory(DataBase.Instance);
             new UIManager();
         }
@@ -78,7 +77,6 @@ namespace SAB.GameSystem
         private void InitStatic()
         {
             InputManager.Instance.SetActive(true);
-            SkillObjectFactory.Instance.Init(_worldProfile.FactionTable);
             CharacterFactory.Instance.Init(_agentController, _entityContainer);
         }
 

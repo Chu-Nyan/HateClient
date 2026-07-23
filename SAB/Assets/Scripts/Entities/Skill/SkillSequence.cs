@@ -8,8 +8,8 @@ namespace SAB.Skill
     /// </summary>
     public class SkillSequence
     {
-        private AttackContext _context;
-        private List<ISkillStep> _steps;
+        private readonly AttackContext _context;
+        private readonly List<ISkillStep> _steps;
 
         private int _currentStepIndex;
         private bool _isDone;
@@ -19,7 +19,7 @@ namespace SAB.Skill
             get => _context;
         }
 
-        public void Refresh(AttackContext context, List<ISkillStep> steps)
+        public SkillSequence(AttackContext context, List<ISkillStep> steps)
         {
             _context = context;
             _steps = steps;
@@ -36,7 +36,7 @@ namespace SAB.Skill
             }
             if (_isDone == true)
             {
-                Debug.LogError("완료된 Sequence 진입");
+                Debug.LogWarning("완료된 Sequence 진입");
                 return true;
             }
 

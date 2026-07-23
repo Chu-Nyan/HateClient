@@ -11,7 +11,7 @@ namespace SAB.GameSystem
     {
         public Transform transform { get; }
         public int InstanceID { get; }
-        public List<SkillHandler> Skills { get; }
+        public List<SkillKernel> Skills { get; }
         public void Attack(int skillIndex, Vector3 targetPoint);
         public void SetCombatMode(bool value);
     }

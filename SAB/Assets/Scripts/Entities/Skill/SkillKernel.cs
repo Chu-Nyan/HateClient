@@ -5,7 +5,7 @@ namespace SAB.Skill
     /// <summary>
     /// 스킬의 공용, 개별 정보
     /// </summary>
-    public class SkillHandler
+    public class SkillKernel
     {
         public readonly int ID;
         private SkillData _data;
@@ -26,7 +26,7 @@ namespace SAB.Skill
             get => _data;
         }
 
-        public SkillHandler(int id)
+        public SkillKernel(int id)
         {
             ID = id;
         }
