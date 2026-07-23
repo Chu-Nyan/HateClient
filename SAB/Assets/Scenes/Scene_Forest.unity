@@ -167582,7 +167582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: 'managedReferences[1000]'
@@ -167601,6 +167601,10 @@ PrefabInstance:
       value: VCamFollow
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: _variantParam.Array.data[1].Key
       value: VCamFollow
       objectReference: {fileID: 0}
@@ -167612,6 +167616,14 @@ PrefabInstance:
       propertyPath: VariantParam.Array.data[1].Param
       value: 4187133155150921874
       objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParams._params.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParam.Array.data[0].Script
+      value: 
+      objectReference: {fileID: 1340904209}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: _variantParam.Array.data[0].Param
       value: 8498091935808094322
@@ -167649,6 +167661,10 @@ PrefabInstance:
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
     - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: managedReferences[4187133155150921873].Value
       value: 
       objectReference: {fileID: 591154639}
@@ -167676,6 +167692,14 @@ PrefabInstance:
       propertyPath: managedReferences[8498091935808094322].value
       value: 
       objectReference: {fileID: 591154639}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].value.Type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4876373083858789537, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].value.Script
+      value: 
+      objectReference: {fileID: 1340904209}
     - target: {fileID: 130183300182124914, guid: 0acf04104c600ac49a3a993c52ccab34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -242789,6 +242813,10 @@ PrefabInstance:
       value: Binding Slot
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].Type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[0].Param
       value: 4187133197356105838
       objectReference: {fileID: 0}
@@ -242799,6 +242827,18 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParam.Array.data[2].Param
       value: 4187133155150921829
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParams._params.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].Script
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParam.Array.data[0].IntValue
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: 'managedReferences[4187133155150921817]'
@@ -242927,6 +242967,10 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: 'managedReferences[4187133197356105838]'
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[SAB.Cutscene.UniqueEntityType, Assembly-CSharp]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].key
+      value: Binding Slot
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[1460415813939888220].value
@@ -243067,6 +243111,14 @@ PrefabInstance:
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: managedReferences[4187133197356105838].Value
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].value.Type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].value.IntValue
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1124869990919818914, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -353109,7 +353161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: VariantParam.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _variantParam.Array.size
@@ -353117,7 +353169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: VariantParam.Array.data[0].Key
-      value: VCam
+      value: Binding Object
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: VariantParam.Array.data[1].Key
@@ -353134,6 +353186,10 @@ PrefabInstance:
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: VariantParam.Array.data[4].Key
       value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParam.Array.data[0].Type
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _variantParam.Array.data[1].Key
@@ -353159,6 +353215,14 @@ PrefabInstance:
       propertyPath: VariantParam.Array.data[4].Param
       value: 4187133155150921860
       objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParams._params.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParam.Array.data[0].Script
+      value: 
+      objectReference: {fileID: 1214020344}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: _variantParam.Array.data[0].Param
       value: 1460415813939888218
@@ -353280,6 +353344,10 @@ PrefabInstance:
       value: 'Assembly-CSharp Chu.Data.VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
     - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].key
+      value: Binding Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: managedReferences[1460415813939888211].value
       value: 
       objectReference: {fileID: 0}
@@ -353399,6 +353467,14 @@ PrefabInstance:
       propertyPath: managedReferences[8498091935808094327].value
       value: 
       objectReference: {fileID: 1254296751}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].value.Type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570995067703575458, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
+      propertyPath: VariantParams._params.Array.data[0].value.Script
+      value: 
+      objectReference: {fileID: 1214020344}
     - target: {fileID: 8734881339218056248, guid: 3a9630dc2e0518f4db85114ec2da75cf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.13999939
@@ -562925,8 +563001,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007928996}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.079211, y: -0.005890844, z: 0.09230791, w: 0.9925574}
-  m_LocalPosition: {x: 109.86, y: 2.2600002, z: 123.57}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 107.0158, y: 0.91, z: 180.04266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

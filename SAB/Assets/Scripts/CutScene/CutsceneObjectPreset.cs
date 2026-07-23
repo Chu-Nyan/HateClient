@@ -1,56 +1,41 @@
 ﻿using Chu.Data;
 using Chu.Utility.Unity;
 using SAB.Unit;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SAB.Cutscene
 {
     public class CutsceneObjectPreset : MonoBehaviour
     {
-        public const string _meshFilter = "MeshFilter";
-        public const string _vcam = "VCam";
-        public const string _vcamFollow = "VCamFollow";
-        public const string _npcID = "NPCID";
-        public const string _aiType = "AIType";
         public const string _bindingObject = "Binding Object";
         public const string _bindingSlot = "Binding Slot";
 
         public CutsceneObjectType Type;
         public BindingSource BindingSource;
         public bool IsPersistent;
+        public VariableParams VariantParams;
 
         [SerializeField, HideInInspector]
         private CutsceneObjectType _prevType = CutsceneObjectType.SingleMesh;
         [SerializeField, HideInInspector]
         private BindingSource _prevSource = BindingSource.SceneObject;
 
-        public Vector3 Position
-        {
-            get => transform.position;
-        }
-
-        public Quaternion Rotation
-        {
-            get => transform.rotation;
-        }
-
         private void OnValidate()
         {
             if (_prevSource == BindingSource && _prevType == Type)
                 return;
-            if (VariantParam == null)
-                VariantParam = new();
+            if (VariantParams == null)
+                VariantParams = new();
 
-            VariantParam.Clear();
+            VariantParams.Clear();
 
             if (BindingSource == BindingSource.SceneObject)
             {
-                TryAddParam<GameObject>(_bindingObject, null);
+                VariantParams.Add(_bindingObject, ParameterType.Script);
             }
             else if (BindingSource == BindingSource.Slot)
             {
-                TryAddParam(_bindingSlot, UniqueEntityType.Player);
+                VariantParams.Add(_bindingSlot, ParameterType.UniqueEntity);
             }
 
             _prevType = Type;
@@ -84,54 +69,6 @@ namespace SAB.Cutscene
             }
 
             throw new System.Exception($"{gameObject.name}: is not {Type}");
-        }
-
-        public T GetVariantParam<T>(string key)
-        {
-            foreach (var item in VariantParam)
-            {
-                if (item.Key != key)
-                    continue;
-
-                //if (item.Param.GetValue() is not T value)
-                throw new System.Exception($"{gameObject.name}:  {item.Key} is not {typeof(T).Name}");
-
-                return value;
-            }
-
-            throw new Exception($"{gameObject.name}: {key} not found");
-        }
-
-        private void TryAddParam<T>(string key, T value)
-        {
-            if (Contains(key) == true)
-                return;
-
-        }
-
-        private bool Contains(string key)
-        {
-            foreach (var item in VariantParam)
-            {
-                if (item.Key == key)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        [ContextMenu("Print Data Log")]
-        public void PrintDebugLog()
-        {
-            string log = "";
-            foreach (var item in VariantParam)
-            {
-                log += $"{item.Key} : {item.Param}";
-            }
-
-            Debug.Log($"{log}\n{GetCutsceneObjectData(new())}");
         }
     }
 }
