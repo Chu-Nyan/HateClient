@@ -1,4 +1,4 @@
-﻿using SAB.EntityAgent;
+﻿using SAB.Cutscene;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace Chu.Data
     {
         public static readonly Dictionary<ParameterType, Type> EnumTypes = new()
         {
-             { ParameterType.UniqueEntity,typeof(BrainType) }
+             { ParameterType.UniqueEntity,typeof(UniqueEntityType) }
         };
 
         public ParameterType Type;

@@ -22,7 +22,7 @@ namespace SAB.Cutscene
         public Dictionary<int, string> FavoritesById;
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;
-        public Dictionary<int, SpawnRequest> CharacterData;
+        public Dictionary<int, CharacterSpawnRequest> CharacterData;
         public Dictionary<int, SingleMeshData> SingleMeshData;
         public HashSet<int> PersistentObjects;
 
@@ -135,7 +135,7 @@ namespace SAB.Cutscene
                 case VCamFollowData follow:
                     AddDataArray(FollowData, id, follow);
                     break;
-                case SpawnRequest character:
+                case CharacterSpawnRequest character:
                     AddDataArray(CharacterData, id, character);
                     break;
                 case SingleMeshData mesh:

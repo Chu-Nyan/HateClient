@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+
 namespace SAB.Cutscene
 {
     public class DialogMarker : Marker, INotification, INotificationOptionProvider

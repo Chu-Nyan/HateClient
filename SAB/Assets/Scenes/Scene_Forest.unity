@@ -243182,7 +243182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 261316142163266750, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: VariantParams._params.Array.data[0].value.IntValue
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1124869990919818914, guid: 5a7b1ed12ca728241863a75d0f55f0b3, type: 3}
       propertyPath: m_LocalPosition.x

@@ -50,9 +50,9 @@ namespace SAB.Cutscene
             {
                 return new VCamStaticData(transform.position, transform.rotation, vcamStatic.CinemachineCamera.Lens.FieldOfView);
             }
-            else if (Target is Character acter)
+            else if (Target is global::Character acter)
             {
-                return new SpawnRequest(acter.Stats.CharacterID, acter.BrainType, transform.position, transform.rotation);
+                return new CharacterSpawnRequest(acter.Stats.CharacterID, acter.BrainType, transform.position, transform.rotation);
             }
 
             throw new System.Exception($"{gameObject.name}, {Target.GetType().Name}: not supported");

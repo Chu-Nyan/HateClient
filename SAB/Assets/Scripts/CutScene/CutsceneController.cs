@@ -51,6 +51,7 @@ namespace SAB.Cutscene
             BindingTrack(data);
 
             _director.time = 0;
+            _director.Evaluate();
             _director.Play();
         }
 
@@ -135,7 +136,7 @@ namespace SAB.Cutscene
                 else if (track is InGameTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, _objectByBindingID[id].transform);
+                    _director.SetGenericBinding(track, (MonoBehaviour)_objectByBindingID[id]);
                 }
             }
         }

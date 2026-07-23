@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Prefab
   m_GUID: a48b7bc929decec4c95559414bee5239
   m_SerializeEntries:
+  - m_GUID: 5a7b1ed12ca728241863a75d0f55f0b3
+    m_Address: Human_CutScene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bca2a66fad3f7ed459c9584eb64ad869
     m_Address: VCamFollow
     m_ReadOnly: 0

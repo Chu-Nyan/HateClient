@@ -32,7 +32,7 @@ public class CutsceneFacade
 
     private void PrepareCharacter(CutsceneData cutsceneData)
     {
-        if (cutsceneData.SpawnContainer.TryGetTable<SpawnRequest>(out var datas) == true)
+        if (cutsceneData.SpawnContainer.TryGetTable<CharacterSpawnRequest>(out var datas) == true)
         {
             foreach (var item in datas)
             {
@@ -45,7 +45,10 @@ public class CutsceneFacade
         foreach (var item in cutsceneData.SceneObjectBindingIDs)
         {
             var obj = _entityContainer.ObjectByFavorite[item.Value.ToString()];
-            _cutscene.RegisterExternalObject(item.Key, obj);
+            if (obj is ICutsceneObject cutsceneobj)
+            {
+                _cutscene.RegisterExternalObject(item.Key, cutsceneobj);
+            }
         }
 
         foreach (var item in cutsceneData.BindingSlots)
@@ -56,7 +59,10 @@ public class CutsceneFacade
                 obj = CharacterFactory.Instance.Create(BrainType.None, 1, Vector3.zero, Quaternion.identity);
             }
 
-            _cutscene.RegisterExternalObject(item.Key, obj);
+            if (obj is ICutsceneObject cutsceneobj)
+            {
+                _cutscene.RegisterExternalObject(item.Key, cutsceneobj);
+            }
         }
     }
 

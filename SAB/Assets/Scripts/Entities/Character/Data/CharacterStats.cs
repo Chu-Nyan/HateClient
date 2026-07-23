@@ -3,11 +3,6 @@ using UnityEngine;
 
 namespace SAB.Unit
 {
-    public enum StatType
-    {
-        HP, ATK, PDEF, MDEF, SPD
-    }
-
     [Serializable]
     public class CharacterStats : IHasStats
     {
@@ -62,53 +57,5 @@ namespace SAB.Unit
         {
             return _finalStats[(int)StatType.ATK];
         }
-    }
-}
-
-public class StateHanlder
-{
-    private StateContext _stateData;
-
-    public StateContext StateData
-    {
-        get => _stateData;
-    }
-
-    public StateHanlder()
-    {
-        _stateData = new();
-    }
-}
-
-public class StateContext
-{
-    private bool _isMoveing;
-    private bool _isAttacking;
-
-    private bool _isInCombat;
-    private float _remainBattleTime;
-
-    public bool IsMoveing
-    {
-        get => _isMoveing;
-        set => _isMoveing = value;
-    }
-
-    public bool IsCombatMode
-    {
-        get => _isInCombat;
-        set => _isInCombat = value;
-    }
-
-    public float RemainBattileTime
-    {
-        get => _remainBattleTime;
-        set => _remainBattleTime = value;
-    }
-
-    public bool IsAttacking
-    {
-        get => _isAttacking;
-        set => _isAttacking = value;
     }
 }

@@ -14,10 +14,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ISpeachable, ICutsceneObject
 {
-    [SerializeField]
-    private Transform _attackOrigin;
     private int _instanceID;
     [SerializeField]
     private BrainType _brainType;
@@ -30,14 +29,16 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     private NavMeshAgent _nav;
     [SerializeField]
     private MeshSlotHub _meshHub;
-    [SerializeField]
-    private Transform _speechAnchor;
     private CharacterAnimator _animator;
 
-    private CharacterBody _body;
-    private OffenseSystem _combatSystem;
-    private DefenseSystem _defenseSystem;
+    private OffenseSystem _combatSys;
+    private DefenseSystem _defenseSys;
     private EquipmentSystem _equipmentSys;
+
+    [SerializeField]
+    private Transform _attackOrigin;
+    [SerializeField]
+    private Transform _speechAnchor;
 
     private event Action<Character> Deactivated;
 
@@ -63,7 +64,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     public List<Skill> Skills
     {
-        get => _combatSystem.SkillList;
+        get => _combatSys.SkillList;
     }
 
     public FactionType FactionType
@@ -76,16 +77,15 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _instanceID = UniqueIDProvider.Next();
 
         _stateContext = new StateContext();
-        _defenseSystem = new DefenseSystem();
-        _combatSystem = new OffenseSystem(_instanceID, _attackOrigin);
-        _body = new(_instanceID, transform.position.ToVector2XZ(), transform.eulerAngles.y, this);
+        _defenseSys = new DefenseSystem(_instanceID, transform.position.ToVector2XZ(), transform.eulerAngles.y, this);
+        _combatSys = new OffenseSystem(_instanceID, _attackOrigin);
         _equipmentSys = new();
         _animator = new CharacterAnimator(GetComponent<Animator>());
         _stateMachine = GenerateStateMachine();
 
         _stateMachine.Setup(_stateContext);
         _animator.RegisterAnimationEvent(AniState.Attack, "AttackFinished", new AniEventData(), 1, a => _stateContext.IsAttacking = false);
-        _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSystem.AttackWithAnimator);
+        _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSys.AttackWithAnimator);
 
         SetPositionWithNavMash(transform.position);
     }
@@ -97,12 +97,12 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         {
             var pos = transform.position.ToVector2XZ();
             var eulerY = transform.eulerAngles.y;
-            _body.OnPositionChanged(pos, eulerY);
+            _defenseSys.OnPositionChanged(pos, eulerY);
         }
 
         _stateMachine.Tick(_stateContext);
-        _combatSystem.Tick();
-        _defenseSystem.Tick(_stats);
+        _combatSys.Tick();
+        _defenseSys.Tick(_stats);
         _animator.Tick(_stateContext, 1); // 1 << 이동속도 퍼센트로 넣기
     }
 
@@ -123,8 +123,8 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     {
         _stats.SetBaseData(baseStats);
         var skill = SkillGenerator.Instance.GetSkill(1);
-        _combatSystem.AddSkill(skill);
-        _combatSystem.SetFaction(baseStats.Faction);
+        _combatSys.AddSkill(skill);
+        _combatSys.SetFaction(baseStats.Faction);
     }
 
     public void SetDestination(Vector3 destination)
@@ -166,7 +166,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     {
         if (_stateContext.IsAttacking == true)
             return;
-        if (_combatSystem.IsUsed(skillIndex) == true)
+        if (_combatSys.IsUsed(skillIndex) == true)
             return;
 
         _stateContext.IsAttacking = true;
@@ -174,13 +174,13 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         transform.rotation = Quaternion.LookRotation(targetPoint - transform.position);
         _animator.SetAttack();
         float dmg = _stats.GetDamage();
-        AniEventData data = _combatSystem.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
+        AniEventData data = _combatSys.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
         _animator.ChangeEventData(AniState.Attack, "BasicAttack", data);
     }
 
     public void Defend(AttackContext attack, HitResult hit)
     {
-        _defenseSystem.Attack(attack, hit);
+        _defenseSys.Attack(attack, hit);
 
         if (_stats.IsDead == true)
             Die();
@@ -212,11 +212,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         gameObject.SetActive(value);
     }
 
-    public void SetActiveAnimator(bool value)
-    {
-
-    }
-
     public void RegisterDeactivated(Action<Character> callback)
     {
         Deactivated += callback;
@@ -239,16 +234,15 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     public void OnOwnerChanged(BrainType type)
     {
         _brainType = type;
-        _body.OnOwnerChanged(type == BrainType.Player);
+        _defenseSys.OnOwnerChanged(type == BrainType.Player);
     }
 
     public void SetCutscenePreset(ICutscenePreset data)
     {
-        if (data is not SpawnRequest request)
+        if (data is not CharacterSpawnRequest request)
             throw new Exception(data.GetType().ToString());
 
-        transform.position = request.Position;
-        transform.rotation = request.Rotation;
+        transform.SetPositionAndRotation(request.Position, request.Rotation);
     }
 
     public void PlayEmote(AnimationClip clip)
