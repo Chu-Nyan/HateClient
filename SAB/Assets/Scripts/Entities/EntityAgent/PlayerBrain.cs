@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SAB.GameSystem;
+using UnityEngine;
 
 namespace SAB.EntityAgent
 {
@@ -76,7 +77,6 @@ namespace SAB.EntityAgent
 
         private void BasicAttack(Vector2 screenPoint)
         {
-            // 캐릭터가 공격 당했을 때도 전투모드 들어가게 추가해야함
             _combatModeDecider.SetActivate(true);
             _combatReceiver.SetCombatMode(true);
             Ray ray = Camera.main.ScreenPointToRay(screenPoint);

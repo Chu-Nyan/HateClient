@@ -1,48 +1,51 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class Faction
+namespace SAB.GameSystem
 {
-    [SerializeField]
-    private FactionRelation[] _factionRelations;
-    [SerializeField]
-    private int _hostilityMask;
-
-    public FactionRelation this[int index]
+    [Serializable]
+    public class Faction
     {
-        get => _factionRelations[index];
-    }
+        [SerializeField]
+        private FactionRelation[] _factionRelations;
+        [SerializeField]
+        private int _hostilityMask;
 
-    public FactionRelation this[FactionType type]
-    {
-        get => _factionRelations[(int)type];
-    }
+        public FactionRelation this[int index]
+        {
+            get => _factionRelations[index];
+        }
 
-    public int Count
-    {
-        get => _factionRelations.Length;
-    }
+        public FactionRelation this[FactionType type]
+        {
+            get => _factionRelations[(int)type];
+        }
 
-    public int HostilityMask
-    {
-        get => _hostilityMask;
-    }
+        public int Count
+        {
+            get => _factionRelations.Length;
+        }
 
-    public Faction(int factionCount)
-    {
-        _factionRelations = new FactionRelation[factionCount];
-    }
+        public int HostilityMask
+        {
+            get => _hostilityMask;
+        }
 
-    public void SetRelation(FactionType type, FactionRelation relation)
-    {
-        _factionRelations[(int)type] = relation;
+        public Faction(int factionCount)
+        {
+            _factionRelations = new FactionRelation[factionCount];
+        }
 
-        int bit = 1 << (int)type;
+        public void SetRelation(FactionType type, FactionRelation relation)
+        {
+            _factionRelations[(int)type] = relation;
 
-        if (relation == FactionRelation.Hostile)
-            _hostilityMask |= bit;
-        else
-            _hostilityMask &= ~bit;
+            int bit = 1 << (int)type;
+
+            if (relation == FactionRelation.Hostile)
+                _hostilityMask |= bit;
+            else
+                _hostilityMask &= ~bit;
+        }
     }
 }

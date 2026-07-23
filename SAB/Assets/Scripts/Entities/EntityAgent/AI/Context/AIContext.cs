@@ -1,4 +1,5 @@
 ﻿using Chu.AI;
+using SAB.GameSystem;
 
 namespace SAB.EntityAgent.AI.Context
 {

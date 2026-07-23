@@ -1,6 +1,6 @@
 ﻿using Chu.AI;
 
-namespace SAB.Unit.State
+namespace SAB.Unit
 {
     public class StateResolver : IMachineStateResolver<CharacterState, StateContext>
     {

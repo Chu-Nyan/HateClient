@@ -1,4 +1,4 @@
-﻿namespace SAB.Unit.Combat
+﻿namespace SAB.Skill
 {
     public interface ISkillStep
     {

@@ -5,15 +5,15 @@ using Chu.Utility;
 using Chu.Utility.Unity;
 using SAB.Cutscene;
 using SAB.EntityAgent;
+using SAB.GameSystem;
 using SAB.Item;
+using SAB.Skill;
+using SAB.UI;
 using SAB.Unit;
-using SAB.Unit.Combat;
-using SAB.Unit.State;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
 
 public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ISpeachable, ICutsceneObject
 {
@@ -62,7 +62,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         get => _stats;
     }
 
-    public List<Skill> Skills
+    public List<SkillHandler> Skills
     {
         get => _combatSys.SkillList;
     }

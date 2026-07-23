@@ -1,8 +1,9 @@
 ﻿using Chu.Collision;
 using Chu.Utility.Unity;
+using SAB.GameSystem;
 using UnityEngine;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     /// <summary>
     /// 스킬의 이펙트, 환경 오브젝트 충돌 처리

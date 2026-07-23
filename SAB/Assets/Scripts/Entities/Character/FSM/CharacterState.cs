@@ -1,4 +1,4 @@
-﻿namespace SAB.Unit.State
+﻿namespace SAB.Unit
 {
     public enum CharacterState
     {

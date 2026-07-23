@@ -1,6 +1,4 @@
-﻿using Chu.Collision;
-
-namespace SAB.Unit.Combat
+﻿namespace SAB.Skill
 {
     /// <summary>
     /// 스킬 공용 정보

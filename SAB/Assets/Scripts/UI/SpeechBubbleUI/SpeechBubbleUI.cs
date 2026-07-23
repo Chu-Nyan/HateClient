@@ -1,55 +1,58 @@
 using Chu.Core;
 using UnityEngine;
 
-public class SpeechBubbleUI : BaseUI
+namespace SAB.UI
 {
-    [SerializeField]
-    private SpeechBubbleUIView _view;
-    private SpeechBubbleUIModel _model;
-
-    private void Awake()
+    public class SpeechBubbleUI : BaseUI
     {
-        _model = new();
-    }
+        [SerializeField]
+        private SpeechBubbleUIView _view;
+        private SpeechBubbleUIModel _model;
 
-    private void Update()
-    {
-        _model.Tick(Time.deltaTime);
-
-        foreach (var id in _model.StepChanged)
+        private void Awake()
         {
-            string text = ChuEngine.Instance.TextResource[_model.GetCurrentStepTextID(id)];
-            _view.ShowBubble(id, text);
+            _model = new();
         }
 
-        foreach (var id in _model.QueueFinished)
+        private void Update()
         {
-            _model.Remove(id);
-            _view.HideBubble(id);
+            _model.Tick(Time.deltaTime);
+
+            foreach (var id in _model.StepChanged)
+            {
+                string text = ChuEngine.Instance.TextResource[_model.GetCurrentStepTextID(id)];
+                _view.ShowBubble(id, text);
+            }
+
+            foreach (var id in _model.QueueFinished)
+            {
+                _model.Remove(id);
+                _view.HideBubble(id);
+            }
+
+            foreach (var item in _model.AnchorByID)
+            {
+                var pos = RectTransformUtility.WorldToScreenPoint(Camera.main, item.Value.position);
+                _view.SetBubblePosition(item.Key, pos);
+            }
+
+            _model.StepChanged.Clear();
+            _model.QueueFinished.Clear();
         }
 
-        foreach (var item in _model.AnchorByID)
+        public void ShowDialogue(Transform anchor, DialogueData text, bool isOverwrite)
         {
-            var pos = RectTransformUtility.WorldToScreenPoint(Camera.main, item.Value.position);
-            _view.SetBubblePosition(item.Key, pos);
+            _model.AddDialogue(anchor, text, isOverwrite);
         }
 
-        _model.StepChanged.Clear();
-        _model.QueueFinished.Clear();
-    }
+        public override void Show()
+        {
+            gameObject.SetActive(true);
+        }
 
-    public void ShowDialogue(Transform anchor, DialogueData text, bool isOverwrite)
-    {
-        _model.AddDialogue(anchor, text, isOverwrite);
-    }
-
-    public override void Show()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public override void Hide()
-    {
-        gameObject.SetActive(false);
+        public override void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

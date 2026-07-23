@@ -1,6 +1,7 @@
 ﻿using Chu.AI;
 using SAB.EntityAgent.AI.Context;
 using SAB.EntityAgent.AI.StateMachine;
+using SAB.GameSystem;
 using System.Collections.Generic;
 using UnityEngine;
 

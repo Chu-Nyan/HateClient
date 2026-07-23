@@ -3,23 +3,26 @@ using Chu.Utility;
 using System;
 using System.Collections.Generic;
 
-public class UIManager : Singleton<UIManager>
+namespace SAB.UI
 {
-    private readonly Dictionary<Type, BaseUI> _baseUIByID;
-
-    public UIManager() : base()
+    public class UIManager : Singleton<UIManager>
     {
-        _baseUIByID = new();
-    }
+        private readonly Dictionary<Type, BaseUI> _baseUIByID;
 
-    public T GetUI<T>() where T : BaseUI, new()
-    {
-        if (_baseUIByID.TryGetValue(typeof(T), out var ui) == false)
+        public UIManager() : base()
         {
-            ui = AssetManager.GenerateLoadAssetSync<T>(typeof(T).ToString());
-            _baseUIByID[typeof(T)] = ui;
+            _baseUIByID = new();
         }
 
-        return (T)ui;
+        public T GetUI<T>() where T : BaseUI, new()
+        {
+            if (_baseUIByID.TryGetValue(typeof(T), out var ui) == false)
+            {
+                ui = AssetManager.GenerateLoadAssetSync<T>(typeof(T).ToString());
+                _baseUIByID[typeof(T)] = ui;
+            }
+
+            return (T)ui;
+        }
     }
 }

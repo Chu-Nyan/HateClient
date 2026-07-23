@@ -1,9 +1,10 @@
 ﻿using Chu.Collision;
 using Chu.Utility.Unity;
+using SAB.Skill;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SAB.Unit.Combat
+namespace SAB.GameSystem
 {
     public class OffenseSystem
     {
@@ -11,11 +12,11 @@ namespace SAB.Unit.Combat
 
         private readonly int _instigatorID;
         private readonly Transform _origin;
-        private readonly List<Skill> _skillList;
+        private readonly List<SkillHandler> _skillList;
         private readonly List<int> _used;
         private FactionType _faction;
 
-        public List<Skill> SkillList
+        public List<SkillHandler> SkillList
         {
             get => _skillList;
         }
@@ -23,7 +24,7 @@ namespace SAB.Unit.Combat
         public OffenseSystem(int instigatorID, Transform origin)
         {
             _instigatorID = instigatorID;
-            _skillList = new List<Skill>();
+            _skillList = new List<SkillHandler>();
             _used = new List<int>();
             _origin = origin;
         }
@@ -48,7 +49,7 @@ namespace SAB.Unit.Combat
             }
         }
 
-        public void AddSkill(Skill skill)
+        public void AddSkill(SkillHandler skill)
         {
             _skillList.Add(skill);
         }

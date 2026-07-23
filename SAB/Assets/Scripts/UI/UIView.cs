@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public abstract class UIView : MonoBehaviour
+namespace SAB.UI
 {
-    public abstract void SetActive(bool value);
+    public abstract class UIView : MonoBehaviour
+    {
+        public abstract void SetActive(bool value);
+    }
 }

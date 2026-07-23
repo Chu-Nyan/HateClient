@@ -1,5 +1,6 @@
 ﻿using SAB.Cutscene;
 using SAB.EntityAgent;
+using SAB.GameSystem;
 
 namespace SAB.Facade
 {

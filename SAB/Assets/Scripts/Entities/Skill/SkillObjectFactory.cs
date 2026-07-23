@@ -1,8 +1,9 @@
 ﻿using Chu.Core;
 using Chu.Utility;
+using SAB.GameSystem;
 using UnityEngine;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     /// <summary>
     /// 원거리 공격(발사체) 생성

@@ -1,4 +1,4 @@
-﻿namespace SAB.Cutscene
+﻿namespace SAB.GameSystem
 {
     public enum UniqueEntityType
     {

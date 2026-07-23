@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public abstract class BaseUI : MonoBehaviour
+namespace SAB.UI
 {
-    public abstract void Show();
-    public abstract void Hide();
+    public abstract class BaseUI : MonoBehaviour
+    {
+        public abstract void Show();
+        public abstract void Hide();
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     public class InstantSkillStep : ISkillStep
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     public class DoTSkillStep : ISkillStep
     {

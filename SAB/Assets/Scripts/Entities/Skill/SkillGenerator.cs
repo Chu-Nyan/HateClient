@@ -1,9 +1,10 @@
 ﻿using Chu.Utility;
 using SAB.DataManger;
+using SAB.GameSystem;
 using System;
 using System.Collections.Generic;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     public class SkillGenerator : Singleton<SkillGenerator>
     {
@@ -31,9 +32,9 @@ namespace SAB.Unit.Combat
             };
         }
 
-        public Skill GetSkill(int id)
+        public SkillHandler GetSkill(int id)
         {
-            var skill = new Skill(_numbering.GetID());
+            var skill = new SkillHandler(_numbering.GetID());
             skill.Setup(_skillDataByID[id]);
             return skill;
         }

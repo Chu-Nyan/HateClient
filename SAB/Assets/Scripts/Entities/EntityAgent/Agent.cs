@@ -1,4 +1,6 @@
-﻿namespace SAB.EntityAgent
+﻿using SAB.GameSystem;
+
+namespace SAB.EntityAgent
 {
     /// <summary>
     /// 행동 전략과 객체를 입력받아 수행

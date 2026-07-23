@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     /// <summary>
     /// 스킬의 공용, 개별 정보
     /// </summary>
-    public class Skill
+    public class SkillHandler
     {
         public readonly int ID;
         private SkillData _data;
@@ -26,7 +26,7 @@ namespace SAB.Unit.Combat
             get => _data;
         }
 
-        public Skill(int id)
+        public SkillHandler(int id)
         {
             ID = id;
         }

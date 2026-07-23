@@ -1,6 +1,6 @@
 ﻿using Chu.Collision;
 
-namespace SAB.Unit.Combat
+namespace SAB.Skill
 {
     public class CollisionLogicData
     {

@@ -1,16 +1,19 @@
-public class DialogueProgress
+namespace SAB.UI
 {
-    public int ID;
-    public float PlayTime;
-
-    public DialogueProgress(int id, float playTime)
+    public class DialogueProgress
     {
-        ID = id;
-        PlayTime = playTime;
-    }
+        public int ID;
+        public float PlayTime;
 
-    public void Reset()
-    {
-        PlayTime = 0;
+        public DialogueProgress(int id, float playTime)
+        {
+            ID = id;
+            PlayTime = playTime;
+        }
+
+        public void Reset()
+        {
+            PlayTime = 0;
+        }
     }
 }

@@ -1,72 +1,75 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class SpeechBubbleUIModel
+namespace SAB.UI
 {
-    public readonly Dictionary<int, Transform> AnchorByID;
-    public readonly Dictionary<int, Queue<DialogueData>> QueueByID;
-    public readonly Dictionary<int, float> PlayTimeByID;
-
-    public readonly HashSet<int> StepChanged;
-    public readonly HashSet<int> QueueFinished;
-
-    public SpeechBubbleUIModel()
+    public partial class SpeechBubbleUIModel
     {
-        AnchorByID = new();
-        QueueByID = new();
-        PlayTimeByID = new();
+        public readonly Dictionary<int, Transform> AnchorByID;
+        public readonly Dictionary<int, Queue<DialogueData>> QueueByID;
+        public readonly Dictionary<int, float> PlayTimeByID;
 
-        StepChanged = new();
-        QueueFinished = new();
-    }
+        public readonly HashSet<int> StepChanged;
+        public readonly HashSet<int> QueueFinished;
 
-    public void Tick(float time)
-    {
-        foreach (var item in AnchorByID)
+        public SpeechBubbleUIModel()
         {
-            PlayTimeByID[item.Key] += time;
+            AnchorByID = new();
+            QueueByID = new();
+            PlayTimeByID = new();
 
-            var queue = QueueByID[item.Key];
+            StepChanged = new();
+            QueueFinished = new();
+        }
 
-            if (PlayTimeByID[item.Key] >= queue.Peek().Time)
+        public void Tick(float time)
+        {
+            foreach (var item in AnchorByID)
             {
-                queue.Dequeue();
-                if (queue.Count == 0)
-                    QueueFinished.Add(item.Key);
-                else
-                    StepChanged.Add(item.Key);
+                PlayTimeByID[item.Key] += time;
+
+                var queue = QueueByID[item.Key];
+
+                if (PlayTimeByID[item.Key] >= queue.Peek().Time)
+                {
+                    queue.Dequeue();
+                    if (queue.Count == 0)
+                        QueueFinished.Add(item.Key);
+                    else
+                        StepChanged.Add(item.Key);
+                }
             }
         }
-    }
 
-    public void AddDialogue(Transform anchor, DialogueData text, bool isOverwrite)
-    {
-        int id = anchor.name.GetHashCode();
-        if (AnchorByID.TryAdd(id, anchor) == true)
+        public void AddDialogue(Transform anchor, DialogueData text, bool isOverwrite)
         {
-            QueueByID[id] = new();
-            PlayTimeByID[id] = 0;
-        }
-        else if (isOverwrite == true && QueueByID[id].Peek().SequenceID != text.SequenceID)
-        {
-            QueueByID[id].Clear();
+            int id = anchor.name.GetHashCode();
+            if (AnchorByID.TryAdd(id, anchor) == true)
+            {
+                QueueByID[id] = new();
+                PlayTimeByID[id] = 0;
+            }
+            else if (isOverwrite == true && QueueByID[id].Peek().SequenceID != text.SequenceID)
+            {
+                QueueByID[id].Clear();
+                QueueByID[id].Enqueue(text);
+                PlayTimeByID[id] = 0;
+            }
+
             QueueByID[id].Enqueue(text);
-            PlayTimeByID[id] = 0;
+            StepChanged.Add(id);
         }
 
-        QueueByID[id].Enqueue(text);
-        StepChanged.Add(id);
-    }
+        public void Remove(int id)
+        {
+            AnchorByID.Remove(id);
+            QueueByID.Remove(id);
+            PlayTimeByID.Remove(id);
+        }
 
-    public void Remove(int id)
-    {
-        AnchorByID.Remove(id);
-        QueueByID.Remove(id);
-        PlayTimeByID.Remove(id);
-    }
-
-    public string GetCurrentStepTextID(int objID)
-    {
-        return QueueByID[objID].Peek().TextID;
+        public string GetCurrentStepTextID(int objID)
+        {
+            return QueueByID[objID].Peek().TextID;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Chu.Collision;
+using SAB.GameSystem;
 using UnityEngine;
 
 namespace SAB.EntityAgent

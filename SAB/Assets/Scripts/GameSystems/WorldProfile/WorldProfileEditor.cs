@@ -1,23 +1,26 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(WorldProfile))]
-public class WorldProfileEditor : Editor
+namespace SAB.GameSystem
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(WorldProfile))]
+    public class WorldProfileEditor : Editor
     {
-        DrawDefaultInspector();
-
-        var profile = (WorldProfile)target;
-
-        EditorGUILayout.Space();
-
-        if (GUILayout.Button("Update Faction Table"))
+        public override void OnInspectorGUI()
         {
-            profile.FactionTable.UpdateFaction();
+            DrawDefaultInspector();
 
-            EditorUtility.SetDirty(profile);
-            AssetDatabase.SaveAssets();
+            var profile = (WorldProfile)target;
+
+            EditorGUILayout.Space();
+
+            if (GUILayout.Button("Update Faction Table"))
+            {
+                profile.FactionTable.UpdateFaction();
+
+                EditorUtility.SetDirty(profile);
+                AssetDatabase.SaveAssets();
+            }
         }
     }
 }

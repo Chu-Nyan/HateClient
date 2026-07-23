@@ -1,6 +1,6 @@
 ﻿using Chu.AI;
 
-namespace SAB.Unit.State
+namespace SAB.Unit
 {
     public class MovementState : IMachineState<CharacterState, StateContext>
     {

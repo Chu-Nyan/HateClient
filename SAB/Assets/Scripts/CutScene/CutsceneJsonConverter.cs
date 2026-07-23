@@ -2,6 +2,7 @@
 using Chu.Utility.Unity;
 using Newtonsoft.Json;
 using SAB.DataManger;
+using SAB.GameSystem;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting;

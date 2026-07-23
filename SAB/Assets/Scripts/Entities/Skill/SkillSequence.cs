@@ -1,58 +1,60 @@
-﻿using SAB.Unit.Combat;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 스킬의 작동 순서
-/// </summary>
-public class SkillSequence
+namespace SAB.Skill
 {
-    private AttackContext _context;
-    private List<ISkillStep> _steps;
-
-    private int _currentStepIndex;
-    private bool _isDone;
-
-    public AttackContext Context
+    /// <summary>
+    /// 스킬의 작동 순서
+    /// </summary>
+    public class SkillSequence
     {
-        get => _context;
-    }
+        private AttackContext _context;
+        private List<ISkillStep> _steps;
 
-    public void Refresh(AttackContext context, List<ISkillStep> steps)
-    {
-        _context = context;
-        _steps = steps;
-        _currentStepIndex = 0;
-        _isDone = false;
-    }
+        private int _currentStepIndex;
+        private bool _isDone;
 
-    public bool TickAndCheck(IHasStats stats)
-    {
-        if (_steps == null || _steps.Count == 0)
+        public AttackContext Context
         {
-            Debug.LogError("SkillStep이 존재하지 않음");
+            get => _context;
+        }
+
+        public void Refresh(AttackContext context, List<ISkillStep> steps)
+        {
+            _context = context;
+            _steps = steps;
+            _currentStepIndex = 0;
+            _isDone = false;
+        }
+
+        public bool TickAndCheck(IHasStats stats)
+        {
+            if (_steps == null || _steps.Count == 0)
+            {
+                Debug.LogError("SkillStep이 존재하지 않음");
+                return true;
+            }
+            if (_isDone == true)
+            {
+                Debug.LogError("완료된 Sequence 진입");
+                return true;
+            }
+
+            while (_currentStepIndex < _steps.Count)
+            {
+                var step = _steps[_currentStepIndex];
+
+                if (step.IsDone == false)
+                    step.Tick(stats);
+
+                if (step.IsDone == true)
+                    _currentStepIndex++;
+                else
+                    return false;
+            }
+
+            _isDone = true;
             return true;
         }
-        if (_isDone == true)
-        {
-            Debug.LogError("완료된 Sequence 진입");
-            return true;
-        }
-
-        while (_currentStepIndex < _steps.Count)
-        {
-            var step = _steps[_currentStepIndex];
-
-            if (step.IsDone == false)
-                step.Tick(stats);
-
-            if (step.IsDone == true)
-                _currentStepIndex++;
-            else
-                return false;
-        }
-
-        _isDone = true;
-        return true;
     }
 }

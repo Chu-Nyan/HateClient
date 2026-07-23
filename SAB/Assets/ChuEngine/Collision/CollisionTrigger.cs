@@ -1,9 +1,9 @@
-﻿using Chu.Collision;
-using Chu.Data;
+﻿using Chu.Data;
 using Chu.Utility;
+using SAB.GameSystem;
 using System;
 
-namespace SAB.Cutscene
+namespace Chu.Collision
 {
     public class CollisionTrigger : INyanCollisionProvider
     {

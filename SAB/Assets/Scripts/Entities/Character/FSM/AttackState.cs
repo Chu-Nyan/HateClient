@@ -1,7 +1,7 @@
 ﻿using Chu.AI;
 using UnityEngine;
 
-namespace SAB.Unit.State
+namespace SAB.Unit
 {
     public class AttackState : IMachineState<CharacterState, StateContext>
     {
