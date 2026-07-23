@@ -2,11 +2,17 @@ using Chu.Core;
 using Chu.Utility;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SAB.UI
 {
     public class UIManager : Singleton<UIManager>
     {
+        private static readonly Dictionary<Type, string> _assetPathByType = new()
+        {
+            {typeof(SpeechBubbleUI),"SpeechBubbleUI" }
+        };
+
         private readonly Dictionary<Type, BaseUI> _baseUIByID;
 
         public UIManager() : base()
@@ -16,9 +22,16 @@ namespace SAB.UI
 
         public T GetUI<T>() where T : BaseUI, new()
         {
-            if (_baseUIByID.TryGetValue(typeof(T), out var ui) == false)
+            Type type = typeof(T);
+            if (_baseUIByID.TryGetValue(type, out var ui) == false)
             {
-                ui = AssetManager.GenerateLoadAssetSync<T>(typeof(T).ToString());
+                if (_assetPathByType.TryGetValue(type, out string path) == false)
+                {
+                    path = type.Name;
+                    Debug.LogWarning($"{path}, not registered");
+                }
+
+                ui = AssetManager.GenerateLoadAssetSync<T>(path);
                 _baseUIByID[typeof(T)] = ui;
             }
 
