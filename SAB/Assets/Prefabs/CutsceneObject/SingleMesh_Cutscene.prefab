@@ -60,6 +60,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3012806129297284256}
   m_SourcePrefab: {fileID: 100100000, guid: d5920388d2841eb48b562b824f9d526d, type: 3}
+--- !u!114 &1742320505263119120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2000345858855828127, guid: d5920388d2841eb48b562b824f9d526d, type: 3}
+  m_PrefabInstance: {fileID: 283534024432951695}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345496827475861688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e29dd8e405338b43ab64237a839f955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2345496827475861688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2550075609112969527, guid: d5920388d2841eb48b562b824f9d526d, type: 3}
@@ -77,19 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5eca32368a0434c8d2cb39dc141a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
+  Target: {fileID: 1742320505263119120}
   BindingSource: 0
-  BindingObject: {fileID: 0}
-  BindingSlot: 0
-  _variantParam:
-  - Key: MeshFilter
-    Param:
-      rid: 1460416025904545877
-  _prevType: 2
-  references:
-    version: 2
-    RefIds:
-    - rid: 1460416025904545877
-      type: {class: 'VariantParam`1[[UnityEngine.MeshFilter, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
-      data:
-        value: {fileID: 0}
+  IsPersistent: 0
+  VariantParams:
+    _params: []
+  _prevSource: 0

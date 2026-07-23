@@ -1114,19 +1114,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5eca32368a0434c8d2cb39dc141a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 3
+  Target: {fileID: 7881329875821641783}
   BindingSource: 0
-  BindingObject: {fileID: 0}
-  BindingSlot: 0
-  _variantParam:
-  - Key: NPCID
-    Param:
-      rid: 1460416025904545875
-  _prevType: 3
-  references:
-    version: 2
-    RefIds:
-    - rid: 1460416025904545875
-      type: {class: 'VariantParam`1[[System.Int32, mscorlib]]', ns: Chu.Data, asm: Assembly-CSharp}
-      data:
-        value: 0
+  IsPersistent: 0
+  VariantParams:
+    _params: []
+  _prevSource: 0
+--- !u!114 &7881329875821641783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6683781507500869920, guid: 5b67c4039bfa24f4a9cc6ad278369c30, type: 3}
+  m_PrefabInstance: {fileID: 3576302434486569239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868594457377889653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb8939dee9a0684b9d2eb630d914960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

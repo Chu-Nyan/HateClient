@@ -77,26 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5eca32368a0434c8d2cb39dc141a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Target: {fileID: 7570995067703575458}
   BindingSource: 0
-  BindingObject: {fileID: 0}
-  BindingSlot: 0
-  _variantParam:
-  - Key: VCam
-    Param:
-      rid: 1460416025904545879
-  - Key: VCamFollow
-    Param:
-      rid: 1460416025904545880
-  _prevType: 1
-  references:
-    version: 2
-    RefIds:
-    - rid: 1460416025904545879
-      type: {class: 'VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
-      data:
-        value: {fileID: 0}
-    - rid: 1460416025904545880
-      type: {class: 'VariantParam`1[[UnityEngine.Component, UnityEngine.CoreModule]]', ns: Chu.Data, asm: Assembly-CSharp}
-      data:
-        value: {fileID: 0}
+  IsPersistent: 0
+  VariantParams:
+    _params: []
+  _prevSource: 0
