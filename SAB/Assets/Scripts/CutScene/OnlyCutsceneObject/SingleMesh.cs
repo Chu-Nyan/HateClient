@@ -1,22 +1,14 @@
 ﻿using Chu.Core;
-using SAB.Cutscene;
 using UnityEngine;
 
-namespace SAB
+namespace SAB.Cutscene
 {
-    public class SingleMesh : MonoBehaviour, ICutsceneObject
+    public class SingleMesh : MonoBehaviour, IOnlyCutscene
     {
         [SerializeField]
         private MeshFilter _filter;
         [SerializeField]
-        private MeshRenderer _renderer;
-        [SerializeField]
         private Animator _animator;
-
-        public int ID
-        {
-            get => gameObject.name.GetHashCode();
-        }
 
         public MeshFilter MeshFilter
         {

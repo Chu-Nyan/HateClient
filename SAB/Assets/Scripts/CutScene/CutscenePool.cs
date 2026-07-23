@@ -7,7 +7,7 @@ namespace SAB.Cutscene
 {
     public class CutscenePool
     {
-        private readonly Dictionary<Type, ObjectPooling<ICutsceneObject>> _objPool;
+        private readonly Dictionary<Type, ObjectPooling<IOnlyCutscene>> _objPool;
         private readonly Dictionary<Type, Type> _dataTypeByObjectType;
 
         public CutscenePool()
@@ -25,24 +25,27 @@ namespace SAB.Cutscene
                 { typeof(VCamFollowData), typeof(VCamFollow) },
                 { typeof(SingleMeshData), typeof(SingleMesh) },
             };
+
         }
 
         public ICutsceneObject DequeueObject(ICutscenePreset config)
         {
             Type type = _dataTypeByObjectType[config.GetType()];
 
-            if (_objPool.TryGetValue(type, out var pool) == true)
-                return pool.Dequeue();
+            if (_objPool.TryGetValue(type, out var pool) == false)
+                throw new Exception();
 
-            throw new Exception();
+            return pool.Dequeue();
         }
 
-        public void EnqueueObject(ICutsceneObject config)
+        public void EnqueueObject(IOnlyCutscene obj)
         {
-            Type type = config.GetType();
+            Type type = obj.GetType();
 
-            if (_objPool.TryGetValue(type, out var pool) == true)
-                pool.Enqueue(config);
+            if (_objPool.TryGetValue(type, out var pool) == false)
+                throw new Exception();
+
+            pool.Enqueue(obj);
         }
     }
 }

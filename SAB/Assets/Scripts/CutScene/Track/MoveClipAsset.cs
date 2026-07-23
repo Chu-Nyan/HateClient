@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
-public class MoveClipAsset : InGameClip
+namespace SAB.Cutscene
 {
-    [SerializeField]
-    private Vector3 _destination;
-
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    public class MoveClipAsset : InGameClip
     {
-        var playable = ScriptPlayable<MoveClipBehaviour>.Create(graph);
-        var behaviour = playable.GetBehaviour();
+        [SerializeField]
+        private Vector3 _destination;
 
-        behaviour.Destination = _destination;
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            var playable = ScriptPlayable<MoveClipBehaviour>.Create(graph);
+            var behaviour = playable.GetBehaviour();
 
-        return playable;
+            behaviour.Destination = _destination;
+
+            return playable;
+        }
     }
 }

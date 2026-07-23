@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
-public class AnimationClipAsset : InGameClip
+namespace SAB.Cutscene
 {
-    [SerializeField]
-    private AnimationClip _clip;
-
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    public class AnimationClipAsset : InGameClip
     {
-        var playable = ScriptPlayable<AnimationClipBehaviour>.Create(graph);
-        var behaviour = playable.GetBehaviour();
+        [SerializeField]
+        private AnimationClip _clip;
 
-        behaviour.Clip = _clip;
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            var playable = ScriptPlayable<AnimationClipBehaviour>.Create(graph);
+            var behaviour = playable.GetBehaviour();
 
-        return playable;
+            behaviour.Clip = _clip;
+
+            return playable;
+        }
     }
 }

@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
-public class MoveClipBehaviour : PlayableBehaviour
+namespace SAB.Cutscene
 {
-    public Vector3 Destination;
-
-    private bool _started;
-
-    public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+    public class MoveClipBehaviour : PlayableBehaviour
     {
-        if (_started)
-            return;
+        public Vector3 Destination;
 
-        if (playerData is IMovementReceiver receiver)
+        private bool _started;
+
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            _started = true;
-            receiver?.SetDestination(Destination);
+            if (_started)
+                return;
+
+            if (playerData is IMovementReceiver receiver)
+            {
+                _started = true;
+                receiver?.SetDestination(Destination);
+            }
+        }
+
+        public override void OnGraphStop(Playable playable)
+        {
+            _started = false;
         }
     }
-
-    public override void OnGraphStop(Playable playable)
-    {
-        _started = false;
-    }
 }
-

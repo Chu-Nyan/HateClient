@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
-public class AnimationClipBehaviour : PlayableBehaviour
+namespace SAB.Cutscene
 {
-    public AnimationClip Clip;
-
-    private bool _started;
-
-    public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+    public class AnimationClipBehaviour : PlayableBehaviour
     {
-        if (_started)
-            return;
+        public AnimationClip Clip;
 
-        if (playerData is Character receiver)
+        private bool _started;
+
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            Debug.Log("start");
+            if (_started)
+                return;
 
-            _started = true;
-            receiver.PlayEmote(Clip);
+            if (playerData is Character receiver)
+            {
+                Debug.Log("start");
+
+                _started = true;
+                receiver.PlayEmote(Clip);
+            }
         }
-    }
 
-    public override void OnGraphStop(Playable playable)
-    {
-        Debug.Log("end");
+        public override void OnGraphStop(Playable playable)
+        {
+            Debug.Log("end");
 
-        _started = false;
+            _started = false;
+        }
     }
 }

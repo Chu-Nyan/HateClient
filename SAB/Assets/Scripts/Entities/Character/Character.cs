@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ICutsceneObject, ISpeachable
+public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ISpeachable, ICutsceneObject
 {
     [SerializeField]
     private Transform _attackOrigin;

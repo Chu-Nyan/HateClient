@@ -40,11 +40,6 @@ namespace SAB.Cutscene
             _cameraBrain = brain;
         }
 
-        public void Ready(EntityContainer container)
-        {
-
-        }
-
         public void Play(CutsceneData data)
         {
             _cutsceneData = data;
@@ -55,9 +50,7 @@ namespace SAB.Cutscene
             PrepareCutsceneObject(data);
             BindingTrack(data);
 
-            _director.RebuildGraph();
             _director.time = 0;
-            _director.Evaluate();
             _director.Play();
         }
 
@@ -142,7 +135,7 @@ namespace SAB.Cutscene
                 else if (track is InGameTrack)
                 {
                     var id = cutsceneData.BindingIDByTrack[track.name];
-                    _director.SetGenericBinding(track, (MonoBehaviour)_objectByBindingID[id]);
+                    _director.SetGenericBinding(track, _objectByBindingID[id].transform);
                 }
             }
         }
@@ -162,7 +155,10 @@ namespace SAB.Cutscene
                     continue;
 
                 item.Value.SetActive(false);
-                _pool.EnqueueObject(item.Value);
+                if (item.Value is IOnlyCutscene only)
+                {
+                    _pool.EnqueueObject(only);
+                }
             }
 
             _objectByBindingID.Clear();
@@ -182,6 +178,11 @@ namespace SAB.Cutscene
             if (_objectByBindingID[id] is ISpeachable able)
             {
                 able.Speech(new(0, marker.TextID, marker.Time), true);
+            }
+            else
+            {
+                var ui = UIManager.Instance.GetUI<SpeechBubbleUI>();
+                ui.ShowDialogue(_objectByBindingID[id].transform, new(0, marker.TextID, marker.Time), true);
             }
         }
     }

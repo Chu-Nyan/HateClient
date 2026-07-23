@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
-public class DialogMarker : Marker, INotification, INotificationOptionProvider
+namespace SAB.Cutscene
 {
-    public string TextID;
-    public string SpeakerTrack;
-    public float Time;
-
-    public PropertyName id => new("Dialog");
-
-    public NotificationFlags flags
+    public class DialogMarker : Marker, INotification, INotificationOptionProvider
     {
-        get => NotificationFlags.Retroactive | NotificationFlags.TriggerInEditMode;
+        public string TextID;
+        public string SpeakerTrack;
+        public float Time;
+
+        public PropertyName id => new("Dialog");
+
+        public NotificationFlags flags
+        {
+            get => NotificationFlags.Retroactive | NotificationFlags.TriggerInEditMode;
+        }
     }
 }

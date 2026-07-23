@@ -1,8 +1,10 @@
-﻿using SAB.Cutscene;
-using UnityEngine.Timeline;
+﻿using UnityEngine.Timeline;
 
-[TrackBindingType(typeof(CutsceneController))]
-[TrackColor(1f, 1f, 1f)]
-public class MarkerTrack : TrackAsset
+namespace SAB.Cutscene
 {
+    [TrackBindingType(typeof(CutsceneController))]
+    [TrackColor(1f, 1f, 1f)]
+    public class MarkerTrack : TrackAsset
+    {
+    }
 }

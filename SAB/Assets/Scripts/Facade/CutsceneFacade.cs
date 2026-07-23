@@ -45,20 +45,15 @@ public class CutsceneFacade
         foreach (var item in cutsceneData.SceneObjectBindingIDs)
         {
             var obj = _entityContainer.ObjectByFavorite[item.Value.ToString()];
-            _cutscene.RegisterExternalObject(item.Key, (ICutsceneObject)obj);
+            _cutscene.RegisterExternalObject(item.Key, obj);
         }
 
         foreach (var item in cutsceneData.BindingSlots)
         {
-            ICutsceneObject obj;
-            if (_entityContainer.ObjectByUniqueType.TryGetValue(item.Value, out var temp) == false)
+            if (_entityContainer.ObjectByUniqueType.TryGetValue(item.Value, out var obj) == false)
             {
                 Debug.LogError($"{item.Value}, unique type is null");
                 obj = CharacterFactory.Instance.Create(BrainType.None, 1, Vector3.zero, Quaternion.identity);
-            }
-            else
-            {
-                obj = (ICutsceneObject)temp;
             }
 
             _cutscene.RegisterExternalObject(item.Key, obj);
