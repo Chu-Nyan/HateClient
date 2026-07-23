@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8adb35401fce4e48ac76f963e5446c5
+    m_Address: WorldProfile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed999518dc377794582c69f458575681
     m_Address: CH01_01_EnterTheForestBattle
     m_ReadOnly: 0

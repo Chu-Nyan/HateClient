@@ -29,8 +29,6 @@ namespace SAB.GameSystem
 
         // Facade
         private GamePlayFacade _gamePlayFacade;
-        [SerializeField]
-        private WorldProfile _worldProfile;
 
         private void Awake()
         {
@@ -42,7 +40,6 @@ namespace SAB.GameSystem
 
             InitStatic();
             InitInstance();
-
 
             StartCoroutine(ChangeMap(MapType.Forest));
         }
@@ -60,7 +57,7 @@ namespace SAB.GameSystem
 
             new AIGenerator();
             new CharacterFactory(DataBase.Instance);
-            new SkillFactory(DataBase.Instance.SkillRepo, _worldProfile.FactionTable);
+            new SkillFactory(DataBase.Instance.SkillRepo, DataBase.Instance.WorldProfile.FactionTable);
             new ItemFactory(DataBase.Instance);
             new UIManager();
         }

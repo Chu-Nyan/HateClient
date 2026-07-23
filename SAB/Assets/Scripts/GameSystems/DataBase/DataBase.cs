@@ -1,6 +1,8 @@
-﻿using Chu.Utility;
+﻿using Chu.Core;
+using Chu.Utility;
 using Chu.Utility.Json;
 using Newtonsoft.Json;
+using SAB.GameSystem;
 using System;
 using System.Collections.Generic;
 
@@ -14,6 +16,7 @@ namespace SAB.DataManger
         public readonly CharacterRepository CharacterRepo;
         public readonly ItemRepository ItemRepo;
         public readonly CutsceneRepository CutSceneRepo;
+        public readonly WorldProfile WorldProfile;
 
         public DataBase()
         {
@@ -21,6 +24,7 @@ namespace SAB.DataManger
             CharacterRepo = new CharacterRepository();
             ItemRepo = new ItemRepository();
             CutSceneRepo = new CutsceneRepository();
+            WorldProfile = AssetManager.LoadAssetSync<WorldProfile>("WorldProfile");
         }
 
         public static Dictionary<K, V[]> DeserializeArrayByKey<TDTO, K, V>(TDTO[] dtos, Func<TDTO, K> keySelector, Func<TDTO, V> converter)
