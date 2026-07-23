@@ -1,4 +1,6 @@
-﻿namespace SAB.Item
+﻿using SAB.Item;
+
+namespace SAB.GameSystem
 {
     public class EquipmentSystem
     {

@@ -4,7 +4,7 @@
     {
         private ItemData _itemData;
         private EquipmentData _equipmentData;
-        private WeaponTemplateData _weaponData;
+        private WeaponBaseData _weaponData;
 
         public ItemData ItemData
         {
@@ -22,7 +22,7 @@
             _equipmentData = new();
         }
 
-        public void Setup(ItemTemplateData itemData, EquipmentTemplateData equipmentData, WeaponTemplateData weaponData)
+        public void Setup(ItemBaseData itemData, EquipmentBaseData equipmentData, WeaponBaseData weaponData)
         {
             _itemData.Setup(itemData);
             _equipmentData.Setup(equipmentData);

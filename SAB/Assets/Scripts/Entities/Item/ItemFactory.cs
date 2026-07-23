@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 public class ItemFactory : Singleton<ItemFactory>
 {
-    private Dictionary<int, ItemTemplateData> _itemData;
-    private Dictionary<int, EquipmentTemplateData> _equipmentData;
-    private Dictionary<int, WeaponTemplateData> _weaponData;
+    private readonly Dictionary<int, ItemBaseData> _itemData;
+    private readonly Dictionary<int, EquipmentBaseData> _equipmentData;
+    private readonly Dictionary<int, WeaponBaseData> _weaponData;
 
     public ItemFactory(DataBase db)
     {
@@ -34,9 +34,9 @@ public class ItemFactory : Singleton<ItemFactory>
 
     private IHasItemData GenerateNewWeapon(int id)
     {
-        ItemTemplateData itemData = _itemData[id];
-        EquipmentTemplateData equipmentData = _equipmentData[id];
-        WeaponTemplateData weaponData = _weaponData[id];
+        ItemBaseData itemData = _itemData[id];
+        EquipmentBaseData equipmentData = _equipmentData[id];
+        WeaponBaseData weaponData = _weaponData[id];
 
         var weapon = new Weapon();
         weapon.Setup(itemData, equipmentData, weaponData);
@@ -45,8 +45,8 @@ public class ItemFactory : Singleton<ItemFactory>
 
     private IHasItemData GenerateNewArmor(int id)
     {
-        ItemTemplateData itemData = _itemData[id];
-        EquipmentTemplateData equipmentData = _equipmentData[id];
+        ItemBaseData itemData = _itemData[id];
+        EquipmentBaseData equipmentData = _equipmentData[id];
 
         var armor = new Armor();
         armor.Setup(itemData, equipmentData);

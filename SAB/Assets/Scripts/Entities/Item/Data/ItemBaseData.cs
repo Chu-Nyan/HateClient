@@ -1,14 +1,14 @@
 ﻿namespace SAB.Item
 {
-    public class ItemTemplateData
+    public class ItemBaseData
     {
         public readonly int ID;
         public readonly TextID TextID;
         public readonly ItemCategory Category;
 
-        public ItemTemplateData(int iD, TextID textID, ItemCategory category)
+        public ItemBaseData(int id, TextID textID, ItemCategory category)
         {
-            ID = iD;
+            ID = id;
             TextID = textID;
             Category = category;
         }

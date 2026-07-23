@@ -2,7 +2,7 @@
 {
     public class ItemData
     {
-        private ItemTemplateData _itemTemplateData;
+        private ItemBaseData _itemTemplateData;
         private ItemInstanceData _itemInstanceData;
 
         public ItemData()
@@ -10,7 +10,7 @@
             _itemInstanceData = new ItemInstanceData();
         }
 
-        public void Setup(ItemTemplateData itemTemplateData)
+        public void Setup(ItemBaseData itemTemplateData)
         {
             _itemTemplateData = itemTemplateData;
         }

@@ -21,7 +21,7 @@
             _equipmentData = new();
         }
 
-        public void Setup(ItemTemplateData itemData, EquipmentTemplateData equipment)
+        public void Setup(ItemBaseData itemData, EquipmentBaseData equipment)
         {
             _itemData.Setup(itemData);
             _equipmentData.Setup(equipment);

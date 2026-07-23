@@ -10,7 +10,7 @@ public enum EquipSlot
 [JsonConverter(typeof(StringEnumConverter))]
 public enum ItemCategory
 {
-    Weapon, Armor, Food, Material, Misc
+    Weapon, Armor
 }
 
 [JsonConverter(typeof(StringEnumConverter))]

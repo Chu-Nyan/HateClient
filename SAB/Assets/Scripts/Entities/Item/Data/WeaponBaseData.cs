@@ -1,6 +1,6 @@
 ﻿namespace SAB.Item
 {
-    public class WeaponTemplateData
+    public class WeaponBaseData
     {
         public readonly int ID;
         public readonly WeaponType WeaponType;
@@ -8,7 +8,7 @@
         public readonly float Damage;
         public readonly int UpgradeSlot;
 
-        public WeaponTemplateData(int id, /*WeaponType weaponType, WeaponHandedness weaponHandedness,*/ float damage, int upgradeSlot)
+        public WeaponBaseData(int id, /*WeaponType weaponType, WeaponHandedness weaponHandedness,*/ float damage, int upgradeSlot)
         {
             ID = id;
             WeaponType = WeaponType.Sword;

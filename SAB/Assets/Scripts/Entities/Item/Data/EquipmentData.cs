@@ -2,10 +2,10 @@
 {
     public class EquipmentData
     {
-        private EquipmentTemplateData _equipmentTemplateData;
+        private EquipmentBaseData _equipmentTemplateData;
         private EquipmentInstanceData _equipmentInstanceData;
 
-        public EquipmentTemplateData Template
+        public EquipmentBaseData Template
         {
             get => _equipmentTemplateData;
         }
@@ -15,7 +15,7 @@
             _equipmentInstanceData = new();
         }
 
-        public void Setup(EquipmentTemplateData equipmentTemplateData)
+        public void Setup(EquipmentBaseData equipmentTemplateData)
         {
             _equipmentTemplateData = equipmentTemplateData;
         }
