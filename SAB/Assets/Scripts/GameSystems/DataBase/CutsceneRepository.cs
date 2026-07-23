@@ -7,9 +7,10 @@ namespace SAB.DataManger
 {
     public class CutsceneRepository
     {
+        public const string FileNameFormat = "{0}_Cutscene";
+
         public readonly Dictionary<string, CutsceneData> DataByName;
         public readonly Dictionary<MapType, string[]> CutsceneNameByMapType;
-        public const string FileNameFormat = "{0}_Cutscene";
 
         public CutsceneRepository()
         {
