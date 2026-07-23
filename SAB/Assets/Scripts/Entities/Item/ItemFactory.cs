@@ -24,9 +24,6 @@ public class ItemFactory : Singleton<ItemFactory>
                 return GenerateNewWeapon(id);
             case ItemCategory.Armor:
                 return GenerateNewArmor(id);
-            case ItemCategory.Food:
-            case ItemCategory.Material:
-            case ItemCategory.Misc:
             default:
                 throw new System.Exception("지원되지 않는 아이템 카테고리 입력" + "ID : " + id);
         }
