@@ -12,6 +12,9 @@ namespace SAB.GameSystem
 {
     public class MapDataJsonConverter : MonoBehaviour
     {
+        private const string MapPath = "DB/Map";
+        private const string CutscenePath = "DB/Cutscene";
+
         [SerializeField]
         private MapType _type;
         [SerializeField]
@@ -55,16 +58,16 @@ namespace SAB.GameSystem
             }
 
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
-            string path = Path.Combine(Application.dataPath, Const.Path_DB_Map);
-            Utility.GenerateFile(path, $"{string.Format(Const.Asset_DB_MapGeneratedData, _type)}.json", json);
+            string path = Path.Combine(Application.dataPath, MapPath);
+            Utility.GenerateFile(path, $"{string.Format(Const.Asset_DB_MapGenerated, _type)}.json", json);
         }
 
         private void ConvertCutscene()
         {
             var data = _cutsceneConverter.GetCutsceneData();
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
-            string path = Path.Combine(Application.dataPath, Const.Path_DB_Cutscene);
-            Utility.GenerateFile(path, $"{string.Format(Const.Asset_DB_CutsceneData, _type)}.json", json);
+            string path = Path.Combine(Application.dataPath, CutscenePath);
+            Utility.GenerateFile(path, $"{string.Format(Const.Asset_DB_Cutscene, _type)}.json", json);
         }
     }
 }

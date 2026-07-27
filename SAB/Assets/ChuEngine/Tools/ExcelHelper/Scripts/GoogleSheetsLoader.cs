@@ -12,7 +12,7 @@ namespace Chu.Tools
     [Serializable]
     public class GoogleSheetsLoader
     {
-        private const string _googleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
+        private const string GoogleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
 
         [SerializeField]
         private string _googleSheetID;
@@ -28,7 +28,7 @@ namespace Chu.Tools
         public async Task RequestExcelFile()
         {
             _isLoading = true;
-            var www = UnityWebRequest.Get(string.Format(_googleDownloadURL, _googleSheetID));
+            var www = UnityWebRequest.Get(string.Format(GoogleDownloadURL, _googleSheetID));
             var operation = www.SendWebRequest();
 
             while (!operation.isDone)

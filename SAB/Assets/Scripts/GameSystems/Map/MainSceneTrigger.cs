@@ -14,6 +14,8 @@ namespace SAB.GameSystem
 {
     public class GameSceneTrigger : MonoBehaviour
     {
+        private const string CutsceneMangerAssetPath = "CutSceneManager";
+
         [SerializeField]
         private GameObject _topviewCam;
         private TopViewCamera _topViewCam;
@@ -66,7 +68,7 @@ namespace SAB.GameSystem
             _entityContainer = new();
             _cutscenePlayer = new();
             _agentController = gameObject.AddComponent<AgentController>();
-            _cutsceneDirector = AssetManager.GenerateLoadAssetSync<CutsceneController>(Const.Asset_CutsceneManger, "CutsceneManager", transform);
+            _cutsceneDirector = AssetManager.GenerateLoadAssetSync<CutsceneController>(CutsceneMangerAssetPath, "CutsceneManager", transform);
         }
 
         private void InitStatic()

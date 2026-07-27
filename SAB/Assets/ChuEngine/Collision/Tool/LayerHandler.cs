@@ -9,8 +9,8 @@ namespace Chu.Collision
     [CreateAssetMenu(fileName = "LayerHandler", menuName = "Scriptable Objects/LayerHandler", order = 1)]
     public class LayerHandler : ScriptableObject
     {
-        private const string _fileName = "NyanLayer.cs";
-        private const string _outputPath = "Assets/ChuEngine/Collision"; // TODO : 경로 하드 코딩 제거
+        private const string FileName = "NyanLayer.cs";
+        private const string OutputPath = "Assets/ChuEngine/Collision"; // TODO : 경로 하드 코딩 제거
 
         [SerializeField]
         private string[] _layer = new string[16];
@@ -79,12 +79,12 @@ namespace Chu.Collision
         {
             try
             {
-                if (Directory.Exists(_outputPath) == false)
-                    Directory.CreateDirectory(_outputPath);
+                if (Directory.Exists(OutputPath) == false)
+                    Directory.CreateDirectory(OutputPath);
 
-                var pathAndFile = Path.Combine(_outputPath, _fileName);
+                var pathAndFile = Path.Combine(OutputPath, FileName);
                 File.WriteAllText(pathAndFile, ConvertConstScript());
-                log = $"파일 생성 완료 \n경로 : {_outputPath} \n파일명 : {_fileName}";
+                log = $"파일 생성 완료 \n경로 : {OutputPath} \n파일명 : {FileName}";
                 return true;
             }
             catch (Exception e)

@@ -11,7 +11,7 @@ namespace SAB.Skill
     /// </summary>
     public class SkillObject : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
     {
-        private const NyanLayer _layer = NyanLayer.Projectile;
+        private const NyanLayer Layer = NyanLayer.Projectile;
         private static int _hitUnityLayer;
 
         private NyanCollider _nyanCollider;
@@ -78,7 +78,7 @@ namespace SAB.Skill
             _context = context;
             _hostilityMask = hostilityMask;
             _nyanCollider.SetInstigatorID(instigator);
-            _nyanCollider.SetLayer(_layer, _context.Mask);
+            _nyanCollider.SetLayer(Layer, _context.Mask);
             _logicStep = 0;
             ChangeShape(_logicStep);
             _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);

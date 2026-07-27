@@ -9,15 +9,16 @@ namespace SAB.EntityAgent
     /// </summary>
     public class AgentController : MonoBehaviour
     {
+        private const int PlayerAgentID = 0;
+
         private static int _idCounter = 0;
-        private const int _playerAgentID = 0;
         private Agent[] _agents;
         private Dictionary<int, Agent> _activeAgentByReceiverId;
         private Queue<Agent> _idleNPCAgent;
 
         public Agent Player
         {
-            get => _agents[_playerAgentID];
+            get => _agents[PlayerAgentID];
         }
 
         private void Awake()
@@ -45,7 +46,7 @@ namespace SAB.EntityAgent
 
             if (type == BrainType.Player)
             {
-                handler = _agents[_playerAgentID];
+                handler = _agents[PlayerAgentID];
             }
             else
             {

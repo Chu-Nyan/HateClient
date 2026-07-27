@@ -35,22 +35,22 @@ namespace Chu.Tools
         [SerializeField] private string _jsonPrefix;
         [SerializeField] private string _scriptSuffix;
 
-        private const int _zeroBase = -1;
+        private const int ZeroBase = -1;
 
-        public int DBNameRow => _dbNameRow + _zeroBase;
-        public int DBTypeRow => _dbTypeRow + _zeroBase;
-        public int DBDataStartedRow => _dbDataStartRow + _zeroBase;
+        public int DBNameRow => _dbNameRow + ZeroBase;
+        public int DBTypeRow => _dbTypeRow + ZeroBase;
+        public int DBDataStartedRow => _dbDataStartRow + ZeroBase;
 
-        public int EnumDataStartedRow => _enumDataStartedRow + _zeroBase;
-        public int EnumTypeColumn => _enumTypeColumn + _zeroBase;
-        public int EnumKeyColumn => _enumKeyColumn + _zeroBase;
-        public int EnumValueColumn => _enumValueColumn + _zeroBase;
-        public int EnumCommentsColumn => _enumCommentsColumn + _zeroBase;
+        public int EnumDataStartedRow => _enumDataStartedRow + ZeroBase;
+        public int EnumTypeColumn => _enumTypeColumn + ZeroBase;
+        public int EnumKeyColumn => _enumKeyColumn + ZeroBase;
+        public int EnumValueColumn => _enumValueColumn + ZeroBase;
+        public int EnumCommentsColumn => _enumCommentsColumn + ZeroBase;
 
         public string ConfigSheetName => _configSheetName;
-        public int SheetPropertyNameColumn => _sheetHeader + _zeroBase;
-        public int SheetTypeColumn => _sheetTypeColumn + _zeroBase;
-        public int SheetPropertyFirstDataRow => _sheetDataStartRow + _zeroBase;
+        public int SheetPropertyNameColumn => _sheetHeader + ZeroBase;
+        public int SheetTypeColumn => _sheetTypeColumn + ZeroBase;
+        public int SheetPropertyFirstDataRow => _sheetDataStartRow + ZeroBase;
 
         public string DTOPath
         {

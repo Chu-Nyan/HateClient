@@ -7,6 +7,10 @@ namespace SAB.Cutscene
 {
     public class CutscenePool
     {
+        private const string VCamStaticPath = "VCamStatic";
+        private const string VCamFollowPath = "VCamFollow";
+        private const string SingleMeshPath = "SingleMesh";
+
         private readonly Dictionary<Type, ObjectPooling<IOnlyCutscene>> _objPool;
         private readonly Dictionary<Type, Type> _dataTypeByObjectType;
 
@@ -14,9 +18,9 @@ namespace SAB.Cutscene
         {
             _objPool = new()
             {
-                { typeof(VCamStatic), new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(Const.Asset_VCamStatic), a => a.SetActive(true))},
-                { typeof(VCamFollow), new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(Const.Asset_VCamFollow), a => a.SetActive(true))},
-                { typeof(SingleMesh), new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(Const.Asset_SingleMesh), a => a.SetActive(true))},
+                { typeof(VCamStatic), new(() => AssetManager.GenerateLoadAssetSync<VCamStatic>(VCamStaticPath), a => a.SetActive(true))},
+                { typeof(VCamFollow), new(() => AssetManager.GenerateLoadAssetSync<VCamFollow>(VCamFollowPath), a => a.SetActive(true))},
+                { typeof(SingleMesh), new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(SingleMeshPath), a => a.SetActive(true))},
             };
 
             _dataTypeByObjectType = new()

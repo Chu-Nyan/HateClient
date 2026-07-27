@@ -8,7 +8,7 @@ namespace SAB.GameSystem
     [CustomPropertyDrawer(typeof(FactionTable))]
     public class FactionTableDrawer : PropertyDrawer
     {
-        private Dictionary<string, int> selectedFactionIndex = new();
+        private Dictionary<string, int> _selectedFactionIndex = new();
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -28,13 +28,13 @@ namespace SAB.GameSystem
             var values = (FactionType[])Enum.GetValues(typeof(FactionType));
             var names = Enum.GetNames(typeof(FactionType));
 
-            if (!selectedFactionIndex.TryGetValue(property.propertyPath, out int selected))
+            if (!_selectedFactionIndex.TryGetValue(property.propertyPath, out int selected))
                 selected = 0;
 
             position.y += EditorGUIUtility.singleLineHeight + 2;
 
             selected = EditorGUI.Popup(position, "Faction", selected, names);
-            selectedFactionIndex[property.propertyPath] = selected;
+            _selectedFactionIndex[property.propertyPath] = selected;
 
             var from = values[selected];
 

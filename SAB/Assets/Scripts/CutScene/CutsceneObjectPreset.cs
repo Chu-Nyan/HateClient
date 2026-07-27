@@ -7,8 +7,8 @@ namespace SAB.Cutscene
 {
     public class CutsceneObjectPreset : MonoBehaviour
     {
-        public const string _bindingObject = "Binding Object";
-        public const string _bindingSlot = "Binding Slot";
+        public const string BindingObject = "Binding Object";
+        public const string BindingSlot = "Binding Slot";
 
         public MonoBehaviour Target;
         public BindingSource BindingSource;
@@ -27,7 +27,7 @@ namespace SAB.Cutscene
 
             if (BindingSource == BindingSource.Slot)
             {
-                VariantParams.Add(_bindingSlot, ParameterType.UniqueEntity);
+                VariantParams.Add(BindingSlot, ParameterType.UniqueEntity);
             }
 
             _prevSource = BindingSource;

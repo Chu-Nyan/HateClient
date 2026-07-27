@@ -11,6 +11,8 @@ namespace SAB.Unit
 {
     public class CharacterFactory : Singleton<CharacterFactory>
     {
+        private const string Asset_Obj_Character = "Character";
+
         private readonly Dictionary<int, BaseStats> _unitDatas;
         private readonly Dictionary<int, CustomizingData> _customizingData;
 
@@ -26,7 +28,7 @@ namespace SAB.Unit
             _customizingData = db.CharacterRepo.CustomizingData;
             _pool = new(() =>
             {
-                return AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character, _root);
+                return AssetManager.GenerateLoadAssetSync<Character>(Asset_Obj_Character, _root);
             });
         }
 

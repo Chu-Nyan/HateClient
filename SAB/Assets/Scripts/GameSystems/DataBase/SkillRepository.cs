@@ -8,16 +8,16 @@ namespace SAB.DataManger
 {
     public class SkillRepository
     {
-        public const string SkillDataPath = "Dto_Skill_Base";
+        private const string BasePath = "Dto_Skill_Base";
 
-        public const string FlowStepPath = "Dto_Skill_FlowStep";
-        public const string InstanceStepPath = "Dto_Skill_Step_Instance";
-        public const string TimerStepPath = "Dto_Skill_Step_Timer";
-        public const string DoTStepPath = "Dto_Skill_Step_DoT";
-        public const string AoEStepPath = "Dto_Skill_Step_AoE";
+        private const string FlowPath = "Dto_Skill_FlowStep";
+        private const string HitBoxesPath = "Dto_Skill_HitBox";
+        private const string CollisionLogicPath = "Dto_Skill_CollisionLogic";
 
-        public const string HitBoxes = "Dto_Skill_HitBox";
-        public const string CollisionLogic = "Dto_Skill_CollisionLogic";
+        private const string InstancePath = "Dto_Skill_Step_Instance";
+        private const string AoePath = "Dto_Skill_Step_AoE";
+        private const string DotPath = "Dto_Skill_Step_DoT";
+        private const string TimerPath = "Dto_Skill_Step_Timer";
 
         public readonly Dictionary<int, SkillData> SkillByID;
 
@@ -33,49 +33,49 @@ namespace SAB.DataManger
         public SkillRepository()
         {
             InstanceStepByID = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillStepInstanceDto>(AssetManager.LoadJson(InstanceStepPath)),
+                dtos: DataBase.ConvertJsonToArray<SkillStepInstanceDto>(AssetManager.LoadJson(InstancePath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new InstanceStepData(dto.ID, dto.DamageRate, dto.Count)
             );
 
             AoEStepByID = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillStepAoEDto>(AssetManager.LoadJson(AoEStepPath)),
+                dtos: DataBase.ConvertJsonToArray<SkillStepAoEDto>(AssetManager.LoadJson(AoePath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new AoEStepData(dto.ID, dto.DamageRate, dto.Ranged, dto.Count)
             );
 
             DotStepByID = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillStepDoTDto>(AssetManager.LoadJson(DoTStepPath)),
+                dtos: DataBase.ConvertJsonToArray<SkillStepDoTDto>(AssetManager.LoadJson(DotPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new DotStepData(dto.ID, dto.DamageRate, dto.Duration)
             );
 
             TimerStepByID = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillStepTimerDto>(AssetManager.LoadJson(TimerStepPath)),
+                dtos: DataBase.ConvertJsonToArray<SkillStepTimerDto>(AssetManager.LoadJson(TimerPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new TimerStepData(dto.ID, dto.Duration)
             );
 
             FlowStepByID = DataBase.DeserializeArrayByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillFlowStepDto>(AssetManager.LoadJson(FlowStepPath)),
+                dtos: DataBase.ConvertJsonToArray<SkillFlowStepDto>(AssetManager.LoadJson(FlowPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => GetStepData(dto.LogicID)
             );
 
             HitBoxByID = DataBase.DeserializeArrayByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillHitBoxDto>(AssetManager.LoadJson(HitBoxes)),
+                dtos: DataBase.ConvertJsonToArray<SkillHitBoxDto>(AssetManager.LoadJson(HitBoxesPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new ShapeParam(dto.ShapeType, dto.OffsetX, dto.OffsetY, dto.Param1, dto.Param2)
             );
 
             CollisionLogicByID = DataBase.DeserializeArrayByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillCollisionLogicDto>(AssetManager.LoadJson(CollisionLogic)),
+                dtos: DataBase.ConvertJsonToArray<SkillCollisionLogicDto>(AssetManager.LoadJson(CollisionLogicPath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID], FlowStepByID[dto.FlowStepID])
             );
 
             SkillByID = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<SkillBaseDto>(AssetManager.LoadJson(SkillDataPath)),
+                dtos: DataBase.ConvertJsonToArray<SkillBaseDto>(AssetManager.LoadJson(BasePath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new SkillData(dto, CollisionLogicByID[dto.ObjectLogicID])
             );

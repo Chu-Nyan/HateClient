@@ -18,7 +18,7 @@ namespace SAB.DataManger
             {
                 DataByType[type] = new();
 
-                string json = AssetManager.LoadJson(string.Format(Const.Asset_DB_MapGeneratedData, type.ToString()));
+                string json = AssetManager.LoadJson(string.Format(Const.Asset_DB_MapGenerated, type.ToString()));
                 MapDefinition dataDtos = JsonConvert.DeserializeObject<MapDefinition>(json, DataBase.JsonSerializerSettings);
 
                 if (dataDtos == null)

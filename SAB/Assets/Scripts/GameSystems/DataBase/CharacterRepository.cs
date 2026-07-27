@@ -6,9 +6,9 @@ namespace SAB.DataManger
 {
     public class CharacterRepository
     {
-        private const string _characterBaseJson = "Dto_Character_Base_Stats";
-        private const string _customizingJson = "Dto_Human_Customizing";
-        private const string _defaultEquipmentJson = "Dto_Human_DefaultEquipment";
+        private const string BasePath = "Dto_Character_Base_Stats";
+        private const string CustomizingPath = "Dto_Human_Customizing";
+        private const string DefaultEquipmentPath = "Dto_Human_DefaultEquipment";
 
         public readonly Dictionary<int, BaseStats> CharacterBaseData;
         public readonly Dictionary<int, CustomizingData> CustomizingData;
@@ -17,19 +17,19 @@ namespace SAB.DataManger
         public CharacterRepository()
         {
             CharacterBaseData = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(_characterBaseJson)),
+                dtos: DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(BasePath)),
                 keySelector: a => a.ID,
                 converter: a => new BaseStats(a.ID, a.Faction, a.NameKey, a.DescKey, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
             );
 
             CustomizingData = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<HumanCustomizingDto>(AssetManager.LoadJson(_customizingJson)),
+                dtos: DataBase.ConvertJsonToArray<HumanCustomizingDto>(AssetManager.LoadJson(CustomizingPath)),
                 keySelector: a => a.ID,
                 converter: a => new CustomizingData(a)
             );
 
             DefaultEquipment = DataBase.DeserializeArrayByKey(
-                dtos: DataBase.ConvertJsonToArray<HumanDefaultEquipmentDto>(AssetManager.LoadJson(_defaultEquipmentJson)),
+                dtos: DataBase.ConvertJsonToArray<HumanDefaultEquipmentDto>(AssetManager.LoadJson(DefaultEquipmentPath)),
                 keySelector: a => a.ID,
                 converter: a => (ItemType)a.EquipmentID
             );

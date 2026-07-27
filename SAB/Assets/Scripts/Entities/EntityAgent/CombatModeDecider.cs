@@ -6,8 +6,8 @@ namespace SAB.EntityAgent
 {
     public class CombatModeDecider : INyanCollisionProvider
     {
-        private const float _searchRange = 5;
-        private const float _waitTime = 5;
+        private const float SearchRange = 5;
+        private const float WaitTime = 5;
 
         private NyanCollider _collider;
 
@@ -47,7 +47,7 @@ namespace SAB.EntityAgent
             else
             {
                 _offTimer += time;
-                if (_offTimer >= _waitTime)
+                if (_offTimer >= WaitTime)
                     SetActivate(false);
             }
         }

@@ -49,7 +49,7 @@ namespace SAB.Cutscene
                     PersistentObjects.Add(id);
 
                 if (cutsceneObj.BindingSource == BindingSource.Slot)
-                    UniqueSlotById.Add(id, (UniqueEntityType)cutsceneObj.VariantParams[CutsceneObjectPreset._bindingSlot].IntValue);
+                    UniqueSlotById.Add(id, (UniqueEntityType)cutsceneObj.VariantParams[CutsceneObjectPreset.BindingSlot].IntValue);
                 else if (cutsceneObj.BindingSource == BindingSource.Spawn)
                     AddObjectData(id, cutsceneObj, idHandler);
             }
