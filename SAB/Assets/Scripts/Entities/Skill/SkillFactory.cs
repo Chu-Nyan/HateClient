@@ -13,14 +13,16 @@ namespace SAB.Skill
         private readonly Dictionary<int, SkillData> _skillDataByID;
         private readonly FactionTable _factionTable;
 
+        private Transform _root;
         private readonly ObjectPooling<SkillObject> _objectPooling;
         private readonly Dictionary<SkillStepType, Func<ISkillStep>> _generateFuncByProcessType;
 
         public SkillFactory(SkillRepository db, FactionTable faction) : base()
         {
+            _root = new GameObject("Projectile").transform;
             _skillDataByID = db.SkillByID;
             _factionTable = faction;
-            _objectPooling = new(() => AssetManager.GenerateLoadAssetSync<SkillObject>("Projectile"));
+            _objectPooling = new(() => AssetManager.GenerateLoadAssetSync<SkillObject>("Projectile", _root));
             _generateFuncByProcessType = new()
             {
                 { SkillStepType.Instant, () => new InstantSkillStep() },

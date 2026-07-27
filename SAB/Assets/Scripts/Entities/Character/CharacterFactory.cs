@@ -14,17 +14,19 @@ namespace SAB.Unit
         private readonly Dictionary<int, BaseStats> _unitDatas;
         private readonly Dictionary<int, CustomizingData> _customizingData;
 
+        private readonly Transform _root;
         private readonly ObjectPooling<Character> _pool;
         private AgentController _agentController;
         private EntityContainer _entityContainer;
 
         public CharacterFactory(DataBase db)
         {
+            _root = new GameObject("Characters").transform;
             _unitDatas = db.CharacterRepo.CharacterBaseData;
             _customizingData = db.CharacterRepo.CustomizingData;
             _pool = new(() =>
             {
-                return AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character);
+                return AssetManager.GenerateLoadAssetSync<Character>(Const.Asset_Character, _root);
             });
         }
 

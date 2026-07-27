@@ -41,6 +41,11 @@ namespace Chu.Core
             return gameObj.GetComponent<T>();
         }
 
+        public static T GenerateLoadAssetSync<T>(string path, Transform parent) where T : Behaviour
+        {
+            return GenerateLoadAssetSync<T>(path, default, parent);
+        }
+
         // Json 불러오기
         public static string LoadJson(string path)
         {
