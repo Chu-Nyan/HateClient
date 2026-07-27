@@ -1,5 +1,4 @@
-﻿using Chu.Collision;
-using Chu.Utility;
+﻿using Chu.Utility;
 using SAB.GameSystem;
 using SAB.Unit;
 using System;
@@ -11,13 +10,9 @@ namespace SAB.Cutscene
     public class CutsceneDataDto
     {
         public string Name;
-        public string AssetPath;
-        public float CenterX;
-        public float CenterY;
         public bool LockPlayer;
-        public ShapeParam[] TriggerZones;
-        public Dictionary<string, int> BindingIDByTrack;
 
+        public Dictionary<string, int> BindingIDByTrack;
         public Dictionary<int, BindingSource> BindingSourceById;
         public Dictionary<int, UniqueEntityType> UniqueSlotById;
         public Dictionary<int, string> FavoritesById;
@@ -27,8 +22,10 @@ namespace SAB.Cutscene
         public Dictionary<int, SingleMeshData> SingleMeshData;
         public HashSet<int> PersistentObjects;
 
-        public CutsceneDataDto(string name, string assetPath, Vector2 center, bool lockPlayer, ShapeParam[] triggerZones, Dictionary<string, int> idByTrack)
+        public CutsceneDataDto(string name, bool lockPlayer, Dictionary<string, int> idByTrack)
         {
+            Name = name;
+            LockPlayer = lockPlayer;
             BindingSourceById = new();
             UniqueSlotById = new();
             FavoritesById = new();
@@ -37,61 +34,10 @@ namespace SAB.Cutscene
             CharacterData = new();
             SingleMeshData = new();
             PersistentObjects = new();
-
-            Name = name;
-            AssetPath = assetPath;
-            CenterX = center.x;
-            CenterY = center.y;
-            LockPlayer = lockPlayer;
-            TriggerZones = triggerZones;
             BindingIDByTrack = idByTrack;
         }
 
-        public CutsceneData GetContainer()
-        {
-            var data = new CutsceneData()
-            {
-                Name = Name,
-                AssetPath = AssetPath,
-                CenterX = CenterX,
-                CenterY = CenterY,
-                LockPlayer = LockPlayer,
-                TriggerZones = TriggerZones,
-                BindingIDByTrack = BindingIDByTrack,
-                BindingSourceByID = BindingSourceById,
-                BindingSlots = UniqueSlotById,
-                SceneObjectBindingIDs = FavoritesById,
-                PersistentObjects = PersistentObjects,
-                SpawnContainer = GetObjectDataContainer()
-            };
-
-            return data;
-        }
-
-        private SpawnDataContainer GetObjectDataContainer()
-        {
-            var container = new SpawnDataContainer();
-            foreach (var item in StaticData)
-            {
-                container.Add(item.Key, item.Value, false);
-            }
-            foreach (var item in FollowData)
-            {
-                container.Add(item.Key, item.Value, false);
-            }
-            foreach (var item in CharacterData)
-            {
-                container.Add(item.Key, item.Value, true);
-            }
-            foreach (var item in SingleMeshData)
-            {
-                container.Add(item.Key, item.Value, false);
-            }
-
-            return container;
-        }
-
-        public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler, MapReferenceHub hub)
+        public void AddObject(int id, GameObject obj, CutsceneJsonConverter idHandler)
         {
             if (BindingSourceById.ContainsKey(id) == true)
                 return;
@@ -107,22 +53,15 @@ namespace SAB.Cutscene
                 else if (cutsceneObj.BindingSource == BindingSource.Spawn)
                     AddObjectData(id, cutsceneObj, idHandler);
             }
-            else // 씬 오브젝트
+            else if (obj.TryGetComponent<ObjectMarker>(out var marker))// 씬 오브젝트
             {
-                var comps = obj.GetComponents<MonoBehaviour>();
-                foreach (var comp in comps)
-                {
-                    foreach (var item in hub.FavoriteObjects)
-                    {
-                        if (item.Key != comp)
-                            continue;
-
-                        BindingSourceById.Add(id, BindingSource.SceneObject);
-                        FavoritesById.Add(id, item.Value);
-                        return;
-                    }
-                }
-                Debug.LogWarning($"{Name}, {id} Scene object not found.");
+                BindingSourceById.Add(id, BindingSource.SceneObject);
+                FavoritesById.Add(id, marker.FavoriteID);
+            }
+            else
+            {
+                throw new Exception($"Serialization Error:  Failed to find serialization component"
+                    + $"Object Name : {obj.name}");
             }
         }
 

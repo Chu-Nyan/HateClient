@@ -1,19 +1,13 @@
-﻿using Chu.Collision;
-using Newtonsoft.Json;
-using SAB.GameSystem;
+﻿using SAB.GameSystem;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SAB.Cutscene
 {
     public class CutsceneData
     {
         public string Name;
-        public string AssetPath;
-        public float CenterX;
-        public float CenterY;
         public bool LockPlayer;
-        public ShapeParam[] TriggerZones;
+
         public Dictionary<string, int> BindingIDByTrack;
         public Dictionary<int, BindingSource> BindingSourceByID;
         public Dictionary<int, UniqueEntityType> BindingSlots;
@@ -21,10 +15,37 @@ namespace SAB.Cutscene
         public SpawnDataContainer SpawnContainer;
         public HashSet<int> PersistentObjects;
 
-        [JsonIgnore]
-        public Vector2 Center
+        public static CutsceneData FromDTO(CutsceneDataDto dto)
         {
-            get => new Vector2(CenterX, CenterY);
+            var container = new SpawnDataContainer();
+            foreach (var item in dto.StaticData)
+            {
+                container.Add(item.Key, item.Value, false);
+            }
+            foreach (var item in dto.FollowData)
+            {
+                container.Add(item.Key, item.Value, false);
+            }
+            foreach (var item in dto.CharacterData)
+            {
+                container.Add(item.Key, item.Value, true);
+            }
+            foreach (var item in dto.SingleMeshData)
+            {
+                container.Add(item.Key, item.Value, false);
+            }
+
+            return new CutsceneData()
+            {
+                Name = dto.Name,
+                LockPlayer = dto.LockPlayer,
+                BindingIDByTrack = dto.BindingIDByTrack,
+                BindingSourceByID = dto.BindingSourceById,
+                BindingSlots = dto.UniqueSlotById,
+                SceneObjectBindingIDs = dto.FavoritesById,
+                PersistentObjects = dto.PersistentObjects,
+                SpawnContainer = container
+            };
         }
     }
 }

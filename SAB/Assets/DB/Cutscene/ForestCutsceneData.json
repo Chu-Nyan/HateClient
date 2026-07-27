@@ -1,19 +1,7 @@
 [
   {
     "Name": "CH01_01_EnterTheForestBattle",
-    "AssetPath": "CH01_01_EnterTheForestBattle",
-    "CenterX": 110.0,
-    "CenterY": 130.0,
     "LockPlayer": true,
-    "TriggerZones": [
-      {
-        "Type": 0,
-        "OffsetX": 0.0,
-        "OffsetY": 0.0,
-        "Param1": 42.39,
-        "Param2": 13.25
-      }
-    ],
     "BindingIDByTrack": {
       "Cam_SwordStatic": 1,
       "Cam_SwordFollow": 2,
@@ -76,19 +64,7 @@
   },
   {
     "Name": "CH01_02_Boss",
-    "AssetPath": "CH01_02_Boss",
-    "CenterX": 108.8,
-    "CenterY": 162.7,
     "LockPlayer": true,
-    "TriggerZones": [
-      {
-        "Type": 0,
-        "OffsetX": 0.0,
-        "OffsetY": 0.0,
-        "Param1": 30.21,
-        "Param2": 10.0
-      }
-    ],
     "BindingIDByTrack": {
       "VCamFollow_Cutscene": 6,
       "VCamStatic_Cutscene (1)": 8,

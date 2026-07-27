@@ -15,6 +15,7 @@ namespace SAB.DataManger
         public readonly SkillRepository SkillRepo;
         public readonly CharacterRepository CharacterRepo;
         public readonly ItemRepository ItemRepo;
+        public readonly MapRepository MapRepo;
         public readonly CutsceneRepository CutSceneRepo;
         public readonly WorldProfile WorldProfile;
 
@@ -23,6 +24,7 @@ namespace SAB.DataManger
             SkillRepo = new SkillRepository();
             CharacterRepo = new CharacterRepository();
             ItemRepo = new ItemRepository();
+            MapRepo = new MapRepository();
             CutSceneRepo = new CutsceneRepository();
             WorldProfile = AssetManager.LoadAssetSync<WorldProfile>("WorldProfile");
         }

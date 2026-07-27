@@ -20,7 +20,6 @@ namespace SAB.GameSystem
         private GameObject _topviewCam;
         private TopViewCamera _topViewCam;
 
-        private MapReferenceHub _currentMapReference;
         private EntityContainer _entityContainer;
 
         private CutsceneMapTrigger _cutscenePlayer;
@@ -108,30 +107,19 @@ namespace SAB.GameSystem
             yield return op.isDone;
 
             Scene loadedScene = SceneManager.GetSceneByName(sceneName);
-            _currentMapReference = SetLoadMapReference(loadedScene);
-            foreach (var item in _currentMapReference.Characters)
+            var mapDef = DataBase.Instance.MapRepo.DataByType[type];
+            foreach (var item in mapDef.Characters)
             {
-                CharacterFactory.Instance.LateInitialize(item);
+                var request = item.Value;
+                var acter = CharacterFactory.Instance.Create(request.BrainType, request.UnitID, request.Position, request.Rotation);
+                if (mapDef.Favorites.TryGetValue(item.Key, out var id) == true)
+                {
+                    _entityContainer.AddFavoriteObject(id, acter);
+                }
             }
-            foreach (var item in _currentMapReference.FavoriteObjects)
-            {
-                _entityContainer.AddFavoriteObject(item.Value, item.Key);
-            }
-            _cutscenePlayer.SetupMap(type);
+
+            _cutscenePlayer.SetupMap(mapDef.CutsceneTriggers);
             GameStart();
-        }
-
-        private MapReferenceHub SetLoadMapReference(Scene scene)
-        {
-            foreach (GameObject rootObj in scene.GetRootGameObjects())
-            {
-                if (rootObj.CompareTag(Const.Tag_MapReferenceHub) == false)
-                    continue;
-
-                return rootObj.GetComponent<MapReferenceHub>();
-            }
-
-            throw new System.Exception("Map scene is missing a hub.");
         }
     }
 }

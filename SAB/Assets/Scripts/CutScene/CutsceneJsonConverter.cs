@@ -1,13 +1,7 @@
-﻿using Chu.Utility.Json;
-using Chu.Utility.Unity;
-using Newtonsoft.Json;
-using SAB.DataManger;
-using SAB.GameSystem;
+﻿using Chu.Utility.Unity;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.AddressableAssets;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -17,45 +11,45 @@ namespace SAB.Cutscene
     public class CutsceneJsonConverter : MonoBehaviour
     {
         [SerializeField]
-        private MapReferenceHub _referenceHub;
-        [SerializeField]
-        private MapType _mapType;
-        [SerializeField]
         private Transform _root;
         [SerializeField]
         private int _searchDepth = 1;
-        [SerializeField]
-        private DefaultAsset _path;
 
         private int _idCount;
         private Dictionary<GameObject, int> _idBySceneObject;
 
-        public void ExportJson()
+        public CutsceneTriggerData[] GetTriggerData()
         {
-            List<CutsceneDataDto> cutSceneDatas = new();
+            List<CutscenePreset> directors = Utility.GetComponentsWithDepth<CutscenePreset>(_root, _searchDepth);
+            var datas = new CutsceneTriggerData[directors.Count];
+
+            for (int i = 0; i < datas.Length; i++)
+            {
+                datas[i] = new()
+                {
+                    Name = directors[i].PlayableDirector.playableAsset.name,
+                    CenterX = directors[i].Center.x,
+                    CenterY = directors[i].Center.y,
+                    TriggerZones = directors[i].TriggerZones
+                };
+            }
+
+            return datas;
+        }
+
+        public CutsceneDataDto[] GetCutsceneData()
+        {
             _idCount = 0;
             _idBySceneObject = new();
 
+            List<CutsceneDataDto> cutSceneDatas = new();
             List<CutscenePreset> directors = Utility.GetComponentsWithDepth<CutscenePreset>(_root, _searchDepth);
-            var settings = AddressableAssetSettingsDefaultObject.Settings;
 
             foreach (var director in directors)
             {
                 Dictionary<string, int> objIDByTrackName = new();
 
-                string path = AssetDatabase.GetAssetPath(director.PlayableDirector.playableAsset);
-                string guid = AssetDatabase.AssetPathToGUID(path);
-                var entry = settings.FindAssetEntry(guid);
-
-                CutsceneDataDto cutsceneData = new(
-                    name: director.PlayableDirector.playableAsset.name,
-                    assetPath: entry.address,
-                    center: director.Center,
-                    lockPlayer: director.LockPlayer,
-                    triggerZones: director.TriggerZone,
-                    idByTrack: objIDByTrackName
-                    );
-
+                CutsceneDataDto cutsceneData = new(director.PlayableDirector.playableAsset.name, director.LockPlayer, objIDByTrackName);
                 TimelineAsset timelineAssets = director.PlayableDirector.playableAsset as TimelineAsset;
                 var tracks = timelineAssets.GetOutputTracks();
 
@@ -79,11 +73,7 @@ namespace SAB.Cutscene
                 cutSceneDatas.Add(cutsceneData);
             }
 
-            string json = JsonConvert.SerializeObject(cutSceneDatas, Formatting.Indented, new JsonSerializerSettings().WithUnity());
-            AssetDatabase.GetAssetPath(_path);
-            string fileName = $"{string.Format(CutsceneRepository.FileNameFormat, _mapType)}";
-            Utility.GenerateFile(AssetDatabase.GetAssetPath(_path), $"{fileName}.json", json);
-            Debug.Log("Cutscene Data Exported");
+            return cutSceneDatas.ToArray();
         }
 
         private void ExtractCameraTrackData(CutsceneDataDto dto, PlayableDirector director, CinemachineTrack track)
@@ -103,7 +93,7 @@ namespace SAB.Cutscene
         private void AddSceneObject(CutsceneDataDto dto, GameObject obj, string clipName)
         {
             int id = GetOrRegisterID(obj);
-            dto.AddObject(id, obj, this, _referenceHub);
+            dto.AddObject(id, obj, this);
             dto.AddTrackData(clipName, id);
         }
 

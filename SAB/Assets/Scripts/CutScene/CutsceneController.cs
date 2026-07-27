@@ -45,7 +45,7 @@ namespace SAB.Cutscene
         {
             _cutsceneData = data;
             ClearPlayingCutscene();
-            PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.AssetPath);
+            PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.Name);
             _director.playableAsset = playableAsset;
             CacheTracks(playableAsset);
             PrepareCutsceneObject(data);

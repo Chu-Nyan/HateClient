@@ -19,7 +19,7 @@ namespace SAB.Cutscene
             get => new(transform.position.x, transform.position.z);
         }
 
-        public ShapeParam[] TriggerZone
+        public ShapeParam[] TriggerZones
         {
             get => _triggerZones;
         }

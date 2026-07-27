@@ -1,0 +1,68 @@
+{
+  "Favorites": {
+    "1": "Guard1",
+    "2": "Guard2"
+  },
+  "Characters": {
+    "1": {
+      "UnitID": 2,
+      "BrainType": 0,
+      "Position": {
+        "x": 105.96,
+        "y": 0.13,
+        "z": 145.81
+      },
+      "Rotation": {
+        "x": 0.0,
+        "y": 0.9986158,
+        "z": 0.0,
+        "w": -0.05259733
+      }
+    },
+    "2": {
+      "UnitID": 3,
+      "BrainType": 0,
+      "Position": {
+        "x": 115.42,
+        "y": 0.32,
+        "z": 146.09
+      },
+      "Rotation": {
+        "x": 0.0,
+        "y": -0.984958947,
+        "z": 0.0,
+        "w": -0.172788665
+      }
+    }
+  },
+  "CutsceneTriggers": [
+    {
+      "Name": "CH01_01_EnterTheForestBattle",
+      "CenterX": 110.0,
+      "CenterY": 130.0,
+      "TriggerZones": [
+        {
+          "Type": 0,
+          "OffsetX": 0.0,
+          "OffsetY": 0.0,
+          "Param1": 42.39,
+          "Param2": 13.25
+        }
+      ]
+    },
+    {
+      "Name": "CH01_02_Boss",
+      "CenterX": 108.8,
+      "CenterY": 162.7,
+      "TriggerZones": [
+        {
+          "Type": 0,
+          "OffsetX": 0.0,
+          "OffsetY": 0.0,
+          "Param1": 30.21,
+          "Param2": 10.0
+        }
+      ]
+    }
+  ]
+}
