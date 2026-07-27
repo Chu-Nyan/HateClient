@@ -1,4 +1,5 @@
-﻿using SAB.Cutscene;
+﻿using Chu.Utility.Unity;
+using SAB.Cutscene;
 using SAB.DataManger;
 using SAB.EntityAgent;
 using SAB.GameSystem;
@@ -20,11 +21,11 @@ namespace SAB.Facade
             _camera = camera;
         }
 
-        public async void Change(MapType type)
+        public async void Change(MapType type, int playerSpawnPoint)
         {
             try
             {
-                await LoadMapAsync(type);
+                await LoadMapAsync(type, playerSpawnPoint);
             }
             catch (System.Exception ex)
             {
@@ -32,7 +33,7 @@ namespace SAB.Facade
             }
         }
 
-        private async Task LoadMapAsync(MapType type)
+        private async Task LoadMapAsync(MapType type, int playerSpawnPoint)
         {
             var op = SceneManager.LoadSceneAsync($"Scene_{type}", LoadSceneMode.Additive);
             while (op.isDone == false)
@@ -57,8 +58,9 @@ namespace SAB.Facade
                     CharacterFactory.Instance.Create(request.BrainType, request.UnitID, request.Position, request.Rotation);
                 }
             }
-
-            var player = CharacterFactory.Instance.Create(BrainType.Player, 1, new Vector3(100, 0, 100), Quaternion.identity, UniqueEntityType.Player);
+            var spawnPos2D = mapDef.SpawnPoint[playerSpawnPoint];
+            Quaternion rotation = Quaternion.Euler(new(0, spawnPos2D.EulerY, 0));
+            var player = CharacterFactory.Instance.Create(BrainType.Player, 1, spawnPos2D.Position.ToVector3XZ(), rotation, UniqueEntityType.Player);
             _camera.StickCameraArm(player.transform);
         }
     }

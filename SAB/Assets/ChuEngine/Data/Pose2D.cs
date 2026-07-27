@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Chu.Data
 {
+    [Serializable]
     public struct Pose2D
     {
         public Vector2 Position;

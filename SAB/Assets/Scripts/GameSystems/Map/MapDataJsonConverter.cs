@@ -1,4 +1,5 @@
-﻿using Chu.Utility.Json;
+﻿using Chu.Data;
+using Chu.Utility.Json;
 using Chu.Utility.Unity;
 using Newtonsoft.Json;
 using SAB.Cutscene;
@@ -30,19 +31,28 @@ namespace SAB.GameSystem
         {
             int id = 0;
             _referenceJsonConverter.AutoBinding();
-            var data = new MapDefinition();
-            var acterData = new Dictionary<int, CharacterSpawnRequest>();
+
+            var data = new MapDefinition
+            {
+                Characters = new Dictionary<int, CharacterSpawnRequest>(),
+                SpawnPoint = new Pose2D[_referenceJsonConverter.SpawnPoint.Length],
+                CutsceneTriggers = _cutsceneConverter.GetTriggerData(),
+                Favorites = _referenceJsonConverter.FavoriteObjects
+            };
 
             foreach (var item in _referenceJsonConverter.Characters)
             {
                 var acter = item.Value;
                 var spwanData = new CharacterSpawnRequest(acter.Stats.CharacterID, acter.BrainType, acter.transform.position, acter.transform.rotation);
-                acterData.Add(++id, spwanData);
+                data.Characters.Add(++id, spwanData);
             }
 
-            data.Characters = acterData;
-            data.Favorites = _referenceJsonConverter.FavoriteObjects;
-            data.CutsceneTriggers = _cutsceneConverter.GetTriggerData();
+            for (int i = 0; i < _referenceJsonConverter.SpawnPoint.Length; i++)
+            {
+                var pos2D = _referenceJsonConverter.SpawnPoint[i].position.ToVector2XZ();
+                var y = _referenceJsonConverter.SpawnPoint[i].rotation.y;
+                data.SpawnPoint[i] = new(pos2D, y);
+            }
 
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
             string path = Path.Combine(Application.dataPath, Const.Path_DB_Map);

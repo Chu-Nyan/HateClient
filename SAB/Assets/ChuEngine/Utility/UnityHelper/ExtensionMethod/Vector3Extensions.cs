@@ -14,4 +14,12 @@ namespace Chu.Utility.Unity
             return new Vector2(v3.x, v3.z);
         }
     }
+
+    public static class Vector2Extensions
+    {
+        public static Vector3 ToVector3XZ(this Vector2 v2)
+        {
+            return new Vector3(v2.x, 0, v2.y);
+        }
+    }
 }

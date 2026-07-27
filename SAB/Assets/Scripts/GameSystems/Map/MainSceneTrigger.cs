@@ -95,7 +95,7 @@ namespace SAB.GameSystem
 
         private void GameStart()
         {
-            _gamePlayFacade.Map.Change(MapType.Forest);
+            _gamePlayFacade.Map.Change(MapType.Forest, 0);
         }
     }
 }
