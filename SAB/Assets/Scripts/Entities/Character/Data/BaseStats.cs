@@ -4,16 +4,16 @@
     {
         public readonly int ID;
         public readonly FactionType Faction;
-        public readonly TextID NameID;
-        public readonly TextID DescID;
+        public readonly string NameKey;
+        public readonly string DescKey;
         public readonly float[] Stats;
 
-        public BaseStats(int iD, FactionType faction, TextID nameID, TextID descID, float[] stats)
+        public BaseStats(int iD, FactionType faction, string nameKey, string descKey, float[] stats)
         {
             ID = iD;
             Faction = faction;
-            NameID = nameID;
-            DescID = descID;
+            NameKey = nameKey;
+            DescKey = descKey;
             Stats = stats;
         }
     }

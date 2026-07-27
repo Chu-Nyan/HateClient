@@ -1,6 +1,6 @@
 public struct ItemBaseDto
 {
 	 public int ID;
-	 public TextID TextID;
+	 public string NameKey;
 	 public ItemCategory Category;
 }

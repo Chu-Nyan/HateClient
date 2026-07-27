@@ -1,8 +1,8 @@
 public struct CharacterBaseStatsDto
 {
 	 public int ID;
-	 public TextID Name;
-	 public TextID Desc;
+	 public string NameKey;
+	 public string DescKey;
 	 public FactionType Faction;
 	 public float HP;
 	 public float ATK;

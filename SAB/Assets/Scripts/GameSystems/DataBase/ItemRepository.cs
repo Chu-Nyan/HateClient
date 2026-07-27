@@ -19,7 +19,7 @@ namespace SAB.DataManger
             Base = DataBase.DeserializeObjectByKey(
                 dtos: DataBase.ConvertJsonToArray<ItemBaseDto>(AssetManager.LoadJson(_basePath)),
                 keySelector: a => a.ID,
-                converter: a => new ItemBaseData(a.ID, a.TextID, a.Category)
+                converter: a => new ItemBaseData(a.ID, a.NameKey, a.Category)
                 );
             Equipment = DataBase.DeserializeObjectByKey(
                 dtos: DataBase.ConvertJsonToArray<ItemEquipmentDto>(AssetManager.LoadJson(_equipmentPath)),

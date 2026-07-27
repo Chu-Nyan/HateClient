@@ -1,7 +1,7 @@
 public struct SkillBaseDto
 {
 	 public int ID;
-	 public TextID StringID;
+	 public string NameKey;
 	 public float CastingTime;
 	 public float Cooldown;
 	 public float Cost;

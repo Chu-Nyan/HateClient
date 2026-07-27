@@ -6,7 +6,7 @@
     public class SkillData
     {
         public readonly int ID;
-        public readonly TextID StringID;
+        public readonly string NameKey;
         public readonly float CastingTime;
         public readonly float Cooldown;
         public readonly float Cost;
@@ -16,7 +16,7 @@
         public SkillData(SkillBaseDto dto, CollisionLogicData[] collisionLogics)
         {
             ID = dto.ID;
-            StringID = dto.StringID;
+            NameKey = dto.NameKey;
             CastingTime = dto.CastingTime;
             Cooldown = dto.Cooldown;
             Cost = dto.Cost;

@@ -1,7 +1,7 @@
 [
   {
     "ID": 1,
-    "StringID": 300000,
+    "NameKey": "skill.basicmelee",
     "CastingTime": 0.0,
     "Cooldown": 1.0,
     "Cost": 0.0,
@@ -12,7 +12,7 @@
   },
   {
     "ID": 2,
-    "StringID": 300001,
+    "NameKey": "skill.basicranged",
     "CastingTime": 0.0,
     "Cooldown": 0.4,
     "Cost": 0.0,
@@ -23,7 +23,7 @@
   },
   {
     "ID": 3,
-    "StringID": 300002,
+    "NameKey": "skill.firebolt",
     "CastingTime": 1.0,
     "Cooldown": 4.0,
     "Cost": 3.0,
@@ -34,7 +34,7 @@
   },
   {
     "ID": 4,
-    "StringID": 300003,
+    "NameKey": "skill.frogpoison",
     "CastingTime": 1.0,
     "Cooldown": 5.0,
     "Cost": 5.0,
@@ -45,7 +45,7 @@
   },
   {
     "ID": 5,
-    "StringID": 300004,
+    "NameKey": "skill.stickybomb",
     "CastingTime": 1.0,
     "Cooldown": 6.0,
     "Cost": 7.0,

@@ -3,13 +3,13 @@
     public class ItemBaseData
     {
         public readonly int ID;
-        public readonly TextID TextID;
+        public readonly string TextKey;
         public readonly ItemCategory Category;
 
-        public ItemBaseData(int id, TextID textID, ItemCategory category)
+        public ItemBaseData(int id, string textKey, ItemCategory category)
         {
             ID = id;
-            TextID = textID;
+            TextKey = textKey;
             Category = category;
         }
     }
