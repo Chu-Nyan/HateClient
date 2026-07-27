@@ -1,16 +1,14 @@
-﻿using SAB.Cutscene;
-using SAB.EntityAgent;
-using SAB.GameSystem;
-
-namespace SAB.Facade
+﻿namespace SAB.Facade
 {
     public class GamePlayFacade
     {
-        public CutsceneFacade Cutscene;
+        public readonly CutsceneFacade Cutscene;
+        public readonly MapFacade Map;
 
-        public GamePlayFacade(CutsceneController cutscene, AgentController agent, EntityContainer container)
+        public GamePlayFacade(CutsceneFacade cutscene, MapFacade changeMap)
         {
-            Cutscene = new(cutscene, agent, InputManager.Instance, container);
+            Cutscene = cutscene;
+            Map = changeMap;
         }
     }
 }

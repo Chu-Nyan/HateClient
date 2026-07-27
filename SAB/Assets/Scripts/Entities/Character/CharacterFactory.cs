@@ -41,10 +41,10 @@ namespace SAB.Unit
             return acter;
         }
 
-        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, int favoriteID)
+        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, string favoriteID)
         {
             var acter = Create(type, unitID, pos, rot);
-            _entityContainer.AddFavoriteObject(favoriteID.ToString(), acter);
+            _entityContainer.AddFavoriteObject(favoriteID, acter);
             return acter;
         }
 
@@ -57,8 +57,8 @@ namespace SAB.Unit
 
         private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 pos, Quaternion rot)
         {
-            acter.SetPositionWithNavMash(pos);
             acter.SetupStats(_unitDatas[unitID]);
+            acter.SetupNavMesh(pos);
             acter.transform.rotation = rot;
             SetCustomizing(acter, unitID);
             SetEquipment(acter, unitID);

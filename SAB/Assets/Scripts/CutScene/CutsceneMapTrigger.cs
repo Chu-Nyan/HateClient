@@ -12,7 +12,7 @@ namespace SAB.Cutscene
         private readonly List<CollisionTrigger> _triggers;
         private readonly Dictionary<int, CutsceneTriggerData> _dataByTriggerID;
 
-        public Action<string> TriggerEnterAction;
+        private Action<string> _triggerEnterAction;
 
         public CutsceneMapTrigger()
         {
@@ -26,9 +26,9 @@ namespace SAB.Cutscene
             _dataByTriggerID = new();
         }
 
-        public void Init(Action<string> triggerEnterAction)
+        public void RegisterTriggerEnterAction(Action<string> triggerEnterAction)
         {
-            TriggerEnterAction = triggerEnterAction;
+            _triggerEnterAction += triggerEnterAction;
         }
 
         public void SetupMap(CutsceneTriggerData[] datas)
@@ -56,7 +56,7 @@ namespace SAB.Cutscene
 
         private void PlayEnterAction(int id)
         {
-            TriggerEnterAction?.Invoke(_dataByTriggerID[id].Name);
+            _triggerEnterAction?.Invoke(_dataByTriggerID[id].Name);
         }
     }
 }

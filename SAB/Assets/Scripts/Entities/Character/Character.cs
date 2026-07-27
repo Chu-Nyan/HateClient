@@ -87,7 +87,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _animator.RegisterAnimationEvent(AniState.Attack, "AttackFinished", new AniEventData(), 1, a => _stateContext.IsAttacking = false);
         _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSys.AttackWithAnimator);
 
-        SetPositionWithNavMash(transform.position);
     }
 
     private void Update()
@@ -125,6 +124,14 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         var skill = SkillFactory.Instance.CreateKernel(1);
         _combatSys.AddSkill(skill);
         _combatSys.SetFaction(baseStats.Faction);
+    }
+
+    public void SetupNavMesh(Vector3 pos)
+    {
+        if (NavMesh.SamplePosition(pos, out var hit, 2f, NavMesh.AllAreas))
+            transform.position = hit.position;
+
+        _nav.enabled = true;
     }
 
     public void SetDestination(Vector3 destination)
@@ -209,6 +216,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
             Deactivated = null;
         }
 
+        _nav.enabled = false;
         gameObject.SetActive(value);
     }
 
