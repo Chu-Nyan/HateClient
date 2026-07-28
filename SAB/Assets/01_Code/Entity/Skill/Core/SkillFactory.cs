@@ -34,7 +34,7 @@ namespace SAB.Skill
 
         public SkillKernel CreateKernel(int id)
         {
-            var skill = new SkillKernel(UniqueIDProvider.Next());
+            var skill = new SkillKernel(IDGenerator.Next());
             skill.Setup(_skillDataByID[id]);
             return skill;
         }

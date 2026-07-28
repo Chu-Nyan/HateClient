@@ -7,6 +7,45 @@ namespace Chu.Core
 {
     public static class AssetManager
     {
+        // 동기 로드
+        public static T LoadAssetSync<T>(string path)
+        {
+            var handle = Addressables.LoadAssetAsync<T>(path);
+            handle.WaitForCompletion();
+            if (handle.Status != AsyncOperationStatus.Succeeded)
+                Debug.LogError("handle.Status is not AsyncOperationStatus.Succeeded");
+
+            return handle.Result;
+        }
+
+        // 동기 로드 후 오브젝트 생성
+        public static T InstantiateLoadAssetSync<T>(string path, string name, Transform parent) where T : Behaviour
+        {
+            var item = LoadAssetSync<GameObject>(path);
+            var gameObj = Object.Instantiate(item, parent);
+            gameObj.name = name == default ? item.name : name;
+            return gameObj.GetComponent<T>();
+        }
+        public static T GenerateLoadAssetSync<T>(string path) where T : Behaviour
+        {
+            return InstantiateLoadAssetSync<T>(path, default, null);
+        }
+
+        public static T GenerateLoadAssetSync<T>(string path, string name) where T : Behaviour
+        {
+            return InstantiateLoadAssetSync<T>(path, name, null);
+        }
+
+        public static T GenerateLoadAssetSync<T>(string path, Transform parent) where T : Behaviour
+        {
+            return InstantiateLoadAssetSync<T>(path, default, parent);
+        }
+
+        // Json 불러오기
+        public static string LoadJson(string path)
+        {
+            return LoadAssetSync<TextAsset>(path).text;
+        }
         // 비동기 로드
         public static void LoadGameObject(string path)
         {
@@ -21,36 +60,6 @@ namespace Chu.Core
             Object.Instantiate(handler.Result);
         }
 
-        // 동기 로드
-        public static T LoadAssetSync<T>(string path)
-        {
-            var handle = Addressables.LoadAssetAsync<T>(path);
-            handle.WaitForCompletion();
-            if (handle.Status != AsyncOperationStatus.Succeeded)
-                Debug.LogError("handle.Status is not AsyncOperationStatus.Succeeded");
-
-            return handle.Result;
-        }
-
-        // 동기 로드 후 오브젝트 생성
-        public static T GenerateLoadAssetSync<T>(string path, string name = default, Transform parent = null) where T : Behaviour
-        {
-            var item = LoadAssetSync<GameObject>(path);
-            var gameObj = Object.Instantiate(item, parent);
-            gameObj.name = name == default ? item.name : name;
-            return gameObj.GetComponent<T>();
-        }
-
-        public static T GenerateLoadAssetSync<T>(string path, Transform parent) where T : Behaviour
-        {
-            return GenerateLoadAssetSync<T>(path, default, parent);
-        }
-
-        // Json 불러오기
-        public static string LoadJson(string path)
-        {
-            return LoadAssetSync<TextAsset>(path).text;
-        }
 
         public static Sprite GetSpriteWithAtlas(string path, string name)
         {

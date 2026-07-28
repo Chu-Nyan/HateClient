@@ -1,5 +1,5 @@
 ﻿using Chu.Collision;
-using Chu.Utility.Unity;
+using Chu.Utility;
 using SAB.Skill;
 using System.Collections.Generic;
 using UnityEngine;

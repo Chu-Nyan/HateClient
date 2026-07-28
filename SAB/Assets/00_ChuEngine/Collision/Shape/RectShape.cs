@@ -5,7 +5,8 @@ namespace Chu.Collision
 {
     public class RectShape : IShape
     {
-        private static float _refreshEpsilon = 0.001f;
+        private const float RefreshEpsilon = 0.001f;
+
         private RectRangeData _rectData;
         private RectBound _aabb;
 
@@ -57,7 +58,7 @@ namespace Chu.Collision
 
         private void RefreshAxis(float degree)
         {
-            if (Mathf.Abs(_objDegree - degree) < _refreshEpsilon)
+            if (Mathf.Abs(_objDegree - degree) < RefreshEpsilon)
                 return;
 
             _objDegree = degree;

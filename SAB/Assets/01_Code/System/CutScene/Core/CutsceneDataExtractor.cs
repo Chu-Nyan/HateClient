@@ -1,4 +1,4 @@
-﻿using Chu.Utility.Unity;
+﻿using Chu.Utility;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
@@ -20,7 +20,7 @@ namespace SAB.Cutscene
 
         public CutsceneTriggerData[] GetTriggerData()
         {
-            List<CutscenePreset> directors = Utility.GetComponentsWithDepth<CutscenePreset>(_root, _searchDepth);
+            List<CutscenePreset> directors = _root.GetComponentsWithDepth<CutscenePreset>(_searchDepth);
             var datas = new CutsceneTriggerData[directors.Count];
 
             for (int i = 0; i < datas.Length; i++)
@@ -43,7 +43,7 @@ namespace SAB.Cutscene
             _idBySceneObject = new();
 
             List<CutsceneDataDto> cutSceneDatas = new();
-            List<CutscenePreset> directors = Utility.GetComponentsWithDepth<CutscenePreset>(_root, _searchDepth);
+            List<CutscenePreset> directors = _root.GetComponentsWithDepth<CutscenePreset>(_searchDepth);
 
             foreach (var director in directors)
             {

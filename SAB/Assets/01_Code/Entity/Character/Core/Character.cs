@@ -1,8 +1,6 @@
 ﻿using Chu.AI;
-using Chu.Art;
 using Chu.Core;
 using Chu.Utility;
-using Chu.Utility.Unity;
 using SAB.Cutscene;
 using SAB.EntityAgent;
 using SAB.GameSystem;
@@ -74,7 +72,7 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
 
     private void Awake()
     {
-        _instanceID = UniqueIDProvider.Next();
+        _instanceID = IDGenerator.Next();
 
         _stateContext = new StateContext();
         _defenseSys = new DefenseSystem(_instanceID, transform.position.ToVector2XZ(), transform.eulerAngles.y, this);

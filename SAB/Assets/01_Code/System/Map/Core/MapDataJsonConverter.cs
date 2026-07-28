@@ -1,6 +1,6 @@
 ﻿using Chu.Data;
+using Chu.Utility;
 using Chu.Utility.Json;
-using Chu.Utility.Unity;
 using Newtonsoft.Json;
 using SAB.Cutscene;
 using SAB.Unit;

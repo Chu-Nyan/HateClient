@@ -47,7 +47,7 @@ namespace SAB.GameSystem
 
         private void RunChuEngine()
         {
-            var engine = new ChuEngine(gameObject, "en");
+            var engine = new ChuEngine("en");
             engine.ActivateCollisionSystem(new(0, 200, 0, 200), 20);
         }
 
@@ -68,7 +68,7 @@ namespace SAB.GameSystem
             _entityContainer = new();
             _cutscenePlayer = new();
             _agentController = gameObject.AddComponent<AgentController>();
-            _cutsceneDirector = AssetManager.GenerateLoadAssetSync<CutsceneController>(CutsceneMangerAssetPath, "CutsceneManager", transform);
+            _cutsceneDirector = AssetManager.InstantiateLoadAssetSync<CutsceneController>(CutsceneMangerAssetPath, "CutsceneManager", transform);
         }
 
         private void InitStatic()

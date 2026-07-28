@@ -12,27 +12,18 @@ namespace Chu.Core
     {
         private readonly GameObject _root;
 
+        private readonly TextTable<string> _textResource;
         private NyanCollisonSystem _collisionSys;
-        private TextResource<string> _textResource;
-        private GlobalObjectPool _objectPool;
-        private GeneratorHub _hub;
 
-        public GeneratorHub GeneratorHub
-        {
-            get => _hub;
-        }
-
-        public TextResource<string> TextResource
+        public TextTable<string> TextResource
         {
             get => _textResource;
         }
 
-        public ChuEngine(GameObject root, string language) : base()
+        public ChuEngine(string language) : base()
         {
-            _root = root;
+            _root = new GameObject("ChuEngine");
             _textResource = new();
-            _hub = new GeneratorHub();
-            _objectPool = new GlobalObjectPool();
 
             var json = ExternalFolderHandler.GetLanguagesTextFile(language);
             _textResource.LoadTexts(JsonConvert.DeserializeObject<Dictionary<string, string>>(json));
@@ -41,16 +32,17 @@ namespace Chu.Core
         public void ActivateCollisionSystem(RectBound bound, int capacity)
         {
             _collisionSys = _root.AddComponent<NyanCollisonSystem>();
-
-            _hub.InitNyanColliderGenerator(_collisionSys);
             _collisionSys.InitArray(capacity);
             _collisionSys.InitBound(bound);
+
+            var nyanColliderGenerator = new NyanColliderFactory();
+            nyanColliderGenerator.Init(_collisionSys);
         }
 
         public static void Run(string language)
         {
-            new ChuEngine(new GameObject("ChuEngine"), language);
-            ChuEngine.Instance.ActivateCollisionSystem(new(0, 100, 0, 100), 20);
+            new ChuEngine(language);
+            Instance.ActivateCollisionSystem(new(0, 100, 0, 100), 20);
         }
     }
 }

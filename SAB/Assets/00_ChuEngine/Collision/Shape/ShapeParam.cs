@@ -1,4 +1,4 @@
-﻿using Chu.Utility.Unity;
+﻿using Chu.Utility;
 using Newtonsoft.Json;
 using System;
 using UnityEngine;

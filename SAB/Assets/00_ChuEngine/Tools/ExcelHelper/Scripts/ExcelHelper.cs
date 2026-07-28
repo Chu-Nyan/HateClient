@@ -26,6 +26,9 @@ namespace Chu.Tools
         public async void SetupAllInOneAsync()
         {
             await LoadExcelFile();
+            if (HasExcelData == false)
+                throw new Exception("엑셀 데이터 없음");
+
             await GenerateEnumScript();
             await GenerateClass();
             await ExportDataToJson();
@@ -68,7 +71,6 @@ namespace Chu.Tools
 
                 list.Add(new SheetData(table[name], type));
             }
-            Debug.Log("시트 불러오기 완료");
             return sheetDatas;
         }
 
@@ -94,15 +96,10 @@ namespace Chu.Tools
                 ExcelUtility.GenerateFile(ConvertSetting.EnumPath, $"{sheet.GetPacalCaseName()}.cs", normalizedText);
                 await Task.Yield();
             }
-
-            Debug.Log("Enum 스크립트 생성 완료");
         }
 
         private async Task GenerateClass()
         {
-            if (HasExcelData == false)
-                throw new Exception("엑셀 데이터 없음");
-
             var log = "스크립트 생성 결과\n";
             foreach (SheetData sheet in _sheetsByType[SheetType.Data])
             {
@@ -133,7 +130,7 @@ namespace Chu.Tools
 
                 if (namespaceByType.TryGetValue(typeRow[i].ToString(), out string ns) == true)
                     usedNamespace.Add(ns);
-                sb.AppendLine($"\t public {typeRow[i]} {nameRow[i]};");
+                sb.AppendLine($"\tpublic {typeRow[i]} {nameRow[i]};");
             }
             sb.AppendLine("}");
 
@@ -147,9 +144,6 @@ namespace Chu.Tools
 
         private async Task ExportDataToJson()
         {
-            if (HasExcelData == false)
-                throw new Exception("DB 없음");
-
             var log = "Json 생성 결과\n";
 
             foreach (SheetData sheet in _sheetsByType[SheetType.Data])
