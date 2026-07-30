@@ -12,6 +12,7 @@ namespace Chu.Tools
     public class GoogleSheetsLoader
     {
         private const string GoogleDownloadURL = "https://docs.google.com/spreadsheets/d/{0}/export?format=xlsx";
+        public const char IgnoreSymbol = '#';
 
         public string GoogleSheetID;
         [NonSerialized]
@@ -42,6 +43,11 @@ namespace Chu.Tools
                 Sheets = ExcelReaderFactory.CreateReader(stream).AsDataSet().Tables;
             }
             IsLoading = false;
+        }
+
+        public static bool HasIgnoreSymbol(string text)
+        {
+            return text.Length == 0 || text[0] == IgnoreSymbol;
         }
     }
 }

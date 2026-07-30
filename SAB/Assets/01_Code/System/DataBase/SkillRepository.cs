@@ -8,16 +8,16 @@ namespace SAB.DataManger
 {
     public class SkillRepository
     {
-        private const string BasePath = "Dto_Skill_Base";
+        private const string BasePath = "SkillBaseData";
 
-        private const string FlowPath = "Dto_Skill_FlowStep";
-        private const string HitBoxesPath = "Dto_Skill_HitBox";
-        private const string CollisionLogicPath = "Dto_Skill_CollisionLogic";
+        private const string FlowPath = "SkillFlowStepData";
+        private const string HitBoxesPath = "SkillHitBoxData";
+        private const string CollisionLogicPath = "SkillCollisionLogicData";
 
-        private const string InstancePath = "Dto_Skill_Step_Instance";
-        private const string AoePath = "Dto_Skill_Step_AoE";
-        private const string DotPath = "Dto_Skill_Step_DoT";
-        private const string TimerPath = "Dto_Skill_Step_Timer";
+        private const string InstancePath = "SkillStepInstanceData";
+        private const string AoePath = "SkillStepAoEData";
+        private const string DotPath = "SkillStepDoTData";
+        private const string TimerPath = "SkillStepTimerData";
 
         public readonly Dictionary<int, SkillData> SkillByID;
 

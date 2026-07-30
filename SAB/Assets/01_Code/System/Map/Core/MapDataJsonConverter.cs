@@ -59,7 +59,7 @@ namespace SAB.GameSystem
 
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
             string path = Path.Combine(Application.dataPath, MapPath);
-            Utility.GenerateFile(path, $"{string.Format(Const.Asset_DB_MapGenerated, _type)}.json", json);
+            FileUtility.GenerateFile(path, $"{string.Format(Const.Asset_DB_MapGenerated, _type)}.json", json);
         }
 
         private void ConvertCutscene()
@@ -67,7 +67,7 @@ namespace SAB.GameSystem
             var data = _cutsceneConverter.GetCutsceneData();
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
             string path = Path.Combine(Application.dataPath, CutscenePath);
-            Utility.GenerateFile(path, $"{string.Format(Const.Asset_DB_Cutscene, _type)}.json", json);
+            FileUtility.GenerateFile(path, $"{string.Format(Const.Asset_DB_Cutscene, _type)}.json", json);
         }
     }
 }

@@ -13,22 +13,69 @@ MonoBehaviour:
   m_Name: ExcelLoader
   m_EditorClassIdentifier: 
   ExcelLoader:
-    _googleSheetID: 1hzh6sZHyNAznkKQVJcs0T0IyYANyY6ywekRyjp2LYJU
-  ConvertSetting:
-    _dbNameRow: 1
-    _dbTypeRow: 2
-    _dbDataStartRow: 4
-    _enumDataStartedRow: 2
-    _enumTypeColumn: 1
-    _enumKeyColumn: 2
-    _enumValueColumn: 3
-    _enumCommentsColumn: 4
-    _configSheetName: '@SheetConfig'
-    _sheetHeader: 1
-    _sheetTypeColumn: 2
-    _sheetDataStartRow: 3
-    _dtoScriptPath: {fileID: 102900000, guid: 43e6a0f0ea408364780910c2b86467d4, type: 3}
-    _dtoJsonPath: {fileID: 102900000, guid: 37a4ab47d36118243a7602ac6afbf4ec, type: 3}
-    _enumPath: {fileID: 102900000, guid: e930cd6b2446e914f8cbb0512e55eacd, type: 3}
-    _jsonPrefix: Dto_
-    _scriptSuffix: Dto
+    GoogleSheetID: 1hzh6sZHyNAznkKQVJcs0T0IyYANyY6ywekRyjp2LYJU
+  Config:
+    _nameRow: 1
+    _typeRow: 2
+    _dataStartRow: 4
+    DefaultDtoScriptPath: {fileID: 102900000, guid: 37a4ab47d36118243a7602ac6afbf4ec, type: 3}
+    DefaultDtoJsonPath: {fileID: 102900000, guid: 37a4ab47d36118243a7602ac6afbf4ec, type: 3}
+    ScriptSuffix: Dto
+    JsonSuffix: Data
+  SheetsByName:
+  - key: Character_Base_Stats
+    value:
+      ScriptPath: {fileID: 102900000, guid: 29c487a6f082ab44680aa73c13384a5d, type: 3}
+      JsonPath: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
+  - key: Human_Customizing
+    value:
+      ScriptPath: {fileID: 102900000, guid: 29c487a6f082ab44680aa73c13384a5d, type: 3}
+      JsonPath: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
+  - key: Human_DefaultEquipment
+    value:
+      ScriptPath: {fileID: 102900000, guid: 29c487a6f082ab44680aa73c13384a5d, type: 3}
+      JsonPath: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
+  - key: Skill_Base
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_FlowStep
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Step_Instance
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Step_DoT
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Step_AoE
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Step_Timer
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Item_Base
+    value:
+      ScriptPath: {fileID: 102900000, guid: 25333d981218ed44480258b5c55dc76b, type: 3}
+      JsonPath: {fileID: 102900000, guid: a96f714431d0a114e96468a2338e236c, type: 3}
+  - key: Item_Equipment
+    value:
+      ScriptPath: {fileID: 102900000, guid: 25333d981218ed44480258b5c55dc76b, type: 3}
+      JsonPath: {fileID: 102900000, guid: a96f714431d0a114e96468a2338e236c, type: 3}
+  - key: Item_Weapon
+    value:
+      ScriptPath: {fileID: 102900000, guid: 25333d981218ed44480258b5c55dc76b, type: 3}
+      JsonPath: {fileID: 102900000, guid: a96f714431d0a114e96468a2338e236c, type: 3}
+  - key: Skill_HitBox
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_CollisionLogic
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}

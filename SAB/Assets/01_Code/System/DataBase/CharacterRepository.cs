@@ -6,9 +6,9 @@ namespace SAB.DataManger
 {
     public class CharacterRepository
     {
-        private const string BasePath = "Dto_Character_Base_Stats";
-        private const string CustomizingPath = "Dto_Human_Customizing";
-        private const string DefaultEquipmentPath = "Dto_Human_DefaultEquipment";
+        private const string BasePath = "CharacterBaseStatsData";
+        private const string CustomizingPath = "HumanCustomizingData";
+        private const string DefaultEquipmentPath = "HumanDefaultEquipmentData";
 
         public readonly Dictionary<int, BaseStats> CharacterBaseData;
         public readonly Dictionary<int, CustomizingData> CustomizingData;

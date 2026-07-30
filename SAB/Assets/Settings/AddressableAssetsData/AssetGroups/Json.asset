@@ -15,73 +15,83 @@ MonoBehaviour:
   m_GroupName: Json
   m_GUID: 3b297e2eed8646447994015dae1ca296
   m_SerializeEntries:
-  - m_GUID: 028435c920e701d4c8f03107cf9cab9d
-    m_Address: Dto_Item_Equipment
+  - m_GUID: 0959175627d1631468fd7cd77849e11d
+    m_Address: SkillCollisionLogicData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 05fc6998f655f3f4f9e099052ece8e4f
-    m_Address: Dto_Skill_Step_AoE
+  - m_GUID: 38239064b6a5bb2439582b7351fa7fe5
+    m_Address: SkillHitBoxData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d460132cb9148349b31dde6e603f5b1
-    m_Address: Dto_Human_DefaultEquipment
+  - m_GUID: 51af514e76c639a42913c0e060b11f93
+    m_Address: SkillFlowStepData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e958985c7ae16a48a05251a51d10d56
-    m_Address: Dto_Item_Weapon
+  - m_GUID: 70e8fe51f3499a34f9b9347f28a8ff9c
+    m_Address: HumanDefaultEquipmentData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2a113915596899043a67a4d863840990
-    m_Address: Dto_Skill_Base
+  - m_GUID: 7b72cb7684b021a42abb5c551d7d0de7
+    m_Address: ItemEquipmentData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3fa553b6044a5584f9d9bbe972beb6df
-    m_Address: Dto_Skill_HitBox
+  - m_GUID: 92b3bcc224cbdcd41be9b25405b1d0be
+    m_Address: ForestCutsceneData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6c4ec1d398517a0499677f96cf494985
-    m_Address: Dto_Skill_FlowStep
+  - m_GUID: 9f44964cab11df84b9efd03f5bf50411
+    m_Address: SkillStepInstanceData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7a7f9e20a0212954c9ee7b2cdda7635f
-    m_Address: Dto_Character_Base_Stats
+  - m_GUID: a19785019359d5e4e8d79306b92d55c2
+    m_Address: ForestGeneratedData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9a76883793ea5ba42b01b01550a6afa4
-    m_Address: Dto_Item_Base
+  - m_GUID: ad0289ef98fca42459021365929e3cc5
+    m_Address: ItemWeaponData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a26e81d7beabec6459d431774758551f
-    m_Address: Dto_Skill_Step_DoT
+  - m_GUID: b5a0261f5bf4d9041b45c9a15d8589c1
+    m_Address: HumanCustomizingData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a70e95f57e3983442acd568c6a98bff5
-    m_Address: Dto_Human_Customizing
+  - m_GUID: c88a861244f336d4384542599b69c89a
+    m_Address: SkillStepAoEData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dda1425313992004aab28da97a2dbd95
-    m_Address: Dto_Skill_CollisionLogic
+  - m_GUID: d93b7b298effd8d45a0f255e29095a0c
+    m_Address: CharacterBaseStatsData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e14af8317d707414e88893e95ca5ef81
-    m_Address: Dto_Skill_Step_Instance
+  - m_GUID: d9889ed3c8048294481e2f34425f8768
+    m_Address: SkillStepTimerData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e78e68579181c6543a77edc0da11e83b
-    m_Address: Dto_Skill_Step_Timer
+  - m_GUID: ee378f5d1b5e3734882085c7b9b73878
+    m_Address: SkillStepDoTData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3269b05edc0ebf4481e6f50e23691cb
+    m_Address: ItemBaseData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f8310f6c4e0b5734b9512e4fccf87b98
+    m_Address: SkillBaseData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

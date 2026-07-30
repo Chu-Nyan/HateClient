@@ -1,3 +1,4 @@
+using Chu.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Chu.Tools
                 var dic = ConvertSheetToJson(ExcelLoader.Sheets[i]);
                 foreach (var item in dic)
                 {
-                    ExcelUtility.GenerateFile(path, $"{item.Key}.json", item.Value);
+                    FileUtility.GenerateFile(path, $"{item.Key}.json", item.Value);
                 }
             }
 
@@ -35,7 +36,7 @@ namespace Chu.Tools
 
             for (int x = 0; x < table.Columns.Count; x++)
             {
-                if (ExcelUtility.HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == Config.KeyColumn)
+                if (GoogleSheetsLoader.HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == Config.KeyColumn)
                     continue;
 
                 dic.Clear();

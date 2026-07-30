@@ -1,3 +1,4 @@
+using Chu.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 
 namespace Chu.Tools
@@ -13,13 +15,14 @@ namespace Chu.Tools
     public class ExcelHelper : ScriptableObject
     {
         public GoogleSheetsLoader ExcelLoader;
-        public DBConvertConfig ConvertSetting;
+        public DBConfig Config;
 
-        private Dictionary<SheetType, List<SheetData>> _sheetsByType;
+        [SerializeField]
+        public Dictionary<string, SheetData> SheetsByName;
 
         public bool HasExcelData
         {
-            get => _sheetsByType != null;
+            get => SheetsByName != null;
         }
 
         #region Excel to File 파이프라인
@@ -29,103 +32,88 @@ namespace Chu.Tools
             if (HasExcelData == false)
                 throw new Exception("엑셀 데이터 없음");
 
-            await GenerateEnumScript();
+            //await GenerateEnumScript();
             await GenerateClass();
             await ExportDataToJson();
+            AssetDatabase.Refresh();
+
+            Debug.Log("생성 완료");
         }
 
         public async Task LoadExcelFile()
         {
             await ExcelLoader.RequestExcelFile();
-            _sheetsByType = ParseSheet(ExcelLoader.Sheets, ConvertSetting);
+            ParseSheet(ExcelLoader.Sheets);
         }
 
-        private Dictionary<SheetType, List<SheetData>> ParseSheet(DataTableCollection table, DBConvertConfig setting)
+        private void ParseSheet(DataTableCollection table)
         {
-            var sheetDatas = new Dictionary<SheetType, List<SheetData>>();
-            var config = table[ConvertSetting.ConfigSheetName];
-            var duplicateChecker = new HashSet<string>();
+            if (SheetsByName == null)
+                SheetsByName = new();
 
-            for (int x = setting.SheetPropertyFirstDataRow; x < config.Rows.Count; x++)
+            var duplicateChecker = new HashSet<string>();
+            for (int i = 0; i < table.Count; i++)
             {
-                var sheet = config.Rows[x];
-                var name = sheet[setting.SheetPropertyNameColumn].ToString();
-                if (table.Contains(name) == false)
-                {
-                    Debug.LogError($"{name} : 존재 하지 않는 시트 이름");
+                var sheet = table[i];
+                var name = sheet.TableName;
+
+                if (GoogleSheetsLoader.HasIgnoreSymbol(name) == true)
                     continue;
-                }
+
                 if (duplicateChecker.Contains(name) == true)
                 {
                     Debug.LogError($"{name} : 시트 중복");
                     continue;
                 }
-                if (Enum.TryParse(sheet[setting.SheetTypeColumn].ToString(), out SheetType type) == false)
+
+                if (SheetsByName.TryGetValue(name, out var data) == false)
                 {
-                    Debug.LogError($"{name} : 잘못된 SheetType");
-                    continue;
+                    data = new();
+                    data.ScriptPath = Config.DefaultDtoScriptPath;
+                    data.JsonPath = Config.DefaultDtoJsonPath;
+                    SheetsByName[name] = data;
                 }
 
-                if (sheetDatas.TryGetValue(type, out var list) == false)
-                    sheetDatas[type] = list = new();
-
-                list.Add(new SheetData(table[name], type));
+                data.Table = table[name];
+                duplicateChecker.Add(name);
             }
-            return sheetDatas;
-        }
 
-        private async Task GenerateEnumScript()
-        {
-            if (_sheetsByType.ContainsKey(SheetType.Enum) == false)
-                return;
-
-            var sb = new StringBuilder();
-            foreach (var sheet in _sheetsByType[SheetType.Enum])
+            foreach (var key in SheetsByName.Keys.ToArray())
             {
-                var list = GetEnumScriptText(sheet);
-                sb.Clear();
-                for (int j = 0; j < list.Count; j++)
-                {
-                    if (j + 1 < list.Count)
-                        sb.AppendLine(list[j]);
-                    else
-                        sb.Append(list[j]);
-                }
+                if (duplicateChecker.Contains(key) == true)
+                    continue;
 
-                var normalizedText = sb.ToString().Replace("\r\n", "\n").Replace("\n", "\r\n");
-                ExcelUtility.GenerateFile(ConvertSetting.EnumPath, $"{sheet.GetPacalCaseName()}.cs", normalizedText);
-                await Task.Yield();
+                SheetsByName.Remove(key);
             }
         }
 
         private async Task GenerateClass()
         {
-            var log = "스크립트 생성 결과\n";
-            foreach (SheetData sheet in _sheetsByType[SheetType.Data])
+            foreach (var item in SheetsByName)
             {
-                var text = GetDataScriptText(sheet, ConvertSetting.NameSpaceByType);
-                ExcelUtility.GenerateFile(ConvertSetting.DTOPath, $"{sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}.cs", text);
-                log += $"- {sheet.Table.TableName} 생성\n";
+                var sheet = item.Value;
+                var text = GetDataScriptText(sheet, Config.NameSpaceByType);
+                var path = AssetDatabase.GetAssetPath(sheet.ScriptPath);
+                var name = Config.GetScriptFileName(sheet.GetPacalCaseName());
 
+                FileUtility.GenerateFile(path, $"{name}.cs", text);
                 await Task.Yield();
             }
-
-            Debug.Log(log);
         }
 
         private string GetDataScriptText(SheetData sheet, Dictionary<string, string> namespaceByType)
         {
             var usedNamespace = new HashSet<string>();
-            var nameRow = sheet.Table.Rows[ConvertSetting.DBNameRow];
-            var typeRow = sheet.Table.Rows[ConvertSetting.DBTypeRow];
+            var nameRow = sheet.Table.Rows[Config.DBNameRow];
+            var typeRow = sheet.Table.Rows[Config.DBTypeRow];
             var sb = new StringBuilder();
             var namespaceText = new StringBuilder();
 
-            sb.AppendLine($"public struct {sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}");
+            sb.AppendLine($"public struct {Config.GetScriptFileName(sheet.GetPacalCaseName())}");
             sb.AppendLine("{");
             for (int i = 0; i < sheet.Table.Columns.Count; i++)
             {
-                if (ExcelUtility.HasIgnoreSymbol(nameRow[i].ToString()) == true)
+                if (GoogleSheetsLoader.HasIgnoreSymbol(nameRow[i].ToString()) == true)
                     continue;
 
                 if (namespaceByType.TryGetValue(typeRow[i].ToString(), out string ns) == true)
@@ -144,20 +132,23 @@ namespace Chu.Tools
 
         private async Task ExportDataToJson()
         {
-            var log = "Json 생성 결과\n";
-
-            foreach (SheetData sheet in _sheetsByType[SheetType.Data])
+            foreach (var item in SheetsByName)
             {
-                var name = sheet.SheetName;
+                var sheet = item.Value;
+                var name = item.Key;
                 if (TryConvertExcelToJson(sheet, out var text) == true)
-                    ExcelUtility.GenerateFile(ConvertSetting.DTOJsonPath, $"{ConvertSetting.JsonPrefix}{name}.json", text);
+                {
+                    var path = AssetDatabase.GetAssetPath(sheet.JsonPath);
+                    FileUtility.GenerateFile(path, $"{Config.GetJsonFileName(sheet.GetPacalCaseName())}.json", text);
+                }
 
-                log += text != default ? $"- {name} 생성 완료\n" : $"- {name} 오류 발생\n";
+                if (text == default)
+                {
+                    Debug.LogError($"JSON conversion failed, {name}");
+                }
 
                 await Task.Yield();
             }
-
-            Debug.Log(log);
         }
 
         private bool TryConvertExcelToJson(SheetData sheet, out string text)
@@ -165,24 +156,24 @@ namespace Chu.Tools
             var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
             var table = sheet.Table;
             Type type = assemblies
-                .Select(a => a.GetType($"{sheet.GetPacalCaseName()}{ConvertSetting.ScriptSuffix}"))
+                .Select(a => a.GetType($"{Config.GetScriptFileName(sheet.GetPacalCaseName())}"))
                 .FirstOrDefault(t => t != null);
 
             var fieldMap = type.GetFields().ToDictionary(f => f.Name);
-            var fieldNames = table.Rows[ConvertSetting.DBNameRow];
-            var datas = new object[table.Rows.Count - ConvertSetting.DBDataStartedRow];
+            var fieldNames = table.Rows[Config.DBNameRow];
+            var datas = new object[table.Rows.Count - Config.DBDataStartedRow];
             var isSucceed = true;
 
             for (int i = 0; i < datas.Length; i++)
             {
-                var data = table.Rows[ConvertSetting.DBDataStartedRow + i];
+                var data = table.Rows[Config.DBDataStartedRow + i];
 
                 var instance = Activator.CreateInstance(type);
                 for (int j = 0; j < table.Columns.Count; j++)
                 {
                     string fieldName = fieldNames[j].ToString();
 
-                    if (ExcelUtility.HasIgnoreSymbol(table.Rows[ConvertSetting.DBNameRow][j].ToString()) == true)
+                    if (GoogleSheetsLoader.HasIgnoreSymbol(table.Rows[Config.DBNameRow][j].ToString()) == true)
                         continue;
                     if (fieldMap.TryGetValue(fieldName, out var fieldInfo) == false)
                         continue;
@@ -201,7 +192,7 @@ namespace Chu.Tools
                     }
                     catch
                     {
-                        Debug.LogError($"{table.TableName}, {ConvertSetting.DBDataStartedRow + i + 1}행 {fieldName} {data[j]} 변환 실패");
+                        Debug.LogError($"{table.TableName}, {Config.DBDataStartedRow + i + 1}행 {fieldName} {data[j]} 변환 실패");
                         isSucceed = false;
                     }
                 }
@@ -210,36 +201,6 @@ namespace Chu.Tools
             }
             text = JsonConvert.SerializeObject(datas, Formatting.Indented);
             return isSucceed;
-        }
-
-        private List<string> GetEnumScriptText(SheetData sheet)
-        {
-            var rows = sheet.Table.Rows;
-            var sb = new StringBuilder();
-            var arr = new List<string>(8);
-            var template = "public enum {0}\n{{\n{1}}}\n";
-
-            var index = ConvertSetting.EnumDataStartedRow;
-
-            while (index < rows.Count)
-            {
-                var typeText = rows[index][ConvertSetting.EnumTypeColumn].ToString();
-
-                sb.Clear();
-                while (index < rows.Count && rows[index][ConvertSetting.EnumTypeColumn].ToString() == typeText)
-                {
-                    sb.Append($"\t{rows[index][ConvertSetting.EnumKeyColumn]} = {rows[index][ConvertSetting.EnumValueColumn]},");
-                    if (rows[index][ConvertSetting.EnumCommentsColumn].ToString() != string.Empty)
-                    {
-                        sb.Append($" // {rows[index][ConvertSetting.EnumCommentsColumn]}");
-                    }
-                    sb.AppendLine();
-                    index++;
-                }
-                arr.Add(String.Format(template, typeText, sb.ToString()));
-            }
-
-            return arr;
         }
         #endregion
 

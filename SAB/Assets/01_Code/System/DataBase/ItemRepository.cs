@@ -6,9 +6,9 @@ namespace SAB.DataManger
 {
     public class ItemRepository
     {
-        private const string BasePath = "Dto_Item_Base";
-        private const string EquipmentPath = "Dto_Item_Equipment";
-        private const string WeaponPath = "Dto_Item_Weapon";
+        private const string BasePath = "ItemBaseData";
+        private const string EquipmentPath = "ItemEquipmentData";
+        private const string WeaponPath = "ItemWeaponData";
 
         public readonly Dictionary<int, ItemBaseData> Base;
         public readonly Dictionary<int, EquipmentBaseData> Equipment;

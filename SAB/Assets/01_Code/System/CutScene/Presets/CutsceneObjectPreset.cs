@@ -37,7 +37,7 @@ namespace SAB.Cutscene
         {
             if (Target is SingleMesh singlemesh)
             {
-                string path = Utility.GetAddressablePath(singlemesh.MeshFilter.sharedMesh);
+                string path = FileUtility.GetAddressablePath(singlemesh.MeshFilter.sharedMesh);
                 return new SingleMeshData(path, transform.position, transform.rotation);
             }
             else if (Target is VCamFollow follow)
