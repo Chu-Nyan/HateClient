@@ -31,7 +31,7 @@ namespace SAB.GameSystem
 
         private void Awake()
         {
-            ChuEngine.Run(new EngineSetting("en", new(0, 100, 0, 100), 4));
+            ChuEngine.Run(new EngineSetting("en", new(0, 300, 0, 300), 4));
 
             GenerateStatic();
             GenerateInstance();

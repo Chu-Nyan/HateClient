@@ -19,6 +19,8 @@ namespace Chu.Tools
             var path = AssetDatabase.GetAssetPath(Config.GeneratePath);
             for (int i = 0; i < ExcelLoader.Sheets.Count; i++)
             {
+                if (GoogleSheetsLoader.HasIgnoreSymbol(ExcelLoader.Sheets[i].TableName) == true)
+                    continue;
                 var dic = ConvertSheetToJson(ExcelLoader.Sheets[i]);
                 foreach (var item in dic)
                 {
