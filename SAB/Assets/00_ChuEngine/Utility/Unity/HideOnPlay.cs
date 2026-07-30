@@ -14,7 +14,7 @@ namespace Chu.Utility
             gameObject.SetActive(_isActive);
             if (_isActive == true)
             {
-                ChuEngine.Run("en");
+                ChuEngine.Run(EngineSetting.Default);
             }
         }
     }

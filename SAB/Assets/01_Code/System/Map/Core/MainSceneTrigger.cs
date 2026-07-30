@@ -31,7 +31,7 @@ namespace SAB.GameSystem
 
         private void Awake()
         {
-            RunChuEngine();
+            ChuEngine.Run(new EngineSetting("en", new(0, 100, 0, 100), 4));
 
             GenerateStatic();
             GenerateInstance();
@@ -43,12 +43,6 @@ namespace SAB.GameSystem
             InitFacade();
 
             GameStart();
-        }
-
-        private void RunChuEngine()
-        {
-            var engine = new ChuEngine("en");
-            engine.ActivateCollisionSystem(new(0, 200, 0, 200), 20);
         }
 
         private void GenerateStatic()

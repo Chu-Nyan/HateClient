@@ -1,11 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Chu.Data
 {
+    [Serializable]
     public struct RectBound
     {
         public float MinX, MinY, MaxX, MaxY;
+        [NonSerialized]
         public float HalfX, HalfY;
 
         public readonly Vector2 Center
@@ -22,6 +25,12 @@ namespace Chu.Data
 
             HalfX = (maxX - minX) * 0.5f;
             HalfY = (maxY - minY) * 0.5f;
+        }
+
+        public void OnAfterDeserialize()
+        {
+            HalfX = (MaxX - MinX) * 0.5f;
+            HalfY = (MaxY - MinY) * 0.5f;
         }
 
         private void SetBound(float minX, float maxX, float minY, float maxY)

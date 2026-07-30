@@ -11,38 +11,41 @@ namespace Chu.Core
     public class ChuEngine : Singleton<ChuEngine>
     {
         private readonly GameObject _root;
-
         private readonly TextTable<string> _textResource;
-        private NyanCollisonSystem _collisionSys;
+        private readonly NyanCollisonSystem _collisionSys;
 
         public TextTable<string> TextResource
         {
             get => _textResource;
         }
 
-        public ChuEngine(string language) : base()
+        public ChuEngine(EngineSetting setting) : base()
         {
             _root = new GameObject("ChuEngine");
             _textResource = new();
-
-            var json = ExternalFolderHandler.GetLanguagesTextFile(language);
+            var json = ExternalFolderHandler.GetLanguagesTextFile(setting.Language);
             _textResource.LoadTexts(JsonConvert.DeserializeObject<Dictionary<string, string>>(json));
+
+            if (setting.UseCollision == true)
+            {
+                _collisionSys = RunCollisionSystem(setting.CollisionBound, setting.Capacity);
+            }
         }
 
-        public void ActivateCollisionSystem(RectBound bound, int capacity)
+        public static void Run(EngineSetting setting)
         {
-            _collisionSys = _root.AddComponent<NyanCollisonSystem>();
-            _collisionSys.InitArray(capacity);
-            _collisionSys.InitBound(bound);
+            new ChuEngine(setting);
+        }
+
+        private NyanCollisonSystem RunCollisionSystem(RectBound bound, int capacity)
+        {
+            var collisionSys = _root.AddComponent<NyanCollisonSystem>();
+            collisionSys.InitArray(capacity);
+            collisionSys.InitBound(bound);
 
             var nyanColliderGenerator = new NyanColliderFactory();
-            nyanColliderGenerator.Init(_collisionSys);
-        }
-
-        public static void Run(string language)
-        {
-            new ChuEngine(language);
-            Instance.ActivateCollisionSystem(new(0, 100, 0, 100), 20);
+            nyanColliderGenerator.Init(collisionSys);
+            return collisionSys;
         }
     }
 }
