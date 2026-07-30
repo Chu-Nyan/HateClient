@@ -9,9 +9,8 @@ namespace Chu.Collision
     [CreateAssetMenu(fileName = "LayerHandler", menuName = "Scriptable Objects/LayerHandler", order = 1)]
     public class LayerHandler : ScriptableObject
     {
-        private const string OutputPath = "Assets/00.ChuEngine/Collision/Layer";
+        private const string OutputPath = "Assets/00_ChuEngine/Collision/Layer";
         private const string FileName = "NyanLayer.cs";
-
 
         [SerializeField]
         private string[] _layer = new string[16];
@@ -50,7 +49,7 @@ namespace Chu.Collision
             sb.AppendLine("// NyanCollisionLayerHandler에 의해 자동 생성됨");
             sb.AppendLine("// 수동 수정 금지");
             sb.AppendLine();
-            sb.AppendLine("namespace Chu.Collisions");
+            sb.AppendLine("namespace Chu.Collision");
             sb.AppendLine("{{");
             sb.AppendLine("\tpublic enum NyanLayer");
             sb.AppendLine("\t{{");
