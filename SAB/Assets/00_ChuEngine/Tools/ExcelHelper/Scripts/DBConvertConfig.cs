@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Chu.Tools
 {
+
     [Serializable]
     public class DBConvertConfig
     {
@@ -17,40 +18,40 @@ namespace Chu.Tools
         [SerializeField] private int _dbNameRow = 1;
         [SerializeField] private int _dbTypeRow = 2;
         [SerializeField] private int _dbDataStartRow = 4;
+
         [Space, Header("Enum Sheet Config")]
         [SerializeField] private int _enumDataStartedRow = 2;
         [SerializeField] private int _enumTypeColumn = 1;
         [SerializeField] private int _enumKeyColumn = 2;
         [SerializeField] private int _enumValueColumn = 3;
         [SerializeField] private int _enumCommentsColumn = 4;
+
         [Space, Header("Individual Sheet Config")]
-        [SerializeField] private string _configSheetName = "@SheetConfig";
+        public string ConfigSheetName = "@SheetConfig";
         [SerializeField] private int _sheetHeader = 1;
         [SerializeField] private int _sheetTypeColumn = 2;
         [SerializeField] private int _sheetDataStartRow = 3;
+
         [Space, Header("Export Path")]
         [SerializeField] private DefaultAsset _dtoScriptPath;
         [SerializeField] private DefaultAsset _dtoJsonPath;
         [SerializeField] private DefaultAsset _enumPath;
-        [SerializeField] private string _jsonPrefix;
-        [SerializeField] private string _scriptSuffix;
+        public string JsonPrefix;
+        public string ScriptSuffix;
 
-        private const int ZeroBase = -1;
+        public int DBNameRow => _dbNameRow - 1;
+        public int DBTypeRow => _dbTypeRow - 1;
+        public int DBDataStartedRow => _dbDataStartRow - 1;
 
-        public int DBNameRow => _dbNameRow + ZeroBase;
-        public int DBTypeRow => _dbTypeRow + ZeroBase;
-        public int DBDataStartedRow => _dbDataStartRow + ZeroBase;
+        public int EnumDataStartedRow => _enumDataStartedRow - 1;
+        public int EnumTypeColumn => _enumTypeColumn - 1;
+        public int EnumKeyColumn => _enumKeyColumn - 1;
+        public int EnumValueColumn => _enumValueColumn - 1;
+        public int EnumCommentsColumn => _enumCommentsColumn - 1;
 
-        public int EnumDataStartedRow => _enumDataStartedRow + ZeroBase;
-        public int EnumTypeColumn => _enumTypeColumn + ZeroBase;
-        public int EnumKeyColumn => _enumKeyColumn + ZeroBase;
-        public int EnumValueColumn => _enumValueColumn + ZeroBase;
-        public int EnumCommentsColumn => _enumCommentsColumn + ZeroBase;
-
-        public string ConfigSheetName => _configSheetName;
-        public int SheetPropertyNameColumn => _sheetHeader + ZeroBase;
-        public int SheetTypeColumn => _sheetTypeColumn + ZeroBase;
-        public int SheetPropertyFirstDataRow => _sheetDataStartRow + ZeroBase;
+        public int SheetPropertyNameColumn => _sheetHeader - 1;
+        public int SheetTypeColumn => _sheetTypeColumn - 1;
+        public int SheetPropertyFirstDataRow => _sheetDataStartRow - 1;
 
         public string DTOPath
         {
@@ -65,16 +66,6 @@ namespace Chu.Tools
         public string EnumPath
         {
             get => AssetDatabase.GetAssetPath(_enumPath);
-        }
-
-        public string JsonPrefix
-        {
-            get => _jsonPrefix;
-        }
-
-        public string ScriptSuffix
-        {
-            get => _scriptSuffix;
         }
     }
 }

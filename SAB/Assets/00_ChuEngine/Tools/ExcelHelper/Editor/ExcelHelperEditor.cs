@@ -7,18 +7,19 @@ namespace Chu.Tools
     public class ExcelHelperEditor : Editor
     {
         private ExcelHelper _helper;
+        private SerializedProperty _excelLoader;
         private SerializedProperty _convertSetting;
 
         private void OnEnable()
         {
+            _excelLoader = serializedObject.FindProperty("ExcelLoader");
             _convertSetting = serializedObject.FindProperty("ConvertSetting");
             _helper = (ExcelHelper)target;
         }
 
         public override void OnInspectorGUI()
         {
-            _helper.ExcelLoader.DrawSheetSettingUI();
-
+            EditorGUILayout.PropertyField(_excelLoader, new GUIContent("Google Sheets"), true);
             GUILayout.Space(10);
             if (GUILayout.Button("Export Data From DB"))
                 _helper.SetupAllInOneAsync();

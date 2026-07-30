@@ -6,18 +6,20 @@ namespace Chu.Tools
     [CustomEditor(typeof(TranslationDBHelper))]
     public class TranslationDBHelperEditor : Editor
     {
-        private SerializedProperty _config;
         private TranslationDBHelper _helper;
+        private SerializedProperty _excelLoader;
+        private SerializedProperty _config;
 
         private void OnEnable()
         {
             _helper = (TranslationDBHelper)target;
+            _excelLoader = serializedObject.FindProperty("ExcelLoader");
             _config = serializedObject.FindProperty("Config");
         }
 
         public override void OnInspectorGUI()
         {
-            _helper.ExcelLoader.DrawSheetSettingUI();
+            EditorGUILayout.PropertyField(_excelLoader, new GUIContent("Google Sheets"), true);
             EditorGUILayout.Space();
             DrawGenerateLocalization();
             EditorGUILayout.Space();
