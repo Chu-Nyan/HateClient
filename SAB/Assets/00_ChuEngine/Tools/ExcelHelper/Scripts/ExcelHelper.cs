@@ -15,7 +15,7 @@ namespace Chu.Tools
     public class ExcelHelper : ScriptableObject
     {
         public GoogleSheetsLoader ExcelLoader;
-        public DBConfig Config;
+        public DataTableConfig Config;
 
         [SerializeField]
         public Dictionary<string, SheetData> SheetsByName;
@@ -94,7 +94,7 @@ namespace Chu.Tools
                 var sheet = item.Value;
                 var text = GetDataScriptText(sheet, Config.NameSpaceByType);
                 var path = AssetDatabase.GetAssetPath(sheet.ScriptPath);
-                var name = Config.GetScriptFileName(sheet.GetPacalCaseName());
+                var name = Config.GetScriptFileName(sheet.GetPascalCaseName());
 
                 FileUtility.GenerateFile(path, $"{name}.cs", text);
                 await Task.Yield();
@@ -109,7 +109,7 @@ namespace Chu.Tools
             var sb = new StringBuilder();
             var namespaceText = new StringBuilder();
 
-            sb.AppendLine($"public struct {Config.GetScriptFileName(sheet.GetPacalCaseName())}");
+            sb.AppendLine($"public class {Config.GetScriptFileName(sheet.GetPascalCaseName())}");
             sb.AppendLine("{");
             for (int i = 0; i < sheet.Table.Columns.Count; i++)
             {
@@ -139,7 +139,7 @@ namespace Chu.Tools
                 if (TryConvertExcelToJson(sheet, out var text) == true)
                 {
                     var path = AssetDatabase.GetAssetPath(sheet.JsonPath);
-                    FileUtility.GenerateFile(path, $"{Config.GetJsonFileName(sheet.GetPacalCaseName())}.json", text);
+                    FileUtility.GenerateFile(path, $"{Config.GetJsonFileName(sheet.GetPascalCaseName())}.json", text);
                 }
 
                 if (text == default)
@@ -156,7 +156,7 @@ namespace Chu.Tools
             var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
             var table = sheet.Table;
             Type type = assemblies
-                .Select(a => a.GetType($"{Config.GetScriptFileName(sheet.GetPacalCaseName())}"))
+                .Select(a => a.GetType($"{Config.GetScriptFileName(sheet.GetPascalCaseName())}"))
                 .FirstOrDefault(t => t != null);
 
             var fieldMap = type.GetFields().ToDictionary(f => f.Name);

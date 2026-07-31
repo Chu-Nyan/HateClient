@@ -28,7 +28,8 @@ namespace Chu.Tools
                 return;
 
             IsLoading = true;
-            var www = UnityWebRequest.Get(string.Format(GoogleDownloadURL, GoogleSheetID));
+            using var www = UnityWebRequest.Get(string.Format(GoogleDownloadURL, GoogleSheetID));
+
             var operation = www.SendWebRequest();
 
             while (!operation.isDone)
@@ -39,7 +40,7 @@ namespace Chu.Tools
             else
             {
                 ExcelUpdateTime = DateTime.Now;
-                var stream = new MemoryStream(www.downloadHandler.data);
+                using var stream = new MemoryStream(www.downloadHandler.data);
                 Sheets = ExcelReaderFactory.CreateReader(stream).AsDataSet().Tables;
             }
             IsLoading = false;

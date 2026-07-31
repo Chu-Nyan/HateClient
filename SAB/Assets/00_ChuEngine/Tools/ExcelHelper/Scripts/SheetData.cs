@@ -12,7 +12,7 @@ namespace Chu.Tools
         public DefaultAsset ScriptPath;
         public DefaultAsset JsonPath;
 
-        public string GetPacalCaseName()
+        public string GetPascalCaseName()
         {
             string cleanName = Table.TableName
                 .Replace("_", "")

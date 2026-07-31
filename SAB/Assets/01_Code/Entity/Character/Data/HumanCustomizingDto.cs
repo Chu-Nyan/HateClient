@@ -1,4 +1,4 @@
-public struct HumanCustomizingDto
+public class HumanCustomizingDto
 {
 	public int ID;
 	public Gender Gender;

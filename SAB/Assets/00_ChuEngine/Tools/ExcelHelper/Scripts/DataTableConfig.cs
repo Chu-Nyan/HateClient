@@ -5,9 +5,8 @@ using UnityEngine;
 
 namespace Chu.Tools
 {
-
     [Serializable]
-    public class DBConfig
+    public class DataTableConfig
     {
         public readonly Dictionary<string, string> NameSpaceByType = new()
         {

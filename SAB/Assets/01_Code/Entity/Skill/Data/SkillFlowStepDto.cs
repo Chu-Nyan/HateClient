@@ -1,4 +1,4 @@
-public struct SkillFlowStepDto
+public class SkillFlowStepDto
 {
 	public int ID;
 	public int LogicID;

@@ -1,4 +1,4 @@
-public struct ItemBaseDto
+public class ItemBaseDto
 {
 	public int ID;
 	public string NameKey;

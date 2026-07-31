@@ -1,4 +1,4 @@
-public struct ItemEquipmentDto
+public class ItemEquipmentDto
 {
 	public int ID;
 	public EquipSlot Slot;

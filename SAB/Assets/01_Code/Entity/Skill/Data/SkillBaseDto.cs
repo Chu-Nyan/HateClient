@@ -1,4 +1,4 @@
-public struct SkillBaseDto
+public class SkillBaseDto
 {
 	public int ID;
 	public string NameKey;

@@ -1,4 +1,4 @@
-public struct SkillCollisionLogicDto
+public class SkillCollisionLogicDto
 {
 	public int ID;
 	public int Order;

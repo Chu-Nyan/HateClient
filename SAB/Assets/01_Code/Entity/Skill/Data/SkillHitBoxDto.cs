@@ -1,6 +1,6 @@
 using Chu.Collision;
 
-public struct SkillHitBoxDto
+public class SkillHitBoxDto
 {
 	public int ID;
 	public ShapeType ShapeType;

@@ -1,4 +1,4 @@
-public struct SkillStepAoEDto
+public class SkillStepAoEDto
 {
 	public int ID;
 	public float DamageRate;

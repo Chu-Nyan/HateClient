@@ -1,4 +1,4 @@
-public struct CharacterBaseStatsDto
+public class CharacterBaseStatsDto
 {
 	public int ID;
 	public string NameKey;

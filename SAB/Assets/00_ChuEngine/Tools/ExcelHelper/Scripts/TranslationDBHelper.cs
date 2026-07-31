@@ -21,6 +21,7 @@ namespace Chu.Tools
             {
                 if (GoogleSheetsLoader.HasIgnoreSymbol(ExcelLoader.Sheets[i].TableName) == true)
                     continue;
+
                 var dic = ConvertSheetToJson(ExcelLoader.Sheets[i]);
                 foreach (var item in dic)
                 {
@@ -34,14 +35,13 @@ namespace Chu.Tools
         private Dictionary<string, string> ConvertSheetToJson(DataTable table)
         {
             var texts = new Dictionary<string, string>();
-            var dic = new Dictionary<string, string>();
 
             for (int x = 0; x < table.Columns.Count; x++)
             {
                 if (GoogleSheetsLoader.HasIgnoreSymbol(table.Rows[0][x].ToString()) == true || x == Config.KeyColumn)
                     continue;
 
-                dic.Clear();
+                var dic = new Dictionary<string, string>();
 
                 for (int y = Config.FirstDataRow; y < table.Rows.Count; y++)
                 {
