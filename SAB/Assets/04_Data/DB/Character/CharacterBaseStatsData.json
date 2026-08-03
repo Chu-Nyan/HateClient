@@ -1,0 +1,112 @@
+[
+  {
+    "ID": 1,
+    "NameKey": "unit.player.name",
+    "DescKey": "unit.player.desc",
+    "Faction": 0,
+    "HP": 100.0,
+    "ATK": 20.0,
+    "PDEF": 10.0,
+    "MDEF": 5.0,
+    "SPD": 1.0
+  },
+  {
+    "ID": 2,
+    "NameKey": "unit.kai.name",
+    "DescKey": "unit.kai.desc",
+    "Faction": 1,
+    "HP": 50.0,
+    "ATK": 10.0,
+    "PDEF": 2.0,
+    "MDEF": 2.0,
+    "SPD": 1.1
+  },
+  {
+    "ID": 3,
+    "NameKey": "unit.lia.name",
+    "DescKey": "unit.lia.desc",
+    "Faction": 1,
+    "HP": 70.0,
+    "ATK": 5.0,
+    "PDEF": 15.0,
+    "MDEF": 10.0,
+    "SPD": 0.9
+  },
+  {
+    "ID": 4,
+    "NameKey": "unit.zen.name",
+    "DescKey": "unit.zen.desc",
+    "Faction": 1,
+    "HP": 30.0,
+    "ATK": 5.0,
+    "PDEF": 1.0,
+    "MDEF": 5.0,
+    "SPD": 0.7
+  },
+  {
+    "ID": 5,
+    "NameKey": "unit.yua.name",
+    "DescKey": "unit.yua.desc",
+    "Faction": 1,
+    "HP": 50.0,
+    "ATK": 10.0,
+    "PDEF": 2.0,
+    "MDEF": 1.0,
+    "SPD": 1.2
+  },
+  {
+    "ID": 6,
+    "NameKey": "unit.noel.name",
+    "DescKey": "unit.noel.desc",
+    "Faction": 1,
+    "HP": 50.0,
+    "ATK": 10.0,
+    "PDEF": 2.0,
+    "MDEF": 2.0,
+    "SPD": 1.3
+  },
+  {
+    "ID": 7,
+    "NameKey": "unit.rei.name",
+    "DescKey": "unit.rei.desc",
+    "Faction": 2,
+    "HP": 70.0,
+    "ATK": 5.0,
+    "PDEF": 15.0,
+    "MDEF": 10.0,
+    "SPD": 0.9
+  },
+  {
+    "ID": 8,
+    "NameKey": "unit.luca.name",
+    "DescKey": "unit.luca.desc",
+    "Faction": 2,
+    "HP": 30.0,
+    "ATK": 5.0,
+    "PDEF": 1.0,
+    "MDEF": 5.0,
+    "SPD": 1.5
+  },
+  {
+    "ID": 9,
+    "NameKey": "unit.mio.name",
+    "DescKey": "unit.mio.desc",
+    "Faction": 2,
+    "HP": 50.0,
+    "ATK": 10.0,
+    "PDEF": 2.0,
+    "MDEF": 1.0,
+    "SPD": 0.5
+  },
+  {
+    "ID": 10,
+    "NameKey": "unit.asha.name",
+    "DescKey": "unit.asha.desc",
+    "Faction": 2,
+    "HP": 50.0,
+    "ATK": 10.0,
+    "PDEF": 2.0,
+    "MDEF": 2.0,
+    "SPD": 1.0
+  }
+]

@@ -1,0 +1,137 @@
+[
+  {
+    "ID": 1,
+    "NameKey": "item.weapon.shortsword",
+    "Category": "Weapon"
+  },
+  {
+    "ID": 2,
+    "NameKey": "item.weapon.ironsword",
+    "Category": "Weapon"
+  },
+  {
+    "ID": 3,
+    "NameKey": "item.weapon.knightsword",
+    "Category": "Weapon"
+  },
+  {
+    "ID": 4,
+    "NameKey": "item.weapon.herosword",
+    "Category": "Weapon"
+  },
+  {
+    "ID": 5,
+    "NameKey": "item.body.cloth",
+    "Category": "Armor"
+  },
+  {
+    "ID": 6,
+    "NameKey": "item.body.adventurer",
+    "Category": "Armor"
+  },
+  {
+    "ID": 7,
+    "NameKey": "item.body.knight",
+    "Category": "Armor"
+  },
+  {
+    "ID": 8,
+    "NameKey": "item.body.scoutleather",
+    "Category": "Armor"
+  },
+  {
+    "ID": 9,
+    "NameKey": "item.body.magerobe",
+    "Category": "Armor"
+  },
+  {
+    "ID": 10,
+    "NameKey": "item.body.sagerobe",
+    "Category": "Armor"
+  },
+  {
+    "ID": 11,
+    "NameKey": "item.body.redknight",
+    "Category": "Armor"
+  },
+  {
+    "ID": 12,
+    "NameKey": "item.body.beast",
+    "Category": "Armor"
+  },
+  {
+    "ID": 13,
+    "NameKey": "item.body.demon",
+    "Category": "Armor"
+  },
+  {
+    "ID": 14,
+    "NameKey": "item.body.hero",
+    "Category": "Armor"
+  },
+  {
+    "ID": 15,
+    "NameKey": "item.body.soldier",
+    "Category": "Armor"
+  },
+  {
+    "ID": 16,
+    "NameKey": "item.shield.wood",
+    "Category": "Armor"
+  },
+  {
+    "ID": 17,
+    "NameKey": "item.shield.standard",
+    "Category": "Armor"
+  },
+  {
+    "ID": 18,
+    "NameKey": "item.shield.knight",
+    "Category": "Armor"
+  },
+  {
+    "ID": 19,
+    "NameKey": "item.shield.blackknight",
+    "Category": "Armor"
+  },
+  {
+    "ID": 20,
+    "NameKey": "item.shield.beast",
+    "Category": "Armor"
+  },
+  {
+    "ID": 21,
+    "NameKey": "item.shield.demon",
+    "Category": "Armor"
+  },
+  {
+    "ID": 22,
+    "NameKey": "item.shield.hero",
+    "Category": "Armor"
+  },
+  {
+    "ID": 23,
+    "NameKey": "item.shield.legendary",
+    "Category": "Armor"
+  },
+  {
+    "ID": 24,
+    "NameKey": "item.shield.demonlord",
+    "Category": "Armor"
+  },
+  {
+    "ID": 25,
+    "NameKey": "item.cloak.knight",
+    "Category": "Armor"
+  },
+  {
+    "ID": 26,
+    "NameKey": "item.cloak.hero",
+    "Category": "Armor"
+  },
+  {
+    "ID": 27,
+    "NameKey": "item.cloak.demonlord",
+    "Category": "Armor"
+  }
+]

@@ -1,0 +1,39 @@
+using UnityEngine;
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    private void Awake()
+    {
+        GenerateStatic();
+        GenerateInstance();
+
+        InitStatic();
+        InitInstance();
+        GameStart();
+    }
+
+    private void GenerateStatic()
+    {
+
+    }
+
+    private void GenerateInstance()
+    {
+
+    }
+
+    private void InitStatic()
+    {
+
+    }
+
+    private void InitInstance()
+    {
+
+    }
+
+    private void GameStart()
+    {
+
+    }
+}

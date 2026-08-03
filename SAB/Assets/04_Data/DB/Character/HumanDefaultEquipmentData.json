@@ -1,0 +1,54 @@
+[
+  {
+    "ID": 1,
+    "EquipmentID": 1
+  },
+  {
+    "ID": 1,
+    "EquipmentID": 14
+  },
+  {
+    "ID": 1,
+    "EquipmentID": 22
+  },
+  {
+    "ID": 1,
+    "EquipmentID": 26
+  },
+  {
+    "ID": 2,
+    "EquipmentID": 5
+  },
+  {
+    "ID": 3,
+    "EquipmentID": 6
+  },
+  {
+    "ID": 4,
+    "EquipmentID": 7
+  },
+  {
+    "ID": 5,
+    "EquipmentID": 8
+  },
+  {
+    "ID": 6,
+    "EquipmentID": 9
+  },
+  {
+    "ID": 7,
+    "EquipmentID": 10
+  },
+  {
+    "ID": 8,
+    "EquipmentID": 11
+  },
+  {
+    "ID": 9,
+    "EquipmentID": 12
+  },
+  {
+    "ID": 10,
+    "EquipmentID": 13
+  }
+]

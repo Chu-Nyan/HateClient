@@ -1,0 +1,30 @@
+[
+  {
+    "ID": 1,
+    "Damage": 5.0,
+    "UpgradeSlot": 1,
+    "WeaponType": "Sword",
+    "Handedness": "OneHand"
+  },
+  {
+    "ID": 2,
+    "Damage": 7.5,
+    "UpgradeSlot": 1,
+    "WeaponType": "Sword",
+    "Handedness": "OneHand"
+  },
+  {
+    "ID": 3,
+    "Damage": 10.0,
+    "UpgradeSlot": 2,
+    "WeaponType": "Sword",
+    "Handedness": "OneHand"
+  },
+  {
+    "ID": 4,
+    "Damage": 12.5,
+    "UpgradeSlot": 3,
+    "WeaponType": "Sword",
+    "Handedness": "OneHand"
+  }
+]

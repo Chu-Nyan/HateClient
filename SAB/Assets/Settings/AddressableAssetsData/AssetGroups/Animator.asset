@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Animator
+  m_EditorClassIdentifier: 
+  m_GroupName: Animator
+  m_GUID: fb315e6cabab0ce41b702872130da24e
+  m_SerializeEntries:
+  - m_GUID: 492aa1d241069364fb83010a834d9f89
+    m_Address: SwordAndShieldAnimator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad68a53c0f8f8e346b1c079a4d7edc5f
+    m_Address: UnarmedHumanoid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2704fcf890f18740ac50b264f0acbb8
+    m_Address: SwordAnimator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1f1c78bf333ed9549b35bfec8d20fc4a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 542026cd5f838074e84687f3bcd93f0a, type: 2}
+    - {fileID: 11400000, guid: 1a28216a140b37e46bc1e5223f51b6df, type: 2}

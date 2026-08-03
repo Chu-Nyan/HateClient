@@ -1,0 +1,169 @@
+[
+  {
+    "Name": "CH01_01_EnterTheForestBattle",
+    "LockPlayer": true,
+    "BindingIDByTrack": {
+      "Cam_SwordStatic": 1,
+      "Cam_SwordFollow": 2,
+      "InGame_Guard1_Movement": 4,
+      "InGame_Guard2_Movement": 5,
+      "InGame_Player_Movement": 3
+    },
+    "BindingSourceById": {
+      "1": 0,
+      "2": 0,
+      "4": 1,
+      "5": 1,
+      "3": 2
+    },
+    "UniqueSlotById": {
+      "3": 0
+    },
+    "FavoritesById": {
+      "4": "Guard1",
+      "5": "Guard2"
+    },
+    "StaticData": {
+      "1": {
+        "Position": {
+          "x": 110.0,
+          "y": 1.18,
+          "z": 130.0
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "POV": 40.0
+      }
+    },
+    "FollowData": {
+      "2": {
+        "Rotation": {
+          "x": 0.079211,
+          "y": -0.005890844,
+          "z": 0.09230791,
+          "w": 0.9925574
+        },
+        "POV": 40.0,
+        "TargetID": 3,
+        "FollowOffset": {
+          "x": 0.0,
+          "y": 2.13,
+          "z": -12.88
+        }
+      }
+    },
+    "CharacterData": {},
+    "SingleMeshData": {},
+    "PersistentObjects": [
+      3
+    ]
+  },
+  {
+    "Name": "CH01_02_Boss",
+    "LockPlayer": true,
+    "BindingIDByTrack": {
+      "VCamFollow_Cutscene": 6,
+      "VCamStatic_Cutscene (1)": 8,
+      "VCamStatic_Cutscene": 9,
+      "Animation Track (1)": 7,
+      "Animation Track (2)": 10,
+      "Activation Track": 10
+    },
+    "BindingSourceById": {
+      "6": 0,
+      "8": 0,
+      "9": 0,
+      "7": 0,
+      "10": 0
+    },
+    "UniqueSlotById": {},
+    "FavoritesById": {},
+    "StaticData": {
+      "8": {
+        "Position": {
+          "x": 106.498993,
+          "y": 3.33372879,
+          "z": 179.389084
+        },
+        "Rotation": {
+          "x": -0.307866931,
+          "y": -0.06872021,
+          "z": 0.0224173125,
+          "w": -0.948679566
+        },
+        "POV": 40.0
+      },
+      "9": {
+        "Position": {
+          "x": 107.0158,
+          "y": 0.91,
+          "z": 180.042664
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "POV": 40.0
+      }
+    },
+    "FollowData": {
+      "6": {
+        "Rotation": {
+          "x": 0.04936699,
+          "y": -0.665715933,
+          "z": 0.0442167632,
+          "w": 0.7432565
+        },
+        "POV": 40.0,
+        "TargetID": 7,
+        "FollowOffset": {
+          "x": 1.48,
+          "y": 0.35,
+          "z": -0.17
+        }
+      }
+    },
+    "CharacterData": {
+      "7": {
+        "UnitID": 10,
+        "BrainType": 2,
+        "Position": {
+          "x": 107.060005,
+          "y": 0.0,
+          "z": 185.28
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.99963063,
+          "z": 0.0,
+          "w": -0.0271781459
+        }
+      },
+      "10": {
+        "UnitID": 4,
+        "BrainType": 0,
+        "Position": {
+          "x": 107.0158,
+          "y": 0.0,
+          "z": 182.032654
+        },
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        }
+      }
+    },
+    "SingleMeshData": {},
+    "PersistentObjects": [
+      7
+    ]
+  }
+]

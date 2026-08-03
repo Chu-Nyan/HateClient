@@ -1,0 +1,82 @@
+[
+  {
+    "ID": 1,
+    "Gender": "Male",
+    "Eye": 1,
+    "Mouth": 1,
+    "Hair": 1,
+    "Eyebrow": 1
+  },
+  {
+    "ID": 2,
+    "Gender": "Male",
+    "Eye": 2,
+    "Mouth": 2,
+    "Hair": 2,
+    "Eyebrow": 1
+  },
+  {
+    "ID": 3,
+    "Gender": "Female",
+    "Eye": 3,
+    "Mouth": 3,
+    "Hair": 3,
+    "Eyebrow": 2
+  },
+  {
+    "ID": 4,
+    "Gender": "Male",
+    "Eye": 4,
+    "Mouth": 4,
+    "Hair": 4,
+    "Eyebrow": 1
+  },
+  {
+    "ID": 5,
+    "Gender": "Female",
+    "Eye": 5,
+    "Mouth": 5,
+    "Hair": 5,
+    "Eyebrow": 2
+  },
+  {
+    "ID": 6,
+    "Gender": "Male",
+    "Eye": 6,
+    "Mouth": 6,
+    "Hair": 6,
+    "Eyebrow": 1
+  },
+  {
+    "ID": 7,
+    "Gender": "Female",
+    "Eye": 7,
+    "Mouth": 7,
+    "Hair": 7,
+    "Eyebrow": 2
+  },
+  {
+    "ID": 8,
+    "Gender": "Male",
+    "Eye": 8,
+    "Mouth": 8,
+    "Hair": 8,
+    "Eyebrow": 1
+  },
+  {
+    "ID": 9,
+    "Gender": "Male",
+    "Eye": 9,
+    "Mouth": 9,
+    "Hair": 9,
+    "Eyebrow": 1
+  },
+  {
+    "ID": 10,
+    "Gender": "Female",
+    "Eye": 10,
+    "Mouth": 10,
+    "Hair": 10,
+    "Eyebrow": 2
+  }
+]

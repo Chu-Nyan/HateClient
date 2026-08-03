@@ -1,0 +1,44 @@
+﻿using Chu.AI;
+using SAB.EntityAgent.AI.Context;
+using System;
+using System.Collections.Generic;
+
+namespace SAB.EntityAgent.AI
+{
+    /// <summary>
+    /// AI가 명령 전달에 필요한 함수 모음
+    /// </summary>
+    public static class AICommandService
+    {
+        public static Dictionary<CommandType, Func<AIContext, MethodResult>> Function = new()
+        {
+            {CommandType.Idle,  Idle},
+            {CommandType.Patrol, Patrol}
+        };
+
+        public static MethodResult Move(AIContext context)
+        {
+            context.OrderToMove(context.MoveCommandData);
+
+            return MethodResult.Success;
+        }
+
+        public static MethodResult Idle(AIContext context)
+        {
+            context.OrderToIdle(new IdleCommandData(IdleData.Default.WaitTime));
+
+            return MethodResult.Success;
+        }
+
+        public static MethodResult Patrol(AIContext context)
+        {
+            var data = PatrolData.Default;
+            var x = UnityEngine.Random.Range(data.XRange.x, data.XRange.y);
+            var z = UnityEngine.Random.Range(data.YRange.x, data.YRange.y);
+            var pos = context.MovementReceiver.transform.position + new UnityEngine.Vector3(x, 0, z);
+            context.OrderToMove(new MoveCommandData(pos));
+
+            return MethodResult.Success;
+        }
+    }
+}

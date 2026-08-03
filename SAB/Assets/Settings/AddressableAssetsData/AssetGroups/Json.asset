@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Json
+  m_EditorClassIdentifier: 
+  m_GroupName: Json
+  m_GUID: 3b297e2eed8646447994015dae1ca296
+  m_SerializeEntries:
+  - m_GUID: 0959175627d1631468fd7cd77849e11d
+    m_Address: SkillCollisionLogicData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38239064b6a5bb2439582b7351fa7fe5
+    m_Address: SkillHitBoxData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51af514e76c639a42913c0e060b11f93
+    m_Address: SkillFlowStepData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70e8fe51f3499a34f9b9347f28a8ff9c
+    m_Address: HumanDefaultEquipmentData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b72cb7684b021a42abb5c551d7d0de7
+    m_Address: ItemEquipmentData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92b3bcc224cbdcd41be9b25405b1d0be
+    m_Address: ForestCutsceneData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f44964cab11df84b9efd03f5bf50411
+    m_Address: SkillStepInstanceData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a19785019359d5e4e8d79306b92d55c2
+    m_Address: ForestGeneratedData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad0289ef98fca42459021365929e3cc5
+    m_Address: ItemWeaponData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5a0261f5bf4d9041b45c9a15d8589c1
+    m_Address: HumanCustomizingData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c88a861244f336d4384542599b69c89a
+    m_Address: SkillStepAoEData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d93b7b298effd8d45a0f255e29095a0c
+    m_Address: CharacterBaseStatsData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9889ed3c8048294481e2f34425f8768
+    m_Address: SkillStepTimerData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee378f5d1b5e3734882085c7b9b73878
+    m_Address: SkillStepDoTData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3269b05edc0ebf4481e6f50e23691cb
+    m_Address: ItemBaseData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f8310f6c4e0b5734b9512e4fccf87b98
+    m_Address: SkillBaseData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1f1c78bf333ed9549b35bfec8d20fc4a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 84af6140c16f6324ea419a2f7cfdd276, type: 2}
+    - {fileID: 11400000, guid: 1dd74c18c4c6e0f448ed3e26dbbe779c, type: 2}

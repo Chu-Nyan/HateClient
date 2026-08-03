@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+
+namespace SAB.Cutscene
+{
+    public class VCamStaticData : ICutscenePreset
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public float POV;
+
+        public VCamStaticData(Vector3 pos, Quaternion rot, float pov)
+        {
+            Position = pos;
+            Rotation = rot;
+            POV = pov;
+        }
+    }
+}
