@@ -21,6 +21,9 @@ namespace SAB.Skill
 
         public SkillSequence(AttackContext context, List<ISkillStep> steps)
         {
+            if (steps == null || steps.Count == 0)
+                throw new System.Exception($"Invalid steps\nSkill ID : {_context.SkillData.ID}");
+
             _context = context;
             _steps = steps;
             _currentStepIndex = 0;
@@ -29,11 +32,6 @@ namespace SAB.Skill
 
         public bool TickAndCheck(IHasStats stats)
         {
-            if (_steps == null || _steps.Count == 0)
-            {
-                Debug.LogError("SkillStep이 존재하지 않음");
-                return true;
-            }
             if (_isDone == true)
             {
                 Debug.LogWarning("완료된 Sequence 진입");

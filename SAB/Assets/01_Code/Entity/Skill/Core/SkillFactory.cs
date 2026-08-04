@@ -10,6 +10,8 @@ namespace SAB.Skill
 {
     public class SkillFactory : Singleton<SkillFactory>
     {
+        private const string SkillObjectPath = "SkillObject";
+
         private readonly Dictionary<int, SkillData> _skillDataByID;
         private readonly FactionTable _factionTable;
 
@@ -19,10 +21,10 @@ namespace SAB.Skill
 
         public SkillFactory(SkillRepository db, FactionTable faction) : base()
         {
-            _root = new GameObject("Projectile").transform;
+            _root = new GameObject("SkillObjects").transform;
             _skillDataByID = db.SkillByID;
             _factionTable = faction;
-            _objectPooling = new(() => AssetManager.GenerateLoadAssetSync<SkillObject>("Projectile", _root));
+            _objectPooling = new(() => AssetManager.GenerateLoadAssetSync<SkillObject>(SkillObjectPath, _root));
             _generateFuncByProcessType = new()
             {
                 { SkillStepType.Instant, () => new InstantSkillStep() },
@@ -52,7 +54,7 @@ namespace SAB.Skill
 
         public SkillSequence CreateSequence(AttackContext context, HitResult hit)
         {
-            var onHitStep = context.SkillData.CollisionLogics[hit.LogicID].OnHitSteps;
+            var onHitStep = context.SkillData.CollisionLogics[hit.LogicIndex].OnHitSteps;
             var list = new List<ISkillStep>();
             for (int i = 0; i < onHitStep.Length; i++)
             {
@@ -67,7 +69,7 @@ namespace SAB.Skill
         {
             var type = (SkillStepType)(data.GetID / 100000);
             ISkillStep step = _generateFuncByProcessType[type]?.Invoke();
-            step.Refresh(data, context);
+            step.Setup(data, context);
 
             return step;
         }

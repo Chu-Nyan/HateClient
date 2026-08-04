@@ -66,7 +66,7 @@ namespace SAB.GameSystem
         public AniEventData TriggerAttackAndGetAniEventData(float damage, int index, Vector3 targetPoint)
         {
             _used.Add(index);
-            SkillList[index].Use();
+            SkillList[index].TryUse();
 
             var data = new AniEventData()
             {

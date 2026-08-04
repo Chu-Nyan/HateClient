@@ -68,6 +68,8 @@ namespace SAB.DataManger
                 converter: dto => new ShapeParam(dto.ShapeType, dto.OffsetX, dto.OffsetY, dto.Param1, dto.Param2)
             );
 
+
+
             CollisionLogicByID = DataBase.DeserializeArrayByKey(
                 dtos: DataBase.ConvertJsonToArray<SkillCollisionLogicDto>(AssetManager.LoadJson(CollisionLogicPath)),
                 keySelector: dto => dto.ID,

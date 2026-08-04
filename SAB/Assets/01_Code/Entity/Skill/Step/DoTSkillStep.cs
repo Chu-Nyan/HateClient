@@ -16,7 +16,7 @@ namespace SAB.Skill
             get => _isDone;
         }
 
-        public void Refresh(IStepData data, AttackContext context)
+        public void Setup(IStepData data, AttackContext context)
         {
             if (data is not DotStepData stepData)
                 throw new Exception("잘못된 SkillStep 초기화");
@@ -25,7 +25,7 @@ namespace SAB.Skill
             _context = context;
             _isDone = false;
             _remainInterval = DotStepData.DamageInterval;
-            _remainTick = Mathf.FloorToInt(_data.Duration / DotStepData.DamageInterval);
+            _remainTick = Mathf.CeilToInt(_data.Duration / DotStepData.DamageInterval);
         }
 
         public void Tick(IHasStats defensive)
@@ -37,7 +37,7 @@ namespace SAB.Skill
                 _remainInterval += DotStepData.DamageInterval;
                 defensive.AddHP(-(_context.Damage * _data.DamageRate));
 
-                if (_remainTick == 0)
+                if (_remainTick <= 0)
                     _isDone = true;
             }
         }
