@@ -16,8 +16,6 @@ namespace SAB.Cutscene
 
             if (playerData is Character receiver)
             {
-                Debug.Log("start");
-
                 _started = true;
                 receiver.PlayEmote(Clip);
             }
@@ -25,8 +23,6 @@ namespace SAB.Cutscene
 
         public override void OnGraphStop(Playable playable)
         {
-            Debug.Log("end");
-
             _started = false;
         }
     }

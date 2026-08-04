@@ -61,6 +61,7 @@ namespace SAB.EntityAgent
             InputManager.Instance.UnregisterWASDPerformed(SetDiection);
             InputManager.Instance.UnregisterWASDCanceled(SetDiection);
             InputManager.Instance.UnregisterLeftClickedPerformed(BasicAttack);
+            SetDiection(Vector2.zero);
         }
 
         private void SetDiection(Vector2 dir)

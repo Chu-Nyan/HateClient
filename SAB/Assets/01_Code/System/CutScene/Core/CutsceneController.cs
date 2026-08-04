@@ -24,8 +24,14 @@ namespace SAB.Cutscene
         private CutsceneData _cutsceneData;
         private readonly Dictionary<string, TrackAsset> _trackByName = new();
         private readonly Dictionary<int, ICutsceneObject> _objectByBindingID = new();
+        private bool _isPlaying;
 
         public event Action<CutsceneData> CutsceneStopped;
+
+        public bool IsPlaying
+        {
+            get => _isPlaying;
+        }
 
         private void Awake()
         {
@@ -43,8 +49,10 @@ namespace SAB.Cutscene
 
         public void Play(CutsceneData data)
         {
-            _cutsceneData = data;
+            _isPlaying = true;
             ClearPlayingCutscene();
+
+            _cutsceneData = data;
             PlayableAsset playableAsset = AssetManager.LoadAssetSync<PlayableAsset>(data.Name);
             _director.playableAsset = playableAsset;
             CacheTracks(playableAsset);
@@ -69,7 +77,7 @@ namespace SAB.Cutscene
             }
         }
 
-        public void RegisterExternalObject(int bindingID, ICutsceneObject obj)
+        public void RegisterObject(int bindingID, ICutsceneObject obj)
         {
             if (_objectByBindingID.TryAdd(bindingID, obj) == false)
             {
@@ -86,7 +94,7 @@ namespace SAB.Cutscene
             {
                 var obj = _pool.DequeueObject(item.Value);
                 obj.SetCutscenePreset(item.Value);
-                RegisterExternalObject(item.Key, obj);
+                RegisterObject(item.Key, obj);
             }
 
             // Init
@@ -169,6 +177,7 @@ namespace SAB.Cutscene
 
         private void OnTimelineStopped(PlayableDirector director)
         {
+            _isPlaying = false;
             ClearPlayingCutscene();
             CutsceneStopped?.Invoke(_cutsceneData);
         }

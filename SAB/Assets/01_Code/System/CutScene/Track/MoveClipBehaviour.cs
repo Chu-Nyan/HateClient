@@ -17,7 +17,7 @@ namespace SAB.Cutscene
             if (playerData is IMovementReceiver receiver)
             {
                 _started = true;
-                receiver?.SetDestination(Destination);
+                receiver.SetDestination(Destination);
             }
         }
 

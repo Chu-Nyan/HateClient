@@ -7,7 +7,6 @@ namespace SAB.Cutscene
 {
     public class CutsceneObjectPreset : MonoBehaviour
     {
-        public const string BindingObject = "Binding Object";
         public const string BindingSlot = "Binding Slot";
 
         public MonoBehaviour Target;
@@ -20,6 +19,9 @@ namespace SAB.Cutscene
 
         private void OnValidate()
         {
+            if (Target.gameObject != gameObject)
+                Debug.LogError("Target must reference the same GameObject.");
+
             if (_prevSource == BindingSource)
                 return;
 
@@ -35,6 +37,11 @@ namespace SAB.Cutscene
 
         public ICutscenePreset GetCutsceneObjectData(CutsceneDataExtractor idHandler)
         {
+            if (Target == null)
+                throw new System.Exception($"Target is null\nName : {gameObject.name}");
+            if (Target is not ICutsceneObject)
+                throw new System.Exception($"Target must implement\nName : {gameObject.name}");
+
             if (Target is SingleMesh singlemesh)
             {
                 string path = FileUtility.GetAddressablePath(singlemesh.MeshFilter.sharedMesh);
@@ -42,6 +49,9 @@ namespace SAB.Cutscene
             }
             else if (Target is VCamFollow follow)
             {
+                if (follow.CinemachineFollow.FollowTarget == null)
+                    throw new System.Exception($"VCam Follow Target is empty\nName : {gameObject.name}");
+
                 var pov = follow.CinemachineCamera.Lens.FieldOfView;
                 var targetID = idHandler.GetOrRegisterID(follow.CinemachineFollow.FollowTarget.gameObject);
                 return new VCamFollowData(transform.rotation, pov, targetID, follow.CinemachineFollow.FollowOffset);
@@ -50,12 +60,14 @@ namespace SAB.Cutscene
             {
                 return new VCamStaticData(transform.position, transform.rotation, vcamStatic.CinemachineCamera.Lens.FieldOfView);
             }
-            else if (Target is global::Character acter)
+            else if (Target is Character acter)
             {
                 return new CharacterSpawnRequest(acter.Stats.CharacterID, acter.BrainType, transform.position, transform.rotation);
             }
-
-            throw new System.Exception($"{gameObject.name}, {Target.GetType().Name}: not supported");
+            else
+            {
+                throw new System.Exception($"Target is not supported\nType : {Target.GetType().Name}");
+            }
         }
     }
 }

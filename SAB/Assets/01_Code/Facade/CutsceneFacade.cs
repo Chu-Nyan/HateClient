@@ -11,14 +11,12 @@ namespace SAB.Facade
     {
         private CutsceneController _cutscene;
         private AgentController _agent;
-        private InputManager _input;
         private EntityContainer _entityContainer;
 
-        public CutsceneFacade(CutsceneController cutscene, AgentController agent, InputManager input, EntityContainer entityContainer)
+        public CutsceneFacade(CutsceneController cutscene, AgentController agent, EntityContainer entityContainer)
         {
             _cutscene = cutscene;
             _agent = agent;
-            _input = input;
             _entityContainer = entityContainer;
 
             cutscene.CutsceneStopped += Stop;
@@ -26,8 +24,13 @@ namespace SAB.Facade
 
         public void Play(string name)
         {
+            if (_cutscene.IsPlaying == true)
+            {
+                Debug.LogWarning($"Multiple playback detected \nRequest : {name}");
+                return;
+            }
+
             var data = DataBase.Instance.CutSceneRepo.DataByName[name];
-            _input.SetActive(false);
             _agent.Player.SetActive(!data.LockPlayer);
             PrepareCharacter(data);
             _cutscene.Play(data);
@@ -41,7 +44,7 @@ namespace SAB.Facade
                 {
                     var acterData = item.Value;
                     var acter = CharacterFactory.Instance.Create(item.Value.BrainType, acterData.UnitID, acterData.Position, acterData.Rotation);
-                    _cutscene.RegisterExternalObject(item.Key, acter);
+                    _cutscene.RegisterObject(item.Key, acter);
                 }
             }
 
@@ -50,7 +53,7 @@ namespace SAB.Facade
                 var obj = _entityContainer.ObjectByFavorite[item.Value.ToString()];
                 if (obj is ICutsceneObject cutsceneobj)
                 {
-                    _cutscene.RegisterExternalObject(item.Key, cutsceneobj);
+                    _cutscene.RegisterObject(item.Key, cutsceneobj);
                 }
             }
 
@@ -64,14 +67,13 @@ namespace SAB.Facade
 
                 if (obj is ICutsceneObject cutsceneobj)
                 {
-                    _cutscene.RegisterExternalObject(item.Key, cutsceneobj);
+                    _cutscene.RegisterObject(item.Key, cutsceneobj);
                 }
             }
         }
 
         public void Stop(CutsceneData data)
         {
-            _input.SetActive(true);
             if (data.LockPlayer == true)
             {
                 _agent.Player.SetActive(true);

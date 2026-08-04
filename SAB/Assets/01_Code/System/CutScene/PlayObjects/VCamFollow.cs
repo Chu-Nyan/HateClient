@@ -23,7 +23,7 @@ namespace SAB.Cutscene
         public void ApplySerializedData(VCamFollowData data)
         {
             transform.rotation = data.Rotation;
-            _vcam.Lens.FieldOfView = data.POV;
+            _vcam.Lens.FieldOfView = data.FieldOfView;
             _follow.FollowOffset = data.FollowOffset;
         }
 

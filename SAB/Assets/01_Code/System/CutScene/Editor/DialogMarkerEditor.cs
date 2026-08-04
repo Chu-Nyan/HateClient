@@ -31,7 +31,6 @@ namespace SAB.Cutscene
                     int currentIndex = System.Array.IndexOf(trackNames, speakerTrackProp.stringValue);
                     if (currentIndex == -1) currentIndex = 0;
 
-                    // 트랙 목록 드롭다운 그리기
                     int newIndex = EditorGUILayout.Popup("Speaker Track", currentIndex, trackNames);
 
                     if (newIndex >= 0 && newIndex < trackNames.Length)

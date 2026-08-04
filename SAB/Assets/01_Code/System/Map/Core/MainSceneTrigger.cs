@@ -80,7 +80,7 @@ namespace SAB.GameSystem
         private void GenerateFacade()
         {
             var changeMap = new MapFacade(_cutscenePlayer, _topViewCam);
-            var cutscene = new CutsceneFacade(_cutsceneDirector, _agentController, InputManager.Instance, _entityContainer);
+            var cutscene = new CutsceneFacade(_cutsceneDirector, _agentController, _entityContainer);
             _gamePlayFacade = new(cutscene, changeMap);
         }
 

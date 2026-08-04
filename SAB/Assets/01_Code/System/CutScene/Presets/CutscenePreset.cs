@@ -4,10 +4,11 @@ using UnityEngine.Playables;
 
 namespace SAB.Cutscene
 {
+    [RequireComponent(typeof(PlayableDirector))]
     public class CutscenePreset : MonoBehaviour
     {
         public bool LockPlayer;
-        public ShapeParam[] _triggerZones;
+        public ShapeParam[] TriggerZones;
 
         public PlayableDirector PlayableDirector
         {
@@ -19,19 +20,14 @@ namespace SAB.Cutscene
             get => new(transform.position.x, transform.position.z);
         }
 
-        public ShapeParam[] TriggerZones
-        {
-            get => _triggerZones;
-        }
-
         public void OnDrawGizmos()
         {
-            if (_triggerZones == null)
+            if (TriggerZones == null)
                 return;
 
-            for (int i = 0; i < _triggerZones.Length; i++)
+            for (int i = 0; i < TriggerZones.Length; i++)
             {
-                _triggerZones[i].DrawGizmo(transform.position, transform.rotation);
+                TriggerZones[i].DrawGizmo(transform.position, transform.rotation);
             }
         }
     }

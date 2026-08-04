@@ -1,5 +1,4 @@
-﻿using SAB.EntityAgent.AI;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 이동 입력을 수신
