@@ -7,6 +7,5 @@ public class SkillBaseDto
 	public float Cost;
 	public string MotionFileName;
 	public int ObjectLogicID;
-	public int FlowStepID;
 	public int MaxHitCount;
 }

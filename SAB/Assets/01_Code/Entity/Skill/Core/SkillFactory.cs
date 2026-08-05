@@ -54,7 +54,7 @@ namespace SAB.Skill
 
         public SkillSequence CreateSequence(AttackContext context, HitResult hit)
         {
-            var onHitStep = context.SkillData.CollisionLogics[hit.LogicIndex].OnHitSteps;
+            var onHitStep = context.SkillData.CollisionLogics[hit.LogicIndex].HitSequence;
             var list = new List<ISkillStep>();
             for (int i = 0; i < onHitStep.Length; i++)
             {

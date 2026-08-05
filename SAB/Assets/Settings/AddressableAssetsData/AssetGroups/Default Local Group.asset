@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: b4de0faf4f6bdcf41bffa4a31e862c8e
   m_SerializeEntries:
+  - m_GUID: 06bab916763d4464fa7b4a093579c4a3
+    m_Address: SkillSequenceData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2dfc6fab99edab5418c18c8caeac99ea
     m_Address: CH01_02_Boss
     m_ReadOnly: 0

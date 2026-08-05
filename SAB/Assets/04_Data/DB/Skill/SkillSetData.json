@@ -1,0 +1,42 @@
+[
+  {
+    "SetID": 1,
+    "SkillID": 1
+  },
+  {
+    "SetID": 1,
+    "SkillID": 2
+  },
+  {
+    "SetID": 1,
+    "SkillID": 3
+  },
+  {
+    "SetID": 1,
+    "SkillID": 4
+  },
+  {
+    "SetID": 2,
+    "SkillID": 1
+  },
+  {
+    "SetID": 2,
+    "SkillID": 2
+  },
+  {
+    "SetID": 2,
+    "SkillID": 3
+  },
+  {
+    "SetID": 3,
+    "SkillID": 1
+  },
+  {
+    "SetID": 3,
+    "SkillID": 2
+  },
+  {
+    "SetID": 4,
+    "SkillID": 1
+  }
+]

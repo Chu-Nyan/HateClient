@@ -9,4 +9,5 @@ public class CharacterBaseStatsDto
 	public float PDEF;
 	public float MDEF;
 	public float SPD;
+	public int SkillSet;
 }

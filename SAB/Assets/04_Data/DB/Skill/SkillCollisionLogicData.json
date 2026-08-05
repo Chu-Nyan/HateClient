@@ -5,7 +5,7 @@
     "HitboxID": 1,
     "ActiveTime": 0.2,
     "Speed": 0.0,
-    "FlowStepID": 1
+    "SequenceID": 1
   },
   {
     "ID": 1,
@@ -13,7 +13,7 @@
     "HitboxID": 1,
     "ActiveTime": 0.4,
     "Speed": 1.0,
-    "FlowStepID": 1
+    "SequenceID": 1
   },
   {
     "ID": 2,
@@ -21,7 +21,7 @@
     "HitboxID": 2,
     "ActiveTime": 5.0,
     "Speed": 5.0,
-    "FlowStepID": 2
+    "SequenceID": 2
   },
   {
     "ID": 3,
@@ -29,7 +29,7 @@
     "HitboxID": 3,
     "ActiveTime": 5.0,
     "Speed": 4.0,
-    "FlowStepID": 3
+    "SequenceID": 3
   },
   {
     "ID": 4,
@@ -37,7 +37,7 @@
     "HitboxID": 4,
     "ActiveTime": 5.0,
     "Speed": 0.2,
-    "FlowStepID": 4
+    "SequenceID": 4
   },
   {
     "ID": 5,
@@ -45,6 +45,6 @@
     "HitboxID": 5,
     "ActiveTime": 3.0,
     "Speed": 5.0,
-    "FlowStepID": 5
+    "SequenceID": 5
   }
 ]

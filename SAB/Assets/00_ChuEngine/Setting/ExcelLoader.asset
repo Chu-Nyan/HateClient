@@ -39,10 +39,6 @@ MonoBehaviour:
     value:
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
-  - key: Skill_FlowStep
-    value:
-      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
-      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_Step_Instance
     value:
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
@@ -76,6 +72,14 @@ MonoBehaviour:
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_CollisionLogic
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Set
+    value:
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Sequence
     value:
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}

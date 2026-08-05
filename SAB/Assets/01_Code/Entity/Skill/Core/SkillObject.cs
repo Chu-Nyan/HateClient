@@ -12,7 +12,7 @@ namespace SAB.Skill
     public class SkillObject : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
     {
         private const NyanLayer Layer = NyanLayer.Projectile;
-        private static readonly int _hitUnityLayer = LayerMask.GetMask("Ground") | LayerMask.GetMask("Obstacle");
+        private const int HitUnityLayer = (1 << 3) | (1 << 6);
 
         private NyanCollider _nyanCollider;
         private AttackContext _context;
@@ -60,7 +60,7 @@ namespace SAB.Skill
 
         private void OnTriggerEnter(Collider other)
         {
-            if ((1 << other.gameObject.layer & _hitUnityLayer) == 0)
+            if ((1 << other.gameObject.layer & HitUnityLayer) == 0)
                 return;
 
             Debug.Log("환경 오브젝트 충돌");

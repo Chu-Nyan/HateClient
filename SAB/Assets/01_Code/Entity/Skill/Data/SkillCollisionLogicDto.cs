@@ -5,5 +5,5 @@ public class SkillCollisionLogicDto
 	public int HitboxID;
 	public float ActiveTime;
 	public float Speed;
-	public int FlowStepID;
+	public int SequenceID;
 }
