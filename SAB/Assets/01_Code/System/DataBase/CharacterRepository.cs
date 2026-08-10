@@ -11,7 +11,6 @@ namespace SAB.DataManger
         private const string DefaultEquipmentPath = "HumanDefaultEquipmentData";
 
         public readonly Dictionary<int, BaseStats> CharacterBaseData;
-        public readonly Dictionary<int, int> SkillSetIDByActerID;
         public readonly Dictionary<int, CustomizingData> CustomizingData;
         public readonly Dictionary<int, ItemType[]> DefaultEquipment;
 
@@ -21,13 +20,7 @@ namespace SAB.DataManger
             CharacterBaseData = DataBase.DeserializeObjectByKey(
                 dtos: baseDTO,
                 keySelector: a => a.ID,
-                converter: a => new BaseStats(a.ID, a.Faction, a.NameKey, a.DescKey, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
-            );
-
-            SkillSetIDByActerID = DataBase.DeserializeObjectByKey(
-                dtos: baseDTO,
-                keySelector: a => a.ID,
-                converter: a => a.SkillSetID
+                converter: a => new BaseStats(a.ID, a.Faction, a.NameKey, a.DescKey, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD }, a.SkillSetID)
             );
 
             CustomizingData = DataBase.DeserializeObjectByKey(
