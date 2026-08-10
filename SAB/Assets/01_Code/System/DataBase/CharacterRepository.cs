@@ -11,15 +11,23 @@ namespace SAB.DataManger
         private const string DefaultEquipmentPath = "HumanDefaultEquipmentData";
 
         public readonly Dictionary<int, BaseStats> CharacterBaseData;
+        public readonly Dictionary<int, int> SkillSetIDByActerID;
         public readonly Dictionary<int, CustomizingData> CustomizingData;
         public readonly Dictionary<int, ItemType[]> DefaultEquipment;
 
         public CharacterRepository()
         {
+            var baseDTO = DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(BasePath));
             CharacterBaseData = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(BasePath)),
+                dtos: baseDTO,
                 keySelector: a => a.ID,
                 converter: a => new BaseStats(a.ID, a.Faction, a.NameKey, a.DescKey, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
+            );
+
+            SkillSetIDByActerID = DataBase.DeserializeObjectByKey(
+                dtos: baseDTO,
+                keySelector: a => a.ID,
+                converter: a => a.SkillSetID
             );
 
             CustomizingData = DataBase.DeserializeObjectByKey(

@@ -19,8 +19,10 @@ namespace SAB.DataManger
         private const string DotPath = "SkillStepDoTData";
         private const string TimerPath = "SkillStepTimerData";
 
-        public readonly Dictionary<int, SkillData> SkillByID;
+        private const string SkillSetPath = "SkillSetData";
 
+        public readonly Dictionary<int, SkillData> SkillByID;
+        public readonly Dictionary<int, int[]> SkillSet;
         public readonly Dictionary<int, IStepData[]> SequenceByID;
         public readonly Dictionary<int, ShapeParam[]> HitBoxByID;
         public readonly Dictionary<int, CollisionLogicData[]> CollisionLogicByID;
@@ -78,6 +80,12 @@ namespace SAB.DataManger
                 dtos: DataBase.ConvertJsonToArray<SkillBaseDto>(AssetManager.LoadJson(BasePath)),
                 keySelector: dto => dto.ID,
                 converter: dto => new SkillData(dto, CollisionLogicByID[dto.ObjectLogicID])
+            );
+
+            SkillSet = DataBase.DeserializeArrayByKey(
+                dtos: DataBase.ConvertJsonToArray<SkillSetDto>(AssetManager.LoadJson(SkillSetPath)),
+                keySelector: dto => dto.SetID,
+                converter: dto => dto.SkillID
             );
         }
 
