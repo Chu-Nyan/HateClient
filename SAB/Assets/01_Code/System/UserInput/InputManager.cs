@@ -10,6 +10,7 @@ namespace SAB.GameSystem
         public readonly InputEvent<Vector2> MousePoint;
         public readonly InputEvent<Vector2> WASD;
         public readonly InputEvent LeftClick;
+        public readonly FixedInputEvent<int>[] Skills;
 
         private Vector2 _mousePosition;
 
@@ -26,6 +27,13 @@ namespace SAB.GameSystem
 
             WASD = new(_action.Player.WASD, InputEventType.Performed | InputEventType.Canceled);
             LeftClick = new(_action.Player.Click, InputEventType.Performed);
+
+            Skills = new FixedInputEvent<int>[]
+            {
+                new(_action.Player.SkillA, InputEventType.Performed, 1),
+                new(_action.Player.SkillB, InputEventType.Performed, 2),
+                new(_action.Player.SkillC, InputEventType.Performed, 3)
+            };
         }
 
         public void SetActive(bool value)
