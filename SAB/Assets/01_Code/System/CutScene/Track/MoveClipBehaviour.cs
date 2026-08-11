@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SAB.EntityAgent;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SAB.Cutscene

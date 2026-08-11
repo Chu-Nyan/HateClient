@@ -51,16 +51,16 @@ namespace SAB.EntityAgent
 
         public void Enable()
         {
-            InputManager.Instance.RegisterWASDPerformed(SetDiection);
-            InputManager.Instance.RegisterWASDCanceled(SetDiection);
-            InputManager.Instance.RegisterLeftClickedPerformed(BasicAttack);
+            InputManager.Instance.WASD.RegisterPerformed(SetDiection);
+            InputManager.Instance.WASD.RegisterCanceled(SetDiection);
+            InputManager.Instance.LeftClick.RegisterPerformed(ScreenPointAttack);
         }
 
         public void Disable()
         {
-            InputManager.Instance.UnregisterWASDPerformed(SetDiection);
-            InputManager.Instance.UnregisterWASDCanceled(SetDiection);
-            InputManager.Instance.UnregisterLeftClickedPerformed(BasicAttack);
+            InputManager.Instance.WASD.UnregisterPerformed(SetDiection);
+            InputManager.Instance.WASD.UnregisterCanceled(SetDiection);
+            InputManager.Instance.LeftClick.UnregisterPerformed(ScreenPointAttack);
             SetDiection(Vector2.zero);
         }
 
@@ -76,11 +76,12 @@ namespace SAB.EntityAgent
             _movementReceiver.SetDestination(direction);
         }
 
-        private void BasicAttack(Vector2 screenPoint)
+        private void ScreenPointAttack()
         {
+            var mousePoint = InputManager.Instance.MousePosition;
             _combatModeDecider.SetActivate(true);
             _combatReceiver.SetCombatMode(true);
-            Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+            Ray ray = Camera.main.ScreenPointToRay(mousePoint);
             int flag = LayerMask.GetMask("Ground");
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, flag))
             {
