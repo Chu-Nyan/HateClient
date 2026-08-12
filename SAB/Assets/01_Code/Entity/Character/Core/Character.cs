@@ -175,12 +175,13 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         if (_combatSys.IsUsed(skillIndex) == true)
             return;
 
+        if (_combatSys.TriggerAttackAndGetAniEventData(_stats.GetDamage(), skillIndex, targetPoint, out var data) == false)
+            return;
+
         _stateContext.IsAttacking = true;
         StopMovement();
         transform.rotation = Quaternion.LookRotation(targetPoint - transform.position);
         _animator.SetAttack();
-        float dmg = _stats.GetDamage();
-        AniEventData data = _combatSys.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
         _animator.ChangeEventData(AniState.Attack, "BasicAttack", data);
     }
 

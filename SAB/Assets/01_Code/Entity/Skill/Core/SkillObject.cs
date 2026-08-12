@@ -14,6 +14,8 @@ namespace SAB.Skill
         private const NyanLayer Layer = NyanLayer.Projectile;
         private const int HitUnityLayer = (1 << 3) | (1 << 6);
 
+        [SerializeField]
+        private MeshFilter _meshFilter;
         private NyanCollider _nyanCollider;
         private AttackContext _context;
         private int _hostilityMask;
@@ -95,6 +97,7 @@ namespace SAB.Skill
         {
             var logic = Context.SkillData.CollisionLogics[step];
             var shape = ShapeParam.ConvertShape(logic.Hitboxes);
+            _meshFilter.mesh = logic.HitBoxMesh;
             _nyanCollider.SetShape(shape);
             _timer = 0;
         }

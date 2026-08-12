@@ -42,10 +42,10 @@ namespace SAB.GameSystem
             var time = Time.deltaTime;
             for (int i = _used.Count - 1; i >= 0; i--)
             {
-                var skill = _skillList[i];
+                var skill = _skillList[_used[i]];
                 skill.ReduceCooldown(time);
                 if (skill.CanUse == true)
-                    _used.Remove(i);
+                    _used.RemoveAt(i);
             }
         }
 
@@ -63,18 +63,22 @@ namespace SAB.GameSystem
             SkillFactory.Instance.CreateObject(_instigatorID, context, _origin.position, dir);
         }
 
-        public AniEventData TriggerAttackAndGetAniEventData(float damage, int index, Vector3 targetPoint)
+        public bool TriggerAttackAndGetAniEventData(float damage, int index, Vector3 targetPoint, out AniEventData data)
         {
-            _used.Add(index);
-            SkillList[index].TryUse();
+            if (SkillList[index].TryUse() == false)
+            {
+                data = default;
+                return false;
+            }
 
-            var data = new AniEventData()
+            _used.Add(index);
+            data = new AniEventData()
             {
                 Float = damage,
                 Int = index,
                 Vector3 = targetPoint,
             };
-            return data;
+            return true;
         }
 
         public void AttackWithAnimator(AniEventData data)

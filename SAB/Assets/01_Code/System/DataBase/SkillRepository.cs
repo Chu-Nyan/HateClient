@@ -3,6 +3,7 @@ using Chu.Core;
 using SAB.Skill;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SAB.DataManger
 {
@@ -73,7 +74,13 @@ namespace SAB.DataManger
             CollisionLogicByID = DataBase.DeserializeArrayByKey(
                 dtos: DataBase.ConvertJsonToArray<SkillCollisionLogicDto>(AssetManager.LoadJson(CollisionLogicPath)),
                 keySelector: dto => dto.ID,
-                converter: dto => new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID], SequenceByID[dto.SequenceID])
+                converter: dto =>
+                {
+                    var shape = ShapeParam.ConvertShape(HitBoxByID[dto.HitboxID]);
+                    shape.UpdateAABB(Vector2.zero, 0);
+                    var mesh = CreateMesh(shape);
+                    return new CollisionLogicData(dto.ID, dto.Order, dto.ActiveTime, dto.Speed, HitBoxByID[dto.HitboxID], SequenceByID[dto.SequenceID], mesh);
+                }
             );
 
             SkillByID = DataBase.DeserializeObjectByKey(
@@ -101,6 +108,94 @@ namespace SAB.DataManger
                 return TimerStepByID[id];
 
             throw new Exception($"Don't have skill step {id}");
+        }
+
+        private Mesh CreateMesh(IShape shape)
+        {
+            if (shape.ShapeType == ShapeType.Rectangle)
+                return CreateMesh((RectShape)shape);
+            else if (shape.ShapeType == ShapeType.Circle)
+                return CreateMesh((CircleShape)shape);
+            else if (shape.ShapeType == ShapeType.Composite)
+                return CreateMesh((CompositeShape)shape);
+
+            throw new Exception();
+        }
+
+        private Mesh CreateMesh(CompositeShape shape)
+        {
+            CombineInstance[] combines = new CombineInstance[shape.Count];
+            for (int i = 0; i < shape.Count; i++)
+            {
+                combines[i] = new CombineInstance
+                {
+                    mesh = CreateMesh(shape[i]),
+                    transform = Matrix4x4.identity
+                };
+            }
+
+            Mesh mesh = new();
+
+            mesh.CombineMeshes(combines, true, false);
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+
+            return mesh;
+        }
+
+        private Mesh CreateMesh(RectShape shape)
+        {
+            Mesh mesh = new();
+
+            Vector3 right = new(shape.Radius[0].x, 0f, shape.Radius[0].y);
+            Vector3 up = new(shape.Radius[1].x, 0f, shape.Radius[1].y);
+            Vector3[] vertices = { -right - up, -right + up, right + up, right - up };
+            int[] triangles = { 0, 1, 2, 0, 2, 3 };
+
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+
+            return mesh;
+        }
+
+        private Mesh CreateMesh(CircleShape shape, int segments = 32)
+        {
+            Mesh mesh = new();
+
+            Vector3[] vertices = new Vector3[segments + 1];
+            int[] triangles = new int[segments * 3];
+
+            vertices[0] = Vector3.zero;
+            float angleStep = Mathf.PI * 2f / segments;
+
+            for (int i = 0; i < segments; i++)
+            {
+                float angle = angleStep * i;
+                vertices[i + 1] = new Vector3(Mathf.Cos(angle) * shape.Radius, 0f, Mathf.Sin(angle) * shape.Radius);
+            }
+
+            for (int i = 0; i < segments; i++)
+            {
+                int current = i + 1;
+                int next = (i + 1) % segments + 1;
+
+                int index = i * 3;
+
+                triangles[index] = 0;
+                triangles[index + 1] = next;
+                triangles[index + 2] = current;
+            }
+
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+
+            return mesh;
         }
     }
 }

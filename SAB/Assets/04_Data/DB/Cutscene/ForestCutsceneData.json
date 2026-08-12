@@ -47,7 +47,7 @@
           "z": 0.09230791,
           "w": 0.9925574
         },
-        "POV": 40.0,
+        "FieldOfView": 40.0,
         "TargetID": 3,
         "FollowOffset": {
           "x": 0.0,
@@ -67,8 +67,8 @@
     "LockPlayer": true,
     "BindingIDByTrack": {
       "VCamFollow_Cutscene": 1,
-      "VCamStatic_Cutscene (1)": 3,
-      "VCamStatic_Cutscene": 4,
+      "VCamStatic_Cutscene": 3,
+      "VCamStatic_Cutscene (1)": 4,
       "Animation Track (1)": 2,
       "Animation Track (2)": 5,
       "Activation Track": 5
@@ -85,20 +85,6 @@
     "StaticData": {
       "3": {
         "Position": {
-          "x": 106.498993,
-          "y": 3.33372879,
-          "z": 179.389084
-        },
-        "Rotation": {
-          "x": -0.307866931,
-          "y": -0.06872021,
-          "z": 0.0224173125,
-          "w": -0.948679566
-        },
-        "POV": 40.0
-      },
-      "4": {
-        "Position": {
           "x": 107.0158,
           "y": 0.91,
           "z": 180.042664
@@ -108,6 +94,20 @@
           "y": 0.0,
           "z": 0.0,
           "w": 1.0
+        },
+        "POV": 40.0
+      },
+      "4": {
+        "Position": {
+          "x": 106.498993,
+          "y": 3.33372879,
+          "z": 179.389084
+        },
+        "Rotation": {
+          "x": -0.307866931,
+          "y": -0.06872021,
+          "z": 0.0224173125,
+          "w": -0.948679566
         },
         "POV": 40.0
       }
@@ -120,7 +120,7 @@
           "z": 0.0442167632,
           "w": 0.7432565
         },
-        "POV": 40.0,
+        "FieldOfView": 40.0,
         "TargetID": 2,
         "FollowOffset": {
           "x": 1.48,

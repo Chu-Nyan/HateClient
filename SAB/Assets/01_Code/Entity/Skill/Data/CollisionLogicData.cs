@@ -1,4 +1,5 @@
 ﻿using Chu.Collision;
+using UnityEngine;
 
 namespace SAB.Skill
 {
@@ -11,7 +12,9 @@ namespace SAB.Skill
         public readonly ShapeParam[] Hitboxes;
         public readonly IStepData[] HitSequence;
 
-        public CollisionLogicData(int id, int order, float active, float spd, ShapeParam[] hitboxes, IStepData[] hitSequence)
+        public readonly Mesh HitBoxMesh;
+
+        public CollisionLogicData(int id, int order, float active, float spd, ShapeParam[] hitboxes, IStepData[] hitSequence, Mesh hitBoxMesh)
         {
             ID = id;
             Hitboxes = hitboxes;
@@ -19,6 +22,7 @@ namespace SAB.Skill
             ActiveTime = active;
             Speed = spd;
             HitSequence = hitSequence;
+            HitBoxMesh = hitBoxMesh;
         }
     }
 }

@@ -31,15 +31,17 @@ namespace SAB.Skill
         {
             _data = data;
             _remainingCooldown = 0;
+            _canUse = true;
         }
 
-        public void TryUse()
+        public bool TryUse()
         {
             if (CanUse == false)
-                return;
+                return false;
 
             _remainingCooldown = _data.Cooldown;
             _canUse = false;
+            return true;
         }
 
         public void ReduceCooldown(float time)
