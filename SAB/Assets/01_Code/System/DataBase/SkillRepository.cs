@@ -149,12 +149,12 @@ namespace SAB.DataManger
 
             Vector3 right = new(shape.Radius[0].x, 0f, shape.Radius[0].y);
             Vector3 up = new(shape.Radius[1].x, 0f, shape.Radius[1].y);
-            Vector3[] vertices = { -right - up, -right + up, right + up, right - up };
+            Vector3 offset = new(shape.Data.Offset.x, 0f, shape.Data.Offset.y);
+            Vector3[] vertices = { -right - up + offset, -right + up + offset, right + up + offset, right - up + offset };
             int[] triangles = { 0, 1, 2, 0, 2, 3 };
 
             mesh.vertices = vertices;
             mesh.triangles = triangles;
-
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
 
@@ -168,13 +168,14 @@ namespace SAB.DataManger
             Vector3[] vertices = new Vector3[segments + 1];
             int[] triangles = new int[segments * 3];
 
-            vertices[0] = Vector3.zero;
+            Vector3 offset = new(shape.Data.Offset.x, 0f, shape.Data.Offset.y);
             float angleStep = Mathf.PI * 2f / segments;
+            vertices[0] = offset;
 
             for (int i = 0; i < segments; i++)
             {
                 float angle = angleStep * i;
-                vertices[i + 1] = new Vector3(Mathf.Cos(angle) * shape.Radius, 0f, Mathf.Sin(angle) * shape.Radius);
+                vertices[i + 1] = offset + new Vector3(Mathf.Cos(angle) * shape.Radius, 0f, Mathf.Sin(angle) * shape.Radius);
             }
 
             for (int i = 0; i < segments; i++)

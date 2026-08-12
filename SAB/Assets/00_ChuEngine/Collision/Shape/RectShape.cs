@@ -1,4 +1,5 @@
 ﻿using Chu.Data;
+using Chu.Utility;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -20,6 +21,11 @@ namespace Chu.Collision
         public ShapeType ShapeType
         {
             get => ShapeType.Rectangle;
+        }
+
+        public RectRangeData Data
+        {
+            get => _rectData;
         }
 
         public Vector2[] Axis
@@ -53,7 +59,7 @@ namespace Chu.Collision
         public void UpdateAABB(Vector2 position, float degree)
         {
             RefreshAxis(degree);
-            _aabb.RefreshAABB(position, _radius);
+            _aabb.RefreshAABB(NyanMath.CalculateOffsetPosition(position, _rectData.Offset, degree), _radius);
         }
 
         private void RefreshAxis(float degree)
