@@ -8,7 +8,7 @@ namespace Chu.Collision
     {
         private const float RefreshEpsilon = 0.001f;
 
-        private RectRangeData _rectData;
+        private RectRangeData _data;
         private RectBound _aabb;
 
         private float _objDegree = float.MinValue;
@@ -25,7 +25,7 @@ namespace Chu.Collision
 
         public RectRangeData Data
         {
-            get => _rectData;
+            get => _data;
         }
 
         public Vector2[] Axis
@@ -52,14 +52,15 @@ namespace Chu.Collision
 
         public void Setup(RectRangeData data)
         {
-            _rectData = data;
+            _data = data;
             _aabb = new(0, data.Width, 0, data.Height);
+            UpdateAABB(Vector2)
         }
 
         public void UpdateAABB(Vector2 position, float degree)
         {
             RefreshAxis(degree);
-            _aabb.RefreshAABB(NyanMath.CalculateOffsetPosition(position, _rectData.Offset, degree), _radius);
+            _aabb.RefreshAABB(NyanMath.CalculateOffsetPosition(position, _data.Offset, degree), _radius);
         }
 
         private void RefreshAxis(float degree)
@@ -68,15 +69,15 @@ namespace Chu.Collision
                 return;
 
             _objDegree = degree;
-            _degree = degree + _rectData.Rotation;
+            _degree = degree + _data.Rotation;
             _radian = _degree * Mathf.Deg2Rad;
 
             float cos = Mathf.Cos(_radian);
             float sin = Mathf.Sin(_radian);
             _axis[0] = new Vector2(cos, sin);
             _axis[1] = new Vector2(-sin, cos);
-            _radius[0] = _rectData.Width * 0.5f * _axis[0];
-            _radius[1] = _rectData.Height * 0.5f * _axis[1];
+            _radius[0] = _data.Width * 0.5f * _axis[0];
+            _radius[1] = _data.Height * 0.5f * _axis[1];
         }
 
         public bool Intersects(IShape target)

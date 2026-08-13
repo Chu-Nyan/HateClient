@@ -9,11 +9,6 @@ namespace Chu.Collision
         private CircleRangeData _data;
         private RectBound _aabb;
 
-        public float Radius
-        {
-            get => _data.Radius;
-        }
-
         public ShapeType ShapeType
         {
             get => ShapeType.Circle;

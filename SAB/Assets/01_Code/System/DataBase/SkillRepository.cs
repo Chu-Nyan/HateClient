@@ -175,7 +175,8 @@ namespace SAB.DataManger
             for (int i = 0; i < segments; i++)
             {
                 float angle = angleStep * i;
-                vertices[i + 1] = offset + new Vector3(Mathf.Cos(angle) * shape.Radius, 0f, Mathf.Sin(angle) * shape.Radius);
+                float rad = shape.Data.Radius;
+                vertices[i + 1] = offset + new Vector3(Mathf.Cos(angle) * rad, 0f, Mathf.Sin(angle) * rad);
             }
 
             for (int i = 0; i < segments; i++)

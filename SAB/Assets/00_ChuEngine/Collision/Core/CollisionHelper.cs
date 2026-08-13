@@ -37,8 +37,9 @@ namespace Chu.Collision
 
             float x = localX - closestX;
             float y = localY - closestY;
+            float rad = b.Data.Radius;
 
-            return x * x + y * y <= b.Radius * b.Radius;
+            return x * x + y * y <= rad * rad;
         }
 
         public static bool IsColliding(CircleShape a, CircleShape b)
@@ -49,7 +50,7 @@ namespace Chu.Collision
             float bNum = aCenter.y - bCenter.y;
             float distance = (float)Math.Sqrt(aNum * aNum + bNum * bNum);
 
-            return distance <= (a.Radius + b.Radius);
+            return distance <= (a.Data.Radius + b.Data.Radius);
         }
 
         public static bool IsColliding(CompositeShape a, CircleShape b)

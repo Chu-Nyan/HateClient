@@ -2,7 +2,7 @@
 
 public struct RectRangeData
 {
-    public static RectRangeData Default = new RectRangeData(Vector3.zero, 0, 1, 1);
+    public static RectRangeData Default = new(Vector3.zero, 0, 1, 1);
 
     public Vector3 Offset;
     public float Rotation;
