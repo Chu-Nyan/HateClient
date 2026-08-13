@@ -54,7 +54,7 @@ namespace Chu.Collision
         {
             _data = data;
             _aabb = new(0, data.Width, 0, data.Height);
-            UpdateAABB(Vector2)
+            UpdateAABB(Vector2.zero, 0);
         }
 
         public void UpdateAABB(Vector2 position, float degree)
