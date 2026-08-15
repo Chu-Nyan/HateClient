@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
@@ -19,16 +20,11 @@ namespace Chu.Tools
         [SerializeField]
         public Dictionary<string, SheetData> SheetsByName;
 
-        public bool HasExcelData
-        {
-            get => SheetsByName != null;
-        }
-
         #region Excel to File 파이프라인
         public async void SetupAllInOneAsync()
         {
             await LoadExcelFile();
-            if (HasExcelData == false)
+            if (SheetsByName != null == false)
                 throw new Exception("엑셀 데이터 없음");
 
             //await GenerateEnumScript();
@@ -90,12 +86,42 @@ namespace Chu.Tools
         {
             foreach (var item in SheetsByName)
             {
-                var sheet = item.Value;
-                var text = item.Value.CreateScirpt(Config, Config.NameSpaceByType);
-                var path = AssetDatabase.GetAssetPath(sheet.ScriptPath);
-                var name = Config.GetScriptFileName(sheet.GetPascalCaseName());
+                var path = AssetDatabase.GetAssetPath(item.Value.ScriptPath);
+                var name = Config.GetScriptFileName(item.Value.GetPascalCaseName());
+                var filePath = Path.Combine(path, $"{name}.cs");
+                string userCode = null;
 
-                FileUtility.GenerateFile(path, $"{name}.cs", text);
+                if (File.Exists(filePath) == true)
+                {
+                    var tempCode = File.ReadAllText(filePath);
+                    int header = tempCode.IndexOf(DataTableConfig.UserCodeMakerHeader, StringComparison.Ordinal);
+                    if (header < 0)
+                        Debug.LogError("User Code Mark Header not found\n" + $"Path : {filePath}");
+                    else
+                    {
+                        int tail = tempCode.IndexOf(DataTableConfig.UserCodeMakerTail, header, StringComparison.Ordinal);
+                        if (tail < 0)
+                            Debug.LogError("User Code Mark Tail not found\n" + $"Path : {filePath}");
+                        else
+                        {
+                            header = tempCode.LastIndexOf("\r\n", header);
+                            if (header < 0)
+                                header = 0;
+                            else
+                                header += 2;
+
+                            tail = tempCode.IndexOf("\r\n", tail, StringComparison.Ordinal);
+                            if (tail < 0)
+                                tail = tempCode.Length;
+
+                            userCode = tempCode[header..tail];
+                        }
+                    }
+                }
+
+                var text = item.Value.CreateScirpt(Config, Config.NameSpaceByType, userCode);
+                File.WriteAllText(filePath, text);
+
                 await Task.Yield();
             }
         }

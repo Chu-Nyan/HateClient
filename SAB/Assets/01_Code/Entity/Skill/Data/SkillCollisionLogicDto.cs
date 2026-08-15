@@ -6,4 +6,7 @@ public class SkillCollisionLogicDto
 	public float ActiveTime;
 	public float Speed;
 	public int SequenceID;
+
+    // <USER_CODE>
+    // </USER_CODE>
 }

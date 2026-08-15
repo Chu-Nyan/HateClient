@@ -9,4 +9,7 @@ public class SkillHitBoxDto
 	public float Param2;
 	public float OffsetX;
 	public float OffsetY;
+
+	// <USER_CODE>
+	// </USER_CODE>
 }

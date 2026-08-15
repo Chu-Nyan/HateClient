@@ -8,6 +8,9 @@ namespace Chu.Tools
     [Serializable]
     public class DataTableConfig
     {
+        public const string UserCodeMakerHeader = "// <USER_CODE>";
+        public const string UserCodeMakerTail = "// </USER_CODE>";
+
         public readonly Dictionary<string, string> NameSpaceByType = new()
         {
             { "ShapeType", "Chu.Collision" }

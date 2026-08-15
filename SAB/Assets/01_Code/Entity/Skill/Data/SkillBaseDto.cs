@@ -8,4 +8,7 @@ public class SkillBaseDto
 	public string MotionFileName;
 	public int ObjectLogicID;
 	public int MaxHitCount;
+
+    // <USER_CODE>
+    // </USER_CODE>
 }

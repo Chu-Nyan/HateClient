@@ -4,4 +4,7 @@ public class SkillStepAoEDto
 	public float DamageRate;
 	public float Ranged;
 	public int Count;
+
+	// <USER_CODE>
+	// </USER_CODE>
 }

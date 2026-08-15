@@ -15,7 +15,7 @@ namespace Chu.Tools
         public DefaultAsset ScriptPath;
         public DefaultAsset JsonPath;
 
-        public string CreateScirpt(DataTableConfig config, Dictionary<string, string> namespaceByType)
+        public string CreateScirpt(DataTableConfig config, Dictionary<string, string> namespaceByType, string userCode)
         {
             var usedNamespace = new HashSet<string>();
             var nameRow = Table.Rows[config.DBNameRow];
@@ -34,6 +34,12 @@ namespace Chu.Tools
                     usedNamespace.Add(ns);
                 sb.AppendLine($"\tpublic {typeRow[i]} {nameRow[i]};");
             }
+
+            sb.AppendLine();
+            if (userCode == null)
+                sb.AppendLine($"\t{DataTableConfig.UserCodeMakerHeader}\n\t{DataTableConfig.UserCodeMakerTail}");
+            else
+                sb.AppendLine(userCode);
 
             sb.AppendLine("}");
 
