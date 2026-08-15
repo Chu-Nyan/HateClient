@@ -24,9 +24,6 @@ namespace Chu.Tools
         public async void SetupAllInOneAsync()
         {
             await LoadExcelFile();
-            if (SheetsByName != null == false)
-                throw new Exception("엑셀 데이터 없음");
-
             //await GenerateEnumScript();
             await GenerateClass();
             await ExportDataToJson();
