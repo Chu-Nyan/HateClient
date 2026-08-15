@@ -32,12 +32,12 @@ namespace Chu.Tools
 
                 if (namespaceByType.TryGetValue(typeRow[i].ToString(), out string ns) == true)
                     usedNamespace.Add(ns);
-                sb.AppendLine($"\tpublic {typeRow[i]} {nameRow[i]};");
+                sb.AppendLine($"    public {typeRow[i]} {nameRow[i]};");
             }
 
             sb.AppendLine();
             if (userCode == null)
-                sb.AppendLine($"\t{DataTableConfig.UserCodeMakerHeader}\n\t{DataTableConfig.UserCodeMakerTail}");
+                sb.AppendLine($"    {DataTableConfig.UserCodeMakerHeader}\n    {DataTableConfig.UserCodeMakerTail}");
             else
                 sb.AppendLine(userCode);
 

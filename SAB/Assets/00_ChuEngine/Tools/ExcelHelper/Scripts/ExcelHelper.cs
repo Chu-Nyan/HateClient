@@ -101,13 +101,13 @@ namespace Chu.Tools
                             Debug.LogError("User Code Mark Tail not found\n" + $"Path : {filePath}");
                         else
                         {
-                            header = tempCode.LastIndexOf("\r\n", header);
+                            header = tempCode.LastIndexOf("\n", header);
                             if (header < 0)
                                 header = 0;
                             else
-                                header += 2;
+                                header += 1;
 
-                            tail = tempCode.IndexOf("\r\n", tail, StringComparison.Ordinal);
+                            tail = tempCode.IndexOf("\n", tail, StringComparison.Ordinal);
                             if (tail < 0)
                                 tail = tempCode.Length;
 
