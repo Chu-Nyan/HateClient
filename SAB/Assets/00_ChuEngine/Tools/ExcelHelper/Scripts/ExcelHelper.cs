@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -92,42 +91,13 @@ namespace Chu.Tools
             foreach (var item in SheetsByName)
             {
                 var sheet = item.Value;
-                var text = GetDataScriptText(sheet, Config.NameSpaceByType);
+                var text = item.Value.CreateScirpt(Config, Config.NameSpaceByType);
                 var path = AssetDatabase.GetAssetPath(sheet.ScriptPath);
                 var name = Config.GetScriptFileName(sheet.GetPascalCaseName());
 
                 FileUtility.GenerateFile(path, $"{name}.cs", text);
                 await Task.Yield();
             }
-        }
-
-        private string GetDataScriptText(SheetData sheet, Dictionary<string, string> namespaceByType)
-        {
-            var usedNamespace = new HashSet<string>();
-            var nameRow = sheet.Table.Rows[Config.DBNameRow];
-            var typeRow = sheet.Table.Rows[Config.DBTypeRow];
-            var sb = new StringBuilder();
-            var namespaceText = new StringBuilder();
-
-            sb.AppendLine($"public class {Config.GetScriptFileName(sheet.GetPascalCaseName())}");
-            sb.AppendLine("{");
-            for (int i = 0; i < sheet.Table.Columns.Count; i++)
-            {
-                if (GoogleSheetsLoader.HasIgnoreSymbol(nameRow[i].ToString()) == true)
-                    continue;
-
-                if (namespaceByType.TryGetValue(typeRow[i].ToString(), out string ns) == true)
-                    usedNamespace.Add(ns);
-                sb.AppendLine($"\tpublic {typeRow[i]} {nameRow[i]};");
-            }
-            sb.AppendLine("}");
-
-            foreach (var ns in usedNamespace.OrderBy(n => n))
-                namespaceText.AppendLine($"using {ns};");
-            if (usedNamespace.Count > 0)
-                namespaceText.AppendLine();
-
-            return namespaceText.Append(sb).ToString();
         }
 
         private async Task ExportDataToJson()
