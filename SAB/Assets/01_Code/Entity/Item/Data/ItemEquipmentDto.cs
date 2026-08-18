@@ -5,5 +5,5 @@ public class ItemEquipmentDto
     public string MeshPath;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

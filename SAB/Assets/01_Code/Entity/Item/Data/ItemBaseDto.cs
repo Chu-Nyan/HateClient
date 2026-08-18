@@ -5,5 +5,5 @@ public class ItemBaseDto
     public ItemCategory Category;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

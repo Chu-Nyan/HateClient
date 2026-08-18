@@ -5,5 +5,5 @@ public class SkillSequenceDto
     public int Order;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

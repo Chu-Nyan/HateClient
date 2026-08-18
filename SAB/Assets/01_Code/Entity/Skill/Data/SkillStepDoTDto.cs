@@ -5,5 +5,5 @@ public class SkillStepDoTDto
     public float Duration;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

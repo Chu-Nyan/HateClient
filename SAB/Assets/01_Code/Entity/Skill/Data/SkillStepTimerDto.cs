@@ -4,5 +4,5 @@ public class SkillStepTimerDto
     public float Duration;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

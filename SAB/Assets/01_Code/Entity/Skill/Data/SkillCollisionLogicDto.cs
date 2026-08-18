@@ -8,5 +8,5 @@ public class SkillCollisionLogicDto
     public int SequenceID;
 
     // <USER_CODE>
-    // </USER_CODE>
+    // </USER_CODE>
 }

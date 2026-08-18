@@ -7,5 +7,5 @@ public class ItemWeaponDto
     public  WeaponHandedness Handedness;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

@@ -4,5 +4,5 @@ public class HumanDefaultEquipmentDto
     public int EquipmentID;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }

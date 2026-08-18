@@ -12,5 +12,5 @@ public class CharacterBaseStatsDto
     public int SkillSetID;
 
 	// <USER_CODE>
-	// </USER_CODE>
+	// </USER_CODE>
 }
