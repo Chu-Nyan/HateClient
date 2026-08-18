@@ -3,15 +3,15 @@
     "ID": 1,
     "Order": 1,
     "HitboxID": 1,
-    "ActiveTime": 0.2,
+    "ActiveTime": 0.5,
     "Speed": 0.0,
     "SequenceID": 1
   },
   {
     "ID": 1,
     "Order": 2,
-    "HitboxID": 1,
-    "ActiveTime": 0.4,
+    "HitboxID": 2,
+    "ActiveTime": 0.5,
     "Speed": 1.0,
     "SequenceID": 1
   },
