@@ -23,8 +23,8 @@ namespace Chu.Tools
             var sb = new StringBuilder();
             var namespaceText = new StringBuilder();
 
-            sb.AppendLine($"public class {config.GetScriptFileName(GetPascalCaseName())}");
-            sb.AppendLine("{");
+            sb.Append($"public class {config.GetScriptFileName(GetPascalCaseName())}\n");
+            sb.Append("{\n");
             for (int i = 0; i < Table.Columns.Count; i++)
             {
                 if (GoogleSheetsLoader.HasIgnoreSymbol(nameRow[i].ToString()) == true)
@@ -32,21 +32,24 @@ namespace Chu.Tools
 
                 if (namespaceByType.TryGetValue(typeRow[i].ToString(), out string ns) == true)
                     usedNamespace.Add(ns);
-                sb.AppendLine($"    public {typeRow[i]} {nameRow[i]};");
+                sb.Append($"    public {typeRow[i]} {nameRow[i]};\n");
             }
 
-            sb.AppendLine();
+            sb.Append("\n");
             if (userCode == null)
-                sb.AppendLine($"    {DataTableConfig.UserCodeMakerHeader}\n    {DataTableConfig.UserCodeMakerTail}");
+            {
+                sb.Append($"    {DataTableConfig.UserCodeMakerHeader}\n");
+                sb.Append($"    {DataTableConfig.UserCodeMakerTail}\n");
+            }
             else
-                sb.AppendLine(userCode);
+                sb.Append(userCode + "\n");
 
-            sb.AppendLine("}");
+            sb.Append("}\n");
 
             foreach (var ns in usedNamespace.OrderBy(n => n))
-                namespaceText.AppendLine($"using {ns};");
+                namespaceText.Append($"using {ns};\n");
             if (usedNamespace.Count > 0)
-                namespaceText.AppendLine();
+                namespaceText.Append("\n");
 
             return namespaceText.Append(sb).ToString();
         }

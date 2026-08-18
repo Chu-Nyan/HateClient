@@ -117,7 +117,7 @@ namespace Chu.Tools
                 }
 
                 var text = item.Value.CreateScirpt(Config, Config.NameSpaceByType, userCode);
-                File.WriteAllText(filePath, text);
+                FileUtility.WriteTextFileWithLf(path, $"{name}.cs", text);
 
                 await Task.Yield();
             }

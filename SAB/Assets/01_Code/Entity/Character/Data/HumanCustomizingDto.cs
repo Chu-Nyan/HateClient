@@ -7,6 +7,6 @@ public class HumanCustomizingDto
     public int Hair;
     public int Eyebrow;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }

@@ -4,6 +4,6 @@ public class SkillStepInstanceDto
     public float DamageRate;
     public int Count;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }

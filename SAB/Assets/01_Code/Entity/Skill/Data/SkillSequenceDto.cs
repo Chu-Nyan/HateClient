@@ -4,6 +4,6 @@ public class SkillSequenceDto
     public int LogicID;
     public int Order;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }

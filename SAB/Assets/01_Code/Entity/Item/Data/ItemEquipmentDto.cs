@@ -4,6 +4,6 @@ public class ItemEquipmentDto
     public EquipSlot Slot;
     public string MeshPath;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }

@@ -4,6 +4,6 @@ public class ItemBaseDto
     public string NameKey;
     public ItemCategory Category;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }

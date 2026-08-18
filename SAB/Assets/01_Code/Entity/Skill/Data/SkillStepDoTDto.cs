@@ -4,6 +4,6 @@ public class SkillStepDoTDto
     public float DamageRate;
     public float Duration;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }

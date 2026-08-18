@@ -11,6 +11,6 @@ public class CharacterBaseStatsDto
     public float SPD;
     public int SkillSetID;
 
-	// <USER_CODE>
-	// </USER_CODE>
+    // <USER_CODE>
+    // </USER_CODE>
 }
