@@ -63,10 +63,11 @@ namespace Chu.Tools
                     data = new();
                     data.ScriptPath = Config.DefaultDtoScriptPath;
                     data.JsonPath = Config.DefaultDtoJsonPath;
+                    data.NameSpace = Config.DefaultDtoNameSpace;
                     SheetsByName[name] = data;
                 }
 
-                data.Table = table[name];
+                data.Setup(table[name], Config);
                 duplicateChecker.Add(name);
             }
 
@@ -86,38 +87,14 @@ namespace Chu.Tools
                 var path = AssetDatabase.GetAssetPath(item.Value.ScriptPath);
                 var name = Config.GetScriptFileName(item.Value.GetPascalCaseName());
                 var filePath = Path.Combine(path, $"{name}.cs");
-                string userCode = null;
+                string userCode;
 
                 if (File.Exists(filePath) == true)
-                {
-                    var tempCode = File.ReadAllText(filePath);
-                    int header = tempCode.IndexOf(DataTableConfig.UserCodeMakerHeader, StringComparison.Ordinal);
-                    if (header < 0)
-                        Debug.LogError("User Code Mark Header not found\n" + $"Path : {filePath}");
-                    else
-                    {
-                        int tail = tempCode.IndexOf(DataTableConfig.UserCodeMakerTail, header, StringComparison.Ordinal);
-                        if (tail < 0)
-                            Debug.LogError("User Code Mark Tail not found\n" + $"Path : {filePath}");
-                        else
-                        {
-                            header = tempCode.LastIndexOf("\n", header);
-                            if (header < 0)
-                                header = 0;
-                            else
-                                header += 1;
+                    userCode = DTOScriptCreater.ChangeGeneratedCode(File.ReadAllText(filePath), item.Value.FieldNameByType);
+                else
+                    userCode = DTOScriptCreater.CreateScript(Config, item.Value);
 
-                            tail = tempCode.IndexOf("\n", tail, StringComparison.Ordinal);
-                            if (tail < 0)
-                                tail = tempCode.Length;
-
-                            userCode = tempCode[header..tail];
-                        }
-                    }
-                }
-
-                var text = item.Value.CreateScirpt(Config, Config.NameSpaceByType, userCode);
-                FileUtility.WriteTextFileWithLf(path, $"{name}.cs", text);
+                FileUtility.WriteTextFileWithLf(path, $"{name}.cs", userCode);
 
                 await Task.Yield();
             }
@@ -149,7 +126,7 @@ namespace Chu.Tools
             var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
             var table = sheet.Table;
             Type type = assemblies
-                .Select(a => a.GetType($"{Config.GetScriptFileName(sheet.GetPascalCaseName())}"))
+                .Select(a => a.GetType($"{Config.GetScriptFileName($"{sheet.NameSpace}.{sheet.GetPascalCaseName()}")}"))
                 .FirstOrDefault(t => t != null);
 
             var fieldMap = type.GetFields().ToDictionary(f => f.Name);
