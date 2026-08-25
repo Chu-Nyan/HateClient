@@ -84,7 +84,32 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _stateMachine.Setup(_stateContext);
         _animator.RegisterAnimationEvent(AniState.Attack, "AttackFinished", new AniEventData(), 1, a => _stateContext.IsAttacking = false);
         _animator.RegisterAnimationEvent(AniState.Attack, "BasicAttack", new AniEventData(), 0.5f, _combatSys.AttackWithAnimator);
+    }
 
+    private FSM<CharacterState, StateContext> GenerateStateMachine()
+    {
+        var stateMachine = new FSM<CharacterState, StateContext>(new StateResolver());
+        stateMachine.AddStates(new MovementState());
+        stateMachine.AddStates(new AttackState());
+        return stateMachine;
+    }
+
+    public void SetupStats(BaseStats baseStats, int[] skills)
+    {
+        _stats.SetBaseData(baseStats);
+        _combatSys.SetFaction(baseStats.Faction);
+        for (int i = 0; i < skills.Length; i++)
+        {
+            _combatSys.AddSkill(SkillFactory.Instance.CreateKernel(skills[i]));
+        }
+    }
+
+    public void SetupNavMesh(Vector3 pos)
+    {
+        if (NavMesh.SamplePosition(pos, out var hit, 2f, NavMesh.AllAreas))
+            transform.position = hit.position;
+
+        _nav.enabled = true;
     }
 
     private void Update()
@@ -101,35 +126,11 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         _combatSys.Tick();
         _defenseSys.Tick(_stats);
         _animator.Tick(_stateContext, 1); // 1 << 이동속도 퍼센트로 넣기
-    }
 
-    private void StateUpdate()
-    {
-        _stateContext.IsMoveing = _nav.velocity.sqrMagnitude > 0.1f;
-    }
-
-    private FSM<CharacterState, StateContext> GenerateStateMachine()
-    {
-        var stateMachine = new FSM<CharacterState, StateContext>(new StateResolver());
-        stateMachine.AddStates(new MovementState());
-        stateMachine.AddStates(new AttackState());
-        return stateMachine;
-    }
-
-    public void SetupStats(BaseStats baseStats)
-    {
-        _stats.SetBaseData(baseStats);
-        var skill = SkillFactory.Instance.CreateKernel(1);
-        _combatSys.AddSkill(skill);
-        _combatSys.SetFaction(baseStats.Faction);
-    }
-
-    public void SetupNavMesh(Vector3 pos)
-    {
-        if (NavMesh.SamplePosition(pos, out var hit, 2f, NavMesh.AllAreas))
-            transform.position = hit.position;
-
-        _nav.enabled = true;
+        void StateUpdate()
+        {
+            _stateContext.IsMoveing = _nav.velocity.sqrMagnitude > 0.1f;
+        }
     }
 
     public void SetDestination(Vector3 destination)
@@ -174,12 +175,13 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
         if (_combatSys.IsUsed(skillIndex) == true)
             return;
 
+        if (_combatSys.TriggerAttackAndGetAniEventData(_stats.GetDamage(), skillIndex, targetPoint, out var data) == false)
+            return;
+
         _stateContext.IsAttacking = true;
         StopMovement();
         transform.rotation = Quaternion.LookRotation(targetPoint - transform.position);
         _animator.SetAttack();
-        float dmg = _stats.GetDamage();
-        AniEventData data = _combatSys.TriggerAttackAndGetAniEventData(dmg, skillIndex, targetPoint);
         _animator.ChangeEventData(AniState.Attack, "BasicAttack", data);
     }
 

@@ -51,16 +51,21 @@ namespace SAB.EntityAgent
 
         public void Enable()
         {
-            InputManager.Instance.RegisterWASDPerformed(SetDiection);
-            InputManager.Instance.RegisterWASDCanceled(SetDiection);
-            InputManager.Instance.RegisterLeftClickedPerformed(BasicAttack);
+            InputManager.Instance.WASD.RegisterPerformed(SetDiection);
+            InputManager.Instance.WASD.RegisterCanceled(SetDiection);
+            InputManager.Instance.LeftClick.RegisterPerformed(UseBasicAttack);
+            for (int i = 0; i < 3; i++) // 3 = 플레이어 스킬 숏컷 갯수
+            {
+                InputManager.Instance.Skills[i].RegisterPerformed(UseSkillToScreenPoint);
+            }
         }
 
         public void Disable()
         {
-            InputManager.Instance.UnregisterWASDPerformed(SetDiection);
-            InputManager.Instance.UnregisterWASDCanceled(SetDiection);
-            InputManager.Instance.UnregisterLeftClickedPerformed(BasicAttack);
+            InputManager.Instance.WASD.UnregisterPerformed(SetDiection);
+            InputManager.Instance.WASD.UnregisterCanceled(SetDiection);
+            InputManager.Instance.LeftClick.UnregisterPerformed(UseBasicAttack);
+            SetDiection(Vector2.zero);
         }
 
         private void SetDiection(Vector2 dir)
@@ -75,16 +80,22 @@ namespace SAB.EntityAgent
             _movementReceiver.SetDestination(direction);
         }
 
-        private void BasicAttack(Vector2 screenPoint)
+        private void UseBasicAttack()
         {
+            UseSkillToScreenPoint(0);
+        }
+
+        private void UseSkillToScreenPoint(int skillIndex)
+        {
+            var mousePoint = InputManager.Instance.MousePosition;
             _combatModeDecider.SetActivate(true);
             _combatReceiver.SetCombatMode(true);
-            Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+            Ray ray = Camera.main.ScreenPointToRay(mousePoint);
             int flag = LayerMask.GetMask("Ground");
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, flag))
             {
                 Vector3 targetPoint = hit.point;
-                _combatReceiver.Attack(0, targetPoint);
+                _combatReceiver.Attack(skillIndex, targetPoint);
             }
         }
     }

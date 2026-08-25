@@ -16,10 +16,11 @@ namespace SAB.DataManger
 
         public CharacterRepository()
         {
+            var baseDTO = DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(BasePath));
             CharacterBaseData = DataBase.DeserializeObjectByKey(
-                dtos: DataBase.ConvertJsonToArray<CharacterBaseStatsDto>(AssetManager.LoadJson(BasePath)),
+                dtos: baseDTO,
                 keySelector: a => a.ID,
-                converter: a => new BaseStats(a.ID, a.Faction, a.NameKey, a.DescKey, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD })
+                converter: a => new BaseStats(a.ID, a.Faction, a.NameKey, a.DescKey, new[] { a.HP, a.ATK, a.PDEF, a.MDEF, a.SPD }, a.SkillSetID)
             );
 
             CustomizingData = DataBase.DeserializeObjectByKey(

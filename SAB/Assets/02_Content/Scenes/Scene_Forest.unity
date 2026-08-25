@@ -268725,7 +268725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &947072949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302090,8 +302090,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
+      propertyPath: TriggerZones.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
       propertyPath: _triggerZones.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
+      propertyPath: TriggerZones.Array.data[0].Param1
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
+      propertyPath: TriggerZones.Array.data[0].Param2
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
+      propertyPath: TriggerZones.Array.data[0].OffsetY
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
       propertyPath: _triggerZones.Array.data[0].Param1
@@ -603953,7 +603969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LockPlayer: 1
-  _triggerZones:
+  TriggerZones:
   - Type: 0
     OffsetX: 0
     OffsetY: 0

@@ -1,4 +1,5 @@
-﻿using SAB.Skill;
+﻿using SAB.EntityAgent;
+using SAB.Skill;
 using System.Collections.Generic;
 using UnityEngine;
 

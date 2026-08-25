@@ -61,7 +61,8 @@ namespace SAB.Unit
 
         private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 pos, Quaternion rot)
         {
-            acter.SetupStats(_unitDatas[unitID]);
+            var skill = DataBase.Instance.SkillRepo.SkillSet[_unitDatas[unitID].DefaultSkillSetID];
+            acter.SetupStats(_unitDatas[unitID], skill);
             acter.SetupNavMesh(pos);
             acter.transform.rotation = rot;
             SetCustomizing(acter, unitID);

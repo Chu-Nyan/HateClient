@@ -81,6 +81,8 @@ namespace SAB.Cutscene
                 case SingleMeshData mesh:
                     AddDataArray(SingleMeshData, id, mesh);
                     break;
+                default:
+                    throw new NotSupportedException($"Unsupported spawn data: {obj.GetType().Name}");
             }
         }
 
@@ -95,12 +97,9 @@ namespace SAB.Cutscene
 
         private void AddDataArray<T, K>(T arr, int id, K value) where T : IDictionary<int, K> where K : ICutscenePreset
         {
-            if (arr.TryAdd(id, value) == true)
+            if (arr.TryAdd(id, value) == false)
             {
-                if (arr[id].Equals(value) == false)
-                {
-                    throw new Exception($"Object ID : {id}, Type : {typeof(K).Name} : Duplicate object name found");
-                }
+                throw new Exception($"Duplicate object name found\nObject ID : {id}, Type : {typeof(K).Name}");
             }
         }
     }

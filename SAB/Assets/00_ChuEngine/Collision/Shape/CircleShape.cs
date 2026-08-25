@@ -1,4 +1,5 @@
 ﻿using Chu.Data;
+using Chu.Utility;
 using UnityEngine;
 
 namespace Chu.Collision
@@ -8,14 +9,14 @@ namespace Chu.Collision
         private CircleRangeData _data;
         private RectBound _aabb;
 
-        public float Radius
-        {
-            get => _data.Radius;
-        }
-
         public ShapeType ShapeType
         {
             get => ShapeType.Circle;
+        }
+
+        public CircleRangeData Data
+        {
+            get => _data;
         }
 
         public RectBound AABB
@@ -34,11 +35,12 @@ namespace Chu.Collision
         {
             _data = data;
             _aabb = new(-_data.Radius, _data.Radius, -_data.Radius, _data.Radius);
+            UpdateAABB(Vector2.zero, 0);
         }
 
         public void UpdateAABB(Vector2 position, float degree)
         {
-            _aabb.RefreshAABB(position);
+            _aabb.RefreshAABB(NyanMath.CalculateOffsetPosition(position, _data.Offset, degree));
         }
 
         public bool Intersects(IShape target)

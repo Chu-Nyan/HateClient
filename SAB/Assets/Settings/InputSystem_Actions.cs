@@ -93,6 +93,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""id"": ""4b35118f-d28c-4bbe-804c-51045541894d"",
             ""actions"": [
                 {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""32521b0f-a3d6-40cc-966b-28d308839176"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""WASD"",
                     ""type"": ""Value"",
                     ""id"": ""b45a76fa-4b13-4a30-996a-758b1c1feaaa"",
@@ -111,13 +120,31 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MousePosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""32521b0f-a3d6-40cc-966b-28d308839176"",
+                    ""name"": ""SkillA"",
+                    ""type"": ""Button"",
+                    ""id"": ""f49ce1cb-94ed-4ae0-b97f-8c4d471561ad"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillB"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""b59f5859-b840-4c6c-9bca-666e43baf546"",
+                    ""expectedControlType"": ""Key"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillC"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""dbc3cf68-776d-474f-9a1a-cf1d3253bf18"",
+                    ""expectedControlType"": ""Key"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -197,6 +224,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6783cb95-74c5-4f90-9216-73d524536132"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96b6a4ab-d35c-421f-b9cd-57d391c8f544"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da2ccf27-6257-4001-92a3-51acbefa4be3"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -266,9 +326,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_WASD = m_Player.FindAction("WASD", throwIfNotFound: true);
         m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
-        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
+        m_Player_SkillA = m_Player.FindAction("SkillA", throwIfNotFound: true);
+        m_Player_SkillB = m_Player.FindAction("SkillB", throwIfNotFound: true);
+        m_Player_SkillC = m_Player.FindAction("SkillC", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -349,9 +412,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_WASD;
     private readonly InputAction m_Player_Click;
-    private readonly InputAction m_Player_MousePosition;
+    private readonly InputAction m_Player_SkillA;
+    private readonly InputAction m_Player_SkillB;
+    private readonly InputAction m_Player_SkillC;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -364,6 +430,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
+        /// Provides access to the underlying input action "Player/MousePosition".
+        /// </summary>
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        /// <summary>
         /// Provides access to the underlying input action "Player/WASD".
         /// </summary>
         public InputAction @WASD => m_Wrapper.m_Player_WASD;
@@ -372,9 +442,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Click => m_Wrapper.m_Player_Click;
         /// <summary>
-        /// Provides access to the underlying input action "Player/MousePosition".
+        /// Provides access to the underlying input action "Player/SkillA".
         /// </summary>
-        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        public InputAction @SkillA => m_Wrapper.m_Player_SkillA;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillB".
+        /// </summary>
+        public InputAction @SkillB => m_Wrapper.m_Player_SkillB;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillC".
+        /// </summary>
+        public InputAction @SkillC => m_Wrapper.m_Player_SkillC;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -401,15 +479,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
             @WASD.started += instance.OnWASD;
             @WASD.performed += instance.OnWASD;
             @WASD.canceled += instance.OnWASD;
             @Click.started += instance.OnClick;
             @Click.performed += instance.OnClick;
             @Click.canceled += instance.OnClick;
-            @MousePosition.started += instance.OnMousePosition;
-            @MousePosition.performed += instance.OnMousePosition;
-            @MousePosition.canceled += instance.OnMousePosition;
+            @SkillA.started += instance.OnSkillA;
+            @SkillA.performed += instance.OnSkillA;
+            @SkillA.canceled += instance.OnSkillA;
+            @SkillB.started += instance.OnSkillB;
+            @SkillB.performed += instance.OnSkillB;
+            @SkillB.canceled += instance.OnSkillB;
+            @SkillC.started += instance.OnSkillC;
+            @SkillC.performed += instance.OnSkillC;
+            @SkillC.canceled += instance.OnSkillC;
         }
 
         /// <summary>
@@ -421,15 +508,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
             @WASD.started -= instance.OnWASD;
             @WASD.performed -= instance.OnWASD;
             @WASD.canceled -= instance.OnWASD;
             @Click.started -= instance.OnClick;
             @Click.performed -= instance.OnClick;
             @Click.canceled -= instance.OnClick;
-            @MousePosition.started -= instance.OnMousePosition;
-            @MousePosition.performed -= instance.OnMousePosition;
-            @MousePosition.canceled -= instance.OnMousePosition;
+            @SkillA.started -= instance.OnSkillA;
+            @SkillA.performed -= instance.OnSkillA;
+            @SkillA.canceled -= instance.OnSkillA;
+            @SkillB.started -= instance.OnSkillB;
+            @SkillB.performed -= instance.OnSkillB;
+            @SkillB.canceled -= instance.OnSkillB;
+            @SkillC.started -= instance.OnSkillC;
+            @SkillC.performed -= instance.OnSkillC;
+            @SkillC.canceled -= instance.OnSkillC;
         }
 
         /// <summary>
@@ -536,6 +632,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         /// <summary>
+        /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePosition(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "WASD" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -550,11 +653,25 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnClick(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SkillA" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMousePosition(InputAction.CallbackContext context);
+        void OnSkillA(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillB(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillC" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillC(InputAction.CallbackContext context);
     }
 }

@@ -13,7 +13,7 @@ namespace SAB.Skill
             get => _isDone;
         }
 
-        public void Refresh(IStepData data, AttackContext context)
+        public void Setup(IStepData data, AttackContext context)
         {
             if (data is not AoEStepData stepData)
                 throw new Exception("잘못된 SkillStep 초기화");

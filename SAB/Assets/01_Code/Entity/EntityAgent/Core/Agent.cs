@@ -11,8 +11,6 @@ namespace SAB.EntityAgent
         private int _receiverID;
 
         private IBrainStrategy _behaviorStrategy;
-        private IOffenseReceiver _combatReceiver;
-        private IMovementReceiver _movementReceiver;
 
         private bool _isActivation;
 
@@ -48,6 +46,7 @@ namespace SAB.EntityAgent
             else
                 _behaviorStrategy.Disable();
         }
+
         public void SetReceivers<T>(T receiver) where T : IInputReceiver
         {
             if (receiver is IOffenseReceiver offense)
@@ -61,14 +60,12 @@ namespace SAB.EntityAgent
 
         private void SetActionReceiver(IOffenseReceiver receiver)
         {
-            _combatReceiver = receiver;
-            _behaviorStrategy.SetCombatReceiver(_combatReceiver);
+            _behaviorStrategy.SetCombatReceiver(receiver);
         }
 
         private void SetMovementReceiver(IMovementReceiver receiver)
         {
-            _movementReceiver = receiver;
-            _behaviorStrategy.SetMovementReceiver(_movementReceiver);
+            _behaviorStrategy.SetMovementReceiver(receiver);
         }
     }
 }

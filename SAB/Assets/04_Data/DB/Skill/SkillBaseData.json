@@ -7,7 +7,6 @@
     "Cost": 0.0,
     "MotionFileName": "Unarmed_Attack",
     "ObjectLogicID": 1,
-    "FlowStepID": 1,
     "MaxHitCount": 10
   },
   {
@@ -18,7 +17,6 @@
     "Cost": 0.0,
     "MotionFileName": "Unarmed_Attack",
     "ObjectLogicID": 2,
-    "FlowStepID": 2,
     "MaxHitCount": 1
   },
   {
@@ -29,7 +27,6 @@
     "Cost": 3.0,
     "MotionFileName": "Unarmed_Attack",
     "ObjectLogicID": 3,
-    "FlowStepID": 3,
     "MaxHitCount": 1
   },
   {
@@ -40,7 +37,6 @@
     "Cost": 5.0,
     "MotionFileName": "Unarmed_Attack",
     "ObjectLogicID": 4,
-    "FlowStepID": 4,
     "MaxHitCount": 1
   },
   {
@@ -51,7 +47,6 @@
     "Cost": 7.0,
     "MotionFileName": "Unarmed_Attack",
     "ObjectLogicID": 5,
-    "FlowStepID": 5,
     "MaxHitCount": 1
   }
 ]

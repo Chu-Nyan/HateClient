@@ -25,6 +25,10 @@ namespace SAB.Cutscene
 
             for (int i = 0; i < datas.Length; i++)
             {
+                if (directors[i].TriggerZones.Length == 0)
+                {
+                    throw new System.Exception($"Trigger bounds not defined.\nName : {directors[i].PlayableDirector.playableAsset.name}");
+                }
                 datas[i] = new()
                 {
                     Name = directors[i].PlayableDirector.playableAsset.name,
@@ -39,30 +43,26 @@ namespace SAB.Cutscene
 
         public CutsceneDataDto[] GetCutsceneData()
         {
-            _idCount = 0;
-            _idBySceneObject = new();
-
             List<CutsceneDataDto> cutSceneDatas = new();
             List<CutscenePreset> directors = _root.GetComponentsWithDepth<CutscenePreset>(_searchDepth);
 
             foreach (var director in directors)
             {
-                Dictionary<string, int> objIDByTrackName = new();
+                _idCount = 0;
+                _idBySceneObject = new();
+                var playable = director.PlayableDirector;
+                CutsceneDataDto cutsceneData = new(playable.playableAsset.name, director.LockPlayer, new());
 
-                CutsceneDataDto cutsceneData = new(director.PlayableDirector.playableAsset.name, director.LockPlayer, objIDByTrackName);
-                TimelineAsset timelineAssets = director.PlayableDirector.playableAsset as TimelineAsset;
-                var tracks = timelineAssets.GetOutputTracks();
-
-                foreach (var track in tracks)
+                foreach (var track in ((TimelineAsset)playable.playableAsset).GetOutputTracks())
                 {
                     if (track is MarkerTrack)
                         continue;
 
                     if (track is CinemachineTrack camTrack)
-                        ExtractCameraTrackData(cutsceneData, director.PlayableDirector, camTrack);
+                        ExtractCameraTrackData(cutsceneData, playable, camTrack);
                     else
                     {
-                        var bindingTrack = director.PlayableDirector.GetGenericBinding(track);
+                        var bindingTrack = playable.GetGenericBinding(track);
                         if (bindingTrack == null)
                             continue;
 
@@ -80,13 +80,14 @@ namespace SAB.Cutscene
         {
             foreach (var clip in track.GetClips())
             {
-                var shot = clip.asset as CinemachineShot;
-                if (shot == null)
-                    continue;
-                if (shot.VirtualCamera.Resolve(director).gameObject == null)
+                if (clip.asset is not CinemachineShot shot)
                     continue;
 
-                AddSceneObject(dto, shot.VirtualCamera.Resolve(director).gameObject, clip.displayName);
+                var virtualCamera = shot.VirtualCamera.Resolve(director);
+                if (virtualCamera == null)
+                    throw new System.Exception($"Camera binding null, Cutscene : {director.name}, clip : {clip.displayName}");
+
+                AddSceneObject(dto, virtualCamera.gameObject, clip.displayName);
             }
         }
 

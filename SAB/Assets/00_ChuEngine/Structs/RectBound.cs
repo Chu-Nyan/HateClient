@@ -52,14 +52,13 @@ namespace Chu.Data
         // 회전 상태를 반영한 AABB 반환
         public void RefreshAABB(Vector2 pos, Vector2[] radius)
         {
-            Vector2 center = pos;
             Vector2 r0 = radius[0];
             Vector2 r1 = radius[1];
 
-            SetBound(center.x - Mathf.Abs(r0.x) - Mathf.Abs(r1.x),
-                     center.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x),
-                     center.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y),
-                     center.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y));
+            SetBound(pos.x - Mathf.Abs(r0.x) - Mathf.Abs(r1.x),
+                     pos.x + Mathf.Abs(r0.x) + Mathf.Abs(r1.x),
+                     pos.y - Mathf.Abs(r0.y) - Mathf.Abs(r1.y),
+                     pos.y + Mathf.Abs(r0.y) + Mathf.Abs(r1.y));
         }
 
         // 내부에 target이 완벽하게 포함되는가?

@@ -47,7 +47,7 @@
           "z": 0.09230791,
           "w": 0.9925574
         },
-        "POV": 40.0,
+        "FieldOfView": 40.0,
         "TargetID": 3,
         "FollowOffset": {
           "x": 0.0,
@@ -66,38 +66,24 @@
     "Name": "CH01_02_Boss",
     "LockPlayer": true,
     "BindingIDByTrack": {
-      "VCamFollow_Cutscene": 6,
-      "VCamStatic_Cutscene (1)": 8,
-      "VCamStatic_Cutscene": 9,
-      "Animation Track (1)": 7,
-      "Animation Track (2)": 10,
-      "Activation Track": 10
+      "VCamFollow_Cutscene": 1,
+      "VCamStatic_Cutscene": 3,
+      "VCamStatic_Cutscene (1)": 4,
+      "Animation Track (1)": 2,
+      "Animation Track (2)": 5,
+      "Activation Track": 5
     },
     "BindingSourceById": {
-      "6": 0,
-      "8": 0,
-      "9": 0,
-      "7": 0,
-      "10": 0
+      "1": 0,
+      "3": 0,
+      "4": 0,
+      "2": 0,
+      "5": 0
     },
     "UniqueSlotById": {},
     "FavoritesById": {},
     "StaticData": {
-      "8": {
-        "Position": {
-          "x": 106.498993,
-          "y": 3.33372879,
-          "z": 179.389084
-        },
-        "Rotation": {
-          "x": -0.307866931,
-          "y": -0.06872021,
-          "z": 0.0224173125,
-          "w": -0.948679566
-        },
-        "POV": 40.0
-      },
-      "9": {
+      "3": {
         "Position": {
           "x": 107.0158,
           "y": 0.91,
@@ -110,18 +96,32 @@
           "w": 1.0
         },
         "POV": 40.0
+      },
+      "4": {
+        "Position": {
+          "x": 106.498993,
+          "y": 3.33372879,
+          "z": 179.389084
+        },
+        "Rotation": {
+          "x": -0.307866931,
+          "y": -0.06872021,
+          "z": 0.0224173125,
+          "w": -0.948679566
+        },
+        "POV": 40.0
       }
     },
     "FollowData": {
-      "6": {
+      "1": {
         "Rotation": {
           "x": 0.04936699,
           "y": -0.665715933,
           "z": 0.0442167632,
           "w": 0.7432565
         },
-        "POV": 40.0,
-        "TargetID": 7,
+        "FieldOfView": 40.0,
+        "TargetID": 2,
         "FollowOffset": {
           "x": 1.48,
           "y": 0.35,
@@ -130,7 +130,7 @@
       }
     },
     "CharacterData": {
-      "7": {
+      "2": {
         "UnitID": 10,
         "BrainType": 2,
         "Position": {
@@ -145,7 +145,7 @@
           "w": -0.0271781459
         }
       },
-      "10": {
+      "5": {
         "UnitID": 4,
         "BrainType": 0,
         "Position": {
@@ -163,7 +163,7 @@
     },
     "SingleMeshData": {},
     "PersistentObjects": [
-      7
+      2
     ]
   }
 ]

@@ -12,12 +12,13 @@ namespace SAB.Skill
     public class SkillObject : MonoBehaviour, INyanCollisionProvider, IAttackContextProvider
     {
         private const NyanLayer Layer = NyanLayer.Projectile;
-        private static int _hitUnityLayer;
+        private const int HitUnityLayer = (1 << 3) | (1 << 6);
 
+        [SerializeField]
+        private MeshFilter _meshFilter;
         private NyanCollider _nyanCollider;
         private AttackContext _context;
         private int _hostilityMask;
-        private Vector3 _dir;
         private int _logicStep;
         private float _timer;
 
@@ -41,6 +42,8 @@ namespace SAB.Skill
         private void Update()
         {
             var logics = Context.SkillData.CollisionLogics;
+            _timer += Time.deltaTime;
+
             if (_timer > logics[_logicStep].ActiveTime)
             {
                 _logicStep++;
@@ -53,24 +56,17 @@ namespace SAB.Skill
                 }
             }
 
-            _timer += Time.deltaTime;
             transform.position += logics[_logicStep].Speed * Time.deltaTime * transform.forward;
             _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if ((1 << other.gameObject.layer & _hitUnityLayer) == 0)
+            if ((1 << other.gameObject.layer & HitUnityLayer) == 0)
                 return;
 
             Debug.Log("환경 오브젝트 충돌");
-            OnExpired();
-        }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void StaticInit()
-        {
-            _hitUnityLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Obstacle");
+            SetActive(false);
         }
 
         public void Setup(int instigator, AttackContext context, int hostilityMask)
@@ -87,8 +83,12 @@ namespace SAB.Skill
 
         public void SetActive(bool value)
         {
-            Destroyed?.Invoke(this);
-            Destroyed = null;
+            if (value == false)
+            {
+                Destroyed?.Invoke(this);
+                Destroyed = null;
+            }
+
             _nyanCollider.SetActive(value);
             gameObject.SetActive(value);
         }
@@ -97,6 +97,7 @@ namespace SAB.Skill
         {
             var logic = Context.SkillData.CollisionLogics[step];
             var shape = ShapeParam.ConvertShape(logic.Hitboxes);
+            _meshFilter.mesh = logic.HitBoxMesh;
             _nyanCollider.SetShape(shape);
             _timer = 0;
         }
@@ -104,9 +105,8 @@ namespace SAB.Skill
         public void SetTarget(Vector3 start, Vector3 dir)
         {
             transform.position = start;
-            _dir = dir;
             _timer = 0f;
-            transform.rotation = Quaternion.LookRotation(_dir);
+            transform.rotation = Quaternion.LookRotation(dir);
             _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
         }
 
@@ -123,13 +123,6 @@ namespace SAB.Skill
 
         public void OnNyanCollisionExit(INyanCollisionProvider collider)
         {
-            // 없음
-        }
-
-        private void OnExpired()
-        {
-            _nyanCollider.SetActive(false);
-            gameObject.SetActive(false);
         }
     }
 }

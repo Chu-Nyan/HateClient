@@ -24,7 +24,6 @@ namespace SAB.Cutscene
         {
             transform.SetPositionAndRotation(data.Position, data.Rotation);
             var mesh = AssetManager.LoadAssetSync<Mesh>(data.MeshPath);
-            _filter.mesh = mesh;
             SetMesh(mesh);
         }
 

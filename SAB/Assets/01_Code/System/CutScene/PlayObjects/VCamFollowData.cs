@@ -6,16 +6,16 @@ namespace SAB.Cutscene
     {
         // VCam
         public Quaternion Rotation;
-        public float POV;
+        public float FieldOfView;
 
         // Follow
         public int TargetID;
         public Vector3 FollowOffset;
 
-        public VCamFollowData(Quaternion rotation, float pov, int targetID, Vector3 followOffset)
+        public VCamFollowData(Quaternion rotation, float fov, int targetID, Vector3 followOffset)
         {
             Rotation = rotation;
-            POV = pov;
+            FieldOfView = fov;
             TargetID = targetID;
             FollowOffset = followOffset;
         }

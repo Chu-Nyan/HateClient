@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace SAB.Cutscene
 {
-    public class SpawnDataContainer
+    public class SpawnDataContainer : IEnumerable<KeyValuePair<int, ICutscenePreset>>
     {
-        public Dictionary<Type, IDictionary> _datasByType;
-        public Dictionary<Type, IDictionary> _externalObjectByType;
+        private readonly Dictionary<Type, IDictionary> _datasByType;
+        private readonly Dictionary<Type, IDictionary> _externalObjectByType;
 
         public SpawnDataContainer()
         {
@@ -59,6 +59,11 @@ namespace SAB.Cutscene
                     yield return new KeyValuePair<int, ICutscenePreset>((int)entry.Key, (ICutscenePreset)entry.Value);
                 }
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace SAB.Cutscene
 
         public void SetupMap(CutsceneTriggerData[] datas)
         {
-            Clear();
+            ClearTrigger();
 
             foreach (var item in datas)
             {
@@ -45,13 +45,15 @@ namespace SAB.Cutscene
             }
         }
 
-        private void Clear()
+        private void ClearTrigger()
         {
             foreach (var trigger in _triggers)
             {
+                trigger.SetActive(false);
                 _triggerPooling.Enqueue(trigger);
             }
             _triggers.Clear();
+            _dataByTriggerID.Clear();
         }
 
         private void PlayEnterAction(int id)

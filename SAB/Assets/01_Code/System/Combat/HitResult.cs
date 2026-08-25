@@ -2,11 +2,11 @@
 {
     public struct HitResult
     {
-        public int LogicID;
+        public int LogicIndex;
 
         public HitResult(int logicID)
         {
-            LogicID = logicID;
+            LogicIndex = logicID;
         }
     }
 }

@@ -19,14 +19,14 @@ namespace Chu.Collision
             get => _aabb;
         }
 
-        public IShape this[int index]
-        {
-            get => _shapeList[index];
-        }
-
         public int Count
         {
             get => _shapeList.Count;
+        }
+
+        public IShape this[int index]
+        {
+            get => _shapeList[index];
         }
 
         public CompositeShape()

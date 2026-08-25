@@ -12,7 +12,7 @@ namespace SAB.Cutscene
         private const string SingleMeshPath = "SingleMesh";
 
         private readonly Dictionary<Type, ObjectPooling<IOnlyCutscene>> _objPool;
-        private readonly Dictionary<Type, Type> _dataTypeByObjectType;
+        private readonly Dictionary<Type, Type> _objectTypeByDataType;
 
         public CutscenePool()
         {
@@ -23,7 +23,7 @@ namespace SAB.Cutscene
                 { typeof(SingleMesh), new(() => AssetManager.GenerateLoadAssetSync<SingleMesh>(SingleMeshPath), a => a.SetActive(true))},
             };
 
-            _dataTypeByObjectType = new()
+            _objectTypeByDataType = new()
             {
                 { typeof(VCamStaticData), typeof(VCamStatic) },
                 { typeof(VCamFollowData), typeof(VCamFollow) },
@@ -34,7 +34,7 @@ namespace SAB.Cutscene
 
         public ICutsceneObject DequeueObject(ICutscenePreset config)
         {
-            Type type = _dataTypeByObjectType[config.GetType()];
+            Type type = _objectTypeByDataType[config.GetType()];
 
             if (_objPool.TryGetValue(type, out var pool) == false)
                 throw new Exception();

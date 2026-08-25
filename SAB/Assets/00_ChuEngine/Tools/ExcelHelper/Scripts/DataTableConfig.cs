@@ -20,6 +20,7 @@ namespace Chu.Tools
 
         public DefaultAsset DefaultDtoScriptPath;
         public DefaultAsset DefaultDtoJsonPath;
+        public string DefaultDtoNameSpace = "Chu.DTO";
         public string ScriptSuffix = "Dto";
         public string JsonSuffix = "Data";
 

@@ -10,15 +10,11 @@ namespace SAB.Skill
         public readonly int ID;
         private SkillData _data;
         private float _remainingCooldown;
-
-        public float RemainingCooldown
-        {
-            get => _remainingCooldown;
-        }
+        private bool _canUse;
 
         public bool CanUse
         {
-            get => _remainingCooldown <= 0;
+            get => _canUse;
         }
 
         public SkillData Data
@@ -35,16 +31,24 @@ namespace SAB.Skill
         {
             _data = data;
             _remainingCooldown = 0;
+            _canUse = true;
         }
 
-        public void Use()
+        public bool TryUse()
         {
+            if (CanUse == false)
+                return false;
+
             _remainingCooldown = _data.Cooldown;
+            _canUse = false;
+            return true;
         }
 
         public void ReduceCooldown(float time)
         {
             _remainingCooldown = Math.Max(0f, _remainingCooldown - time);
+            if (_remainingCooldown <= 0)
+                _canUse = true;
         }
     }
 }

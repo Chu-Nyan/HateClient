@@ -20,62 +20,82 @@ MonoBehaviour:
     _dataStartRow: 4
     DefaultDtoScriptPath: {fileID: 102900000, guid: 37a4ab47d36118243a7602ac6afbf4ec, type: 3}
     DefaultDtoJsonPath: {fileID: 102900000, guid: 37a4ab47d36118243a7602ac6afbf4ec, type: 3}
+    DefaultDtoNameSpace: Chu.DTO
     ScriptSuffix: Dto
     JsonSuffix: Data
   SheetsByName:
   - key: Character_Base_Stats
     value:
+      NameSpace: SAB.Unit
       ScriptPath: {fileID: 102900000, guid: 29c487a6f082ab44680aa73c13384a5d, type: 3}
       JsonPath: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
   - key: Human_Customizing
     value:
+      NameSpace: SAB.Unit
       ScriptPath: {fileID: 102900000, guid: 29c487a6f082ab44680aa73c13384a5d, type: 3}
       JsonPath: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
   - key: Human_DefaultEquipment
     value:
+      NameSpace: SAB.Unit
       ScriptPath: {fileID: 102900000, guid: 29c487a6f082ab44680aa73c13384a5d, type: 3}
       JsonPath: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
   - key: Skill_Base
     value:
-      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
-      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
-  - key: Skill_FlowStep
-    value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_Step_Instance
     value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_Step_DoT
     value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_Step_AoE
     value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_Step_Timer
     value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Item_Base
     value:
+      NameSpace: SAB.Item
       ScriptPath: {fileID: 102900000, guid: 25333d981218ed44480258b5c55dc76b, type: 3}
       JsonPath: {fileID: 102900000, guid: a96f714431d0a114e96468a2338e236c, type: 3}
   - key: Item_Equipment
     value:
+      NameSpace: SAB.Item
       ScriptPath: {fileID: 102900000, guid: 25333d981218ed44480258b5c55dc76b, type: 3}
       JsonPath: {fileID: 102900000, guid: a96f714431d0a114e96468a2338e236c, type: 3}
   - key: Item_Weapon
     value:
+      NameSpace: SAB.Item
       ScriptPath: {fileID: 102900000, guid: 25333d981218ed44480258b5c55dc76b, type: 3}
       JsonPath: {fileID: 102900000, guid: a96f714431d0a114e96468a2338e236c, type: 3}
   - key: Skill_HitBox
     value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
   - key: Skill_CollisionLogic
     value:
+      NameSpace: SAB.Skill
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Set
+    value:
+      NameSpace: SAB.Skill
+      ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
+      JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
+  - key: Skill_Sequence
+    value:
+      NameSpace: SAB.Skill
       ScriptPath: {fileID: 102900000, guid: 3ed67deb05fd1d74b95caf3e4d530ff0, type: 3}
       JsonPath: {fileID: 102900000, guid: 91b2b85e7dbb01342b1f3652be4ee425, type: 3}
