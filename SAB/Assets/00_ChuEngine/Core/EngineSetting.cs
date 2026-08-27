@@ -5,7 +5,7 @@ public class EngineSetting
     public static readonly EngineSetting Default = new("en", new(0, 100, 0, 100), 4);
 
     public string Language;
-    public bool UseCollision;
+    public bool UseCollision = true;
     public readonly RectBound CollisionBound;
     public int Capacity;
 

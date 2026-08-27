@@ -11,13 +11,15 @@ namespace SAB.Cutscene
         // Follow
         public int TargetID;
         public Vector3 FollowOffset;
+        public Vector3 PositionDamping;
 
-        public VCamFollowData(Quaternion rotation, float fov, int targetID, Vector3 followOffset)
+        public VCamFollowData(Quaternion rotation, float fov, int targetID, Vector3 followOffset, Vector3 damping)
         {
             Rotation = rotation;
             FieldOfView = fov;
             TargetID = targetID;
             FollowOffset = followOffset;
+            PositionDamping = damping;
         }
     }
 }

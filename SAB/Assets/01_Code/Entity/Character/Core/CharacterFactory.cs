@@ -59,6 +59,11 @@ namespace SAB.Unit
             return acter;
         }
 
+        public Character Create(CharacterSpawnRequest request)
+        {
+            return Create(request.BrainType, request.UnitID, request.Position, request.Rotation);
+        }
+
         private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 pos, Quaternion rot)
         {
             var skill = DataBase.Instance.SkillRepo.SkillSet[_unitDatas[unitID].DefaultSkillSetID];

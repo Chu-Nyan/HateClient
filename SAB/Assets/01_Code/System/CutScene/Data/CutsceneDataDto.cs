@@ -19,7 +19,6 @@ namespace SAB.Cutscene
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;
         public Dictionary<int, CharacterSpawnRequest> CharacterData;
-        public Dictionary<int, SingleMeshData> SingleMeshData;
         public HashSet<int> PersistentObjects;
 
         public CutsceneDataDto(string name, bool lockPlayer, Dictionary<string, int> idByTrack)
@@ -32,9 +31,28 @@ namespace SAB.Cutscene
             StaticData = new();
             FollowData = new();
             CharacterData = new();
-            SingleMeshData = new();
             PersistentObjects = new();
             BindingIDByTrack = idByTrack;
+        }
+
+        public CutsceneData ToData()
+        {
+            var data = new CutsceneData
+            {
+                Name = Name,
+                LockPlayer = LockPlayer,
+
+                BindingIDByTrack = BindingIDByTrack,
+                BindingSourceByID = BindingSourceById,
+                UniqueSlotByID = UniqueSlotById,
+                FavoritesByID = FavoritesById,
+                StaticData = StaticData,
+                FollowData = FollowData,
+                CharacterData = CharacterData,
+                PersistentObjects = PersistentObjects
+            };
+
+            return data;
         }
 
         public void AddObject(int id, GameObject obj, CutsceneDataExtractor idHandler)
@@ -77,9 +95,6 @@ namespace SAB.Cutscene
                     break;
                 case CharacterSpawnRequest character:
                     AddDataArray(CharacterData, id, character);
-                    break;
-                case SingleMeshData mesh:
-                    AddDataArray(SingleMeshData, id, mesh);
                     break;
                 default:
                     throw new NotSupportedException($"Unsupported spawn data: {obj.GetType().Name}");

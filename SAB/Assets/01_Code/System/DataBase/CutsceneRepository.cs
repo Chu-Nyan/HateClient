@@ -21,7 +21,7 @@ namespace SAB.DataManger
 
                 foreach (var item in dataDtos)
                 {
-                    DataByName[item.Name] = CutsceneData.FromDTO(item);
+                    DataByName[item.Name] = item.ToData();
                 }
             }
         }

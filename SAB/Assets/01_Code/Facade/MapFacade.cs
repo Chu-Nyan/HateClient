@@ -13,12 +13,12 @@ namespace SAB.Facade
     public class MapFacade
     {
         private readonly CutsceneMapTrigger _triggers;
-        private readonly TopViewCamera _camera;
+        private readonly VCamFollow _mainCam;
 
-        public MapFacade(CutsceneMapTrigger triggers, TopViewCamera camera)
+        public MapFacade(CutsceneMapTrigger triggers, VCamFollow main)
         {
             _triggers = triggers;
-            _camera = camera;
+            _mainCam = main;
         }
 
         public async void Change(MapType type, int playerSpawnPoint)
@@ -61,7 +61,7 @@ namespace SAB.Facade
             var spawnPos2D = mapDef.SpawnPoint[playerSpawnPoint];
             Quaternion rotation = Quaternion.Euler(new(0, spawnPos2D.EulerY, 0));
             var player = CharacterFactory.Instance.Create(BrainType.Player, 1, spawnPos2D.Position.ToVector3XZ(), rotation, UniqueEntityType.Player);
-            _camera.StickCameraArm(player.transform);
+            _mainCam.SetThirdPersonTarget(player.transform);
         }
     }
 }

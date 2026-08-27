@@ -1,5 +1,4 @@
 ﻿using Chu.Data;
-using Chu.Utility;
 using SAB.Unit;
 using UnityEngine;
 
@@ -42,19 +41,15 @@ namespace SAB.Cutscene
             if (Target is not ICutsceneObject)
                 throw new System.Exception($"Target must implement\nName : {gameObject.name}");
 
-            if (Target is SingleMesh singlemesh)
-            {
-                string path = FileUtility.GetAddressablePath(singlemesh.MeshFilter.sharedMesh);
-                return new SingleMeshData(path, transform.position, transform.rotation);
-            }
-            else if (Target is VCamFollow follow)
+            if (Target is VCamFollow follow)
             {
                 if (follow.CinemachineFollow.FollowTarget == null)
                     throw new System.Exception($"VCam Follow Target is empty\nName : {gameObject.name}");
 
                 var pov = follow.CinemachineCamera.Lens.FieldOfView;
                 var targetID = idHandler.GetOrRegisterID(follow.CinemachineFollow.FollowTarget.gameObject);
-                return new VCamFollowData(transform.rotation, pov, targetID, follow.CinemachineFollow.FollowOffset);
+                var followComp = follow.CinemachineFollow;
+                return new VCamFollowData(transform.rotation, pov, targetID, followComp.FollowOffset, followComp.TrackerSettings.PositionDamping);
             }
             else if (Target is VCamStatic vcamStatic)
             {

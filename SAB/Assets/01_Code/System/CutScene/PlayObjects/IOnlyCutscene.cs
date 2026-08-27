@@ -1,7 +1,7 @@
 ﻿namespace SAB.Cutscene
 {
-    public interface IOnlyCutscene : ICutsceneObject
-    {
-    }
+    //public interface IOnlyCutscene : ICutsceneObject
+    //{
+    //}
 }
 

@@ -16,9 +16,7 @@ namespace SAB.GameSystem
     {
         private const string CutsceneMangerAssetPath = "CutSceneManager";
 
-        [SerializeField]
-        private GameObject _topviewCam;
-        private TopViewCamera _topViewCam;
+        private VCamFollow _mainCam;
 
         private EntityContainer _entityContainer;
 
@@ -50,6 +48,7 @@ namespace SAB.GameSystem
             new DataBase();
             new InputManager();
             new AIGenerator();
+            new CameraFactory();
             new CharacterFactory(DataBase.Instance);
             new SkillFactory(DataBase.Instance.SkillRepo, DataBase.Instance.WorldProfile.FactionTable);
             new ItemFactory(DataBase.Instance);
@@ -58,28 +57,28 @@ namespace SAB.GameSystem
 
         private void GenerateInstance()
         {
-            _topViewCam = new TopViewCamera();
             _entityContainer = new();
             _cutscenePlayer = new();
             _agentController = gameObject.AddComponent<AgentController>();
             _cutsceneDirector = AssetManager.InstantiateLoadAssetSync<CutsceneController>(CutsceneMangerAssetPath, "CutsceneManager", transform);
+            _mainCam = CameraFactory.Instance.CreateFollow(new(Quaternion.Euler(40f, 0f, 0f), 60, -1, new(0, 6, -7.5f), new(1, 1, 1)));
         }
 
         private void InitStatic()
         {
+            _mainCam.Setup(new(Quaternion.Euler(40f, 0f, 0f), 60, -1, new(0, 6, -7.5f), new(1, 1, 1)));
             InputManager.Instance.SetActive(true);
             CharacterFactory.Instance.Init(_agentController, _entityContainer);
         }
 
         private void InitInstance()
         {
-            _topViewCam.InitCamera(_topviewCam);
             _cutsceneDirector.Init(Camera.main.GetComponent<CinemachineBrain>());
         }
 
         private void GenerateFacade()
         {
-            var changeMap = new MapFacade(_cutscenePlayer, _topViewCam);
+            var changeMap = new MapFacade(_cutscenePlayer, _mainCam);
             var cutscene = new CutsceneFacade(_cutsceneDirector, _agentController, _entityContainer);
             _gamePlayFacade = new(cutscene, changeMap);
         }
