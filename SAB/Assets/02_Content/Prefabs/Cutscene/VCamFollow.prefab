@@ -142,4 +142,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vcam: {fileID: 3298445161108689452}
   _follow: {fileID: 7905305508731602905}
-  _cameraArm: {fileID: 2666959245879605828}

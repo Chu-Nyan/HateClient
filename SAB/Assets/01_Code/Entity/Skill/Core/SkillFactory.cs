@@ -24,7 +24,7 @@ namespace SAB.Skill
             _root = new GameObject("SkillObjects").transform;
             _skillDataByID = db.SkillByID;
             _factionTable = faction;
-            _objectPooling = new(() => AssetManager.GenerateLoadAssetSync<SkillObject>(SkillObjectPath, _root));
+            _objectPooling = new(() => AssetManager.InstantiateAssetSync<SkillObject>(SkillObjectPath, _root));
             _generateFuncByProcessType = new()
             {
                 { SkillStepType.Instant, () => new InstantSkillStep() },

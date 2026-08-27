@@ -28,7 +28,7 @@ namespace SAB.Unit
             _customizingData = db.CharacterRepo.CustomizingData;
             _pool = new(() =>
             {
-                return AssetManager.GenerateLoadAssetSync<Character>(Asset_Obj_Character, _root);
+                return AssetManager.InstantiateAssetSync<Character>(Asset_Obj_Character, _root);
             });
         }
 

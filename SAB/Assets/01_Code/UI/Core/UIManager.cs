@@ -31,8 +31,8 @@ namespace SAB.UI
                     Debug.LogWarning($"{path}, not registered");
                 }
 
-                ui = AssetManager.GenerateLoadAssetSync<T>(path);
                 _baseUIByID[typeof(T)] = ui;
+                ui = AssetManager.InstantiateAssetSync<T>(path);
             }
 
             return (T)ui;

@@ -19,26 +19,26 @@ namespace Chu.Core
         }
 
         // 동기 로드 후 오브젝트 생성
-        public static T InstantiateLoadAssetSync<T>(string path, string name, Transform parent) where T : Behaviour
+        public static T InstantiateAssetSync<T>(string path, string name, Transform parent) where T : Behaviour
         {
             var item = LoadAssetSync<GameObject>(path);
             var gameObj = Object.Instantiate(item, parent);
             gameObj.name = name == default ? item.name : name;
             return gameObj.GetComponent<T>();
         }
-        public static T GenerateLoadAssetSync<T>(string path) where T : Behaviour
+        public static T InstantiateAssetSync<T>(string path) where T : Behaviour
         {
-            return InstantiateLoadAssetSync<T>(path, default, null);
+            return InstantiateAssetSync<T>(path, default, null);
         }
 
-        public static T GenerateLoadAssetSync<T>(string path, string name) where T : Behaviour
+        public static T InstantiateAssetSync<T>(string path, string name) where T : Behaviour
         {
-            return InstantiateLoadAssetSync<T>(path, name, null);
+            return InstantiateAssetSync<T>(path, name, null);
         }
 
-        public static T GenerateLoadAssetSync<T>(string path, Transform parent) where T : Behaviour
+        public static T InstantiateAssetSync<T>(string path, Transform parent) where T : Behaviour
         {
-            return InstantiateLoadAssetSync<T>(path, default, parent);
+            return InstantiateAssetSync<T>(path, default, parent);
         }
 
         // Json 불러오기

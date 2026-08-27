@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3298131653223002591, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1030.4003
       objectReference: {fileID: 0}
     - target: {fileID: 3298131653223002591, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
       propertyPath: m_LocalRotation.w
@@ -47,6 +47,14 @@ PrefabInstance:
     - target: {fileID: 3298131653223002591, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298445161108689452, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
+      propertyPath: Target.TrackingTarget
+      value: 
+      objectReference: {fileID: 8734881339218056248}
+    - target: {fileID: 3298445161108689452, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
+      propertyPath: Target.CustomLookAtTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5014918137390396836, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
       propertyPath: m_Name
@@ -94,3 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 710c10e5c53c26c449e5757d57dcd78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8734881339218056248 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3298131653223002591, guid: bca2a66fad3f7ed459c9584eb64ad869, type: 3}
+  m_PrefabInstance: {fileID: 6124289730492491239}
+  m_PrefabAsset: {fileID: 0}

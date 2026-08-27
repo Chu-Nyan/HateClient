@@ -60,7 +60,7 @@ namespace SAB.GameSystem
             _entityContainer = new();
             _cutscenePlayer = new();
             _agentController = gameObject.AddComponent<AgentController>();
-            _cutsceneDirector = AssetManager.InstantiateLoadAssetSync<CutsceneController>(CutsceneMangerAssetPath, "CutsceneManager", transform);
+            _cutsceneDirector = AssetManager.InstantiateAssetSync<CutsceneController>(CutsceneMangerAssetPath, "CutsceneManager", transform);
             _mainCam = CameraFactory.Instance.CreateFollow(new(Quaternion.Euler(40f, 0f, 0f), 60, -1, new(0, 6, -7.5f), new(1, 1, 1)));
         }
 

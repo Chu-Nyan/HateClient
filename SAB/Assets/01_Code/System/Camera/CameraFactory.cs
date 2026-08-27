@@ -18,8 +18,8 @@ namespace SAB.GameSystem
         {
             _root = new GameObject("Camera").transform;
             _pooling = new();
-            _pooling.Add(VCamType.Static, new(() => AssetManager.InstantiateLoadAssetSync<VCamStatic>(_staticPath, "StaticCamera", _root)));
-            _pooling.Add(VCamType.Follow, new(() => AssetManager.InstantiateLoadAssetSync<VCamFollow>(_followPath, "FollowCamera", _root)));
+            _pooling.Add(VCamType.Static, new(() => AssetManager.InstantiateAssetSync<VCamStatic>(_staticPath, "StaticCamera", _root)));
+            _pooling.Add(VCamType.Follow, new(() => AssetManager.InstantiateAssetSync<VCamFollow>(_followPath, "FollowCamera", _root)));
         }
 
         public VCamFollow CreateFollow(VCamFollowData data)
