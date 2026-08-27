@@ -25,11 +25,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d5920388d2841eb48b562b824f9d526d
-    m_Address: SingleMesh
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f93dc76a3f8d33d4c9d51c0df834ab45
     m_Address: VCamStatic
     m_ReadOnly: 0
