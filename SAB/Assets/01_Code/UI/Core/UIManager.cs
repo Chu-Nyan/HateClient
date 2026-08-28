@@ -2,7 +2,6 @@ using Chu.Core;
 using Chu.Utility;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SAB.UI
 {
@@ -10,29 +9,26 @@ namespace SAB.UI
     {
         private static readonly Dictionary<Type, string> _assetPathByType = new()
         {
-            {typeof(SpeechBubbleUI),"SpeechBubbleUI" }
+            { typeof(SpeechBubbleUI),"SpeechBubbleUI" }
         };
 
-        private readonly Dictionary<Type, UIBase> _baseUIByID;
+        private readonly Dictionary<Type, UIController> _uiByID;
 
         public UIManager() : base()
         {
-            _baseUIByID = new();
+            _uiByID = new();
         }
 
-        public T GetUI<T>() where T : UIBase, new()
+        public T GetUI<T>() where T : UIController
         {
             Type type = typeof(T);
-            if (_baseUIByID.TryGetValue(type, out var ui) == false)
+            if (_uiByID.TryGetValue(type, out var ui) == false)
             {
                 if (_assetPathByType.TryGetValue(type, out string path) == false)
-                {
-                    path = type.Name;
-                    Debug.LogWarning($"{path}, not registered");
-                }
+                    throw new InvalidOperationException($"path not registered\n{type.Name}");
 
-                _baseUIByID[typeof(T)] = ui;
                 ui = AssetManager.InstantiateAssetSync<T>(path);
+                _uiByID[type] = ui;
             }
 
             return (T)ui;

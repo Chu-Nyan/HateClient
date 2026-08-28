@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SAB.UI
 {
-    public class SpeechBubbleUI : UIBase
+    public class SpeechBubbleUI : UIController
     {
         [SerializeField]
         private SpeechBubbleUIView _view;

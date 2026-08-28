@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SAB.UI
 {
-    public class SpeechBubbleUIView : UIView
+    public class SpeechBubbleUIView : MonoBehaviour
     {
         [SerializeField]
         private RectTransform _canvas;
@@ -47,10 +47,6 @@ namespace SAB.UI
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas, screenPos, null, out var localPosition);
             _elements[id].SetPosition(localPosition);
-        }
-
-        public override void SetActive(bool value)
-        {
         }
     }
 }
