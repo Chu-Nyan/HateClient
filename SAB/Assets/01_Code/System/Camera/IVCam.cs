@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 
 namespace SAB.Cutscene
 {
-    public interface IVCam : ICutsceneObject
+    public interface IVCam : IEntity
     {
         public VCamType Type { get; }
 

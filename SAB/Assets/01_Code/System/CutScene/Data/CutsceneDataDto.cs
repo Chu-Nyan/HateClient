@@ -110,7 +110,7 @@ namespace SAB.Cutscene
             }
         }
 
-        private void AddDataArray<T, K>(T arr, int id, K value) where T : IDictionary<int, K> where K : ICutscenePreset
+        private void AddDataArray<T, K>(T arr, int id, K value) where T : IDictionary<int, K>
         {
             if (arr.TryAdd(id, value) == false)
             {

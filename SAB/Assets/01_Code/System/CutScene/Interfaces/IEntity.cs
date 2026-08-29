@@ -2,7 +2,7 @@
 
 namespace SAB.Cutscene
 {
-    public interface ICutsceneObject
+    public interface IEntity
     {
         public Transform transform { get; }
         public void SetActive(bool value);

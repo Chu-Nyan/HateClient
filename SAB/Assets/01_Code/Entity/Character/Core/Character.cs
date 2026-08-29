@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ISpeachable, ICutsceneObject
+public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDefendable, ISpeachable, IEntity
 {
     private int _instanceID;
     [SerializeField]
@@ -243,14 +243,6 @@ public class Character : MonoBehaviour, IMovementReceiver, IOffenseReceiver, IDe
     {
         _brainType = type;
         _defenseSys.OnOwnerChanged(type == BrainType.Player);
-    }
-
-    public void SetCutscenePreset(ICutscenePreset data)
-    {
-        if (data is not CharacterSpawnRequest request)
-            throw new Exception(data.GetType().ToString());
-
-        transform.SetPositionAndRotation(request.Position, request.Rotation);
     }
 
     public void PlayEmote(AnimationClip clip)

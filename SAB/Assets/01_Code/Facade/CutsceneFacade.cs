@@ -14,7 +14,7 @@ namespace SAB.Facade
         private AgentController _agent;
         private EntityContainer _entityContainer;
 
-        private Dictionary<int, ICutsceneObject> _objectByActorID;
+        private Dictionary<int, IEntity> _objectByActorID;
 
         public CutsceneFacade(CutsceneController cutscene, AgentController agent, EntityContainer entityContainer)
         {
@@ -64,7 +64,7 @@ namespace SAB.Facade
 
             foreach (var item in cutsceneData.FavoritesByID)
             {
-                if (_entityContainer.ObjectByFavorite[item.Value] is not ICutsceneObject cutsceneobj)
+                if (_entityContainer.ObjectByFavorite[item.Value] is not IEntity cutsceneobj)
                     throw new System.Exception("");
 
                 _objectByActorID.Add(item.Key, cutsceneobj);
@@ -75,7 +75,7 @@ namespace SAB.Facade
                 if (_entityContainer.ObjectByUniqueType.TryGetValue(item.Value, out var obj) == false)
                     throw new System.Exception($"unique type is null\n{item.Value}");
 
-                if (obj is not ICutsceneObject cutsceneobj)
+                if (obj is not IEntity cutsceneobj)
                     throw new System.Exception("");
 
                 _objectByActorID.Add(item.Key, cutsceneobj);

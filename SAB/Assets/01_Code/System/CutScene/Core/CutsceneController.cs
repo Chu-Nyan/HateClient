@@ -21,7 +21,7 @@ namespace SAB.Cutscene
         // Cutscene in progress
         private CutsceneData _cutsceneData;
         private Dictionary<string, TrackAsset> _trackByName;
-        private Dictionary<int, ICutsceneObject> _objectByActorID;
+        private Dictionary<int, IEntity> _objectByActorID;
         private bool _isPlaying;
 
         public event Action<CutsceneData> CutsceneStopped;
@@ -46,7 +46,7 @@ namespace SAB.Cutscene
             _cameraBrain = brain;
         }
 
-        public void Play(CutsceneData data, Dictionary<int, ICutsceneObject> objectByActorID)
+        public void Play(CutsceneData data, Dictionary<int, IEntity> objectByActorID)
         {
             _cutsceneData = data;
             _objectByActorID = objectByActorID;

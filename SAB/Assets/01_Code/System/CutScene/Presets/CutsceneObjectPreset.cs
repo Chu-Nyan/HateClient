@@ -34,11 +34,11 @@ namespace SAB.Cutscene
             _prevSource = BindingSource;
         }
 
-        public ICutscenePreset GetCutsceneObjectData(CutsceneDataExtractor idHandler)
+        public object GetCutsceneObjectData(CutsceneDataExtractor idHandler)
         {
             if (Target == null)
                 throw new System.Exception($"Target is null\nName : {gameObject.name}");
-            if (Target is not ICutsceneObject)
+            if (Target is not IEntity)
                 throw new System.Exception($"Target must implement\nName : {gameObject.name}");
 
             if (Target is VCamFollow follow)

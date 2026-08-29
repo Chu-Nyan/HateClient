@@ -1,10 +1,9 @@
-﻿using SAB.Cutscene;
-using SAB.EntityAgent;
+﻿using SAB.EntityAgent;
 using UnityEngine;
 
 namespace SAB.Unit
 {
-    public class CharacterSpawnRequest : ICutscenePreset
+    public class CharacterSpawnRequest
     {
         public int UnitID;
         public BrainType BrainType;
