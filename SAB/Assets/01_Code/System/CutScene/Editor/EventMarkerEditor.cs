@@ -6,18 +6,18 @@ using UnityEngine.Timeline;
 
 namespace SAB.Cutscene
 {
-    [CustomEditor(typeof(DialogMarker))]
-    public class DialogMarkerEditor : Editor
+    [CustomEditor(typeof(EventMarker))]
+    public class EventMarkerEditor : Editor
     {
         public override void OnInspectorGUI()
         {
-            SerializedProperty TextIDProp = serializedObject.FindProperty("TextID");
-            SerializedProperty speakerTrackProp = serializedObject.FindProperty("SpeakerTrack");
+            SerializedProperty TextIDProp = serializedObject.FindProperty("Action");
+            SerializedProperty speakerTrackProp = serializedObject.FindProperty("Target");
             SerializedProperty timeProp = serializedObject.FindProperty("Time");
 
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(TextIDProp, new GUIContent("TextID"));
+            EditorGUILayout.PropertyField(TextIDProp, new GUIContent("Action"));
             EditorGUILayout.PropertyField(timeProp, new GUIContent("Time"));
 
             if (target is Marker marker && marker.parent != null)

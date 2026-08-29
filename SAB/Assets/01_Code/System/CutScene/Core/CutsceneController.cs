@@ -117,18 +117,18 @@ namespace SAB.Cutscene
             }
         }
 
-        private void ShowDialog(DialogMarker marker)
+        private void ShowDialog(EventMarker marker)
         {
-            var id = _cutsceneData.BindingIDByTrack[marker.SpeakerTrack];
+            var id = _cutsceneData.BindingIDByTrack[marker.Target];
 
             if (_objectByActorID[id] is ISpeachable able)
             {
-                able.Speech(new(0, marker.TextID, marker.Time), true);
+                able.Speech(new(0, marker.Action, marker.Time), true);
             }
             else
             {
                 var ui = UIManager.Instance.GetUI<SpeechBubbleUI>();
-                ui.ShowDialogue(_objectByActorID[id].transform, new(0, marker.TextID, marker.Time), true);
+                ui.ShowDialogue(_objectByActorID[id].transform, new(0, marker.Action, marker.Time), true);
             }
         }
 

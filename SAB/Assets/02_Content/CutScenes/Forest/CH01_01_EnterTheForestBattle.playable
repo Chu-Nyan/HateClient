@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Name: Custom Attack Marker
   m_EditorClassIdentifier: 
   m_Time: 1.1166666666666667
-  TextID: 
-  SpeakerTrack: 
+  Action: 
+  Target: 
   Time: 0
 --- !u!114 &-5623668003949067633
 MonoBehaviour:
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Name: Dialog Marker
   m_EditorClassIdentifier: 
   m_Time: 3
-  TextID: 
-  SpeakerTrack: 
+  Action: 
+  Target: 
   Time: 0
 --- !u!114 &-1916392730412969973
 MonoBehaviour:
@@ -292,8 +292,8 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   m_Time: 6.033333333333333
-  TextID: cutscene.ch01.01.002
-  SpeakerTrack: InGame_Player_Movement
+  Action: cutscene.ch01.01.002
+  Target: InGame_Player_Movement
   Time: 2
 --- !u!114 &11400000
 MonoBehaviour:
@@ -333,8 +333,8 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   m_Time: 12.049999999999997
-  TextID: cutscene.ch01.01.005
-  SpeakerTrack: InGame_Guard2_Movement
+  Action: cutscene.ch01.01.005
+  Target: InGame_Guard1_Movement
   Time: 2
 --- !u!114 &1230504456449615621
 MonoBehaviour:
@@ -349,8 +349,8 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   m_Time: 4.033333333333333
-  TextID: cutscene.ch01.01.001
-  SpeakerTrack: InGame_Guard1_Movement
+  Action: cutscene.ch01.01.001
+  Target: InGame_Guard1_Movement
   Time: 2
 --- !u!114 &2014247106963148826
 MonoBehaviour:
@@ -457,8 +457,8 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   m_Time: 10.049999999999997
-  TextID: cutscene.ch01.01.004
-  SpeakerTrack: InGame_Player_Movement
+  Action: cutscene.ch01.01.004
+  Target: InGame_Player_Movement
   Time: 2
 --- !u!114 &2828576666018909498
 MonoBehaviour:
@@ -527,8 +527,8 @@ MonoBehaviour:
   m_Name: Custom Attack Marker
   m_EditorClassIdentifier: 
   m_Time: 2.4
-  TextID: 
-  SpeakerTrack: 
+  Action: 
+  Target: 
   Time: 0
 --- !u!114 &5010755634276513414
 MonoBehaviour:
@@ -543,8 +543,8 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   m_Time: 14.016666666666662
-  TextID: cutscene.ch01.01.006
-  SpeakerTrack: InGame_Player_Movement
+  Action: cutscene.ch01.01.006
+  Target: InGame_Player_Movement
   Time: 2
 --- !u!114 &5922963615066761292
 MonoBehaviour:
@@ -722,6 +722,6 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   m_Time: 8.033333333333331
-  TextID: cutscene.ch01.01.003
-  SpeakerTrack: InGame_Guard1_Movement
+  Action: cutscene.ch01.01.003
+  Target: InGame_Guard2_Movement
   Time: 2

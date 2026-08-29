@@ -4,13 +4,13 @@ using UnityEngine.Timeline;
 
 namespace SAB.Cutscene
 {
-    public class DialogMarker : Marker, INotification, INotificationOptionProvider
+    public class EventMarker : Marker, INotification, INotificationOptionProvider
     {
-        public string TextID;
-        public string SpeakerTrack;
+        public string Action;
+        public string Target;
         public float Time;
 
-        public PropertyName id => new("Dialog");
+        public PropertyName id => new("Event");
 
         public NotificationFlags flags
         {

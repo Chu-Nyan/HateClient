@@ -1,6 +1,5 @@
 ﻿using Chu.Data;
 using Chu.Utility;
-using Chu.Utility.Json;
 using Newtonsoft.Json;
 using SAB.Cutscene;
 using SAB.Unit;
@@ -12,8 +11,8 @@ namespace SAB.GameSystem
 {
     public class MapDataJsonConverter : MonoBehaviour
     {
-        private const string MapPath = "04_Data/DB/Map";
-        private const string CutscenePath = "04_Data/DB/Cutscene";
+        private const string _mapPath = "04_Data/DB/Map";
+        private const string _cutscenePath = "04_Data/DB/Cutscene";
 
         [SerializeField]
         private MapType _type;
@@ -58,7 +57,7 @@ namespace SAB.GameSystem
             }
 
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
-            string path = Path.Combine(Application.dataPath, MapPath);
+            string path = Path.Combine(Application.dataPath, _mapPath);
             FileUtility.GenerateFile(path, $"{string.Format(Const.Asset_DB_MapGenerated, _type)}.json", json);
         }
 
@@ -66,7 +65,7 @@ namespace SAB.GameSystem
         {
             var data = _cutsceneConverter.GetCutsceneData();
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings().WithUnity());
-            string path = Path.Combine(Application.dataPath, CutscenePath);
+            string path = Path.Combine(Application.dataPath, _cutscenePath);
             FileUtility.GenerateFile(path, $"{string.Format(Const.Asset_DB_Cutscene, _type)}.json", json);
         }
     }
