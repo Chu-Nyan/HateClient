@@ -8,7 +8,7 @@ namespace SAB.DataManger
 {
     public class MapRepository
     {
-        public readonly Dictionary<MapType, MapDefinition> DataByType;
+        public readonly Dictionary<MapType, MapGeneratorData> DataByType;
 
         public MapRepository()
         {
@@ -19,7 +19,7 @@ namespace SAB.DataManger
                 DataByType[type] = new();
 
                 string json = AssetManager.LoadJson(string.Format(Const.Asset_DB_MapGenerated, type.ToString()));
-                MapDefinition dataDtos = JsonConvert.DeserializeObject<MapDefinition>(json, DataBase.JsonSerializerSettings);
+                MapGeneratorData dataDtos = JsonConvert.DeserializeObject<MapGeneratorData>(json, DataBase.JsonSerializerSettings);
 
                 if (dataDtos == null)
                     throw new Exception($"{type} CutScene Data can't find");

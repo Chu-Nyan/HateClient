@@ -25,17 +25,7 @@ namespace SAB.Cutscene
 
             for (int i = 0; i < datas.Length; i++)
             {
-                if (directors[i].TriggerZones.Length == 0)
-                {
-                    throw new System.Exception($"Trigger bounds not defined.\nName : {directors[i].PlayableDirector.playableAsset.name}");
-                }
-                datas[i] = new()
-                {
-                    Name = directors[i].PlayableDirector.playableAsset.name,
-                    CenterX = directors[i].Center.x,
-                    CenterY = directors[i].Center.y,
-                    TriggerZones = directors[i].TriggerZones
-                };
+                datas[i] = directors[i].ToData();
             }
 
             return datas;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SAB.GameSystem
 {
-    public class MapReferenceContainer : MonoBehaviour
+    public class MapReferenceBinding : MonoBehaviour
     {
         [NonSerialized]
         public Dictionary<int, Character> Characters;

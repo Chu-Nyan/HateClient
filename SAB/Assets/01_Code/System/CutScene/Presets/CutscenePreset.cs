@@ -7,18 +7,12 @@ namespace SAB.Cutscene
     [RequireComponent(typeof(PlayableDirector))]
     public class CutscenePreset : MonoBehaviour
     {
+        [SerializeField]
+        public PlayableDirector PlayableDirector;
+        [SerializeField]
         public bool LockPlayer;
+        [SerializeField]
         public ShapeParam[] TriggerZones;
-
-        public PlayableDirector PlayableDirector
-        {
-            get => GetComponent<PlayableDirector>();
-        }
-
-        public Vector2 Center
-        {
-            get => new(transform.position.x, transform.position.z);
-        }
 
         public void OnDrawGizmos()
         {
@@ -29,6 +23,20 @@ namespace SAB.Cutscene
             {
                 TriggerZones[i].DrawGizmo(transform.position, transform.rotation);
             }
+        }
+
+        public CutsceneTriggerData ToData()
+        {
+            if (TriggerZones.Length == 0)
+                throw new System.Exception($"Trigger bounds not defined.\nName : {gameObject.name}");
+
+            return new()
+            {
+                Name = PlayableDirector.playableAsset.name,
+                CenterX = transform.position.x,
+                CenterY = transform.position.z,
+                TriggerZones = TriggerZones
+            };
         }
     }
 }

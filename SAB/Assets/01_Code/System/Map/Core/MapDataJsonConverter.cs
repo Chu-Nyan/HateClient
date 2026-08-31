@@ -19,7 +19,7 @@ namespace SAB.GameSystem
         [SerializeField]
         private CutsceneDataExtractor _cutsceneConverter;
         [SerializeField]
-        private MapReferenceContainer _referenceJsonConverter;
+        private MapReferenceBinding _referenceJsonConverter;
 
         [ContextMenu("Convert")]
         public void Convert()
@@ -34,7 +34,7 @@ namespace SAB.GameSystem
             int id = 0;
             _referenceJsonConverter.AutoBinding();
 
-            var data = new MapDefinition
+            var data = new MapGeneratorData
             {
                 Characters = new Dictionary<int, CharacterSpawnRequest>(),
                 SpawnPoint = new Pose2D[_referenceJsonConverter.SpawnPoint.Length],

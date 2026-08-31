@@ -302090,6 +302090,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
+      propertyPath: PlayableDirector
+      value: 
+      objectReference: {fileID: 1062274789}
+    - target: {fileID: 1741990750272823629, guid: 7f4c4bfe2878dd544aaa663d7f010d79, type: 3}
       propertyPath: TriggerZones.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -343581,6 +343585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SAB.GameSystem.ObjectMarker
   FavoriteID: Guard1
+  UniqueType: 0
 --- !u!1 &1214439450
 GameObject:
   m_ObjectHideFlags: 0
@@ -375629,6 +375634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SAB.GameSystem.ObjectMarker
   FavoriteID: Guard2
+  UniqueType: 0
 --- !u!1 &1341323097
 GameObject:
   m_ObjectHideFlags: 0
@@ -604320,6 +604326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56990bee4d6a01a4db9a2f5c04e64c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayableDirector: {fileID: 4780763809784958001}
   LockPlayer: 1
   TriggerZones:
   - Type: 0

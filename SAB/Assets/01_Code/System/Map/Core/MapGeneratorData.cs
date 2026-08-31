@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SAB.GameSystem
 {
-    public class MapDefinition
+    public class MapGeneratorData
     {
         public Pose2D[] SpawnPoint;
         public Dictionary<int, string> Favorites;
