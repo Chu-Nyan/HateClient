@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Chu.Data;
+using Chu.Utility;
+using SAB.Cutscene;
+using SAB.Unit;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,56 +9,57 @@ namespace SAB.GameSystem
 {
     public class MapReferenceBinding : MonoBehaviour
     {
-        [NonSerialized]
-        public Dictionary<int, Character> Characters;
-        [NonSerialized]
-        public Dictionary<int, ObjectMarker> ObjMarker;
+        public Transform CutsceneTriggerRoot;
         public Transform[] SpawnPoint;
 
-        public void AutoBinding()
+        public MapGeneratorData GetGeneratorData()
         {
-            Characters = new();
-            ObjMarker = new();
-            int id = 0;
-            var acters = transform.GetComponentsInChildren<Character>();
+            var id = 0;
+            var actors = new Dictionary<int, CharacterSpawnRequest>();
+            var spawnPoint = new Pose2D[SpawnPoint.Length];
+            var favorites = new Dictionary<int, string>();
+            var uniqueTypes = new Dictionary<int, UniqueObjType>();
 
-            foreach (var item in acters)
+            foreach (var actor in transform.GetComponentsInChildren<Character>())
             {
                 id++;
-                Characters.Add(id, item);
-                if (item.TryGetComponent<ObjectMarker>(out var marker) == true)
+                var spwanData = new CharacterSpawnRequest(actor.Stats.CharacterID, actor.BrainType, actor.transform.position, actor.transform.rotation);
+                actors.Add(id, spwanData);
+                if (actor.TryGetComponent<ObjectMarker>(out var marker) == true)
                 {
-                    ObjMarker.Add(id, marker);
+                    if (string.IsNullOrEmpty(marker.FavoriteID) == false)
+                        favorites.Add(id, marker.FavoriteID);
+                    if (marker.UniqueType != UniqueObjType.None)
+                        uniqueTypes.Add(id, marker.UniqueType);
                 }
             }
-        }
 
-        public Dictionary<int, string> GetFavoriteIDs()
-        {
-            var dic = new Dictionary<int, string>();
-            foreach (var item in ObjMarker)
+            for (int i = 0; i < SpawnPoint.Length; i++)
             {
-                if (string.IsNullOrEmpty(item.Value.FavoriteID) == true)
-                    continue;
-
-                dic.Add(item.Key, item.Value.FavoriteID);
+                spawnPoint[i] = SpawnPoint[i].ToPose2D();
             }
 
-            return dic;
+            return new MapGeneratorData
+            {
+                Characters = actors,
+                SpawnPoint = spawnPoint,
+                CutsceneTriggers = GetTriggerData(),
+                Favorites = favorites,
+                UniqueObjs = uniqueTypes,
+            };
         }
 
-        public Dictionary<int, UniqueObjType> GetUniqueObjTypes()
+        private CutsceneTriggerData[] GetTriggerData()
         {
-            var dic = new Dictionary<int, UniqueObjType>();
-            foreach (var item in ObjMarker)
-            {
-                if (item.Value.UniqueType == UniqueObjType.None)
-                    continue;
+            List<CutscenePreset> directors = CutsceneTriggerRoot.GetComponentsWithDepth<CutscenePreset>(1);
+            var datas = new CutsceneTriggerData[directors.Count];
 
-                dic.Add(item.Key, item.Value.UniqueType);
+            for (int i = 0; i < datas.Length; i++)
+            {
+                datas[i] = directors[i].ToData();
             }
 
-            return dic;
+            return datas;
         }
     }
 }

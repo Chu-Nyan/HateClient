@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chu.Data;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chu.Utility
@@ -27,6 +28,14 @@ namespace Chu.Utility
                     Traverse(child, depth + 1);
                 }
             }
+        }
+
+        public static Pose2D ToPose2D(this Transform root)
+        {
+            var pos2D = root.position.ToVector2XZ();
+            var y = root.rotation.y;
+
+            return new(pos2D, y);
         }
     }
 }
