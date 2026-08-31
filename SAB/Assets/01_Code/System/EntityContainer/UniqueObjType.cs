@@ -1,7 +1,8 @@
 ﻿namespace SAB.GameSystem
 {
-    public enum UniqueEntityType
+    public enum UniqueObjType
     {
+        None,
         Player
     }
 }

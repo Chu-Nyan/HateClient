@@ -49,19 +49,14 @@ namespace SAB.Facade
             foreach (var item in mapDef.Characters)
             {
                 var request = item.Value;
-                if (mapDef.Favorites.TryGetValue(item.Key, out var id) == true)
-                {
-                    CharacterFactory.Instance.Create(request.BrainType, request.UnitID, request.Position, request.Rotation, id);
-                }
-                else
-                {
-                    CharacterFactory.Instance.Create(request.BrainType, request.UnitID, request.Position, request.Rotation);
-                }
+                mapDef.Favorites.TryGetValue(item.Key, out var favoritesID);
+                mapDef.UniqueObjs.TryGetValue(item.Key, out var uniqueType);
+                CharacterFactory.Instance.Create(request.BrainType, request.UnitID, request.Position, request.Rotation, favoritesID, uniqueType);
+                var spawnPos2D = mapDef.SpawnPoint[playerSpawnPoint];
+                Quaternion rotation = Quaternion.Euler(new(0, spawnPos2D.EulerY, 0));
+                var player = CharacterFactory.Instance.Create(BrainType.Player, 1, spawnPos2D.Position.ToVector3XZ(), rotation, UniqueObjType.Player);
+                _mainCam.SetThirdPersonTarget(player.transform);
             }
-            var spawnPos2D = mapDef.SpawnPoint[playerSpawnPoint];
-            Quaternion rotation = Quaternion.Euler(new(0, spawnPos2D.EulerY, 0));
-            var player = CharacterFactory.Instance.Create(BrainType.Player, 1, spawnPos2D.Position.ToVector3XZ(), rotation, UniqueEntityType.Player);
-            _mainCam.SetThirdPersonTarget(player.transform);
         }
     }
 }

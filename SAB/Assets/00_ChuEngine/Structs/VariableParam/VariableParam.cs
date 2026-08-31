@@ -10,7 +10,7 @@ namespace Chu.Data
     {
         public static readonly Dictionary<ParameterType, Type> EnumTypes = new()
         {
-             { ParameterType.UniqueEntity,typeof(UniqueEntityType) }
+             { ParameterType.UniqueEntity,typeof(UniqueObjType) }
         };
 
         public ParameterType Type;

@@ -6,11 +6,11 @@ namespace SAB.GameSystem
 {
     public class EntityContainer
     {
-        private readonly BiDictionary<UniqueEntityType, MonoBehaviour> _objectByUniqueType;
+        private readonly BiDictionary<UniqueObjType, MonoBehaviour> _objectByUniqueType;
         private readonly BiDictionary<string, MonoBehaviour> _objectByFavorite;
         private readonly Dictionary<int, Character> _character;
 
-        public IReadOnlyDictionary<UniqueEntityType, MonoBehaviour> ObjectByUniqueType
+        public IReadOnlyDictionary<UniqueObjType, MonoBehaviour> ObjectByUniqueType
         {
             get => _objectByUniqueType;
         }
@@ -37,7 +37,7 @@ namespace SAB.GameSystem
             _character.Add(acter.InstanceID, acter);
         }
 
-        public void AddUniqueObject(UniqueEntityType type, MonoBehaviour obj)
+        public void AddUniqueObject(UniqueObjType type, MonoBehaviour obj)
         {
             _objectByUniqueType.Add(type, obj);
         }

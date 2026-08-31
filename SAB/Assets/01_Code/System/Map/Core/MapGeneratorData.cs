@@ -9,6 +9,7 @@ namespace SAB.GameSystem
     {
         public Pose2D[] SpawnPoint;
         public Dictionary<int, string> Favorites;
+        public Dictionary<int, UniqueObjType> UniqueObjs;
         public Dictionary<int, CharacterSpawnRequest> Characters;
         public CutsceneTriggerData[] CutsceneTriggers;
     }

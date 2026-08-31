@@ -9,13 +9,13 @@ namespace SAB.GameSystem
         [NonSerialized]
         public Dictionary<int, Character> Characters;
         [NonSerialized]
-        public Dictionary<int, string> FavoriteObjects;
+        public Dictionary<int, ObjectMarker> ObjMarker;
         public Transform[] SpawnPoint;
 
         public void AutoBinding()
         {
             Characters = new();
-            FavoriteObjects = new();
+            ObjMarker = new();
             int id = 0;
             var acters = transform.GetComponentsInChildren<Character>();
 
@@ -25,9 +25,37 @@ namespace SAB.GameSystem
                 Characters.Add(id, item);
                 if (item.TryGetComponent<ObjectMarker>(out var marker) == true)
                 {
-                    FavoriteObjects.Add(id, marker.FavoriteID);
+                    ObjMarker.Add(id, marker);
                 }
             }
+        }
+
+        public Dictionary<int, string> GetFavoriteIDs()
+        {
+            var dic = new Dictionary<int, string>();
+            foreach (var item in ObjMarker)
+            {
+                if (string.IsNullOrEmpty(item.Value.FavoriteID) == true)
+                    continue;
+
+                dic.Add(item.Key, item.Value.FavoriteID);
+            }
+
+            return dic;
+        }
+
+        public Dictionary<int, UniqueObjType> GetUniqueObjTypes()
+        {
+            var dic = new Dictionary<int, UniqueObjType>();
+            foreach (var item in ObjMarker)
+            {
+                if (item.Value.UniqueType == UniqueObjType.None)
+                    continue;
+
+                dic.Add(item.Key, item.Value.UniqueType);
+            }
+
+            return dic;
         }
     }
 }

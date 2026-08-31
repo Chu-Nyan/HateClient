@@ -38,30 +38,36 @@ namespace SAB.Unit
             _entityContainer = container;
         }
 
-        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot)
+        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, string favoriteID, UniqueObjType uniqueType)
         {
             var acter = _pool.Dequeue();
             InitCharacter(acter, type, unitID, pos, rot);
+            if (string.IsNullOrEmpty(favoriteID) == false)
+                _entityContainer.AddFavoriteObject(favoriteID, acter);
+            if (uniqueType != UniqueObjType.None)
+                _entityContainer.AddUniqueObject(uniqueType, acter);
             return acter;
+        }
+
+        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot)
+        {
+            return Create(type, unitID, pos, rot, null, UniqueObjType.None);
         }
 
         public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, string favoriteID)
         {
-            var acter = Create(type, unitID, pos, rot);
-            _entityContainer.AddFavoriteObject(favoriteID, acter);
-            return acter;
+            return Create(type, unitID, pos, rot, favoriteID, UniqueObjType.None);
+
         }
 
-        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, UniqueEntityType uniqueType)
+        public Character Create(BrainType type, int unitID, Vector3 pos, Quaternion rot, UniqueObjType uniqueType)
         {
-            var acter = Create(type, unitID, pos, rot);
-            _entityContainer.AddUniqueObject(uniqueType, acter);
-            return acter;
+            return Create(type, unitID, pos, rot, null, uniqueType);
         }
 
         public Character Create(CharacterSpawnRequest request)
         {
-            return Create(request.BrainType, request.UnitID, request.Position, request.Rotation);
+            return Create(request.BrainType, request.UnitID, request.Position, request.Rotation, null, UniqueObjType.None);
         }
 
         private void InitCharacter(Character acter, BrainType type, int unitID, Vector3 pos, Quaternion rot)

@@ -11,7 +11,7 @@ namespace SAB.Cutscene
 
         public Dictionary<string, int> BindingIDByTrack;
         public Dictionary<int, BindingSource> BindingSourceByID;
-        public Dictionary<int, UniqueEntityType> UniqueSlotByID;
+        public Dictionary<int, UniqueObjType> UniqueSlotByID;
         public Dictionary<int, string> FavoritesByID;
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;

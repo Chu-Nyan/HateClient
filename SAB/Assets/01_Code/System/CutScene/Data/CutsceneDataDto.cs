@@ -14,7 +14,7 @@ namespace SAB.Cutscene
 
         public Dictionary<string, int> BindingIDByTrack;
         public Dictionary<int, BindingSource> BindingSourceById;
-        public Dictionary<int, UniqueEntityType> UniqueSlotById;
+        public Dictionary<int, UniqueObjType> UniqueSlotById;
         public Dictionary<int, string> FavoritesById;
         public Dictionary<int, VCamStaticData> StaticData;
         public Dictionary<int, VCamFollowData> FollowData;
@@ -67,7 +67,7 @@ namespace SAB.Cutscene
                     PersistentObjects.Add(id);
 
                 if (cutsceneObj.BindingSource == BindingSource.Slot)
-                    UniqueSlotById.Add(id, (UniqueEntityType)cutsceneObj.VariantParams[CutsceneObjectPreset.BindingSlot].IntValue);
+                    UniqueSlotById.Add(id, (UniqueObjType)cutsceneObj.VariantParams[CutsceneObjectPreset.BindingSlot].IntValue);
                 else if (cutsceneObj.BindingSource == BindingSource.Spawn)
                     AddObjectData(id, cutsceneObj, idHandler);
             }

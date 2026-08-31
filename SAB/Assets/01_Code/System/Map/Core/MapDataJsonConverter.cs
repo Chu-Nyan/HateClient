@@ -39,7 +39,8 @@ namespace SAB.GameSystem
                 Characters = new Dictionary<int, CharacterSpawnRequest>(),
                 SpawnPoint = new Pose2D[_referenceJsonConverter.SpawnPoint.Length],
                 CutsceneTriggers = _cutsceneConverter.GetTriggerData(),
-                Favorites = _referenceJsonConverter.FavoriteObjects
+                Favorites = _referenceJsonConverter.GetFavoriteIDs(),
+                UniqueObjs = _referenceJsonConverter.GetUniqueObjTypes()
             };
 
             foreach (var item in _referenceJsonConverter.Characters)
