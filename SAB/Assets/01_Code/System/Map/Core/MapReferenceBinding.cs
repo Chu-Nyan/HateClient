@@ -3,20 +3,33 @@ using Chu.Utility;
 using SAB.Cutscene;
 using SAB.Unit;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace SAB.GameSystem
 {
-    public class MapReferenceBinding : MonoBehaviour
+    public class MapReferenceBinding : DataExporter
     {
-        public Transform CutsceneTriggerRoot;
-        public Transform[] SpawnPoint;
+        [SerializeField]
+        private MapType _mapType;
+        [SerializeField]
+        private DefaultAsset _generatorFolder;
+        [SerializeField]
+        private Transform _cutsceneTriggerRoot;
+        [SerializeField]
+        private Transform[] _spawnPoint;
 
-        public MapGeneratorData GetGeneratorData()
+        protected override string DataPath
+        {
+            get => Path.Combine(AssetDatabase.GetAssetPath(_generatorFolder), string.Format(Const.Asset_DB_MapGenerated, _mapType));
+        }
+
+        private MapGeneratorData GetGeneratorData()
         {
             var id = 0;
             var actors = new Dictionary<int, CharacterSpawnRequest>();
-            var spawnPoint = new Pose2D[SpawnPoint.Length];
+            var spawnPoint = new Pose2D[_spawnPoint.Length];
             var favorites = new Dictionary<int, string>();
             var uniqueTypes = new Dictionary<int, UniqueObjType>();
 
@@ -34,9 +47,9 @@ namespace SAB.GameSystem
                 }
             }
 
-            for (int i = 0; i < SpawnPoint.Length; i++)
+            for (int i = 0; i < _spawnPoint.Length; i++)
             {
-                spawnPoint[i] = SpawnPoint[i].ToPose2D();
+                spawnPoint[i] = _spawnPoint[i].ToPose2D();
             }
 
             return new MapGeneratorData
@@ -49,9 +62,14 @@ namespace SAB.GameSystem
             };
         }
 
+        protected override object GenerateData()
+        {
+            return GetGeneratorData();
+        }
+
         private CutsceneTriggerData[] GetTriggerData()
         {
-            List<CutscenePreset> directors = CutsceneTriggerRoot.GetComponentsWithDepth<CutscenePreset>(1);
+            List<CutscenePreset> directors = _cutsceneTriggerRoot.GetComponentsWithDepth<CutscenePreset>(1);
             var datas = new CutsceneTriggerData[directors.Count];
 
             for (int i = 0; i < datas.Length; i++)

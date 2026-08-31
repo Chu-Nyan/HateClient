@@ -165666,6 +165666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a66149d4f8b3c54da72cc765f96e8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SAB.GameSystem.MapReferenceContainer
+  _generatorFolder: {fileID: 102900000, guid: 37ee7c5ea43f4a14cbb2e599d9dce662, type: 3}
   CutsceneTriggerRoot: {fileID: 1004179265}
   SpawnPoint:
   - {fileID: 494405421}
@@ -285271,6 +285272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e83ee033f27e541bcef29f9adf49dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _generatorFolder: {fileID: 102900000, guid: 8df606a36188eec48befdb4015ac4226, type: 3}
   _root: {fileID: 1004179265}
   _searchDepth: 1
 --- !u!1 &1005023330
@@ -462154,8 +462156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SAB.GameSystem.MapJsonConverter
   _type: 0
-  _cutsceneConverter: {fileID: 1004179266}
-  _mapReference: {fileID: 0}
+  _converters:
+  - {fileID: 584736225}
+  - {fileID: 1004179266}
 --- !u!1 &1652277587
 GameObject:
   m_ObjectHideFlags: 0

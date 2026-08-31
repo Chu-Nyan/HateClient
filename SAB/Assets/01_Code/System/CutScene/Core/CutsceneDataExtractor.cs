@@ -1,15 +1,22 @@
 ﻿using Chu.Utility;
+using SAB.GameSystem;
 using System.Collections.Generic;
+using System.IO;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 namespace SAB.Cutscene
 {
-    public class CutsceneDataExtractor : MonoBehaviour
+    public class CutsceneDataExtractor : DataExporter
     {
+        [SerializeField]
+        private MapType _mapType;
+        [SerializeField]
+        private DefaultAsset _generatorFolder;
         [SerializeField]
         private Transform _root;
         [SerializeField]
@@ -18,17 +25,9 @@ namespace SAB.Cutscene
         private int _idCount;
         private Dictionary<GameObject, int> _idBySceneObject;
 
-        public CutsceneTriggerData[] GetTriggerData()
+        protected override string DataPath
         {
-            List<CutscenePreset> directors = _root.GetComponentsWithDepth<CutscenePreset>(_searchDepth);
-            var datas = new CutsceneTriggerData[directors.Count];
-
-            for (int i = 0; i < datas.Length; i++)
-            {
-                datas[i] = directors[i].ToData();
-            }
-
-            return datas;
+            get => Path.Combine(AssetDatabase.GetAssetPath(_generatorFolder), string.Format(Const.Asset_DB_Cutscene, _mapType));
         }
 
         public CutsceneDataDto[] GetCutsceneData()
@@ -64,6 +63,11 @@ namespace SAB.Cutscene
             }
 
             return cutSceneDatas.ToArray();
+        }
+
+        protected override object GenerateData()
+        {
+            return GetCutsceneData();
         }
 
         private void ExtractCameraTrackData(CutsceneDataDto dto, PlayableDirector director, CinemachineTrack track)
